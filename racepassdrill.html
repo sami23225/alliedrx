@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>RACE & PASS Memory Drill — Chapter 12 Interactive Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+/* ----------------------------------
+   THEME + VARIABLES
+---------------------------------- */
+:root {
+  --color-primary: #af4bef;
+  --color-primary-soft: #d9b8ff;
+  --color-accent: #8380f0;
+  --color-bg: #f7f5fb;
+  --color-text: #1e2030;
+  --color-muted: #727089;
+
+  --radius-lg: 24px;
+  --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+}
+
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+  padding: 20px;
+  color: var(--color-text);
+}
+
+/* ----------------------------------
+   PAGE CONTAINER
+---------------------------------- */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 30px 26px 42px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ----------------------------------
+   HEADER / BRANDING
+---------------------------------- */
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  height: 42px;
+  width: auto;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+}
+
+.course-meta span {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-muted);
+}
+
+.badge-mode {
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 0.74rem;
+  background: rgba(12, 10, 24, 0.06);
+  border: 1px solid rgba(12, 10, 24, 0.10);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+}
+
+/* Titles */
+h1 {
+  font-size: clamp(1.9rem, 3vw, 2.3rem);
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+.subtitle {
+  font-size: 1rem;
+  color: var(--color-muted);
+  margin-bottom: 22px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 20px 0 14px;
+  color: var(--color-text);
+}
+
+.section-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+
+/* ----------------------------------
+   FLIP CARDS
+---------------------------------- */
+.flip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.flip-card {
+  perspective: 700px;
+  cursor: pointer;
+}
+
+.flip-inner {
+  width: 100%;
+  height: 130px;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  border-radius: 16px;
+}
+
+.flip-card.active .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 12px;
+  text-align: center;
+}
+
+.flip-front {
+  background: rgba(175, 75, 239, 0.15);
+  color: var(--color-primary);
+}
+
+.flip-back {
+  background: #0f172a;
+  color: #e5e7eb;
+  transform: rotateY(180deg);
+}
+
+/* ----------------------------------
+   DRAG-AND-DROP
+---------------------------------- */
+.drag-container {
+  margin-top: 12px;
+  background: rgba(175,75,239,0.07);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.draggable-item {
+  padding: 10px 12px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(15,23,42,0.12);
+  margin-bottom: 8px;
+  cursor: grab;
+  font-size: 0.92rem;
+}
+
+.drag-over {
+  border: 2px dashed var(--color-primary);
+}
+
+/* ----------------------------------
+   QUIZ
+---------------------------------- */
+.quiz-item {
+  margin-bottom: 20px;
+}
+.quiz-question {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.quiz-options {
+  list-style: none;
+  padding-left: 0;
+}
+.quiz-options li {
+  margin-bottom: 6px;
+}
+
+/* ----------------------------------
+   BUTTONS
+---------------------------------- */
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: 0 10px 25px rgba(88,28,135,0.3);
+}
+
+/* ----------------------------------
+   SCORE METER
+---------------------------------- */
+.score-box {
+  margin: 30px auto 0;
+  text-align: center;
+}
+.score-bar {
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 99px;
+  height: 16px;
+  overflow: hidden;
+}
+.score-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.4s ease;
+}
+
+/* ----------------------------------
+   CONFETTI
+---------------------------------- */
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 999;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+  <!-- HEADER -->
+  <header class="brand-row">
+    <div class="brand">
+      <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" class="brand-logo" />
+      <div class="course-meta">
+        <span>Clinical Medical Assistant</span>
+        <span>Campus & Distance Learning</span>
+      </div>
+    </div>
+    <span class="badge-mode">Interactive Memory Drill</span>
+  </header>
+
+  <h1>RACE & PASS Memory Mastery Drill</h1>
+  <p class="subtitle">
+    Strengthen your response skills for fire and extinguisher safety using
+    RACE and PASS — through memory cards, drag-to-order, and scenario challenges.
+  </p>
+
+  <!-- FLIP CARDS -->
+  <p class="section-label">Step 1</p>
+  <h2 class="section-title">Flip to Learn: RACE & PASS Terms</h2>
+
+  <div class="flip-grid">
+    <!-- RACE -->
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">R — Rescue</div>
+        <div class="flip-back">Move people away from danger first.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">A — Alarm</div>
+        <div class="flip-back">Pull the alarm, call emergency services.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">C — Contain</div>
+        <div class="flip-back">Close doors/windows to slow fire spread.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">E — Extinguish/Evacuate</div>
+        <div class="flip-back">Use extinguisher only if safe — otherwise evacuate.</div>
+      </div>
+    </div>
+
+    <!-- PASS -->
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">P — Pull</div>
+        <div class="flip-back">Remove safety pin from the extinguisher.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">A — Aim</div>
+        <div class="flip-back">Aim low at the base of the fire.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">S — Squeeze</div>
+        <div class="flip-back">Squeeze the handle to release agent.</div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">S — Sweep</div>
+        <div class="flip-back">Sweep side to side across flame base.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAG-ORDER -->
+  <p class="section-label" style="margin-top:28px;">Step 2</p>
+  <h2 class="section-title">Drag to Arrange the Steps (Test Your Recall)</h2>
+
+  <div>
+    <h3 style="margin-top:10px;">🔥 RACE Order</h3>
+    <div id="raceList" class="drag-container">
+      <div class="draggable-item" draggable="true">Rescue</div>
+      <div class="draggable-item" draggable="true">Contain</div>
+       <div class="draggable-item" draggable="true">Extinguish/Evacuate</div>
+      <div class="draggable-item" draggable="true">Alarm</div>
+      
+    </div>
+
+    <button class="btn" onclick="checkOrder('raceList',['Rescue','Alarm','Contain','Extinguish/Evacuate'])">Check RACE Order</button>
+    <p id="raceFeedback"></p>
+  </div>
+
+  <div style="margin-top:20px;">
+    <h3>🧯 PASS Order</h3>
+    <div id="passList" class="drag-container">
+      <div class="draggable-item" draggable="true">Pull</div>
+      <div class="draggable-item" draggable="true">Sweep</div>
+      <div class="draggable-item" draggable="true">Aim</div>
+      <div class="draggable-item" draggable="true">Squeeze</div>
+       <div class="draggable-item" draggable="true">Aim</div>
+     
+    </div>
+
+    <button class="btn" onclick="checkOrder('passList',['Pull','Aim','Squeeze','Sweep'])">Check PASS Order</button>
+    <p id="passFeedback"></p>
+  </div>
+
+  <!-- SCENARIO QUIZ -->
+  <p class="section-label" style="margin-top:30px;">Step 3</p>
+  <h2 class="section-title">Scenario Quick Check</h2>
+
+  <div id="quizArea">
+    <div class="quiz-item">
+      <p class="quiz-question">1. You discover a small fire starting in a trash bin. Your *very first* step is:</p>
+      <ul class="quiz-options">
+        <li><label><input type="radio" name="q1" value="a"> Alarm immediately.</label></li>
+        <li><label><input type="radio" name="q1" value="b"> Rescue anyone in immediate danger.</label></li>
+        <li><label><input type="radio" name="q1" value="c"> Look for an extinguisher.</label></li>
+      </ul>
+    </div>
+
+    <div class="quiz-item">
+      <p class="quiz-question">2. When using a fire extinguisher, the *very first* step is:</p>
+      <ul class="quiz-options">
+        <li><label><input type="radio" name="q2" value="a"> Aim at the flames.</label></li>
+        <li><label><input type="radio" name="q2" value="b"> Sweep side to side.</label></li>
+        <li><label><input type="radio" name="q2" value="c"> Pull the pin.</label></li>
+      </ul>
+    </div>
+
+    <div class="quiz-item">
+      <p class="quiz-question">3. A hallway fills with smoke. Which RACE step are you performing by closing doors?</p>
+      <ul class="quiz-options">
+        <li><label><input type="radio" name="q3" value="a"> Rescue</label></li>
+        <li><label><input type="radio" name="q3" value="b"> Contain</label></li>
+        <li><label><input type="radio" name="q3" value="c"> Extinguish/Evacuate</label></li>
+      </ul>
+    </div>
+
+    <button class="btn" onclick="checkQuiz()">Check Scenario Answers</button>
+    <p id="quizFeedback"></p>
+  </div>
+
+  <!-- SCORE METER -->
+  <div class="score-box">
+    <p style="margin-bottom:4px;font-weight:600;">Progress Score</p>
+    <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+  </div>
+</div>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas" class="confetti"></canvas>
+
+<script>
+/* ------------------------
+   FLIP CARDS
+------------------------ */
+function flipCard(card) {
+  card.classList.toggle("active");
+}
+
+/* ------------------------
+   DRAGGING
+------------------------ */
+let dragged;
+
+document.addEventListener("dragstart", e => {
+  dragged = e.target;
+  e.target.style.opacity = 0.5;
+});
+
+document.addEventListener("dragend", e => {
+  e.target.style.opacity = "";
+});
+
+document.addEventListener("dragover", e => {
+  e.preventDefault();
+  if (e.target.classList.contains("draggable-item")) {
+    e.target.classList.add("drag-over");
+  }
+});
+
+document.addEventListener("dragleave", e => {
+  if (e.target.classList.contains("draggable-item")) {
+    e.target.classList.remove("drag-over");
+  }
+});
+
+document.addEventListener("drop", e => {
+  e.preventDefault();
+  if (e.target.classList.contains("draggable-item")) {
+    e.target.classList.remove("drag-over");
+    let parent = e.target.parentNode;
+    if (dragged !== e.target) {
+      let items = [...parent.children];
+      let draggedIndex = items.indexOf(dragged);
+      let dropIndex = items.indexOf(e.target);
+      if (draggedIndex < dropIndex) {
+        parent.insertBefore(dragged, e.target.nextSibling);
+      } else {
+        parent.insertBefore(dragged, e.target);
+      }
+    }
+  }
+});
+
+/* ------------------------
+   CHECK ORDER
+------------------------ */
+let score = 0;
+
+function updateScore(amount) {
+  score += amount;
+  if (score > 100) score = 100;
+  document.getElementById("scoreFill").style.width = score + "%";
+  if (score === 100) launchConfetti();
+}
+
+function checkOrder(containerId, correctOrder) {
+  const container = document.getElementById(containerId);
+  const items = [...container.children].map(el => el.textContent.trim());
+  const feedbackId = containerId === "raceList" ? "raceFeedback" : "passFeedback";
+
+  if (JSON.stringify(items) === JSON.stringify(correctOrder)) {
+    document.getElementById(feedbackId).textContent = "Perfect order!";
+    updateScore(30);
+  } else {
+    document.getElementById(feedbackId).textContent = "Incorrect — try again.";
+  }
+}
+
+/* ------------------------
+   QUIZ CHECK
+------------------------ */
+function checkQuiz() {
+  const answers = { q1:"b", q2:"c", q3:"b" };
+  let correct = 0;
+
+  Object.keys(answers).forEach(q => {
+    const selected = document.querySelector(`input[name="${q}"]:checked`);
+    if (selected && selected.value === answers[q]) correct++;
+  });
+
+  if (correct === 3) {
+    document.getElementById("quizFeedback").textContent = "All correct — excellent!";
+    updateScore(40);
+  } else {
+    document.getElementById("quizFeedback").textContent = "Some answers need review.";
+  }
+}
+
+/* ------------------------
+   CONFETTI EFFECT
+------------------------ */
+function launchConfetti() {
+  const canvas = document.getElementById("confettiCanvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const numPieces = 120;
+
+  for (let i=0; i<numPieces; i++) {
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      w: 10 + Math.random()*10,
+      h: 10 + Math.random()*10,
+      color: `hsl(${Math.random()*360},100%,70%)`,
+      speed: 2 + Math.random()*3,
+      angle: Math.random()*2*Math.PI
+    });
+  }
+
+  function update() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    for (let p of pieces) {
+      p.y += p.speed;
+      p.angle += 0.02;
+      ctx.save();
+      ctx.translate(p.x + p.w/2, p.y + p.h/2);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+
+      if (p.y > canvas.height) p.y = -20;
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  update();
+
+  setTimeout(() => {
+    canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
+  }, 6000);
+}
+</script>
+
+</body>
+</html>
