@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Week 1 – OSHA Hazard Finder (Chapter 12)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d9b8ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #1e2030;
+      --color-muted: #727089;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      padding: 18px 14px 24px;
+      background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+    }
+
+    /* MAIN PAGE WRAPPER — MOBILE SAFE */
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 20px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 22px;
+      overflow: visible;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 18px 16px 20px;
+      }
+    }
+
+    /* Prevent overflow clipping */
+    .column {
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* BRANDING ROW */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      max-width: 36rem;
+      margin-bottom: 18px;
+      color: var(--color-muted);
+    }
+
+    .subtitle strong { color: var(--color-primary); }
+
+    /* HEADERS */
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-letter-spacing: 0.16em;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    /* CARD */
+    .card {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 14px 16px 16px;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), #fff);
+      min-width: 0;
+    }
+
+    .small {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+
+    /* HAZARD CLASSIFY LIST */
+    .hazard-class-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+      min-width: 0;
+    }
+
+    .hazard-class-item {
+      background: rgba(248, 250, 252, 0.9);
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 12px;
+      min-width: 0;
+    }
+
+    .hazard-select-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .hazard-select {
+      flex: 1 1 180px;
+      min-width: 0;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 6px 8px;
+      font-size: 0.84rem;
+    }
+
+    .hazard-feedback {
+      font-size: 0.8rem;
+      min-height: 1.1em;
+    }
+
+    .correct { color: #15803d; }
+    .incorrect { color: #b91c1c; }
+
+    /* ZONE GRID */
+    .zone-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    @media (max-width: 900px) {
+      .zone-grid { grid-template-columns: 1fr; }
+    }
+
+    .zone-item {
+      background: rgba(12, 10, 24, 0.96);
+      border-radius: 14px;
+      padding: 12px;
+      color: #e5e7eb;
+      min-width: 0; /* FIX ADDED */
+    }
+
+    .zone-tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      background: rgba(124, 58, 237, 0.2);
+      border-radius: 999px;
+      margin-bottom: 4px;
+      letter-spacing: 0.1em;
+    }
+
+    .zone-select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 6px 8px;
+      margin-top: 4px;
+      font-size: 0.84rem;
+      background: #0f172a;
+      color: #fff;
+      min-width: 0; /* FIX ADDED */
+    }
+
+    /* BUTTON */
+    .btn {
+      border-radius: 999px;
+      padding: 7px 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .feedback-line {
+      font-size: 0.82rem;
+      min-height: 1.1em;
+      margin-top: 6px;
+    }
+
+    .good { color: #15803d; }
+    .bad { color: #b91c1c; }
+
+    /* TEXTAREA */
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      padding: 10px 12px;
+      resize: vertical;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    /* RIGHT SIDE CARDS */
+    .side-card {
+      background: rgba(12, 10, 24, 0.96);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+      min-width: 0;
+      line-height: 1.7;
+    }
+
+    .side-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #a5b4fc;
+      border-radius: 999px;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .completion-card {
+      padding: 12px 14px;
+      border-radius: 18px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      background: rgba(248, 250, 252, 0.9);
+    }
+
+    /* REVEAL TEXT */
+    .reveal-link {
+      font-size: 0.82rem;
+      text-decoration: underline;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 8px;
+      color: #c4b5fd;
+    }
+
+    .reveal-text {
+      display: none;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="hazard-heading">
+
+    <!-- LEFT COLUMN -->
+    <section class="column">
+
+      <!-- Branding -->
+      <header class="brand-row">
+        <div class="brand">
+          <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" class="brand-logo" />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 1 — OSHA Hazard Finder (Chapter 12)</span>
+            </div>
+          </div>
+        </div>
+        <span class="badge-mode">Interactive OSHA Lab</span>
+      </header>
+
+      <h1 id="hazard-heading">OSHA Hazard Finder</h1>
+      <p class="subtitle">
+        Use this activity to practice spotting and classifying
+        <strong>OSHA-related hazards</strong> in a medical office.
+      </p>
+
+      <!-- ACTIVITY 1 -->
+      <section>
+        <p class="section-label">Activity 1</p>
+        <h2 class="section-title">Classify That Hazard</h2>
+
+        <div class="card">
+          <p class="small">Choose the best OSHA hazard category.</p>
+
+          <ul class="hazard-class-list">
+
+            <!-- Hazard 1 -->
+            <li class="hazard-class-item">
+              <p>1. Overfilled sharps container with needles protruding.</p>
+              <div class="hazard-select-row">
+                <select id="hc1" class="hazard-select" data-answer="bloodborne">
+                  <option value="">Select category</option>
+                  <option value="bloodborne">Bloodborne / Biological</option>
+                  <option value="chemical">Chemical</option>
+                  <option value="ergonomic">Ergonomic</option>
+                  <option value="physical">Physical</option>
+                  <option value="safety">Safety / Environmental</option>
+                </select>
+                <span id="hc1-feedback" class="hazard-feedback"></span>
+              </div>
+            </li>
+
+            <!-- Hazard 2 -->
+            <li class="hazard-class-item">
+              <p>2. Unlabeled disinfectant bottle stored next to drink cups.</p>
+              <div class="hazard-select-row">
+                <select id="hc2" class="hazard-select" data-answer="chemical">
+                  <option value="">Select category</option>
+                  <option value="bloodborne">Bloodborne / Biological</option>
+                  <option value="chemical">Chemical</option>
+                  <option value="ergonomic">Ergonomic</option>
+                  <option value="physical">Physical</option>
+                  <option value="safety">Safety / Environmental</option>
+                </select>
+                <span id="hc2-feedback" class="hazard-feedback"></span>
+              </div>
+            </li>
+
+            <!-- Hazard 3 -->
+            <li class="hazard-class-item">
+              <p>3. ECG machine cords stretched across dim hallway.</p>
+              <div class="hazard-select-row">
+                <select id="hc3" class="hazard-select" data-answer="physical">
+                  <option value="">Select category</option>
+                  <option value="bloodborne">Bloodborne / Biological</option>
+                  <option value="chemical">Chemical</option>
+                  <option value="ergonomic">Ergonomic</option>
+                  <option value="physical">Physical</option>
+                  <option value="safety">Safety / Environmental</option>
+                </select>
+                <span id="hc3-feedback" class="hazard-feedback"></span>
+              </div>
+            </li>
+
+            <!-- Hazard 4 -->
+            <li class="hazard-class-item">
+              <p>4. MA twisting to reach heavy charts overhead.</p>
+              <div class="hazard-select-row">
+                <select id="hc4" class="hazard-select" data-answer="ergonomic">
+                  <option value="">Select category</option>
+                  <option value="bloodborne">Bloodborne / Biological</option>
+                  <option value="chemical">Chemical</option>
+                  <option value="ergonomic">Ergonomic</option>
+                  <option value="physical">Physical</option>
+                  <option value="safety">Safety / Environmental</option>
+                </select>
+                <span id="hc4-feedback" class="hazard-feedback"></span>
+              </div>
+            </li>
+
+            <!-- Hazard 5 -->
+            <li class="hazard-class-item">
+              <p>5. Emergency exit blocked by stacked boxes.</p>
+              <div class="hazard-select-row">
+                <select id="hc5" class="hazard-select" data-answer="safety">
+                  <option value="">Select category</option>
+                  <option value="bloodborne">Bloodborne / Biological</option>
+                  <option value="chemical">Chemical</option>
+                  <option value="ergonomic">Ergonomic</option>
+                  <option value="physical">Physical</option>
+                  <option value="safety">Safety / Environmental</option>
+                </select>
+                <span id="hc5-feedback" class="hazard-feedback"></span>
+              </div>
+            </li>
+
+          </ul>
+
+          <button class="btn" onclick="checkHazardClasses()">Check classifications</button>
+          <div id="class-feedback" class="feedback-line"></div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY 2 -->
+      <section>
+        <p class="section-label">Activity 2</p>
+        <h2 class="section-title">Where Does This Hazard Live?</h2>
+
+        <div class="card">
+          <p class="small">Match each hazard to the clinic zone.</p>
+
+          <div class="zone-grid">
+            <!-- Zone A -->
+            <div class="zone-item">
+              <div class="zone-tag">Hazard A</div>
+              <p>Open blood collection tubes left on counter.</p>
+              <label>Most likely zone:</label>
+              <select id="z1" class="zone-select" data-answer="lab">
+                <option value="">Select zone</option>
+                <option value="reception">Reception / Waiting</option>
+                <option value="exam">Exam Room</option>
+                <option value="lab">Lab / Phlebotomy</option>
+                <option value="break">Break Room</option>
+                <option value="storage">Storage / Utility</option>
+              </select>
+            </div>
+
+            <!-- Zone B -->
+            <div class="zone-item">
+              <div class="zone-tag">Hazard B</div>
+              <p>Toys & magazines scattered across floor.</p>
+              <label>Most likely zone:</label>
+              <select id="z2" class="zone-select" data-answer="reception">
+                <option value="">Select zone</option>
+                <option value="reception">Reception / Waiting</option>
+                <option value="exam">Exam Room</option>
+                <option value="lab">Lab / Phlebotomy</option>
+                <option value="break">Break Room</option>
+                <option value="storage">Storage / Utility</option>
+              </select>
+            </div>
+
+            <!-- Zone C -->
+            <div class="zone-item">
+              <div class="zone-tag">Hazard C</div>
+              <p>Mop bucket left filled with water in hallway.</p>
+              <label>Most likely zone:</label>
+              <select id="z3" class="zone-select" data-answer="storage">
+                <option value="">Select zone</option>
+                <option value="reception">Reception / Waiting</option>
+                <option value="exam">Exam Room</option>
+                <option value="lab">Lab / Phlebotomy</option>
+                <option value="break">Break Room</option>
+                <option value="storage">Storage / Utility / Hallway</option>
+              </select>
+            </div>
+
+            <!-- Zone D -->
+            <div class="zone-item">
+              <div class="zone-tag">Hazard D</div>
+              <p>Oxygen tank not secured to wall or cart.</p>
+              <label>Most likely zone:</label>
+              <select id="z4" class="zone-select" data-answer="exam">
+                <option value="">Select zone</option>
+                <option value="reception">Reception / Waiting</option>
+                <option value="exam">Exam Room</option>
+                <option value="lab">Lab / Phlebotomy</option>
+                <option value="break">Break Room</option>
+                <option value="storage">Storage / Utility</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn" onclick="checkZones()">Check zones</button>
+          <div id="zone-feedback" class="feedback-line"></div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column">
+
+      <section>
+        <p class="section-label">Apply it</p>
+        <h2 class="section-title">Fix the Hazard – Your Plan</h2>
+
+        <div class="side-card">
+          <p class="side-subtitle">Reflection prompts</p>
+          <ul class="side-list">
+            <li><span class="dot"></span>Which two hazards are most likely in your workplace?</li>
+            <li><span class="dot"></span>Which OSHA standard applies to each?</li>
+            <li><span class="dot"></span>Who must you communicate with to fix it?</li>
+          </ul>
+
+          <textarea placeholder="Example: Check sharps fill lines each shift..."></textarea>
+
+          <span class="reveal-link" onclick="toggleReveal('example-fix')">Show an example hazard fix</span>
+          <div id="example-fix" class="reveal-text">
+            <strong>Example:</strong> “During our morning huddle I will remind staff that sharps
+            containers must be closed and replaced at the fill line. I’ll check each exam
+            room weekly and document replacements.”
+          </div>
+        </div>
+      </section>
+
+      <!-- OSHA CHECKLIST -->
+      <section>
+        <p class="section-label">Skill focus</p>
+        <h2 class="section-title">My OSHA Safety Checklist</h2>
+
+        <div class="side-card">
+          <ul class="checklist">
+            <li><input type="checkbox"> I can name three OSHA hazard categories.</li>
+            <li><input type="checkbox"> I know where SDS sheets & exposure plans are stored.</li>
+            <li><input type="checkbox"> I understand why hazards must always be reported.</li>
+            <li><input type="checkbox"> I can explain PPE & sharps disposal requirements.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- COMPLETION -->
+      <section>
+        <p class="section-label">Before you continue</p>
+        <h2 class="section-title">Ready to Move On?</h2>
+
+        <div class="completion-card">
+          <p>Before marking complete, make sure you:</p>
+          <ul class="side-list">
+            <li><span class="dot"></span>Classified each OSHA hazard.</li>
+            <li><span class="dot"></span>Matched hazards to clinic zones.</li>
+            <li><span class="dot"></span>Wrote at least one hazard correction step.</li>
+            <li><span class="dot"></span>Completed your OSHA checklist.</li>
+          </ul>
+        </div>
+      </section>
+
+    </aside>
+  </main>
+
+  <script>
+    function checkHazardClasses() {
+      const selects = document.querySelectorAll('.hazard-select');
+      let total = selects.length, correctCount = 0;
+
+      selects.forEach(sel => {
+        const answer = sel.dataset.answer;
+        const fb = document.getElementById(sel.id + "-feedback");
+        if (!sel.value) {
+          fb.textContent = "Choose a category.";
+          fb.className = "hazard-feedback";
+          return;
+        }
+        if (sel.value === answer) {
+          correctCount++;
+          fb.textContent = "Correct!";
+          fb.className = "hazard-feedback correct";
+        } else {
+          fb.textContent = "Not quite.";
+          fb.className = "hazard-feedback incorrect";
+        }
+      });
+
+      const overall = document.getElementById("class-feedback");
+      overall.textContent =
+        correctCount === total
+          ? "Excellent! All classifications correct."
+          : "Some were incorrect — try again.";
+      overall.className =
+        correctCount === total ? "feedback-line good" : "feedback-line bad";
+    }
+
+    function checkZones() {
+      const selects = document.querySelectorAll('.zone-select');
+      let total = selects.length, correctCount = 0;
+
+      selects.forEach(sel => {
+        if (sel.value === sel.dataset.answer && sel.value !== "") {
+          correctCount++;
+        }
+      });
+
+      const fb = document.getElementById("zone-feedback");
+      fb.textContent =
+        correctCount === total
+          ? "Great job — you matched all zones correctly!"
+          : "Some zones are incorrect — look again.";
+      fb.className =
+        correctCount === total ? "feedback-line good" : "feedback-line bad";
+    }
+
+    function toggleReveal(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
