@@ -28,7 +28,7 @@
       width: 100%;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      overflow-x: hidden; /* prevent sideways cut-off */
     }
 
     body {
@@ -38,11 +38,23 @@
       background:
         radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
       color: var(--color-text);
+      -webkit-text-size-adjust: 100%; /* iOS: stop weird zooming */
+    }
+
+    /* Make sure nothing can be wider than the viewport */
+    img,
+    main,
+    .page,
+    .column,
+    .card,
+    .side-card,
+    .completion-card {
+      max-width: 100%;
     }
 
     @media (max-width: 600px) {
       body {
-        padding: 16px;
+        padding: 12px; /* smaller body padding on phones */
       }
     }
 
@@ -58,13 +70,42 @@
       grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
       gap: 28px;
       position: relative;
-      /* IMPORTANT: no overflow:hidden here */
     }
 
     @media (max-width: 900px) {
       .page {
         grid-template-columns: 1fr;
         padding: 22px;
+      }
+    }
+
+    /* Stronger “phone mode” for very narrow screens (iPhone width and below) */
+    @media (max-width: 480px) {
+      body {
+        padding: 0; /* give every pixel to the content */
+      }
+
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 16px 14px 24px; /* tighter padding inside the card */
+      }
+
+      h1 {
+        font-size: 1.6rem; /* slightly smaller heading */
+      }
+
+      .section-title {
+        font-size: 1rem;
+      }
+
+      .subtitle,
+      .card p,
+      .small,
+      .side-card,
+      .checklist,
+      .side-list {
+        font-size: 0.9rem;
       }
     }
 
@@ -92,6 +133,7 @@
       height: 40px;
       width: auto;
       filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      max-width: 100%;
     }
 
     .course-meta {
