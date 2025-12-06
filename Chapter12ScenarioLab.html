@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Week 1 – Chapter 12 Scenario Lab: Safety &amp; Emergency Practices</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d9b8ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #1e2030;
+      --color-muted: #727089;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      padding: 18px 14px 24px;
+      background:
+        radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 24px;
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 20px 26px;
+      position: relative;
+      overflow: hidden;
+      /* MOBILE-FIRST: single column by default */
+    }
+
+    @media (min-width: 900px) {
+      .page {
+        display: grid;
+        grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+        gap: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 16px 12px 20px;
+      }
+    }
+
+    img,
+    .page,
+    .column,
+    .card,
+    .side-card,
+    .completion-card {
+      max-width: 100%;
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    /* Header / branding */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap; /* allow wrapping on small screens */
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      flex-shrink: 0;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: normal; /* allow wrapping */
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 36rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Sections */
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 14px 16px 16px;
+      margin-bottom: 14px;
+      background: linear-gradient(
+        135deg,
+        rgba(175, 75, 239, 0.06),
+        rgba(255, 255, 255, 0.98)
+      );
+      width: 100%;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    .small {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+
+    /* Hazards checklist */
+    .hazard-list {
+      list-style: none;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    .hazard-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .hazard-list input {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .feedback-line {
+      font-size: 0.82rem;
+      margin-top: 6px;
+      min-height: 1.1em;
+    }
+
+    .feedback-line.good {
+      color: #15803d;
+    }
+
+    .feedback-line.bad {
+      color: #b91c1c;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      margin-top: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+    }
+
+    /* Match-up activity */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .match-item {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(12, 10, 24, 0.96);
+      color: #e5e7eb;
+      font-size: 0.86rem;
+      width: 100%;
+    }
+
+    .match-item label {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+    }
+
+    .match-select {
+      width: 100%;
+      margin-top: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 6px 8px;
+      font-size: 0.84rem;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    .match-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(124, 58, 237, 0.2);
+      color: #c7d2fe;
+      margin-bottom: 4px;
+    }
+
+    /* Reflection / textarea */
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 10px 11px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      resize: vertical;
+      margin-top: 6px;
+    }
+
+    textarea:focus {
+      outline: 2px solid var(--color-primary-soft);
+      border-color: var(--color-primary);
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.86rem;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .checklist input {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Right column cards */
+    .side-card {
+      background: rgba(12, 10, 24, 0.96);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .side-card strong {
+      color: #ffffff;
+    }
+
+    .side-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .side-list {
+      list-style: none;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.86rem;
+    }
+
+    .side-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 7px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .completion-card {
+      border-radius: 18px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      padding: 12px 14px;
+      font-size: 0.84rem;
+      color: var(--color-muted);
+      background: rgba(248, 250, 252, 0.9);
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="scenario-heading">
+    <!-- LEFT COLUMN -->
+    <section class="column">
+      <header class="brand-row">
+        <div class="brand">
+          <img
+            src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+            alt="AlliedRx logo"
+            class="brand-logo"
+          />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 1 — Chapter 12 Scenario Lab</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Interactive Safety Review</span>
+      </header>
+
+      <h1 id="scenario-heading">Safety &amp; Emergency Practices in Action</h1>
+      <p class="subtitle">
+        Use this page to apply what you learned in
+        <strong>Chapter 12 – Safety and Emergency Practices</strong>.
+        Walk through common medical office scenarios and check your readiness to
+        prevent hazards and respond to emergencies.
+      </p>
+
+      <!-- ACTIVITY 1: HAZARD SCAN -->
+      <section aria-label="safety walk-through">
+        <p class="section-label">Activity 1</p>
+        <h2 class="section-title">Quick Safety Walk-Through</h2>
+
+        <div class="card">
+          <p class="small">
+            Imagine you are opening the clinic for the day. Select each item that
+            represents a <strong>safety hazard that must be corrected</strong> before
+            patients arrive.
+          </p>
+
+          <ul class="hazard-list">
+            <li>
+              <input type="checkbox" id="h1" data-correct="true" />
+              <label for="h1">
+                Electrical cords from the ECG machine are stretched across the hallway.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="h2" data-correct="false" />
+              <label for="h2">
+                The crash cart is locked, stocked, and the seal date is current.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="h3" data-correct="true" />
+              <label for="h3">
+                Biohazard sharps container is filled above the recommended line.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="h4" data-correct="true" />
+              <label for="h4">
+                Exit door is partially blocked by extra supply boxes.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="h5" data-correct="false" />
+              <label for="h5">
+                Fire extinguishers are mounted, visible, and inspection tags are up to date.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="h6" data-correct="true" />
+              <label for="h6">
+                A cleaning solution bottle is stored in a cabinet without a label.
+              </label>
+            </li>
+          </ul>
+
+          <button type="button" class="btn" onclick="checkHazards()">Check hazards</button>
+          <div id="hazard-feedback" class="feedback-line"></div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY 2: EMERGENCY MATCH-UP -->
+      <section aria-label="emergency response match up">
+        <p class="section-label">Activity 2</p>
+        <h2 class="section-title">Match the Emergency to the First Response</h2>
+
+        <div class="card">
+          <p class="small">
+            For each situation, choose the best <strong>first action</strong> for the
+            medical assistant. Think about office protocols, scope of practice,
+            and the need to activate EMS.
+          </p>
+
+          <div class="match-grid">
+            <div class="match-item">
+              <div class="match-tag">Scenario A</div>
+              <p>
+                A patient suddenly clutches their chest, becomes pale and sweaty,
+                and says, “I think I’m having a heart attack.”
+              </p>
+              <label for="m1">Best first response:</label>
+              <select id="m1" class="match-select" data-answer="b">
+                <option value="">Select an option</option>
+                <option value="a">Have the patient complete new forms while you notify the provider.</option>
+                <option value="b">Call for help, activate EMS per protocol, and begin basic life support steps if needed.</option>
+                <option value="c">Give the patient water and tell them to sit quietly until the provider is free.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario B</div>
+              <p>
+                A child in the waiting room begins coughing after eating a snack.
+                They are breathing but struggling and cannot speak in full sentences.
+              </p>
+              <label for="m2">Best first response:</label>
+              <select id="m2" class="match-select" data-answer="a">
+                <option value="">Select an option</option>
+                <option value="a">Stay with the child, assess airway and breathing, and be ready to initiate choking protocol.</option>
+                <option value="b">Ignore the episode unless the parent asks for help.</option>
+                <option value="c">Give the child something to drink to wash the food down.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario C</div>
+              <p>
+                A patient calls the office reporting new-onset slurred speech and
+                one-sided weakness that started 20 minutes ago.
+              </p>
+              <label for="m3">Best first response:</label>
+              <select id="m3" class="match-select" data-answer="c">
+                <option value="">Select an option</option>
+                <option value="a">Schedule the next available appointment this afternoon.</option>
+                <option value="b">Place the caller on hold while you check with billing.</option>
+                <option value="c">Use telephone triage protocol and direct the caller to activate EMS immediately for possible stroke.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario D</div>
+              <p>
+                You notice smoke coming from a wastebasket in an exam room.
+              </p>
+              <label for="m4">Best first response:</label>
+              <select id="m4" class="match-select" data-answer="a">
+                <option value="">Select an option</option>
+                <option value="a">Follow the facility fire plan (RACE), remove patients from danger, and activate the alarm.</option>
+                <option value="b">Finish rooming your current patient, then tell someone.</option>
+                <option value="c">Open the window and hope the smoke clears.</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="btn" onclick="checkMatch()">Check answers</button>
+          <div id="match-feedback" class="feedback-line"></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column" aria-label="planning and reflection">
+      <!-- EMERGENCY READINESS PLAN -->
+      <section>
+        <p class="section-label">Apply it</p>
+        <h2 class="section-title">My Emergency Readiness Plan</h2>
+
+        <div class="side-card">
+          <p class="side-subtitle">Reflection prompts</p>
+          <ul class="side-list">
+            <li>
+              <span class="dot"></span>
+              <span>
+                Which <strong>office hazards</strong> from Activity 1 are most likely in your current or future workplace?
+              </span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>
+                How will you keep emergency equipment (crash cart, oxygen, AED) ready for use on every shift?
+              </span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>
+                What steps will you take to stay calm and follow protocol when a real emergency happens?
+              </span>
+            </li>
+          </ul>
+
+          <label for="plan-notes" class="small" style="display:block;margin-top:10px;">
+            Jot down 2–3 actions that will help you feel confident handling emergencies:
+          </label>
+          <textarea id="plan-notes" placeholder="Example: Review fire plan this week; practice locating crash cart and AED at clinical site..."></textarea>
+        </div>
+      </section>
+
+      <!-- TELEPHONE TRIAGE MINI-CHECKLIST -->
+      <section>
+        <p class="section-label">Skill focus</p>
+        <h2 class="section-title">Telephone Triage &amp; Documentation</h2>
+
+        <div class="side-card">
+          <p>
+            Use this checklist to connect Chapter 12 content to
+            <strong>real-world telephone triage</strong>. Mark each item once you can
+            explain it without checking your book.
+          </p>
+
+          <ul class="checklist" style="margin-top:10px;">
+            <li>
+              <input type="checkbox" id="tt1" />
+              <label for="tt1">
+                I can describe which <strong>symptoms are life-threatening</strong> and require immediate EMS activation (e.g., chest pain, stroke signs, anaphylaxis).
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="tt2" />
+              <label for="tt2">
+                I know the key questions to ask during a triage call: <strong>who, what, when, where, how severe</strong>.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="tt3" />
+              <label for="tt3">
+                I can explain why the MA <strong>never gives a diagnosis</strong> over the phone and always follows written protocols.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="tt4" />
+              <label for="tt4">
+                I can list what must be documented after an emergency call (caller name, symptoms, advice given, provider notified, time).
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- COMPLETION REMINDER -->
+      <section>
+        <p class="section-label">Before you continue</p>
+        <h2 class="section-title">Ready to Move On?</h2>
+
+        <div class="completion-card">
+          <p>
+            Before you mark this activity complete, make sure you have:
+          </p>
+          <ul class="side-list" style="margin-top:8px;">
+            <li>
+              <span class="dot"></span>
+              <span>Selected the hazards in the <strong>Safety Walk-Through</strong> and reviewed the feedback.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Matched each emergency scenario with an appropriate <strong>first response</strong>.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Written at least one concrete step in your <strong>Emergency Readiness Plan</strong>.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Checked off the <strong>Telephone Triage &amp; Documentation</strong> items you feel confident about.</span>
+            </li>
+          </ul>
+          <p style="margin-top:8px;">
+            When you feel solid on these concepts, return to your course player
+            and continue to the next Chapter 12 activity.
+          </p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    function checkHazards() {
+      const checkboxes = document.querySelectorAll('.hazard-list input[type="checkbox"]');
+      let correct = 0;
+      let totalCorrect = 0;
+      let incorrectChecked = 0;
+
+      checkboxes.forEach(cb => {
+        const shouldBeChecked = cb.getAttribute('data-correct') === 'true';
+        if (shouldBeChecked) {
+          totalCorrect++;
+          if (cb.checked) correct++;
+        } else {
+          if (cb.checked) incorrectChecked++;
+        }
+      });
+
+      const feedback = document.getElementById('hazard-feedback');
+
+      if (correct === totalCorrect && incorrectChecked === 0) {
+        feedback.textContent = 'Nice work—those are the key hazards to address before opening the clinic.';
+        feedback.className = 'feedback-line good';
+      } else {
+        feedback.textContent = 'Some hazards are still missed or incorrectly selected. Review Chapter 12 safety guidelines and try again.';
+        feedback.className = 'feedback-line bad';
+      }
+    }
+
+    function checkMatch() {
+      const selects = document.querySelectorAll('.match-select');
+      let total = selects.length;
+      let correctCount = 0;
+
+      selects.forEach(sel => {
+        const answer = sel.getAttribute('data-answer');
+        if (sel.value === answer) {
+          correctCount++;
+        }
+      });
+
+      const feedback = document.getElementById('match-feedback');
+
+      if (correctCount === total) {
+        feedback.textContent = 'All scenarios matched correctly—your first-response decisions line up with Chapter 12 priorities.';
+        feedback.className = 'feedback-line good';
+      } else {
+        feedback.textContent = 'Some matches are off. Re-read the scenarios and think about airway, breathing, circulation, and when to activate EMS.';
+        feedback.className = 'feedback-line bad';
+      }
+    }
+  </script>
+</body>
+</html>
