@@ -17,22 +17,36 @@
       --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top left, #ffffff 0, #f1ecff 45%, #f7f5fb 100%);
       color: var(--color-text);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 24px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
     }
 
     .page {
       width: 100%;
       max-width: 1120px;
+      margin: 0 auto;
       background: #ffffff;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
@@ -43,144 +57,356 @@
     }
 
     @media (max-width: 900px) {
-      .page { grid-template-columns: 1fr; padding: 24px; }
+      .page {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
     }
 
-    .brand { display: flex; align-items: center; margin-bottom: 24px; }
-    .brand-logo { height: 48px; }
+    @media (max-width: 480px) {
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 24px;
+      }
+    }
+
+    section,
+    aside,
+    .page,
+    .visual,
+    .phone-wrapper {
+      max-width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+      max-width: 100%;
+    }
 
     .tag {
-      font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--color-accent); font-weight: 600; margin-bottom: 8px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
     h1 {
-      font-size: clamp(2.3rem, 3vw, 3rem);
+      font-size: clamp(2rem, 3vw, 2.6rem);
       line-height: 1.05;
       color: var(--color-primary);
       margin-bottom: 18px;
     }
 
-    .subtitle { font-size: 1.05rem; color: var(--color-muted); margin-bottom: 22px; }
+    .subtitle {
+      font-size: 1.02rem;
+      color: var(--color-muted);
+      margin-bottom: 22px;
+      max-width: 34rem;
+    }
 
-    .benefits { list-style: none; margin-bottom: 22px; }
+    .benefits {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+
     .benefits li {
-      display: flex; gap: 10px; margin-bottom: 10px; font-size: .98rem;
-    }
-    .bullet {
-      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
-      background: var(--color-primary-soft); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .8rem; font-weight: 700;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      align-items: flex-start;
     }
 
-    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+    .bullet {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--color-primary-soft);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
 
     .btn-store {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 16px; border-radius: 999px;
-      background: #000; color: #fff; text-decoration: none;
-      font-size: 0.9rem; font-weight: 500;
-      box-shadow: 0 6px 14px rgba(0,0,0,.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+    }
+
+    .btn-store span {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .btn-store small {
+      font-size: 0.65rem;
+      opacity: 0.8;
+    }
+
+    .btn-store strong {
+      font-size: 0.9rem;
     }
 
     .btn-outline {
-      border-radius: 999px; border: 1px solid var(--color-primary-soft);
-      padding: 9px 16px; background: rgba(175,75,239,.05);
-      color: var(--color-primary); font-size: .9rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-primary-soft);
+      padding: 9px 16px;
+      background: rgba(175, 75, 239, 0.05);
+      color: var(--color-primary);
+      font-size: 0.9rem;
       text-decoration: none;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .cta-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-store,
+      .btn-outline {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
     }
 
     .visual {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .visual {
+        align-items: center;
+      }
     }
 
     /* PHONE MOCKUP */
     .phone-wrapper {
-      width: min(280px, 80vw); aspect-ratio: 9/18;
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 9 / 18;
       background: linear-gradient(145deg, #151022, #332354);
-      padding: 10px; border-radius: 34px;
+      padding: 10px;
+      border-radius: 34px;
       box-shadow: 0 22px 55px rgba(20, 7, 54, 0.6);
     }
 
     .phone-inner {
       background: radial-gradient(circle at top, #ffffff 0, #f4e9ff 40%, #ece7ff 100%);
-      border-radius: 26px; height: 100%;
-      padding: 12px; display: flex; flex-direction: column;
+      border-radius: 26px;
+      height: 100%;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
     }
 
     .phone-header {
-      display: flex; justify-content: space-between; margin-bottom: 8px;
-      font-size: .7rem; color: var(--color-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.7rem;
+      color: var(--color-muted);
+      gap: 10px;
     }
 
-    .phone-logo { height: 20px; }
+    .phone-logo {
+      height: 20px;
+      width: auto;
+      max-width: 60px;
+    }
 
-    .phone-title { font-size: .8rem; font-weight: 600; }
+    .phone-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
 
     .phone-pill {
-      padding: 3px 8px; border-radius: 999px;
-      background: rgba(131,128,240,.12); font-size: .68rem; font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(131, 128, 240, 0.12);
+      font-size: 0.68rem;
+      font-weight: 600;
       color: var(--color-accent);
+      margin-top: 2px;
+      display: inline-block;
     }
 
-    .phone-main { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .phone-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
     .phone-body {
-      background: #fff; border-radius: 16px; padding: 10px;
-      box-shadow: 0 10px 20px rgba(71,35,113,.15);
+      background: #fff;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 10px 20px rgba(71, 35, 113, 0.15);
     }
 
-    .phone-body h3 { font-size: .86rem; color: var(--color-primary); margin-bottom: 4px; }
-    .phone-body p { font-size: .76rem; color: var(--color-muted); margin-bottom: 6px; }
+    .phone-body h3 {
+      font-size: 0.86rem;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
 
-    .phone-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .phone-body p {
+      font-size: 0.76rem;
+      color: var(--color-muted);
+      margin-bottom: 6px;
+    }
+
+    .phone-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
     .phone-tag {
-      padding: 3px 7px; border-radius: 999px;
-      background: rgba(175,75,239,.08); color: var(--color-primary);
-      font-size: .68rem; font-weight: 500;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      color: var(--color-primary);
+      font-size: 0.68rem;
+      font-weight: 500;
     }
 
-    .phone-card-row { display: flex; gap: 6px; margin-top: 6px; }
+    .phone-card-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
     .phone-card {
-      flex: 1; padding: 7px; border-radius: 12px;
-      background: linear-gradient(135deg, #af4bef, #8380f0); color: #fff;
-      font-size: .68rem;
+      flex: 1;
+      padding: 7px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #af4bef, #8380f0);
+      color: #fff;
+      font-size: 0.68rem;
+    }
+
+    .phone-card h4 {
+      font-size: 0.7rem;
+      margin-bottom: 2px;
+    }
+
+    .phone-card small {
+      font-size: 0.6rem;
     }
 
     .phone-progress {
-      margin-top: 4px; width: 100%; height: 4px; border-radius: 999px;
-      background: rgba(255,255,255,.3); overflow: hidden;
-    }
-    .phone-progress span {
-      display: block; width: 75%; height: 100%;
-      background: #00ffc3; border-radius: inherit;
+      margin-top: 4px;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.3);
+      overflow: hidden;
     }
 
-    .phone-list { margin-top: 6px; font-size: .68rem; }
-    .phone-list-item { display: flex; justify-content: space-between; padding-top: 3px; }
+    .phone-progress span {
+      display: block;
+      width: 75%;
+      height: 100%;
+      background: #00ffc3;
+      border-radius: inherit;
+    }
+
+    .phone-list {
+      margin-top: 6px;
+      font-size: 0.68rem;
+    }
+
+    .phone-list-item {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 3px;
+      gap: 6px;
+    }
+
     .pill-due {
-      padding: 2px 6px; border-radius: 999px;
-      background: rgba(131,128,240,.14); color: var(--color-accent);
-      font-size: .6rem; font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(131, 128, 240, 0.14);
+      color: var(--color-accent);
+      font-size: 0.6rem;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .phone-footer {
-      margin-top: 6px; padding-top: 6px;
-      border-top: 1px solid rgba(175,75,239,.18);
-      display: flex; justify-content: space-between; font-size: .62rem;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(175, 75, 239, 0.18);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62rem;
       color: var(--color-muted);
+      align-items: center;
     }
 
-    .nav { display: flex; gap: 10px; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; }
-    .nav-dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      background: #ddd; border: 1px solid #bbb;
+    .nav {
+      display: flex;
+      gap: 10px;
     }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 1px solid #bbb;
+    }
+
     .nav-item--active .nav-dot {
-      background: var(--color-primary); border-color: var(--color-primary);
+      background: var(--color-primary);
+      border-color: var(--color-primary);
     }
   </style>
 </head>
@@ -212,11 +438,17 @@
 
       <div class="cta-row">
         <a href="https://apps.apple.com/us/app/alliedrx/id1610718169" class="btn-store" target="_blank">
-          <span><small>Download on</small><strong>App Store</strong></span>
+          <span>
+            <small>Download on</small>
+            <strong>App Store</strong>
+          </span>
         </a>
 
         <a href="https://play.google.com/store/apps/details?id=com.alliedrxinstitute.school&pli=1" class="btn-store" target="_blank">
-          <span><small>Get it on</small><strong>Google Play</strong></span>
+          <span>
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </span>
         </a>
 
         <a href="#" class="btn-outline">Open in your browser</a>
@@ -226,7 +458,6 @@
     <aside class="visual">
       <div class="phone-wrapper">
         <div class="phone-inner">
-
           <header class="phone-header">
             <div>
               <div class="phone-title">Distance Learning CCMA</div>
@@ -235,14 +466,17 @@
             <img
               src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
               class="phone-logo"
+              alt="AlliedRx logo small"
             />
           </header>
 
           <div class="phone-main">
-
             <div class="phone-body">
               <h3>Today's Focus</h3>
-              <p>Continue the <strong>Health Record & Ophthalmology</strong> module and complete weekly notes.</p>
+              <p>
+                Continue the <strong>Health Record &amp; Ophthalmology</strong> module and
+                complete weekly notes.
+              </p>
 
               <div class="phone-tags">
                 <span class="phone-tag">Modules</span>
@@ -279,22 +513,29 @@
             <footer class="phone-footer">
               <div class="nav">
                 <div class="nav-item nav-item--active">
-                  <div class="nav-dot"></div><span>Home</span>
+                  <div class="nav-dot"></div>
+                  <span>Home</span>
                 </div>
-                <div class="nav-item"><div class="nav-dot"></div><span>Courses</span></div>
-                <div class="nav-item"><div class="nav-dot"></div><span>Inbox</span></div>
-                <div class="nav-item"><div class="nav-dot"></div><span>Profile</span></div>
+                <div class="nav-item">
+                  <div class="nav-dot"></div>
+                  <span>Courses</span>
+                </div>
+                <div class="nav-item">
+                  <div class="nav-dot"></div>
+                  <span>Inbox</span>
+                </div>
+                <div class="nav-item">
+                  <div class="nav-dot"></div>
+                  <span>Profile</span>
+                </div>
               </div>
               <div>3:01</div>
             </footer>
-
           </div>
         </div>
       </div>
 
-      <!-- QR REMOVED -->
       <div style="height: 20px;"></div>
-
     </aside>
   </main>
 </body>
