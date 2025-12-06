@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Week 1 Reading Assignments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header / branding */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Reading cards */
+    .reading-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .reading-card {
+      border-radius: 18px;
+      padding: 14px 16px 14px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      background: linear-gradient(
+        135deg,
+        rgba(175, 75, 239, 0.07),
+        rgba(255, 255, 255, 0.95)
+      );
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chapter-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.16);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      white-space: nowrap;
+    }
+
+    .chapter-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .chapter-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .chapter-text {
+      font-size: 0.84rem;
+      color: var(--color-muted);
+    }
+
+    .tag-time {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      font-size: 0.74rem;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    .reading-notes {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .reading-notes strong {
+      color: var(--color-text);
+    }
+
+    .checklist-heading {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 0.86rem;
+      color: var(--color-text);
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .check-dot {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: rgba(148, 163, 184, 0.9);
+      flex-shrink: 0;
+    }
+
+    /* Right column */
+    .section-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .side-heading {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: 10px;
+    }
+
+    .side-card {
+      background: rgba(12, 10, 24, 0.94);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      margin-bottom: 14px;
+    }
+
+    .side-card strong {
+      color: #ffffff;
+    }
+
+    .side-subheading {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin: 10px 0 10px;
+    }
+
+    .side-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .side-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .note-card {
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(15, 23, 42, 0.75);
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .note-card strong {
+      color: #fef3c7;
+    }
+
+    .complete-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="week1-reading-heading">
+    <!-- LEFT COLUMN: title + reading cards + checklist -->
+    <section class="column" aria-label="Week 1 reading assignments">
+      <header class="brand-row">
+        <div class="brand">
+          <img
+            src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+            alt="AlliedRx logo"
+            class="brand-logo"
+          />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 1 — Reading Assignments</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Online &amp; Self-Paced</span>
+      </header>
+
+      <h1 id="week1-reading-heading">Week 1 Reading</h1>
+      <p class="subtitle">
+        This week you’ll build your foundation in the Clinical Medical Assistant
+        program by reading <strong>two core textbook chapters</strong>. Complete
+        both readings before you move on to the next unit.
+      </p>
+
+      <div class="reading-grid">
+        <!-- Chapter 1 -->
+        <article class="reading-card">
+          <div class="chapter-pill">Chapter 1</div>
+          <div class="chapter-main">
+            <div class="chapter-title">
+              Competency-Based Education and the Medical Assistant Student
+            </div>
+            <p class="chapter-text">
+              Focus on what it means to learn in a <strong>competency-based</strong>
+              program, the expectations for you as a medical assistant student,
+              and how your skills will be measured throughout the course.
+            </p>
+          </div>
+          <div class="tag-time">Est. 45–60 min</div>
+        </article>
+
+        <!-- Chapter 12 -->
+        <article class="reading-card">
+          <div class="chapter-pill">Chapter 12</div>
+          <div class="chapter-main">
+            <div class="chapter-title">
+              Safety and Emergency Practices
+            </div>
+            <p class="chapter-text">
+              Pay attention to infection control, office safety, and
+              <strong>emergency response procedures</strong>. These concepts are
+              essential for protecting both patients and the healthcare team.
+            </p>
+          </div>
+          <div class="tag-time">Est. 45–60 min</div>
+        </article>
+      </div>
+
+      <p class="reading-notes">
+        <strong>Textbook:</strong>
+        Clinical Medical Assisting (Course Textbook)
+      </p>
+
+      <p class="checklist-heading">How to work through this reading</p>
+      <ul class="checklist">
+        <li>
+          <span class="check-dot">□</span>
+          <span>Skim each chapter’s headings, subheadings, and summary before you start reading in detail.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>As you read, highlight or note any key terms that are unfamiliar so you can look them up.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Pause after each major section and jot down 1–2 sentences about what you learned.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Complete any “Review Questions” or “Check Your Understanding” sections in the textbook.</span>
+        </li>
+      </ul>
+
+      <p class="complete-hint">
+        Once you have finished Chapter 1 and Chapter 12, you can mark this unit
+        as complete and move on to the next activity in the course.
+      </p>
+    </section>
+
+    <!-- RIGHT COLUMN: framing & why these readings matter -->
+    <aside class="column" aria-label="Why these readings are important">
+      <p class="section-tag">Why this matters</p>
+      <h2 class="side-heading">How this reading supports your success</h2>
+
+      <div class="side-card">
+        <p>
+          Chapter 1 helps you understand <strong>how this program is designed</strong>:
+          you’ll be evaluated on specific competencies, not just test scores. Knowing
+          this early will help you track your progress and focus your study time.
+        </p>
+        <p>
+          Chapter 12 shows how those competencies connect to
+          <strong>real-world safety and emergency practices</strong> in the clinic.
+          The habits you build here directly impact patient safety in every setting.
+        </p>
+
+        <p class="side-subheading">After completing this reading, you should be able to:</p>
+        <ul class="side-list">
+          <li>
+            <span class="dot"></span>
+            <span>Describe what competency-based education means for you as a medical assistant student.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Identify your role in maintaining a safe environment and responding to basic emergencies.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Recognize where these concepts will show up again in skills check-offs, simulations, and exams.</span>
+          </li>
+        </ul>
+
+        <div class="note-card">
+          <strong>Pro tip:</strong> Flag any sections on emergency procedures,
+          safety protocols, and competency lists—these are high-yield topics for
+          both skills validation and certification exam prep.
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
