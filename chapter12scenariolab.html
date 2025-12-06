@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Week 1 – Chapter 12 Scenario Lab: Safety &amp; Emergency Practices</title>
+  <title>Week 1 – Chapter 12 Scenario Lab: Safety & Emergency Practices</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -23,12 +24,6 @@
       padding: 0;
     }
 
-    html,
-    body {
-      width: 100%;
-      overflow-x: hidden;
-    }
-
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
@@ -36,13 +31,6 @@
       background:
         radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
       color: var(--color-text);
-      -webkit-text-size-adjust: 100%;
-    }
-
-    @media (min-width: 768px) {
-      body {
-        padding: 24px;
-      }
     }
 
     .page {
@@ -53,37 +41,18 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
       padding: 22px 20px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 22px;
       position: relative;
       overflow: hidden;
-      /* MOBILE-FIRST: single column by default */
     }
 
-    @media (min-width: 900px) {
+    @media (max-width: 900px) {
       .page {
-        display: grid;
-        grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
-        gap: 22px;
+        grid-template-columns: 1fr;
+        padding: 18px 16px 20px;
       }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 0;
-      }
-      .page {
-        border-radius: 0;
-        box-shadow: none;
-        padding: 16px 12px 20px;
-      }
-    }
-
-    img,
-    .page,
-    .column,
-    .card,
-    .side-card,
-    .completion-card {
-      max-width: 100%;
     }
 
     .column {
@@ -100,14 +69,13 @@
       gap: 14px;
       margin-bottom: 10px;
       flex-wrap: wrap;
-      width: 100%;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap; /* allow wrapping on small screens */
+      flex-wrap: nowrap;
     }
 
     .brand-logo {
@@ -115,7 +83,6 @@
       width: auto;
       max-width: 100%;
       filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
-      flex-shrink: 0;
     }
 
     .course-meta {
@@ -129,7 +96,6 @@
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: var(--color-muted);
-      white-space: normal;
     }
 
     .week-label {
@@ -161,17 +127,6 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--color-muted);
-      white-space: normal; /* allow wrapping */
-    }
-
-    @media (max-width: 480px) {
-      .brand-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .badge-mode {
-        margin-top: 6px;
-      }
     }
 
     h1 {
@@ -343,6 +298,13 @@
       margin-bottom: 4px;
     }
 
+    /* NEW: ensure scenario text inside dark boxes is light */
+    .match-item,
+    .match-item p,
+    .match-item label {
+      color: #e5e7eb;
+    }
+
     /* Reflection / textarea */
     textarea {
       width: 100%;
@@ -440,8 +402,8 @@
       width: 100%;
     }
   </style>
-</head>
 
+</head>
 <body>
   <main class="page" aria-labelledby="scenario-heading">
     <!-- LEFT COLUMN -->
@@ -454,7 +416,7 @@
             class="brand-logo"
           />
           <div class="course-meta">
-            <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+            <span class="course-name">Clinical Medical Assistant • Distance Learning</span>
             <div class="week-label">
               <span class="week-label-dot"></span>
               <span>Week 1 — Chapter 12 Scenario Lab</span>
@@ -462,264 +424,267 @@
           </div>
         </div>
 
-        <span class="badge-mode">Interactive Safety Review</span>
-      </header>
+```
+    <span class="badge-mode">Interactive Safety Review</span>
+  </header>
 
-      <h1 id="scenario-heading">Safety &amp; Emergency Practices in Action</h1>
-      <p class="subtitle">
-        Use this page to apply what you learned in
-        <strong>Chapter 12 – Safety and Emergency Practices</strong>.
-        Walk through common medical office scenarios and check your readiness to
-        prevent hazards and respond to emergencies.
+  <h1 id="scenario-heading">Safety &amp; Emergency Practices in Action</h1>
+  <p class="subtitle">
+    Use this page to apply what you learned in
+    <strong>Chapter 12 – Safety and Emergency Practices</strong>.
+    Walk through common medical office scenarios and check your readiness to
+    prevent hazards and respond to emergencies.
+  </p>
+
+  <!-- ACTIVITY 1: HAZARD SCAN -->
+  <section aria-label="safety walk-through">
+    <p class="section-label">Activity 1</p>
+    <h2 class="section-title">Quick Safety Walk-Through</h2>
+
+    <div class="card">
+      <p class="small">
+        Imagine you are opening the clinic for the day. Select each item that
+        represents a <strong>safety hazard that must be corrected</strong> before
+        patients arrive.
       </p>
 
-      <!-- ACTIVITY 1: HAZARD SCAN -->
-      <section aria-label="safety walk-through">
-        <p class="section-label">Activity 1</p>
-        <h2 class="section-title">Quick Safety Walk-Through</h2>
-
-        <div class="card">
-          <p class="small">
-            Imagine you are opening the clinic for the day. Select each item that
-            represents a <strong>safety hazard that must be corrected</strong> before
-            patients arrive.
-          </p>
-
-          <ul class="hazard-list">
-            <li>
-              <input type="checkbox" id="h1" data-correct="true" />
-              <label for="h1">
-                Electrical cords from the ECG machine are stretched across the hallway.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="h2" data-correct="false" />
-              <label for="h2">
-                The crash cart is locked, stocked, and the seal date is current.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="h3" data-correct="true" />
-              <label for="h3">
-                Biohazard sharps container is filled above the recommended line.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="h4" data-correct="true" />
-              <label for="h4">
-                Exit door is partially blocked by extra supply boxes.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="h5" data-correct="false" />
-              <label for="h5">
-                Fire extinguishers are mounted, visible, and inspection tags are up to date.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="h6" data-correct="true" />
-              <label for="h6">
-                A cleaning solution bottle is stored in a cabinet without a label.
-              </label>
-            </li>
-          </ul>
-
-          <button type="button" class="btn" onclick="checkHazards()">Check hazards</button>
-          <div id="hazard-feedback" class="feedback-line"></div>
-        </div>
-      </section>
-
-      <!-- ACTIVITY 2: EMERGENCY MATCH-UP -->
-      <section aria-label="emergency response match up">
-        <p class="section-label">Activity 2</p>
-        <h2 class="section-title">Match the Emergency to the First Response</h2>
-
-        <div class="card">
-          <p class="small">
-            For each situation, choose the best <strong>first action</strong> for the
-            medical assistant. Think about office protocols, scope of practice,
-            and the need to activate EMS.
-          </p>
-
-          <div class="match-grid">
-            <div class="match-item">
-              <div class="match-tag">Scenario A</div>
-              <p>
-                A patient suddenly clutches their chest, becomes pale and sweaty,
-                and says, “I think I’m having a heart attack.”
-              </p>
-              <label for="m1">Best first response:</label>
-              <select id="m1" class="match-select" data-answer="b">
-                <option value="">Select an option</option>
-                <option value="a">Have the patient complete new forms while you notify the provider.</option>
-                <option value="b">Call for help, activate EMS per protocol, and begin basic life support steps if needed.</option>
-                <option value="c">Give the patient water and tell them to sit quietly until the provider is free.</option>
-              </select>
-            </div>
-
-            <div class="match-item">
-              <div class="match-tag">Scenario B</div>
-              <p>
-                A child in the waiting room begins coughing after eating a snack.
-                They are breathing but struggling and cannot speak in full sentences.
-              </p>
-              <label for="m2">Best first response:</label>
-              <select id="m2" class="match-select" data-answer="a">
-                <option value="">Select an option</option>
-                <option value="a">Stay with the child, assess airway and breathing, and be ready to initiate choking protocol.</option>
-                <option value="b">Ignore the episode unless the parent asks for help.</option>
-                <option value="c">Give the child something to drink to wash the food down.</option>
-              </select>
-            </div>
-
-            <div class="match-item">
-              <div class="match-tag">Scenario C</div>
-              <p>
-                A patient calls the office reporting new-onset slurred speech and
-                one-sided weakness that started 20 minutes ago.
-              </p>
-              <label for="m3">Best first response:</label>
-              <select id="m3" class="match-select" data-answer="c">
-                <option value="">Select an option</option>
-                <option value="a">Schedule the next available appointment this afternoon.</option>
-                <option value="b">Place the caller on hold while you check with billing.</option>
-                <option value="c">Use telephone triage protocol and direct the caller to activate EMS immediately for possible stroke.</option>
-              </select>
-            </div>
-
-            <div class="match-item">
-              <div class="match-tag">Scenario D</div>
-              <p>
-                You notice smoke coming from a wastebasket in an exam room.
-              </p>
-              <label for="m4">Best first response:</label>
-              <select id="m4" class="match-select" data-answer="a">
-                <option value="">Select an option</option>
-                <option value="a">Follow the facility fire plan (RACE), remove patients from danger, and activate the alarm.</option>
-                <option value="b">Finish rooming your current patient, then tell someone.</option>
-                <option value="c">Open the window and hope the smoke clears.</option>
-              </select>
-            </div>
-          </div>
-
-          <button type="button" class="btn" onclick="checkMatch()">Check answers</button>
-          <div id="match-feedback" class="feedback-line"></div>
-        </div>
-      </section>
-    </section>
-
-    <!-- RIGHT COLUMN -->
-    <aside class="column" aria-label="planning and reflection">
-      <!-- EMERGENCY READINESS PLAN -->
-      <section>
-        <p class="section-label">Apply it</p>
-        <h2 class="section-title">My Emergency Readiness Plan</h2>
-
-        <div class="side-card">
-          <p class="side-subtitle">Reflection prompts</p>
-          <ul class="side-list">
-            <li>
-              <span class="dot"></span>
-              <span>
-                Which <strong>office hazards</strong> from Activity 1 are most likely in your current or future workplace?
-              </span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>
-                How will you keep emergency equipment (crash cart, oxygen, AED) ready for use on every shift?
-              </span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>
-                What steps will you take to stay calm and follow protocol when a real emergency happens?
-              </span>
-            </li>
-          </ul>
-
-          <label for="plan-notes" class="small" style="display:block;margin-top:10px;">
-            Jot down 2–3 actions that will help you feel confident handling emergencies:
+      <ul class="hazard-list">
+        <li>
+          <input type="checkbox" id="h1" data-correct="true" />
+          <label for="h1">
+            Electrical cords from the ECG machine are stretched across the hallway.
           </label>
-          <textarea id="plan-notes" placeholder="Example: Review fire plan this week; practice locating crash cart and AED at clinical site..."></textarea>
-        </div>
-      </section>
+        </li>
+        <li>
+          <input type="checkbox" id="h2" data-correct="false" />
+          <label for="h2">
+            The crash cart is locked, stocked, and the seal date is current.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="h3" data-correct="true" />
+          <label for="h3">
+            Biohazard sharps container is filled above the recommended line.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="h4" data-correct="true" />
+          <label for="h4">
+            Exit door is partially blocked by extra supply boxes.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="h5" data-correct="false" />
+          <label for="h5">
+            Fire extinguishers are mounted, visible, and inspection tags are up to date.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="h6" data-correct="true" />
+          <label for="h6">
+            A cleaning solution bottle is stored in a cabinet without a label.
+          </label>
+        </li>
+      </ul>
 
-      <!-- TELEPHONE TRIAGE MINI-CHECKLIST -->
-      <section>
-        <p class="section-label">Skill focus</p>
-        <h2 class="section-title">Telephone Triage &amp; Documentation</h2>
+      <button type="button" class="btn" onclick="checkHazards()">Check hazards</button>
+      <div id="hazard-feedback" class="feedback-line"></div>
+    </div>
+  </section>
 
-        <div class="side-card">
+  <!-- ACTIVITY 2: EMERGENCY MATCH-UP -->
+  <section aria-label="emergency response match up">
+    <p class="section-label">Activity 2</p>
+    <h2 class="section-title">Match the Emergency to the First Response</h2>
+
+    <div class="card">
+      <p class="small">
+        For each situation, choose the best <strong>first action</strong> for the
+        medical assistant. Think about office protocols, scope of practice,
+        and the need to activate EMS.
+      </p>
+
+      <div class="match-grid">
+        <div class="match-item">
+          <div class="match-tag">Scenario A</div>
           <p>
-            Use this checklist to connect Chapter 12 content to
-            <strong>real-world telephone triage</strong>. Mark each item once you can
-            explain it without checking your book.
+            A patient suddenly clutches their chest, becomes pale and sweaty,
+            and says, “I think I’m having a heart attack.”
           </p>
-
-          <ul class="checklist" style="margin-top:10px;">
-            <li>
-              <input type="checkbox" id="tt1" />
-              <label for="tt1">
-                I can describe which <strong>symptoms are life-threatening</strong> and require immediate EMS activation (e.g., chest pain, stroke signs, anaphylaxis).
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="tt2" />
-              <label for="tt2">
-                I know the key questions to ask during a triage call: <strong>who, what, when, where, how severe</strong>.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="tt3" />
-              <label for="tt3">
-                I can explain why the MA <strong>never gives a diagnosis</strong> over the phone and always follows written protocols.
-              </label>
-            </li>
-            <li>
-              <input type="checkbox" id="tt4" />
-              <label for="tt4">
-                I can list what must be documented after an emergency call (caller name, symptoms, advice given, provider notified, time).
-              </label>
-            </li>
-          </ul>
+          <label for="m1">Best first response:</label>
+          <select id="m1" class="match-select" data-answer="b">
+            <option value="">Select an option</option>
+            <option value="a">Have the patient complete new forms while you notify the provider.</option>
+            <option value="b">Call for help, activate EMS per protocol, and begin basic life support steps if needed.</option>
+            <option value="c">Give the patient water and tell them to sit quietly until the provider is free.</option>
+          </select>
         </div>
-      </section>
 
-      <!-- COMPLETION REMINDER -->
-      <section>
-        <p class="section-label">Before you continue</p>
-        <h2 class="section-title">Ready to Move On?</h2>
-
-        <div class="completion-card">
+        <div class="match-item">
+          <div class="match-tag">Scenario B</div>
           <p>
-            Before you mark this activity complete, make sure you have:
+            A child in the waiting room begins coughing after eating a snack.
+            They are breathing but struggling and cannot speak in full sentences.
           </p>
-          <ul class="side-list" style="margin-top:8px;">
-            <li>
-              <span class="dot"></span>
-              <span>Selected the hazards in the <strong>Safety Walk-Through</strong> and reviewed the feedback.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Matched each emergency scenario with an appropriate <strong>first response</strong>.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Written at least one concrete step in your <strong>Emergency Readiness Plan</strong>.</span>
-            </li>
-            <li>
-              <span class="dot"></span>
-              <span>Checked off the <strong>Telephone Triage &amp; Documentation</strong> items you feel confident about.</span>
-            </li>
-          </ul>
-          <p style="margin-top:8px;">
-            When you feel solid on these concepts, return to your course player
-            and continue to the next Chapter 12 activity.
-          </p>
+          <label for="m2">Best first response:</label>
+          <select id="m2" class="match-select" data-answer="a">
+            <option value="">Select an option</option>
+            <option value="a">Stay with the child, assess airway and breathing, and be ready to initiate choking protocol.</option>
+            <option value="b">Ignore the episode unless the parent asks for help.</option>
+            <option value="c">Give the child something to drink to wash the food down.</option>
+          </select>
         </div>
-      </section>
-    </aside>
+
+        <div class="match-item">
+          <div class="match-tag">Scenario C</div>
+          <p>
+            A patient calls the office reporting new-onset slurred speech and
+            one-sided weakness that started 20 minutes ago.
+          </p>
+          <label for="m3">Best first response:</label>
+          <select id="m3" class="match-select" data-answer="c">
+            <option value="">Select an option</option>
+            <option value="a">Schedule the next available appointment this afternoon.</option>
+            <option value="b">Place the caller on hold while you check with billing.</option>
+            <option value="c">Use telephone triage protocol and direct the caller to activate EMS immediately for possible stroke.</option>
+          </select>
+        </div>
+
+        <div class="match-item">
+          <div class="match-tag">Scenario D</div>
+          <p>
+            You notice smoke coming from a wastebasket in an exam room.
+          </p>
+          <label for="m4">Best first response:</label>
+          <select id="m4" class="match-select" data-answer="a">
+            <option value="">Select an option</option>
+            <option value="a">Follow the facility fire plan (RACE), remove patients from danger, and activate the alarm.</option>
+            <option value="b">Finish rooming your current patient, then tell someone.</option>
+            <option value="c">Open the window and hope the smoke clears.</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" class="btn" onclick="checkMatch()">Check answers</button>
+      <div id="match-feedback" class="feedback-line"></div>
+    </div>
+  </section>
+</section>
+
+<!-- RIGHT COLUMN -->
+<aside class="column" aria-label="planning and reflection">
+  <!-- EMERGENCY READINESS PLAN -->
+  <section>
+    <p class="section-label">Apply it</p>
+    <h2 class="section-title">My Emergency Readiness Plan</h2>
+
+    <div class="side-card">
+      <p class="side-subtitle">Reflection prompts</p>
+      <ul class="side-list">
+        <li>
+          <span class="dot"></span>
+          <span>
+            Which <strong>office hazards</strong> from Activity 1 are most likely in your current or future workplace?
+          </span>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <span>
+            How will you keep emergency equipment (crash cart, oxygen, AED) ready for use on every shift?
+          </span>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <span>
+            What steps will you take to stay calm and follow protocol when a real emergency happens?
+          </span>
+        </li>
+      </ul>
+
+      <label for="plan-notes" class="small" style="display:block;margin-top:10px;">
+        Jot down 2–3 actions that will help you feel confident handling emergencies:
+      </label>
+      <textarea id="plan-notes" placeholder="Example: Review fire plan this week; practice locating crash cart and AED at clinical site..."></textarea>
+    </div>
+  </section>
+
+  <!-- TELEPHONE TRIAGE MINI-CHECKLIST -->
+  <section>
+    <p class="section-label">Skill focus</p>
+    <h2 class="section-title">Telephone Triage &amp; Documentation</h2>
+
+    <div class="side-card">
+      <p>
+        Use this checklist to connect Chapter 12 content to
+        <strong>real-world telephone triage</strong>. Mark each item once you can
+        explain it without checking your book.
+      </p>
+
+      <ul class="checklist" style="margin-top:10px;">
+        <li>
+          <input type="checkbox" id="tt1" />
+          <label for="tt1">
+            I can describe which <strong>symptoms are life-threatening</strong> and require immediate EMS activation (e.g., chest pain, stroke signs, anaphylaxis).
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="tt2" />
+          <label for="tt2">
+            I know the key questions to ask during a triage call: <strong>who, what, when, where, how severe</strong>.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="tt3" />
+          <label for="tt3">
+            I can explain why the MA <strong>never gives a diagnosis</strong> over the phone and always follows written protocols.
+          </label>
+        </li>
+        <li>
+          <input type="checkbox" id="tt4" />
+          <label for="tt4">
+            I can list what must be documented after an emergency call (caller name, symptoms, advice given, provider notified, time).
+          </label>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- COMPLETION REMINDER -->
+  <section>
+    <p class="section-label">Before you continue</p>
+    <h2 class="section-title">Ready to Move On?</h2>
+
+    <div class="completion-card">
+      <p>
+        Before you mark this activity complete, make sure you have:
+      </p>
+      <ul class="side-list" style="margin-top:8px;">
+        <li>
+          <span class="dot"></span>
+          <span>Selected the hazards in the <strong>Safety Walk-Through</strong> and reviewed the feedback.</span>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <span>Matched each emergency scenario with an appropriate <strong>first response</strong>.</span>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <span>Written at least one concrete step in your <strong>Emergency Readiness Plan</strong>.</span>
+        </li>
+        <li>
+          <span class="dot"></span>
+          <span>Checked off the <strong>Telephone Triage &amp; Documentation</strong> items you feel confident about.</span>
+        </li>
+      </ul>
+      <p style="margin-top:8px;">
+        When you feel solid on these concepts, return to your course player
+        and continue to the next Chapter 12 activity.
+      </p>
+    </div>
+  </section>
+</aside>
+```
+
   </main>
 
   <script>
@@ -773,5 +738,7 @@
       }
     }
   </script>
+
 </body>
 </html>
+
