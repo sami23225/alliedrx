@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>3D Anatomical Model Viewer</title>
+  <title>3D Model Test</title>
   <style>
     body { margin: 0; overflow: hidden; }
     canvas { display: block; }
@@ -11,73 +11,56 @@
 </head>
 <body>
 
-<!-- Three.js core -->
+<!-- Three.js -->
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.155/build/three.min.js"></script>
 
-<!-- Orbit controls -->
+<!-- OrbitControls -->
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.155/examples/js/controls/OrbitControls.js"></script>
 
-<!-- STL loader -->
+<!-- STLLoader -->
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.155/examples/js/loaders/STLLoader.js"></script>
 
 <script>
-  // Create scene
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x111111);
 
-  // Camera
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.set(0, 0, 150);
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.set(0, 0, 50);
 
-  // Renderer
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Lighting
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
-  scene.add(hemi);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  // Basic lighting
+  const light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
+  scene.add(light);
 
   const dir = new THREE.DirectionalLight(0xffffff, 1);
   dir.position.set(50, 50, 100).normalize();
   scene.add(dir);
 
-  // Controls
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-  // Load STL model
+  // Load a CORS-safe sample STL model
   const loader = new THREE.STLLoader();
-
   loader.load(
-    "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D/main/assets/BodyParts3D_data/stl/FMA12521.stl",
+    "https://threejs.org/examples/models/stl/ascii/slotted_disk.stl",
     function (geometry) {
-      const material = new THREE.MeshStandardMaterial({
-        color: 0x88ccff,
-        metalness: 0.1,
-        roughness: 0.6
-      });
-
+      const material = new THREE.MeshStandardMaterial({ color: 0xffcc00 });
       const mesh = new THREE.Mesh(geometry, material);
+      mesh.scale.set(0.2, 0.2, 0.2);
       mesh.rotation.x = -Math.PI / 2;
-      mesh.scale.set(0.1, 0.1, 0.1);
-
       scene.add(mesh);
     },
     undefined,
-    function (err) {
-      console.error("Error loading STL:", err);
+    function (error) {
+      console.error("STL load error:", error);
     }
   );
 
-  // Animation loop
   function animate() {
     requestAnimationFrame(animate);
     controls.update();
@@ -85,13 +68,13 @@
   }
   animate();
 
-  // Handle resizing
   window.addEventListener("resize", () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
   });
 </script>
 
 </body>
 </html>
+
