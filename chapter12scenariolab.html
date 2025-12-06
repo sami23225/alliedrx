@@ -1,166 +1,506 @@
-<!-- LEFT COLUMN -->
-<section class="column">
-  <header class="brand-row">
-    <div class="brand">
-      <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
-           alt="AlliedRx logo" class="brand-logo" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Week 1 – Chapter 12 Scenario Lab: Safety & Emergency Practices</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <div class="course-meta">
-        <span class="course-name">Clinical Medical Assistant • Distance Learning</span>
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d9b8ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #1e2030;
+      --color-muted: #727089;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
 
-        <div class="week-label">
-          <span class="week-label-dot"></span>
-          <span>Week 1 — Chapter 12 Scenario Lab</span>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 18px 14px 24px;
+      background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 20px 26px;
+
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 22px;
+
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 18px 16px 20px;
+      }
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-width: 0; /* FIX TEXT OVERFLOW ON MOBILE */
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175,75,239,0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12,10,24,0.06);
+      border: 1px solid rgba(12,10,24,0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 36rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Section headers */
+    .section-label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    /* Cards */
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,0.06);
+      padding: 14px 16px 16px;
+      background: linear-gradient(135deg, rgba(175,75,239,0.06), #ffffff);
+      width: 100%;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .hazard-list,
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: .88rem;
+      margin-top: 10px;
+    }
+
+    .hazard-list li,
+    .checklist li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .feedback-line {
+      font-size: .82rem;
+      margin-top: 8px;
+      min-height: 1.1em;
+    }
+
+    .feedback-line.good { color: #15803d; }
+    .feedback-line.bad { color: #b91c1c; }
+
+    .btn {
+      margin-top: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: .05em;
+      font-size: .84rem;
+      box-shadow: 0 10px 25px rgba(88,28,135,0.35);
+    }
+
+    /* Match grid */
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    @media(max-width:900px) {
+      .match-grid { grid-template-columns: 1fr; }
+    }
+
+    .match-item {
+      background: rgba(12,10,24,0.96);
+      color: #e5e7eb;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: .86rem;
+    }
+
+    .match-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(124,58,237,0.25);
+      font-size: .7rem;
+      text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 4px;
+      color: #c7d2fe;
+    }
+
+    .match-select {
+      width: 100%;
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 6px 8px;
+      font-size: .84rem;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.7);
+      padding: 10px 11px;
+      margin-top: 6px;
+      font-size: .88rem;
+      resize: vertical;
+    }
+
+    .side-card {
+      background: rgba(12,10,24,0.96);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      line-height: 1.7;
+      width: 100%;
+    }
+
+    .completion-card {
+      border-radius: 18px;
+      border: 1px dashed rgba(148,163,184,0.7);
+      background: rgba(248,250,252,.9);
+      padding: 12px 14px;
+      font-size: .84rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="scenario-heading">
+
+    <!-- LEFT COLUMN -->
+    <section class="column">
+      <header class="brand-row">
+        <div class="brand">
+          <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" class="brand-logo" />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 1 — Chapter 12 Scenario Lab</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        <span class="badge-mode">Interactive Safety Review</span>
+      </header>
 
-    <span class="badge-mode">Interactive Safety Review</span>
-  </header>
+      <h1 id="scenario-heading">Safety & Emergency Practices in Action</h1>
 
-  <h1 id="scenario-heading">Safety & Emergency Practices in Action</h1>
+      <p class="subtitle">
+        Use this page to apply what you learned in
+        <strong>Chapter 12 – Safety and Emergency Practices</strong>.
+      </p>
 
-  <p class="subtitle">
-    Apply what you learned in <strong>Chapter 12 – Safety and Emergency Practices</strong>.
-    Walk through common scenarios and check your readiness.
-  </p>
+      <!-- ACTIVITY 1 -->
+      <section>
+        <p class="section-label">Activity 1</p>
+        <h2 class="section-title">Quick Safety Walk-Through</h2>
 
-  <!-- ACTIVITY 1 -->
-  <section>
-    <p class="section-label">Activity 1</p>
-    <h2 class="section-title">Quick Safety Walk-Through</h2>
+        <div class="card">
+          <p class="small">Select each item that represents a <strong>safety hazard</strong>.</p>
 
-    <div class="card">
-      <p class="small">Select each item that represents a <strong>safety hazard</strong>.</p>
+          <ul class="hazard-list">
+            <li><input type="checkbox" id="h1" data-correct="true"><label for="h1">ECG cords stretched across hallway.</label></li>
+            <li><input type="checkbox" id="h2" data-correct="false"><label for="h2">Crash cart locked & stocked.</label></li>
+            <li><input type="checkbox" id="h3" data-correct="true"><label for="h3">Sharps container overfilled.</label></li>
+            <li><input type="checkbox" id="h4" data-correct="true"><label for="h4">Exit door blocked.</label></li>
+            <li><input type="checkbox" id="h5" data-correct="false"><label for="h5">Fire extinguishers up to date.</label></li>
+            <li><input type="checkbox" id="h6" data-correct="true"><label for="h6">Cleaning solution missing label.</label></li>
+          </ul>
 
-      <ul class="hazard-list">
-        <li><input type="checkbox" id="h1" data-correct="true"><label for="h1">Electrical cords stretched across hallway.</label></li>
-        <li><input type="checkbox" id="h2" data-correct="false"><label for="h2">Crash cart locked & stocked.</label></li>
-        <li><input type="checkbox" id="h3" data-correct="true"><label for="h3">Sharps container overfilled.</label></li>
-        <li><input type="checkbox" id="h4" data-correct="true"><label for="h4">Exit door blocked by boxes.</label></li>
-        <li><input type="checkbox" id="h5" data-correct="false"><label for="h5">Fire extinguishers up to date.</label></li>
-        <li><input type="checkbox" id="h6" data-correct="true"><label for="h6">Cleaning solution bottle unlabeled.</label></li>
-      </ul>
-
-      <button class="btn" onclick="checkHazards()">Check hazards</button>
-      <div id="hazard-feedback" class="feedback-line"></div>
-    </div>
-  </section>
-
-  <!-- ACTIVITY 2 -->
-  <section>
-    <p class="section-label">Activity 2</p>
-    <h2 class="section-title">Match the Emergency</h2>
-
-    <div class="card">
-      <p class="small">Choose the best <strong>first action</strong> for each emergency.</p>
-
-      <div class="match-grid">
-
-        <div class="match-item">
-          <div class="match-tag">Scenario A</div>
-          <p>Patient clutching chest, pale, sweaty.</p>
-          <label for="m1">Best response:</label>
-          <select id="m1" class="match-select" data-answer="b">
-            <option value=""></option>
-            <option value="a">Have patient fill forms.</option>
-            <option value="b">Activate EMS, begin BLS.</option>
-            <option value="c">Give water and wait.</option>
-          </select>
+          <button class="btn" onclick="checkHazards()">Check hazards</button>
+          <div id="hazard-feedback" class="feedback-line"></div>
         </div>
+      </section>
 
-        <div class="match-item">
-          <div class="match-tag">Scenario B</div>
-          <p>Child coughing, struggling to breathe.</p>
-          <label for="m2">Best response:</label>
-          <select id="m2" class="match-select" data-answer="a">
-            <option value=""></option>
-            <option value="a">Assess airway; prepare choking protocol.</option>
-            <option value="b">Ignore unless parent asks.</option>
-            <option value="c">Give water.</option>
-          </select>
+      <!-- ACTIVITY 2 -->
+      <section>
+        <p class="section-label">Activity 2</p>
+        <h2 class="section-title">Match the Emergency</h2>
+
+        <div class="card">
+          <p class="small">Choose the correct <strong>first action</strong> for each.</p>
+
+          <div class="match-grid">
+
+            <div class="match-item">
+              <div class="match-tag">Scenario A</div>
+              <p>Patient clutches chest, pale, sweaty.</p>
+              <label for="m1">Best response:</label>
+              <select id="m1" class="match-select" data-answer="b">
+                <option value="">Select…</option>
+                <option value="a">Have patient complete forms.</option>
+                <option value="b">Activate EMS, begin BLS steps.</option>
+                <option value="c">Give water and wait.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario B</div>
+              <p>Child coughing, struggling to talk.</p>
+              <label for="m2">Best response:</label>
+              <select id="m2" class="match-select" data-answer="a">
+                <option value="">Select…</option>
+                <option value="a">Assess airway, prepare choking aid.</option>
+                <option value="b">Ignore unless asked.</option>
+                <option value="c">Give drink to wash food down.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario C</div>
+              <p>Caller reports sudden slurred speech + weakness.</p>
+              <label for="m3">Best response:</label>
+              <select id="m3" class="match-select" data-answer="c">
+                <option value="">Select…</option>
+                <option value="a">Schedule an appointment.</option>
+                <option value="b">Place caller on hold.</option>
+                <option value="c">Follow stroke protocol → EMS now.</option>
+              </select>
+            </div>
+
+            <div class="match-item">
+              <div class="match-tag">Scenario D</div>
+              <p>Smoke coming from wastebasket.</p>
+              <label for="m4">Best response:</label>
+              <select id="m4" class="match-select" data-answer="a">
+                <option value="">Select…</option>
+                <option value="a">Follow fire plan (RACE), remove patients, activate alarm.</option>
+                <option value="b">Finish rooming patient first.</option>
+                <option value="c">Open window and hope smoke clears.</option>
+              </select>
+            </div>
+
+          </div>
+
+          <button class="btn" onclick="checkMatch()">Check answers</button>
+          <div id="match-feedback" class="feedback-line"></div>
         </div>
+      </section>
 
-        <div class="match-item">
-          <div class="match-tag">Scenario C</div>
-          <p>Caller reports slurred speech + weakness.</p>
-          <label for="m3">Best response:</label>
-          <select id="m3" class="match-select" data-answer="c">
-            <option value=""></option>
-            <option value="a">Schedule appointment.</option>
-            <option value="b">Put caller on hold.</option>
-            <option value="c">Activate EMS — possible stroke.</option>
-          </select>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column">
+
+      <section>
+        <p class="section-label">Apply it</p>
+        <h2 class="section-title">My Emergency Readiness Plan</h2>
+
+        <div class="side-card">
+          <p class="side-subtitle">Reflection prompts</p>
+
+          <ul class="side-list">
+            <li><span class="dot"></span>Which hazards are most likely in your workplace?</li>
+            <li><span class="dot"></span>How will you ensure emergency equipment stays ready?</li>
+            <li><span class="dot"></span>How will you stay calm and follow protocol?</li>
+          </ul>
+
+          <textarea id="plan-notes" placeholder="Example: Review fire plan; locate AED weekly..."></textarea>
         </div>
+      </section>
 
-        <div class="match-item">
-          <div class="match-tag">Scenario D</div>
-          <p>Smoke coming from wastebasket.</p>
-          <label for="m4">Best response:</label>
-          <select id="m4" class="match-select" data-answer="a">
-            <option value=""></option>
-            <option value="a">Follow fire plan (RACE), remove patients.</option>
-            <option value="b">Finish rooming patient.</option>
-            <option value="c">Open window.</option>
-          </select>
+      <section>
+        <p class="section-label">Skill focus</p>
+        <h2 class="section-title">Telephone Triage & Documentation</h2>
+
+        <div class="side-card">
+          <p>Mark each item once you understand it confidently:</p>
+
+          <ul class="checklist">
+            <li><input type="checkbox" id="t1"><label for="t1">Identify life-threatening symptoms.</label></li>
+            <li><input type="checkbox" id="t2"><label for="t2">Know key triage questions.</label></li>
+            <li><input type="checkbox" id="t3"><label for="t3">Explain why MAs never diagnose by phone.</label></li>
+            <li><input type="checkbox" id="t4"><label for="t4">Document symptoms, advice, provider, and time.</label></li>
+          </ul>
         </div>
+      </section>
 
-      </div>
+      <section>
+        <p class="section-label">Before you continue</p>
+        <h2 class="section-title">Ready to Move On?</h2>
 
-      <button class="btn" onclick="checkMatch()">Check answers</button>
-      <div id="match-feedback" class="feedback-line"></div>
-    </div>
-  </section>
-</section>
+        <div class="completion-card">
+          <p>Make sure you have:</p>
+          <ul class="side-list">
+            <li><span class="dot"></span>Completed the hazard scan.</li>
+            <li><span class="dot"></span>Matched all emergency responses.</li>
+            <li><span class="dot"></span>Written part of your readiness plan.</li>
+            <li><span class="dot"></span>Checked off triage skills.</li>
+          </ul>
+        </div>
+      </section>
 
-<!-- RIGHT SIDEBAR -->
-<aside class="column">
+    </aside>
+  </main>
 
-  <section>
-    <p class="section-label">Apply it</p>
-    <h2 class="section-title">My Emergency Readiness Plan</h2>
+  <script>
+    function checkHazards() {
+      const checks = document.querySelectorAll('.hazard-list input');
+      let correct = 0, wrong = 0;
+      checks.forEach(cb => {
+        const should = cb.dataset.correct === 'true';
+        if (cb.checked && should) correct++;
+        if (cb.checked && !should) wrong++;
+      });
 
-    <div class="side-card">
-      <p class="side-subtitle">Reflection prompts</p>
+      const fb = document.getElementById('hazard-feedback');
+      if (correct === 4 && wrong === 0) {
+        fb.textContent = 'Great job — you identified all hazards correctly!';
+        fb.className = 'feedback-line good';
+      } else {
+        fb.textContent = 'Some selections are incorrect — try again.';
+        fb.className = 'feedback-line bad';
+      }
+    }
 
-      <ul class="side-list">
-        <li><span class="dot"></span>Which hazards are most likely in your workplace?</li>
-        <li><span class="dot"></span>How will you keep emergency equipment ready?</li>
-        <li><span class="dot"></span>How will you stay calm and follow protocol?</li>
-      </ul>
+    function checkMatch() {
+      const selects = document.querySelectorAll('.match-select');
+      let total = selects.length;
+      let correct = 0;
 
-      <label class="small" for="plan-notes">Write 2–3 actions:</label>
-      <textarea id="plan-notes"></textarea>
-    </div>
-  </section>
+      selects.forEach(sel => {
+        if (sel.value === sel.dataset.answer) correct++;
+      });
 
-  <section>
-    <p class="section-label">Skill focus</p>
-    <h2 class="section-title">Telephone Triage</h2>
+      const fb = document.getElementById('match-feedback');
 
-    <div class="side-card">
-      <ul class="side-list">
-        <li><span class="dot"></span>Identify life-threatening symptoms.</li>
-        <li><span class="dot"></span>Ask: who, what, when, where, severity.</li>
-        <li><span class="dot"></span>Never diagnose over the phone.</li>
-        <li><span class="dot"></span>Document caller, symptoms, advice.</li>
-      </ul>
-    </div>
-  </section>
+      if (correct === total) {
+        fb.textContent = 'Perfect — all emergency responses are correct!';
+        fb.className = 'feedback-line good';
+      } else {
+        fb.textContent = 'Some responses are incorrect — review and retry.';
+        fb.className = 'feedback-line bad';
+      }
+    }
+  </script>
 
-  <section>
-    <p class="section-label">Before you continue</p>
-    <h2 class="section-title">Ready to Move On?</h2>
-
-    <div class="completion-card">
-      <ul class="side-list">
-        <li><span class="dot"></span>Completed the Safety Walk-Through.</li>
-        <li><span class="dot"></span>Matched all emergency responses.</li>
-        <li><span class="dot"></span>Added notes to your plan.</li>
-        <li><span class="dot"></span>Reviewed triage checklist.</li>
-      </ul>
-      <p style="margin-top:8px;">You may continue to the next activity.</p>
-    </div>
-  </section>
-
-</aside>
+</body>
+</html>
