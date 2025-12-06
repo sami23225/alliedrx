@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Week 1 – Chapter 12 Telephone Triage Sorting Activity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d9b8ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #1e2030;
+      --color-muted: #727089;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      padding: 18px 14px 24px;
+      background:
+        radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 20px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 22px;
+      position: relative;
+      overflow: visible; /* important: let content show on small screens */
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 18px 16px 20px;
+      }
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-width: 0; /* prevents text from forcing horizontal scroll */
+    }
+
+    /* Header / branding */
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: nowrap;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 36rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Sections */
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 14px 16px 16px;
+      margin-bottom: 14px;
+      background: linear-gradient(
+        135deg,
+        rgba(175, 75, 239, 0.06),
+        rgba(255, 255, 255, 0.98)
+      );
+      width: 100%;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    .small {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      margin-top: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+      transition: transform 0.05s ease, box-shadow 0.05s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+    }
+
+    .feedback-line {
+      font-size: 0.82rem;
+      margin-top: 6px;
+      min-height: 1.1em;
+    }
+
+    .feedback-line.good {
+      color: #15803d;
+    }
+
+    .feedback-line.bad {
+      color: #b91c1c;
+    }
+
+    /* Sorting activity */
+    .sort-key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+    }
+
+    .sort-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+      background: rgba(248, 250, 252, 0.9);
+    }
+
+    .sort-pill strong {
+      color: var(--color-primary);
+    }
+
+    .sort-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .sort-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sort-item {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.86rem;
+      width: 100%;
+    }
+
+    .sort-item-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .sort-item p {
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    .sort-label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .sort-select {
+      width: 100%;
+      margin-top: 4px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      padding: 6px 8px;
+      font-size: 0.84rem;
+      background: #ffffff;
+      color: var(--color-text);
+    }
+
+    /* Reflection / textarea */
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 10px 11px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      resize: vertical;
+      margin-top: 6px;
+    }
+
+    textarea:focus {
+      outline: 2px solid var(--color-primary-soft);
+      border-color: var(--color-primary);
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.86rem;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .checklist input {
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Right column cards */
+    .side-card {
+      background: rgba(12, 10, 24, 0.96);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .side-card strong {
+      color: #ffffff;
+    }
+
+    .side-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .side-list {
+      list-style: none;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.86rem;
+    }
+
+    .side-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 7px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .completion-card {
+      border-radius: 18px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      padding: 12px 14px;
+      font-size: 0.84rem;
+      color: var(--color-muted);
+      background: rgba(248, 250, 252, 0.9);
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-labelledby="triage-heading">
+    <!-- LEFT COLUMN -->
+    <section class="column">
+      <header class="brand-row">
+        <div class="brand">
+          <img
+            src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+            alt="AlliedRx logo"
+            class="brand-logo"
+          />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 1 — Chapter 12 Telephone Triage Sorting</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Interactive Skill Lab</span>
+      </header>
+
+      <h1 id="triage-heading">Telephone Triage Sorting Activity</h1>
+      <p class="subtitle">
+        Practice sorting real-world <strong>telephone triage calls</strong> by urgency.
+        Use what you learned in Chapter 12 – Emergency Readiness and Telephone Triage
+        to decide when to activate EMS, schedule an urgent visit, or give routine advice.
+      </p>
+
+      <!-- ACTIVITY: SORT THE CALLS -->
+      <section aria-label="sort telephone triage calls">
+        <p class="section-label">Activity 1</p>
+        <h2 class="section-title">Sort the Calls by Priority</h2>
+
+        <div class="card">
+          <p class="small">
+            Read each caller scenario and choose the <strong>best triage level</strong>.
+            Focus on red-flag symptoms, time of onset, and your role as the medical assistant.
+          </p>
+
+          <div class="sort-key" aria-label="triage levels key">
+            <span class="sort-pill"><strong>A.</strong> Call 911 / EMS now</span>
+            <span class="sort-pill"><strong>B.</strong> Have provider/nurse speak with caller immediately</span>
+            <span class="sort-pill"><strong>C.</strong> Schedule same-day urgent office visit</span>
+            <span class="sort-pill"><strong>D.</strong> Give routine advice and schedule non-urgent visit / message</span>
+          </div>
+
+          <div class="sort-grid">
+            <div class="sort-item">
+              <div class="sort-item-title">Call 1</div>
+              <p>
+                A 58-year-old patient reports sudden chest pressure, shortness of breath,
+                and sweating that started 5 minutes ago while walking up stairs.
+              </p>
+              <label for="s1" class="sort-label">Best triage level:</label>
+              <select id="s1" class="sort-select" data-answer="a">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+
+            <div class="sort-item">
+              <div class="sort-item-title">Call 2</div>
+              <p>
+                A parent says their 3-year-old has had a low-grade fever and runny nose
+                for two days, but the child is drinking fluids and playing.
+              </p>
+              <label for="s2" class="sort-label">Best triage level:</label>
+              <select id="s2" class="sort-select" data-answer="d">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+
+            <div class="sort-item">
+              <div class="sort-item-title">Call 3</div>
+              <p>
+                A patient with a history of diabetes reports new numbness and tingling
+                in both feet over the last week, with no injury.
+              </p>
+              <label for="s3" class="sort-label">Best triage level:</label>
+              <select id="s3" class="sort-select" data-answer="c">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+
+            <div class="sort-item">
+              <div class="sort-item-title">Call 4</div>
+              <p>
+                A 72-year-old patient suddenly develops slurred speech and weakness
+                on the right side that began 15 minutes ago.
+              </p>
+              <label for="s4" class="sort-label">Best triage level:</label>
+              <select id="s4" class="sort-select" data-answer="a">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+
+            <div class="sort-item">
+              <div class="sort-item-title">Call 5</div>
+              <p>
+                A patient who had a minor ankle sprain yesterday reports increasing
+                swelling and pain, but they can still walk with discomfort.
+              </p>
+              <label for="s5" class="sort-label">Best triage level:</label>
+              <select id="s5" class="sort-select" data-answer="c">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+
+            <div class="sort-item">
+              <div class="sort-item-title">Call 6</div>
+              <p>
+                A patient on a new blood pressure medication reports feeling very dizzy
+                and light-headed when standing, and almost fainted this morning.
+              </p>
+              <label for="s6" class="sort-label">Best triage level:</label>
+              <select id="s6" class="sort-select" data-answer="b">
+                <option value="">Select A, B, C, or D</option>
+                <option value="a">A. Call 911 / EMS now</option>
+                <option value="b">B. Provider/nurse speaks with caller immediately</option>
+                <option value="c">C. Same-day urgent office visit</option>
+                <option value="d">D. Routine advice / non-urgent visit</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" class="btn" onclick="checkSorting()">Check my sorting</button>
+          <div id="sort-feedback" class="feedback-line"></div>
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column" aria-label="triage scripting and reflection">
+      <!-- TRIAGE SCRIPT PRACTICE -->
+      <section>
+        <p class="section-label">Apply it</p>
+        <h2 class="section-title">Triage Script Practice</h2>
+
+        <div class="side-card">
+          <p class="side-subtitle">Practice using a structured script</p>
+          <p>
+            Use this space to draft a brief <strong>telephone triage script</strong>.
+            Include how you will introduce yourself, confirm the caller’s identity,
+            ask key assessment questions, and close the call.
+          </p>
+
+          <ul class="side-list" style="margin-top:10px;">
+            <li>
+              <span class="dot"></span>
+              <span>How will you quickly verify the <strong>patient’s name, DOB, and call-back number</strong>?</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Which questions will you ask to clarify <strong>who, what, when, where, and how severe</strong> the problem is?</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>What exact words will you use when you <strong>tell someone to call 911</strong> or go to the ED?</span>
+            </li>
+          </ul>
+
+          <label for="script-notes" class="small" style="display:block;margin-top:10px;">
+            Draft your script or key phrases here:
+          </label>
+          <textarea id="script-notes" placeholder="Example: 'Thank you for calling AlliedRx Clinic, this is ____ the medical assistant. Can I get your full name and date of birth? Tell me exactly what is happening right now...'"></textarea>
+        </div>
+      </section>
+
+      <!-- DOCUMENTATION CHECKLIST -->
+      <section>
+        <p class="section-label">Skill focus</p>
+        <h2 class="section-title">Documentation &amp; Safety Checklist</h2>
+
+        <div class="side-card">
+          <p>
+            Check off each item once you can explain it in your own words, without
+            looking at the textbook.
+          </p>
+
+          <ul class="checklist" style="margin-top:10px;">
+            <li>
+              <input type="checkbox" id="c1" />
+              <label for="c1">
+                I can list the <strong>minimum information</strong> that must be documented for every triage call
+                (caller ID, symptoms, onset, advice given, provider notified, time).
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="c2" />
+              <label for="c2">
+                I can explain why medical assistants <strong>never diagnose</strong> over the phone and always
+                follow written protocols and provider orders.
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="c3" />
+              <label for="c3">
+                I can identify at least <strong>three red-flag symptoms</strong> that require immediate EMS
+                activation (e.g., chest pain, stroke signs, trouble breathing, anaphylaxis).
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="c4" />
+              <label for="c4">
+                I know how to document when a caller <strong>refuses recommended care</strong> and when to
+                notify the provider or supervisor.
+              </label>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- COMPLETION REMINDER -->
+      <section>
+        <p class="section-label">Before you continue</p>
+        <h2 class="section-title">Ready to Move On?</h2>
+
+        <div class="completion-card">
+          <p>
+            Before you mark this activity complete, make sure you have:
+          </p>
+          <ul class="side-list" style="margin-top:8px;">
+            <li>
+              <span class="dot"></span>
+              <span>Sorted each call into the correct <strong>triage level</strong> and checked your answers.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Written at least a few lines of your <strong>telephone triage script</strong>.</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Reviewed and checked off the <strong>Documentation &amp; Safety Checklist</strong>.</span>
+            </li>
+          </ul>
+          <p style="margin-top:8px;">
+            When you feel confident, return to your course player and continue
+            to the next Chapter 12 activity.
+          </p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    function checkSorting() {
+      const selects = document.querySelectorAll('.sort-select');
+      let total = selects.length;
+      let correctCount = 0;
+      let unanswered = 0;
+
+      selects.forEach(sel => {
+        const answer = sel.getAttribute('data-answer');
+        if (!sel.value) {
+          unanswered++;
+        } else if (sel.value === answer) {
+          correctCount++;
+        }
+      });
+
+      const feedback = document.getElementById('sort-feedback');
+
+      if (unanswered > 0) {
+        feedback.textContent = 'Answer each call before checking your sorting.';
+        feedback.className = 'feedback-line bad';
+        return;
+      }
+
+      if (correctCount === total) {
+        feedback.textContent =
+          'Excellent! You matched every call to the appropriate triage level. Your priorities line up with Chapter 12 guidelines.';
+        feedback.className = 'feedback-line good';
+      } else {
+        feedback.textContent =
+          'Some calls are sorted into the wrong level. Look again at red-flag symptoms, onset time, and when EMS must be activated.';
+        feedback.className = 'feedback-line bad';
+      }
+    }
+  </script>
+</body>
+</html>
