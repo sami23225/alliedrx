@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Build-Your-Own Emergency Action Plan — Interactive Drag Builder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+/* ----------------------------------
+   THEME + RESET
+---------------------------------- */
+
+:root {
+  --color-primary: #af4bef;
+  --color-primary-soft: #d9b8ff;
+  --color-accent: #8380f0;
+  --color-bg: #f7f5fb;
+  --color-text: #1e2030;
+  --color-muted: #727089;
+  --radius-lg: 24px;
+  --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+  padding: 22px;
+  color: var(--color-text);
+}
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 32px 26px 40px;
+  box-shadow: var(--shadow-soft);
+  min-width: 0; /* 🔥 FIX */
+}
+
+/* ----------------------------------
+   Header Branding
+---------------------------------- */
+
+.brand-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  min-width: 0; /* 🔥 FIX */
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0; /* 🔥 FIX */
+}
+
+.brand-logo {
+  height: 48px;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+}
+
+.course-meta span {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.badge-mode {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(12,10,24,0.08);
+  border: 1px solid rgba(12,10,24,0.1);
+  font-size: 0.74rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+h1 {
+  font-size: clamp(1.9rem,3vw,2.3rem);
+  margin: 18px 0 8px;
+  color: var(--color-primary);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--color-muted);
+  margin-bottom: 28px;
+  max-width: 42rem;
+}
+
+/* ----------------------------------
+   DRAG ELEMENTS PANEL
+---------------------------------- */
+
+.builder-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  min-width: 0; /* 🔥 FIX */
+}
+
+@media (max-width: 900px) {
+  .builder-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.drag-items-panel {
+  background: rgba(175,75,239,0.06);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 20px;
+  padding: 16px 18px;
+  min-width: 0; /* 🔥 FIX */
+}
+
+.drag-items-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-primary);
+}
+
+.draggable {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(15,23,42,0.12);
+  margin-bottom: 8px;
+  cursor: grab;
+  transition: transform 0.1s ease;
+}
+
+.draggable:active {
+  transform: scale(0.98);
+}
+
+/* Shake animation for wrong drop */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+/* ----------------------------------
+   DROP ZONES
+---------------------------------- */
+
+.plan-section {
+  background: rgba(12,10,24,0.9);
+  color: #e5e7eb;
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  min-height: 140px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  min-width: 0; /* 🔥 FIX */
+}
+
+.plan-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #c4b5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.drop-zone {
+  min-height: 90px;
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 14px;
+  padding: 10px;
+  min-width: 0; /* 🔥 FIX */
+}
+
+.drop-zone .dropped {
+  background: rgba(255,255,255,0.15);
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  font-size: 0.92rem;
+}
+
+/* Highlight when hovering */
+.drop-zone.hovered {
+  border-color: var(--color-primary-soft);
+}
+
+/* ----------------------------------
+   PREVIEW BOX
+---------------------------------- */
+
+.preview-box {
+  margin-top: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid rgba(15,23,42,0.10);
+  min-width: 0; /* 🔥 FIX */
+}
+
+.preview-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+/* ----------------------------------
+   BUTTONS
+---------------------------------- */
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 8px;
+  box-shadow: 0 6px 20px rgba(88,28,135,0.3);
+}
+
+.btn-row {
+  margin-top: 18px;
+}
+
+/* ----------------------------------
+   CONFETTI CANVAS
+---------------------------------- */
+
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="brand-row">
+    <div class="brand">
+      <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" class="brand-logo"/>
+      <div class="course-meta">
+        <span>Clinical Medical Assistant</span>
+        <span>Campus & Distance Learning</span>
+      </div>
+    </div>
+    <span class="badge-mode">Emergency Action Builder</span>
+  </header>
+
+  <h1>Build-Your-Own Emergency Action Plan</h1>
+  <p class="subtitle">
+    Drag items into each emergency category below.  
+    Items will **auto-snap to correct categories**, or **shake** if incorrect.  
+    Your custom Emergency Action Plan updates in real time.
+  </p>
+
+  <!-- BUILDER LAYOUT -->
+  <div class="builder-row">
+
+    <!-- LEFT: DRAG ITEMS -->
+    <div class="drag-items-panel">
+      <div class="drag-items-title">Available Actions</div>
+
+      <!-- FIRE -->
+      <div class="draggable" draggable="true" data-category="fire">Activate RACE protocol</div>
+      <div class="draggable" draggable="true" data-category="fire">Identify primary evacuation exits</div>
+      <div class="draggable" draggable="true" data-category="fire">Use extinguisher only if safe</div>
+      <div class="draggable" draggable="true" data-category="fire">Close doors to contain smoke</div>
+
+      <!-- MEDICAL -->
+      <div class="draggable" draggable="true" data-category="medical">Call EMS immediately</div>
+      <div class="draggable" draggable="true" data-category="medical">Retrieve AED</div>
+      <div class="draggable" draggable="true" data-category="medical">Begin CPR if indicated</div>
+      <div class="draggable" draggable="true" data-category="medical">Assist with oxygen & crash cart</div>
+
+      <!-- HAZMAT -->
+      <div class="draggable" draggable="true" data-category="hazmat">Consult SDS for the chemical</div>
+      <div class="draggable" draggable="true" data-category="hazmat">Don appropriate PPE</div>
+      <div class="draggable" draggable="true" data-category="hazmat">Isolate contaminated area</div>
+      <div class="draggable" draggable="true" data-category="hazmat">Report exposure to supervisor</div>
+
+      <!-- COMMUNICATION -->
+      <div class="draggable" draggable="true" data-category="comm">Notify chain of command</div>
+      <div class="draggable" draggable="true" data-category="comm">Document patient condition</div>
+      <div class="draggable" draggable="true" data-category="comm">Complete incident report</div>
+      <div class="draggable" draggable="true" data-category="comm">Record time-stamped events</div>
+    </div>
+
+    <!-- RIGHT: DROP ZONES -->
+    <div style="min-width:0;"><!-- 🔥 FIX ADDED HERE -->
+      <!-- FIRE -->
+      <div class="plan-section">
+        <div class="plan-title">Fire / Evacuation Response</div>
+        <div class="drop-zone" data-accept="fire" id="zone-fire"></div>
+      </div>
+
+      <!-- MEDICAL -->
+      <div class="plan-section">
+        <div class="plan-title">Medical Emergency Response</div>
+        <div class="drop-zone" data-accept="medical" id="zone-medical"></div>
+      </div>
+
+      <!-- HAZMAT -->
+      <div class="plan-section">
+        <div class="plan-title">Hazardous Exposure / Chemical Spill</div>
+        <div class="drop-zone" data-accept="hazmat" id="zone-hazmat"></div>
+      </div>
+
+      <!-- COMM -->
+      <div class="plan-section">
+        <div class="plan-title">Communication & Documentation</div>
+        <div class="drop-zone" data-accept="comm" id="zone-comm"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-box">
+    <div class="preview-title">Your Emergency Action Plan</div>
+    <div id="previewContent">
+      <em>Your customized plan will appear here as you drag actions into categories.</em>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="copyPlan()">Copy My Plan</button>
+      <button class="btn" onclick="resetPlan()">Clear All</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas" class="confetti"></canvas>
+
+<script>
+/* -------------------------------
+   DRAG LOGIC
+------------------------------- */
+
+let draggedItem = null;
+
+document.querySelectorAll(".draggable").forEach(item => {
+  item.addEventListener("dragstart", e => {
+    draggedItem = e.target;
+    e.dataTransfer.effectAllowed = "move";
+  });
+});
+
+document.querySelectorAll(".drop-zone").forEach(zone => {
+  zone.addEventListener("dragover", e => {
+    e.preventDefault();
+    zone.classList.add("hovered");
+  });
+
+  zone.addEventListener("dragleave", () => {
+    zone.classList.remove("hovered");
+  });
+
+  zone.addEventListener("drop", e => {
+    e.preventDefault();
+    zone.classList.remove("hovered");
+
+    const allowed = zone.dataset.accept;
+    const actual = draggedItem.dataset.category;
+
+    if (allowed === actual) {
+      const clone = document.createElement("div");
+      clone.classList.add("dropped");
+      clone.textContent = draggedItem.textContent;
+      zone.appendChild(clone);
+
+      draggedItem.remove();
+      updatePreview();
+      checkCompletion();
+    } else {
+      draggedItem.classList.add("shake");
+      setTimeout(() => draggedItem.classList.remove("shake"), 500);
+    }
+  });
+});
+
+/* -------------------------------
+   PREVIEW BUILDER
+------------------------------- */
+
+function updatePreview() {
+  const zones = [
+    { id: "zone-fire", label: "🔥 Fire / Evacuation Response" },
+    { id: "zone-medical", label: "🩺 Medical Emergency Response" },
+    { id: "zone-hazmat", label: "☣️ Hazardous Exposure / Chemical Spill" },
+    { id: "zone-comm", label: "📣 Communication & Documentation" }
+  ];
+
+  let html = "";
+
+  zones.forEach(zone => {
+    const items = [...document.querySelectorAll(`#${zone.id} .dropped`)]
+      .map(i => `<li>${i.textContent}</li>`)
+      .join("");
+
+    html += `
+      <h3 style="margin-top:10px; color:#1e2030">${zone.label}</h3>
+      <ul style="margin:6px 0 14px 20px; font-size:0.95rem;">
+        ${items || "<li><em>No items added yet</em></li>"}
+      </ul>
+    `;
+  });
+
+  document.getElementById("previewContent").innerHTML = html;
+}
+
+function checkCompletion() {
+  const zones = ["zone-fire","zone-medical","zone-hazmat","zone-comm"];
+  const complete = zones.every(z => document.querySelector(`#${z} .dropped`));
+
+  if (complete) launchConfetti();
+}
+
+/* -------------------------------
+   COPY PLAN
+------------------------------- */
+
+function copyPlan() {
+  const text = document.getElementById("previewContent").innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Your Emergency Action Plan has been copied!");
+  });
+}
+
+/* -------------------------------
+   RESET PLAN
+------------------------------- */
+
+function resetPlan() {
+  location.reload();
+}
+
+/* -------------------------------
+   CONFETTI ANIMATION
+------------------------------- */
+
+function launchConfetti() {
+  const canvas = document.getElementById("confettiCanvas");
+  const ctx = canvas.getContext("2d");
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const count = 200;
+
+  for (let i = 0; i < count; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: 10 + Math.random() * 10,
+      h: 10 + Math.random() * 10,
+      color: `hsl(${Math.random()*360},100%,70%)`,
+      speed: 2 + Math.random() * 3,
+      angle: Math.random() * Math.PI * 2
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    pieces.forEach(p => {
+      p.y += p.speed;
+      p.angle += 0.02;
+
+      ctx.save();
+      ctx.translate(p.x + p.w/2, p.y + p.h/2);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+
+      if (p.y > canvas.height) p.y = -20;
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  setTimeout(() => {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  }, 6000);
+}
+</script>
+
+</body>
+</html>
