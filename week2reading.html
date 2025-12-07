@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Week 2 Reading Assignments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 22px;
+      }
+    }
+
+    img,
+    .page,
+    .column,
+    .reading-card,
+    .side-card {
+      max-width: 100%;
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header / branding */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Reading cards */
+    .reading-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .reading-card {
+      border-radius: 18px;
+      padding: 14px 16px 14px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      background: linear-gradient(
+        135deg,
+        rgba(175, 75, 239, 0.07),
+        rgba(255, 255, 255, 0.95)
+      );
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .reading-card {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+      .chapter-pill {
+        justify-self: flex-start;
+      }
+      .tag-time {
+        justify-self: flex-start;
+        margin-top: 6px;
+      }
+    }
+
+    .chapter-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.16);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      white-space: nowrap;
+    }
+
+    .chapter-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .chapter-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .chapter-text {
+      font-size: 0.84rem;
+      color: var(--color-muted);
+    }
+
+    .tag-time {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      font-size: 0.74rem;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    .reading-notes {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+    }
+
+    .reading-notes strong {
+      color: var(--color-text);
+    }
+
+    .checklist-heading {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 0.86rem;
+      color: var(--color-text);
+    }
+
+    .checklist li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .check-dot {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: rgba(148, 163, 184, 0.9);
+      flex-shrink: 0;
+    }
+
+    /* Right column */
+    .section-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .side-heading {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: 10px;
+    }
+
+    .side-card {
+      background: rgba(12, 10, 24, 0.94);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      margin-bottom: 14px;
+    }
+
+    .side-card strong {
+      color: #ffffff;
+    }
+
+    .side-subheading {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin: 10px 0 10px;
+    }
+
+    .side-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .side-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .note-card {
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(15, 23, 42, 0.75);
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .note-card strong {
+      color: #fef3c7;
+    }
+
+    .complete-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="week2-reading-heading">
+    <!-- LEFT COLUMN: title + reading cards + checklist -->
+    <section class="column" aria-label="Week 2 reading assignments">
+      <header class="brand-row">
+        <div class="brand">
+          <img
+            src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+            alt="AlliedRx logo"
+            class="brand-logo"
+          />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 2 — Reading Assignments</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Online &amp; Self-Paced</span>
+      </header>
+
+      <h1 id="week2-reading-heading">Week 2 Reading</h1>
+      <p class="subtitle">
+        This week you'll study <strong>documentation fundamentals</strong> and 
+        <strong>specialty clinical procedures</strong>. These chapters provide 
+        the foundation for accurate record-keeping and specialized patient care.
+      </p>
+
+      <div class="reading-grid">
+        <!-- Chapter 2: The Health Record -->
+        <article class="reading-card">
+          <div class="chapter-pill">Chapter 2</div>
+          <div class="chapter-main">
+            <div class="chapter-title">
+              The Health Record
+            </div>
+            <p class="chapter-text">
+              Focus on <strong>SOAP note structure</strong>, documentation standards, 
+              HIPAA compliance, and the legal importance of accurate medical records. 
+              This is essential for every clinical encounter.
+            </p>
+          </div>
+          <div class="tag-time">Est. 50–65 min</div>
+        </article>
+
+        <!-- Chapter 13: Ophthalmology and Otolaryngology -->
+        <article class="reading-card">
+          <div class="chapter-pill">Chapter 13</div>
+          <div class="chapter-main">
+            <div class="chapter-title">
+              Ophthalmology and Otolaryngology
+            </div>
+            <p class="chapter-text">
+              Pay attention to <strong>eye and ear examination procedures</strong>, 
+              diagnostic equipment, common pathologies, and specialized terminology 
+              used in these clinical specialties.
+            </p>
+          </div>
+          <div class="tag-time">Est. 60–75 min</div>
+        </article>
+      </div>
+
+      <p class="reading-notes">
+        <strong>Textbook:</strong>
+        Kinn's The Medical Assistant, 13th Edition
+      </p>
+
+      <p class="checklist-heading">How to work through this reading</p>
+      <ul class="checklist">
+        <li>
+          <span class="check-dot">□</span>
+          <span>Start with Chapter 2 to understand documentation standards before learning specialty procedures.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Create a terminology list for ophthalmology and otolaryngology terms as you read Chapter 13.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Practice drawing SOAP note templates while reading about documentation standards.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Note equipment names and purposes—you'll use these in clinical simulations.</span>
+        </li>
+        <li>
+          <span class="check-dot">□</span>
+          <span>Complete all chapter review questions and critical thinking exercises.</span>
+        </li>
+      </ul>
+
+      <p class="complete-hint">
+        Once you have finished both chapters, complete the associated 
+        documentation exercise and terminology quiz before moving to Week 3.
+      </p>
+    </section>
+
+    <!-- RIGHT COLUMN: framing & why these readings matter -->
+    <aside class="column" aria-label="Why these readings are important">
+      <p class="section-tag">Clinical Connection</p>
+      <h2 class="side-heading">Why Documentation & Specialties Matter Together</h2>
+
+      <div class="side-card">
+        <p>
+          Chapter 2 teaches you <strong>how to document</strong>—Chapter 13 shows you 
+          <strong>what to document</strong>. Every eye exam, otoscopic finding, and 
+          visual acuity test requires precise, legally sound recording.
+        </p>
+        <p>
+          In ophthalmology and otolaryngology practices, documentation errors can lead 
+          to <strong>incorrect prescriptions, missed diagnoses, or treatment delays</strong>. 
+          Your accuracy protects patient vision, hearing, and overall health.
+        </p>
+
+        <p class="side-subheading">After completing this reading, you should be able to:</p>
+        <ul class="side-list">
+          <li>
+            <span class="dot"></span>
+            <span>Document a patient encounter using proper SOAP note format for eye or ear exams.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Identify common ophthalmology and otolaryngology equipment and their purposes.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Apply HIPAA guidelines when documenting sensitive visual or auditory health information.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Recognize when documentation requires specialist referral notations.</span>
+          </li>
+        </ul>
+
+        <div class="note-card">
+          <strong>Clinical Insight:</strong> When documenting visual acuity, 
+          always record both uncorrected and corrected vision. For otoscopic exams, 
+          note ear canal color, cerumen amount, and tympanic membrane appearance. 
+          These details matter for tracking changes over time.
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
