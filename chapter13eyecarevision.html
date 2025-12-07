@@ -2,20 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ALLIEDRx -- Chapter 13: Nose, Throat & Sensory Loss Clinic</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AlliedRx -- Chapter 13: Eye Care & Vision Assessment Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
-        /* === ALLIEDRx BRANDING EXACT MATCH === */
         :root {
-            --color-primary: #af4bef; /* Purple - main brand color */
-            --color-primary-soft: #d492ff; /* Light purple */
-            --color-accent: #8380f0; /* Blue-purple accent */
-            --color-success: #00b894; /* Green for correct/success */
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
             --color-warning: #fdcb6e;
-            --color-error: #e17055; /* Red/Orange for errors */
-            --color-bg: #f7f5fb; /* Light background */
-            --color-text: #2b2b2b; /* Dark text */
-            --color-muted: #6c6880; /* Muted text */
+            --color-error: #e17055;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 12px;
@@ -27,16 +26,21 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         body {
-            padding: 24px;
+            padding: 16px;
             background: radial-gradient(
                 circle at top left,
                 #ffffff 0,
@@ -44,90 +48,59 @@
                 var(--color-bg) 100%
             );
             color: var(--color-text);
-            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 480px) {
             body {
                 padding: 12px;
             }
         }
 
-        /* === ANIMATIONS === */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @media (max-width: 375px) {
+            body {
+                padding: 8px;
             }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes checkmarkPop {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* === MAIN PAGE CONTAINER === */
+        /* Main Page Container */
         .page {
             width: 100%;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             background: #ffffff;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-soft);
-            padding: 28px 30px 32px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 32px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.6s ease-out;
+            gap: 24px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             .page {
-                padding: 22px;
-                gap: 28px;
+                padding: 20px;
+                gap: 20px;
             }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 0;
-            }
             .page {
-                border-radius: 0;
-                box-shadow: none;
-                padding: 18px 14px 22px;
-                gap: 24px;
+                padding: 16px;
+                gap: 16px;
+                border-radius: 20px;
             }
         }
 
-        /* === ALLIEDRx HEADER/BRANDING === */
+        /* Header */
         .brand-row {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            gap: 12px;
             margin-bottom: 8px;
             flex-wrap: wrap;
             width: 100%;
-            animation: fadeInUp 0.5s ease-out;
         }
 
         .brand {
@@ -135,114 +108,134 @@
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+            max-width: 100%;
         }
 
         .brand-logo {
-            height: 40px;
+            height: 36px;
             width: auto;
             max-width: 100%;
             filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            flex-shrink: 0;
         }
 
         .course-meta {
             display: flex;
             flex-direction: column;
-            gap: 2px;
-            max-width: 100%;
+            gap: 4px;
+            max-width: calc(100% - 50px);
         }
 
         .course-name {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.1em;
             color: var(--color-muted);
             white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .week-label {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 4px 10px;
+            gap: 6px;
+            padding: 4px 8px;
             border-radius: 999px;
             background: rgba(175, 75, 239, 0.08);
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             color: var(--color-primary);
             white-space: normal;
+            max-width: 100%;
         }
 
         .week-label-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 999px;
             background: var(--color-success);
             flex-shrink: 0;
-            animation: pulse 2s infinite;
         }
 
         .badge-mode {
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 999px;
             background: rgba(12, 10, 24, 0.06);
             border: 1px solid rgba(12, 10, 24, 0.08);
-            font-size: 0.74rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.1em;
             color: var(--color-muted);
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         @media (max-width: 480px) {
             .brand-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 8px;
             }
+            
+            .brand {
+                width: 100%;
+            }
+            
+            .course-meta {
+                max-width: 100%;
+            }
+            
             .badge-mode {
-                margin-top: 6px;
+                align-self: flex-start;
             }
         }
 
-        /* === MODULE HEADER === */
+        /* Module Header */
         .module-header {
-            animation: fadeInUp 0.5s ease-out 0.1s both;
+            width: 100%;
         }
 
         h1 {
-            font-size: clamp(2rem, 3vw, 2.4rem);
-            line-height: 1.05;
+            font-size: 1.8rem;
+            line-height: 1.2;
             color: var(--color-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .module-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--color-muted);
-            max-width: 800px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
 
         .module-description {
-            font-size: 0.98rem;
+            font-size: 0.9rem;
             color: var(--color-muted);
-            max-width: 800px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        /* === PROGRESS TRACKER === */
+        /* Progress Tracker - SIMPLIFIED */
         .progress-tracker {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 8px 0 20px;
-            animation: fadeInUp 0.5s ease-out 0.2s both;
+            gap: 8px;
+            margin: 16px 0;
+            width: 100%;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .progress-step {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
+            gap: 4px;
+            font-size: 0.8rem;
             color: var(--color-muted);
+            min-width: 80px;
         }
 
         .progress-step.active {
@@ -277,29 +270,23 @@
             color: white;
         }
 
-        .step-divider {
-            flex: 1;
-            height: 2px;
-            background: rgba(12, 10, 24, 0.1);
-            margin: 0 8px;
-        }
-
-        /* === PROGRESS SUMMARY === */
+        /* Progress Summary - SIMPLIFIED 2-COLUMN LAYOUT */
         .progress-summary {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
             margin-top: 16px;
             padding: 16px;
             background: rgba(175, 75, 239, 0.03);
             border-radius: var(--radius-sm);
-            animation: fadeInUp 0.5s ease-out 0.3s both;
+            width: 100%;
         }
 
         @media (max-width: 480px) {
             .progress-summary {
                 grid-template-columns: 1fr;
                 gap: 12px;
+                padding: 12px;
             }
         }
 
@@ -308,6 +295,7 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
+            text-align: center;
         }
 
         .progress-number {
@@ -319,554 +307,356 @@
         .progress-label {
             font-size: 0.75rem;
             color: var(--color-muted);
-            text-align: center;
         }
 
-        /* === ACTIVITY GRID === */
+        /* Activity Grid - 2 COLUMNS MAX */
         .activity-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 32px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.5s ease-out 0.3s both;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
-        /* === ACTIVITY CARDS === */
+        @media (max-width: 768px) {
+            .activity-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Activity Cards */
         .activity-card {
             background: rgba(175, 75, 239, 0.03);
             border-radius: var(--radius-md);
             border: 1px solid rgba(175, 75, 239, 0.1);
-            padding: 28px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            gap: 16px;
+            width: 100%;
         }
 
-        .activity-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-medium);
+        @media (max-width: 480px) {
+            .activity-card {
+                padding: 16px;
+                gap: 12px;
+            }
         }
 
         .activity-header {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .activity-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: var(--color-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .activity-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--color-text);
-        }
-
-        .activity-description {
-            font-size: 1rem;
-            color: var(--color-muted);
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-
-        /* === ACTIVITY 1: THROAT CULTURE SCENARIO === */
-        .scenario-container {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .scenario {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid rgba(12, 10, 24, 0.08);
-        }
-
-        .scenario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
-        .patient-info {
-            font-weight: 700;
-            color: var(--color-primary);
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .patient-demographics {
-            font-size: 1rem;
-            color: var(--color-muted);
-            margin-bottom: 12px;
-        }
-
-        .symptoms {
-            color: var(--color-text);
-            margin-bottom: 16px;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .symptoms strong {
-            color: var(--color-muted);
-        }
-
-        .swabbing-instruction {
-            font-size: 1rem;
-            color: var(--color-muted);
-            margin-bottom: 16px;
-            font-style: italic;
-            padding: 16px;
-            background: rgba(175, 75, 239, 0.05);
-            border-radius: var(--radius-sm);
-            line-height: 1.5;
-        }
-
-        .throat-area-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin: 24px 0;
-        }
-
-        @media (max-width: 768px) {
-            .throat-area-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .throat-area {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 24px;
-            border: 3px dashed #ddd;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            min-height: 140px;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .throat-area:hover {
-            border-color: var(--color-primary-soft);
-            background-color: rgba(175, 75, 239, 0.03);
-        }
-
-        .throat-area.correct-drop {
-            border-color: var(--color-success);
-            background-color: rgba(0, 184, 148, 0.05);
-        }
-
-        .throat-area.incorrect-drop {
-            border-color: var(--color-error);
-            background-color: rgba(225, 112, 85, 0.05);
-        }
-
-        .area-title {
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-
-        .area-instruction {
-            font-size: 0.95rem;
-            color: var(--color-text);
-            line-height: 1.4;
-        }
-
-        .swab-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 24px 0;
-            justify-content: center;
-        }
-
-        .swab-tag {
-            background: white;
-            border: 3px solid var(--color-accent);
-            color: var(--color-text);
-            padding: 12px 20px;
-            border-radius: 24px;
-            font-size: 1rem;
-            cursor: grab;
-            transition: all 0.2s ease;
-            user-select: none;
-            font-weight: 600;
-        }
-
-        .swab-tag:hover {
-            background: var(--color-accent);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(131, 128, 240, 0.3);
-        }
-
-        .swab-tag.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .swab-tag.placed {
-            background: var(--color-success);
-            color: white;
-            border-color: var(--color-success);
-            cursor: default;
-        }
-
-        /* === ACTIVITY 2: SENSORY LOSS COMMUNICATION === */
-        .communication-container {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .communication-section {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid rgba(12, 10, 24, 0.08);
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            color: var(--color-primary);
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--color-primary-soft);
-        }
-
-        .sensory-types-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        @media (max-width: 768px) {
-            .sensory-types-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .sensory-type {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 20px;
-            border: 2px solid rgba(12, 10, 24, 0.08);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .sensory-type:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .sensory-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sensory-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             background: var(--color-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            flex-shrink: 0;
         }
 
-        .sensory-title {
-            font-size: 1.1rem;
+        .activity-title {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--color-text);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
-        .sensory-description {
-            font-size: 0.95rem;
+        .activity-description {
+            font-size: 0.9rem;
             color: var(--color-muted);
             line-height: 1.5;
+            width: 100%;
         }
 
-        .strategies-container {
-            margin-top: 24px;
-        }
-
-        .strategies-title {
-            font-size: 1.1rem;
-            color: var(--color-primary);
-            margin-bottom: 16px;
-        }
-
-        .communication-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .communication-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .communication-card {
-            background: white;
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            border: 2px solid rgba(12, 10, 24, 0.08);
-            cursor: grab;
-            user-select: none;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        .communication-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--color-primary-soft);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .communication-card.dragging {
-            opacity: 0.7;
-            transform: rotate(3deg);
-        }
-
-        .communication-card.correct {
-            border-color: var(--color-success);
-            background: rgba(0, 184, 148, 0.05);
-        }
-
-        .communication-card.incorrect {
-            border-color: var(--color-error);
-            background: rgba(225, 112, 85, 0.05);
-        }
-
-        .drop-zones-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 32px;
-        }
-
-        @media (max-width: 768px) {
-            .drop-zones-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .drop-zone {
-            min-height: 120px;
-            border: 3px dashed var(--color-primary-soft);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            background: rgba(175, 75, 239, 0.03);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .drop-zone.active {
-            border-color: var(--color-primary);
-            background: rgba(175, 75, 239, 0.08);
-        }
-
-        /* === ACTIVITY 3: ADA/HIPAA SCENARIOS === */
-        .legal-scenario {
+        /* Eye Anatomy Diagram - SIMPLIFIED */
+        .eye-diagram-container {
             background: white;
             border-radius: var(--radius-md);
-            padding: 24px;
-            border: 1px solid rgba(12, 10, 24, 0.08);
-            margin-bottom: 24px;
-        }
-
-        .legal-question {
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-
-        .legal-options {
-            display: grid;
-            gap: 16px;
-        }
-
-        .legal-option {
-            background: white;
-            padding: 18px;
-            border-radius: var(--radius-sm);
+            padding: 15px;
             border: 2px solid rgba(12, 10, 24, 0.08);
-            cursor: pointer;
-            transition: all 0.2s ease;
+            margin-top: 12px;
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: visible;
+        }
+
+        .eye-diagram {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .eye-diagram svg {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
+
+        /* Number Labels - SIMPLIFIED */
+        .number-label {
+            position: absolute;
+            width: 90px;
+            padding: 8px 10px;
+            background: white;
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-sm);
             display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            font-size: 1rem;
+            align-items: center;
+            gap: 8px;
+            cursor: grab;
+            user-select: none;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .legal-option:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-2px);
+        /* Initial positions - all on left side */
+        .number-label:nth-child(1) { /* Cornea */
+            top: 20px;
+            left: 10px;
+        }
+        .number-label:nth-child(2) { /* Lens */
+            top: 70px;
+            left: 10px;
+        }
+        .number-label:nth-child(3) { /* Retina */
+            top: 120px;
+            left: 10px;
+        }
+        .number-label:nth-child(4) { /* Iris */
+            top: 170px;
+            left: 10px;
+        }
+        .number-label:nth-child(5) { /* Pupil */
+            top: 220px;
+            left: 10px;
+        }
+        .number-label:nth-child(6) { /* Optic Nerve */
+            top: 270px;
+            left: 10px;
         }
 
-        .legal-option.selected {
-            background: rgba(175, 75, 239, 0.05);
-            border-color: var(--color-primary);
-        }
-
-        .legal-option.correct {
-            background: rgba(0, 184, 148, 0.05);
-            border-color: var(--color-success);
-        }
-
-        .legal-option.incorrect {
-            background: rgba(225, 112, 85, 0.05);
-            border-color: var(--color-error);
-        }
-
-        .option-indicator {
+        .label-number {
             width: 24px;
             height: 24px;
-            border: 2px solid var(--color-muted);
-            border-radius: 4px;
-            flex-shrink: 0;
-            margin-top: 2px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            flex-shrink: 0;
         }
 
-        .legal-option.selected .option-indicator {
-            background: var(--color-primary);
-            border-color: var(--color-primary);
+        .label-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text);
+            white-space: nowrap;
         }
 
-        .legal-option.correct .option-indicator {
-            background: var(--color-success);
-            border-color: var(--color-success);
+        /* Specialist Grid - 1 COLUMN */
+        .specialist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 16px;
+            width: 100%;
         }
 
-        .legal-option.incorrect .option-indicator {
-            background: var(--color-error);
-            border-color: var(--color-error);
-        }
-
-        .option-text {
-            flex: 1;
-            line-height: 1.5;
-        }
-
-        /* === ACTIVITY 4: PROCEDURE SEQUENCE === */
-        .procedure-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 24px;
-        }
-
-        .procedure-step {
+        .specialist-card {
             background: white;
             border-radius: var(--radius-md);
-            padding: 20px;
-            border-left: 4px solid var(--color-primary);
+            padding: 16px;
+            border: 2px solid rgba(12, 10, 24, 0.08);
             display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            transition: all 0.3s ease;
+            flex-direction: column;
+            gap: 12px;
             cursor: pointer;
+            width: 100%;
         }
 
-        .procedure-step:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .procedure-step.active {
-            background: rgba(175, 75, 239, 0.05);
-        }
-
-        .procedure-number {
-            width: 36px;
-            height: 36px;
+        .specialist-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--color-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-size: 1.2rem;
+            margin: 0 auto;
+        }
+
+        .specialist-title {
             font-size: 1rem;
             font-weight: 700;
-            flex-shrink: 0;
-            transition: background 0.3s ease;
+            color: var(--color-text);
+            text-align: center;
         }
 
-        .procedure-content {
-            flex: 1;
+        .specialist-description {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-align: center;
+            line-height: 1.4;
         }
 
-        .procedure-title {
+        /* Scenario styling */
+        .scenario {
+            padding: 12px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        /* Refractive Errors - SINGLE COLUMN */
+        .errors-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .error-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 2px solid rgba(12, 10, 24, 0.08);
+            cursor: grab;
+            user-select: none;
+            width: 100%;
+            touch-action: none;
+        }
+
+        .error-title {
             font-size: 1rem;
             font-weight: 700;
             color: var(--color-text);
             margin-bottom: 4px;
         }
 
-        .procedure-description {
-            font-size: 0.9rem;
+        .error-description {
+            font-size: 0.8rem;
             color: var(--color-muted);
-            line-height: 1.6;
         }
 
-        /* === ACTION BUTTONS === */
+        .error-category {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 8px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .description-zone {
+            padding: 16px;
+            border: 2px dashed var(--color-primary);
+            border-radius: var(--radius-sm);
+            min-height: 80px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        /* Vision Process Steps */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .process-step {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border-left: 4px solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .step-description {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            line-height: 1.4;
+        }
+
+        /* Action Buttons - SINGLE COLUMN */
         .action-buttons {
             display: flex;
-            gap: 16px;
-            margin-top: 32px;
-            animation: fadeInUp 0.5s ease-out 0.4s both;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+            width: 100%;
         }
 
         .btn {
-            padding: 14px 28px;
+            padding: 14px 24px;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             border: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
         }
 
         .btn-primary {
@@ -874,110 +664,55 @@
             color: white;
         }
 
-        .btn-primary:hover:not(:disabled) {
-            background: #9a3ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(175, 75, 239, 0.3);
-        }
-
         .btn-secondary {
             background: rgba(12, 10, 24, 0.06);
             color: var(--color-text);
         }
 
-        .btn-secondary:hover {
-            background: rgba(12, 10, 24, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        /* === RESULTS PANEL === */
-        .results-panel {
-            background: rgba(12, 10, 24, 0.94);
-            color: #e5e7eb;
-            border-radius: var(--radius-md);
-            padding: 32px;
-            margin-top: 32px;
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-
-        .results-panel.show {
-            display: block;
-        }
-
-        .results-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .results-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        .results-content {
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .results-content strong {
-            color: #ffffff;
-        }
-
-        .score-display {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-sm);
-        }
-
-        .score-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--color-primary-soft);
-        }
-
-        .score-text {
-            font-size: 1rem;
-            color: #c4b5fd;
-        }
-
-        /* === CLINICAL INSIGHT CARD === */
-        .clinical-insight {
-            margin-top: 24px;
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(15, 23, 42, 0.7);
-            padding: 20px;
-            font-size: 0.95rem;
-            color: #e5e7eb;
-            line-height: 1.6;
-        }
-
-        .clinical-insight strong {
-            color: #fef3c7;
-        }
-
-        /* === FEEDBACK MESSAGES === */
-        .feedback-message {
-            padding: 16px 20px;
-            border-radius: var(--radius-sm);
+        /* Check button */
+        .check-btn {
             margin-top: 16px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Answer key */
+        .answer-key {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
             display: none;
-            animation: fadeIn 0.3s ease;
+        }
+
+        .answer-key h4 {
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Feedback Messages */
+        .feedback-message {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+            font-size: 0.9rem;
+            display: none;
+            width: 100%;
         }
 
         .feedback-correct {
@@ -994,74 +729,114 @@
             display: block;
         }
 
-        /* === ACTIVITY BUTTONS === */
-        .activity-btn {
-            padding: 12px 24px;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            align-self: flex-start;
+        /* Results Panel */
+        .results-panel {
+            background: rgba(12, 10, 24, 0.94);
+            color: #e5e7eb;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            width: 100%;
+        }
+
+        .results-panel.show {
+            display: block;
+        }
+
+        .results-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
-        .activity-btn:hover {
-            background: #9a3ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(175, 75, 239, 0.3);
+        .results-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
         }
 
-        /* === RESPONSIVE ADJUSTMENTS === */
-        @media (max-width: 768px) {
-            .activity-grid {
-                gap: 24px;
-            }
-            .activity-card {
-                padding: 20px;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .throat-area-grid {
-                gap: 16px;
-            }
-            .swab-tags {
-                gap: 10px;
-            }
-            .communication-cards {
-                gap: 12px;
+        .results-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            flex-wrap: wrap;
+        }
+
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+        }
+
+        .score-text {
+            font-size: 0.9rem;
+            color: #c4b5fd;
+        }
+
+        .clinical-insight {
+            margin-top: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(15, 23, 42, 0.7);
+            padding: 12px;
+            font-size: 0.85rem;
+            color: #e5e7eb;
+        }
+
+        /* Remove all hover effects for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .number-label:hover,
+            .specialist-card:hover,
+            .error-card:hover,
+            .process-step:hover,
+            .btn:hover {
+                transform: none;
             }
         }
 
-        @media (max-width: 480px) {
-            .progress-tracker {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .step-divider {
-                display: none;
-            }
-            .sensory-types-grid {
-                gap: 16px;
-            }
-            .drop-zones-container {
-                gap: 16px;
-            }
+        /* Utility classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-1 {
+            margin-bottom: 4px;
+        }
+        
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+        
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+        
+        .mt-1 {
+            margin-top: 4px;
+        }
+        
+        .mt-2 {
+            margin-top: 8px;
+        }
+        
+        .mt-3 {
+            margin-top: 12px;
         }
     </style>
 </head>
 <body>
-    <main class="page" aria-labelledby="module-heading">
+    <main class="page">
         <!-- Header -->
         <header class="brand-row">
             <div class="brand">
@@ -1074,7 +849,7 @@
                     <span class="course-name">Clinical Medical Assistant • Kinn's Chapter 13</span>
                     <div class="week-label">
                         <span class="week-label-dot"></span>
-                        <span>Interactive Module 4: Nose, Throat & Sensory Loss Clinic</span>
+                        <span>Eye Care & Vision Assessment</span>
                     </div>
                 </div>
             </div>
@@ -1083,11 +858,11 @@
 
         <!-- Module Header -->
         <section class="module-header">
-            <h1 id="module-heading">Nose, Throat & Sensory Loss Clinic</h1>
-            <p class="module-subtitle">Master nose/throat examination, patient education for sensory loss, and ADA/HIPAA compliance</p>
+            <h1>Eye Care & Vision Assessment Clinic</h1>
+            <p class="module-subtitle">Master eye anatomy, vision processes, refractive errors, and clinical procedures</p>
             <p class="module-description">
-                This interactive module covers Objectives 13-15 from Chapter 13. You'll learn throat culture techniques, 
-                sensory loss communication strategies, and legal/ethical compliance requirements.
+                This interactive module covers Objectives 1-8 from Chapter 13. You'll explore eye anatomy, 
+                differentiate between eye care professionals, understand refractive errors, and learn diagnostic procedures.
             </p>
         </section>
 
@@ -1095,26 +870,23 @@
         <div class="progress-tracker">
             <div class="progress-step active">
                 <span class="step-icon">1</span>
-                <span>Throat Culture</span>
+                <span>Eye Anatomy</span>
             </div>
-            <div class="step-divider"></div>
             <div class="progress-step">
                 <span class="step-icon">2</span>
-                <span>Sensory Communication</span>
+                <span>Specialists</span>
             </div>
-            <div class="step-divider"></div>
             <div class="progress-step">
                 <span class="step-icon">3</span>
-                <span>ADA/HIPAA Compliance</span>
+                <span>Errors</span>
             </div>
-            <div class="step-divider"></div>
             <div class="progress-step">
                 <span class="step-icon">4</span>
-                <span>Procedure Sequence</span>
+                <span>Vision Process</span>
             </div>
         </div>
 
-        <!-- Progress Summary -->
+        <!-- Progress Summary - 2 COLUMNS -->
         <div class="progress-summary">
             <div class="progress-item">
                 <span class="progress-number" id="completedCount">0</span>
@@ -1128,365 +900,282 @@
                 <span class="progress-number" id="timeSpent">0 min</span>
                 <span class="progress-label">Time Spent</span>
             </div>
+            <div class="progress-item">
+                <span class="progress-number">4</span>
+                <span class="progress-label">Total Activities</span>
+            </div>
         </div>
 
-        <!-- Activity Grid -->
+        <!-- Activity Grid - MAX 2 COLUMNS -->
         <div class="activity-grid">
-            <!-- ACTIVITY 1: THROAT CULTURE SCENARIO -->
-            <section class="activity-card" aria-label="Throat Culture Scenario Activity">
+            <!-- Activity 1: Eye Anatomy -->
+            <section class="activity-card">
                 <div class="activity-header">
-                    <div class="activity-icon">🦠</div>
-                    <h2 class="activity-title">Throat Culture Collection Scenario</h2>
+                    <div class="activity-icon">👁️</div>
+                    <h2 class="activity-title">Eye Anatomy Labeling</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Review the patient case and drag swab tags to the correct throat 
-                    areas for proper culture collection. Avoid contaminating areas.
+                    <strong>Instructions:</strong> Drag the numbered labels (1-6) to their correct positions on the eye diagram. 
+                    Check your answers when done.
                 </p>
                 
-                <div class="scenario-container">
-                    <div class="scenario">
-                        <div class="scenario-header">
-                            <div>
-                                <div class="patient-info">Patient: Jamie, 8 years old</div>
-                                <div class="patient-demographics">Pediatric patient with sore throat symptoms</div>
-                            </div>
-                        </div>
-                        <div class="symptoms">
-                            <strong>Presenting Symptoms:</strong> Sore throat x 3 days, painful swallowing, fever 38.2°C, 
-                            anterior cervical lymphadenopathy (swollen neck glands).<br>
-                            <strong>History:</strong> No penicillin allergy, no recent antibiotic use.<br>
-                            <strong>Throat Appearance:</strong> Tonsils 3+ enlarged, erythematous, exudate present.
-                        </div>
-                        
-                        <div class="swabbing-instruction">
-                            <strong>Pro Tip:</strong> For accurate throat culture, swab BOTH tonsillar pillars and 
-                            posterior pharynx. Avoid the tongue, cheeks, and uvula to prevent contamination.
-                        </div>
-                        
-                        <div class="throat-area-grid">
-                            <div class="throat-area" data-area="left-tonsil" id="area-left-tonsil">
-                                <div class="area-title">Left Tonsillar Pillar</div>
-                                <div class="area-instruction">Swab area thoroughly</div>
-                            </div>
-                            <div class="throat-area" data-area="right-tonsil" id="area-right-tonsil">
-                                <div class="area-title">Right Tonsillar Pillar</div>
-                                <div class="area-instruction">Swab area thoroughly</div>
-                            </div>
-                            <div class="throat-area" data-area="posterior-pharynx" id="area-posterior">
-                                <div class="area-title">Posterior Pharynx</div>
-                                <div class="area-instruction">Back of throat wall</div>
-                            </div>
-                            <div class="throat-area" data-area="uvula" id="area-uvula">
-                                <div class="area-title">Uvula</div>
-                                <div class="area-instruction">DO NOT SWAB (contaminant)</div>
-                            </div>
-                        </div>
-                        
-                        <div class="swab-tags">
-                            <div class="swab-tag" data-tag="culture-swab" id="tag-culture" draggable="true">
-                                Culture Swab
-                            </div>
-                            <div class="swab-tag" data-tag="sterile-tip" id="tag-sterile" draggable="true">
-                                Sterile Tip
-                            </div>
-                            <div class="swab-tag" data-tag="transport-medium" id="tag-transport" draggable="true">
-                                Transport Medium
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 24px;">
-                            <button class="activity-btn" id="checkSwabbingBtn">
-                                ✓ Check Swabbing Technique
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="feedback-message" id="swabbingFeedback"></div>
-            </section>
-
-            <!-- ACTIVITY 2: SENSORY LOSS COMMUNICATION -->
-            <section class="activity-card" aria-label="Sensory Loss Communication Activity">
-                <div class="activity-header">
-                    <div class="activity-icon">👁️👂</div>
-                    <h2 class="activity-title">Sensory Loss Communication Strategies</h2>
-                </div>
-                <p class="activity-description">
-                    <strong>Instructions:</strong> Match communication strategies to the appropriate sensory loss type. 
-                    Drag strategies to the correct drop zone.
-                </p>
-                
-                <div class="communication-container">
-                    <div class="communication-section">
-                        <h3 class="section-title">Sensory Loss Types</h3>
-                        <div class="sensory-types-grid">
-                            <!-- Vision Loss -->
-                            <div class="sensory-type">
-                                <div class="sensory-header">
-                                    <div class="sensory-icon">👁️</div>
-                                    <div class="sensory-title">Vision Impairment</div>
-                                </div>
-                                <div class="sensory-description">
-                                    Patients with low vision, macular degeneration, or blindness
-                                </div>
-                            </div>
+                <div class="eye-diagram-container">
+                    <div class="eye-diagram" id="eyeDiagram">
+                        <svg width="100%" height="100%" viewBox="0 0 400 350" preserveAspectRatio="xMidYMid meet">
+                            <!-- Eye outline -->
+                            <ellipse cx="200" cy="175" rx="120" ry="80" fill="none" stroke="#6c6880" stroke-width="2"/>
                             
-                            <!-- Hearing Loss -->
-                            <div class="sensory-type">
-                                <div class="sensory-header">
-                                    <div class="sensory-icon">👂</div>
-                                    <div class="sensory-title">Hearing Impairment</div>
-                                </div>
-                                <div class="sensory-description">
-                                    Patients with hearing loss, presbycusis, or deafness
-                                </div>
-                            </div>
+                            <!-- Iris and pupil -->
+                            <circle cx="200" cy="175" r="40" fill="none" stroke="#af4bef" stroke-width="2"/>
+                            <circle cx="200" cy="175" r="15" fill="#8380f0"/>
+                            
+                            <!-- Target positions -->
+                            <circle class="target-zone" id="target1" cx="120" cy="125" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target2" cx="200" cy="135" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target3" cx="250" cy="175" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target4" cx="200" cy="215" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target5" cx="200" cy="175" r="20" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target6" cx="280" cy="175" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            
+                            <!-- Target numbers -->
+                            <text x="120" y="125" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">①</text>
+                            <text x="200" y="135" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">②</text>
+                            <text x="250" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">③</text>
+                            <text x="200" y="215" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">④</text>
+                            <text x="200" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">⑤</text>
+                            <text x="280" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="14">⑥</text>
+                        </svg>
+                        
+                        <!-- Draggable Number Labels -->
+                        <div class="number-label" id="label1" draggable="true" data-structure="cornea" data-target="target1">
+                            <span class="label-number">1</span>
+                            <span class="label-text">Cornea</span>
                         </div>
-
-                        <div class="drop-zones-container">
-                            <div class="drop-zone" id="drop-vision">
-                                <div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">
-                                    Drop Vision Strategies Here
-                                </div>
-                            </div>
-                            <div class="drop-zone" id="drop-hearing">
-                                <div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">
-                                    Drop Hearing Strategies Here
-                                </div>
-                            </div>
+                        <div class="number-label" id="label2" draggable="true" data-structure="lens" data-target="target2">
+                            <span class="label-number">2</span>
+                            <span class="label-text">Lens</span>
                         </div>
-                    </div>
-
-                    <div class="communication-section">
-                        <h3 class="section-title">Communication Strategy Cards</h3>
-                        <div class="strategies-container">
-                            <div class="communication-cards">
-                                <div class="communication-card" data-strategy="vision" id="card-large-print" draggable="true">
-                                    Provide large-print materials & ensure good lighting
-                                </div>
-                                <div class="communication-card" data-strategy="hearing" id="card-face-patient" draggable="true">
-                                    Face patient directly & speak clearly (not loudly)
-                                </div>
-                                <div class="communication-card" data-strategy="vision" id="card-verbal-description" draggable="true">
-                                    Give verbal descriptions of procedures & surroundings
-                                </div>
-                                <div class="communication-card" data-strategy="hearing" id="card-reduce-noise" draggable="true">
-                                    Reduce background noise & use written notes if needed
-                                </div>
-                                <div class="communication-card" data-strategy="hearing" id="card-assistive-listening" draggable="true">
-                                    Offer assistive listening devices or amplifier
-                                </div>
-                                <div class="communication-card" data-strategy="vision" id="card-contrast-colors" draggable="true">
-                                    Use high contrast colors for important information
-                                </div>
-                                <div class="communication-card" data-strategy="both" id="card-teach-back" draggable="true">
-                                    Use teach-back method to confirm understanding
-                                </div>
-                                <div class="communication-card" data-strategy="both" id="card-extra-time" draggable="true">
-                                    Allow extra time for processing information
-                                </div>
-                            </div>
+                        <div class="number-label" id="label3" draggable="true" data-structure="retina" data-target="target3">
+                            <span class="label-number">3</span>
+                            <span class="label-text">Retina</span>
+                        </div>
+                        <div class="number-label" id="label4" draggable="true" data-structure="iris" data-target="target4">
+                            <span class="label-number">4</span>
+                            <span class="label-text">Iris</span>
+                        </div>
+                        <div class="number-label" id="label5" draggable="true" data-structure="pupil" data-target="target5">
+                            <span class="label-number">5</span>
+                            <span class="label-text">Pupil</span>
+                        </div>
+                        <div class="number-label" id="label6" draggable="true" data-structure="optic-nerve" data-target="target6">
+                            <span class="label-number">6</span>
+                            <span class="label-text">Optic Nerve</span>
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 24px;">
-                    <button class="activity-btn" id="checkCommunicationBtn">
-                        ✓ Check Communication Matches
-                    </button>
+                <button id="checkAnatomyBtn" class="check-btn">
+                    ✓ Check My Labels
+                </button>
+                
+                <div id="anatomyAnswerKey" class="answer-key">
+                    <h4>Answer Key:</h4>
+                    <div class="answer-grid">
+                        <div><strong>① Cornea:</strong> Transparent front layer</div>
+                        <div><strong>② Lens:</strong> Focuses light behind pupil</div>
+                        <div><strong>③ Retina:</strong> Light-sensitive back layer</div>
+                        <div><strong>④ Iris:</strong> Colored muscle controls pupil</div>
+                        <div><strong>⑤ Pupil:</strong> Opening that lets light in</div>
+                        <div><strong>⑥ Optic Nerve:</strong> Carries signals to brain</div>
+                    </div>
                 </div>
                 
-                <div class="feedback-message" id="communicationFeedback"></div>
+                <div class="feedback-message" id="anatomyFeedback"></div>
             </section>
 
-            <!-- ACTIVITY 3: ADA/HIPAA SCENARIOS -->
-            <section class="activity-card" aria-label="ADA/HIPAA Scenarios Activity">
+            <!-- Activity 2: Eye Specialists -->
+            <section class="activity-card">
                 <div class="activity-header">
-                    <div class="activity-icon">⚖️</div>
-                    <h2 class="activity-title">ADA/HIPAA Compliance Scenarios</h2>
+                    <div class="activity-icon">👨‍⚕️</div>
+                    <h2 class="activity-title">Eye Care Professionals</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Select the correct legal/ethical response for each scenario 
-                    involving patients with sensory loss and privacy requirements.
+                    <strong>Instructions:</strong> Read each patient scenario below, then click on the correct 
+                    eye care professional who should handle that case.
                 </p>
                 
-                <div class="scenario-container">
-                    <!-- Scenario 1 -->
-                    <div class="legal-scenario">
-                        <div class="legal-question">
-                            1. A patient who is deaf and uses American Sign Language (ASL) comes for a 
-                            diabetes education appointment. What is the appropriate ADA accommodation?
-                        </div>
-                        <div class="legal-options">
-                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Have a bilingual staff member try to communicate</div>
-                            </div>
-                            <div class="legal-option" data-scenario="1" data-answer="correct">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Schedule a qualified sign language interpreter</div>
-                            </div>
-                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Write notes back and forth during the appointment</div>
-                            </div>
-                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Ask a family member to interpret if available</div>
-                            </div>
-                        </div>
+                <div class="specialist-grid">
+                    <div class="specialist-card" data-specialist="ophthalmologist">
+                        <div class="specialist-icon">👁️</div>
+                        <h3 class="specialist-title">Ophthalmologist</h3>
+                        <p class="specialist-description">Medical doctor (MD) who can perform eye surgery, diagnose and treat eye diseases, prescribe medications</p>
                     </div>
                     
-                    <!-- Scenario 2 -->
-                    <div class="legal-scenario">
-                        <div class="legal-question">
-                            2. A family member calls asking about their elderly mother's recent 
-                            hearing test results. The mother has moderate dementia. What is the HIPAA-compliant response?
-                        </div>
-                        <div class="legal-options">
-                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Provide results since they're immediate family</div>
-                            </div>
-                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Ask them to get written permission from the patient</div>
-                            </div>
-                            <div class="legal-option" data-scenario="2" data-answer="correct">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">"I cannot disclose protected health information without proper authorization"</div>
-                            </div>
-                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Provide general information but not specific results</div>
-                            </div>
-                        </div>
+                    <div class="specialist-card" data-specialist="optometrist">
+                        <div class="specialist-icon">👓</div>
+                        <h3 class="specialist-title">Optometrist</h3>
+                        <p class="specialist-description">Doctor of Optometry (OD) who examines eyes, prescribes corrective lenses, diagnoses some eye conditions</p>
                     </div>
                     
-                    <!-- Scenario 3 -->
-                    <div class="legal-scenario">
-                        <div class="legal-question">
-                            3. A patient with low vision requests that their medical information be provided 
-                            in an accessible format. What ADA requirement applies?
+                    <div class="specialist-card" data-specialist="optician">
+                        <div class="specialist-icon">🔧</div>
+                        <h3 class="specialist-title">Optician</h3>
+                        <p class="specialist-description">Technician who fits, adjusts, and dispenses eyeglasses and contact lenses based on prescriptions</p>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <h4 class="mb-2"><strong>Patient Scenarios:</strong></h4>
+                    <div>
+                        <div class="scenario" data-scenario="1" data-correct="ophthalmologist">
+                            <strong>Scenario 1:</strong> 68-year-old patient needs cataract surgery and post-operative care
                         </div>
-                        <div class="legal-options">
-                            <div class="legal-option" data-scenario="3" data-answer="correct">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Provide information in large print, braille, or audio format</div>
-                            </div>
-                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Read the information aloud to the patient</div>
-                            </div>
-                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Ask a family member to read it to them</div>
-                            </div>
-                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
-                                <div class="option-indicator"></div>
-                                <div class="option-text">Provide standard print and offer a magnifying glass</div>
-                            </div>
+                        <div class="scenario" data-scenario="2" data-correct="optometrist">
+                            <strong>Scenario 2:</strong> College student needs routine eye exam and prescription for new contact lenses
+                        </div>
+                        <div class="scenario" data-scenario="3" data-correct="optician">
+                            <strong>Scenario 3:</strong> Patient brings in a prescription from their optometrist and needs glasses fitted properly
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 24px;">
-                    <button class="activity-btn" id="checkLegalBtn">
-                        ✓ Check Legal Responses
-                    </button>
-                </div>
+                <div class="feedback-message" id="specialistFeedback"></div>
                 
-                <div class="feedback-message" id="legalFeedback"></div>
+                <div class="mt-3" style="padding: 12px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm); font-size: 0.8rem;">
+                    <strong>Clinical Tip:</strong> Always verify credentials. Ophthalmologists are MDs who can perform surgery. 
+                    Optometrists are ODs who handle vision correction. Opticians are technicians who fit eyewear.
+                </div>
             </section>
 
-            <!-- ACTIVITY 4: NOSE/THROAT EXAM PROCEDURE -->
-            <section class="activity-card" aria-label="Nose/Throat Exam Procedure Activity">
+            <!-- Activity 3: Refractive Errors -->
+            <section class="activity-card">
+                <div class="activity-header">
+                    <div class="activity-icon">📊</div>
+                    <h2 class="activity-title">Refractive Errors Game</h2>
+                </div>
+                <p class="activity-description">
+                    <strong>Instructions:</strong> Drag each refractive error card to its correct description. 
+                    Match the condition with how it affects vision.
+                </p>
+                
+                <div class="errors-container">
+                    <div class="mb-2">
+                        <h4><strong>Conditions:</strong></h4>
+                        <div class="error-card" id="myopia-card" draggable="true" data-correct="myopia-desc">
+                            <div class="error-title">Myopia</div>
+                            <div class="error-description">(Nearsightedness)</div>
+                            <span class="error-category">Drag to match</span>
+                        </div>
+                        
+                        <div class="error-card mt-2" id="hyperopia-card" draggable="true" data-correct="hyperopia-desc">
+                            <div class="error-title">Hyperopia</div>
+                            <div class="error-description">(Farsightedness)</div>
+                            <span class="error-category">Drag to match</span>
+                        </div>
+                        
+                        <div class="error-card mt-2" id="astigmatism-card" draggable="true" data-correct="astigmatism-desc">
+                            <div class="error-title">Astigmatism</div>
+                            <div class="error-description"></div>
+                            <span class="error-category">Drag to match</span>
+                        </div>
+                        
+                        <div class="error-card mt-2" id="presbyopia-card" draggable="true" data-correct="presbyopia-desc">
+                            <div class="error-title">Presbyopia</div>
+                            <div class="error-description"></div>
+                            <span class="error-category">Drag to match</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="mb-2"><strong>Descriptions:</strong></h4>
+                        <div class="description-zone" id="myopia-desc" data-accepts="myopia-card">
+                            <strong>A:</strong> Distant objects appear blurry while close objects are clear
+                        </div>
+                        
+                        <div class="description-zone" id="hyperopia-desc" data-accepts="hyperopia-card">
+                            <strong>B:</strong> Close objects appear blurry while distant objects are clear
+                        </div>
+                        
+                        <div class="description-zone" id="astigmatism-desc" data-accepts="astigmatism-card">
+                            <strong>C:</strong> Blurred vision at all distances due to irregular cornea shape
+                        </div>
+                        
+                        <div class="description-zone" id="presbyopia-desc" data-accepts="presbyopia-card">
+                            <strong>D:</strong> Age-related loss of near vision, usually after age 40
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feedback-message" id="errorsFeedback"></div>
+                
+                <div class="mt-3" style="padding: 12px; background: rgba(0, 184, 148, 0.05); border-radius: var(--radius-sm);">
+                    <strong>Clinical Application:</strong> These refractive errors are corrected with:
+                    <ul style="margin-left: 20px; margin-top: 8px; font-size: 0.8rem;">
+                        <li>Myopia: Concave lenses (- prescription)</li>
+                        <li>Hyperopia: Convex lenses (+ prescription)</li>
+                        <li>Astigmatism: Cylindrical lenses</li>
+                        <li>Presbyopia: Bifocal or progressive lenses</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Activity 4: Vision Process -->
+            <section class="activity-card">
                 <div class="activity-header">
                     <div class="activity-icon">🔄</div>
-                    <h2 class="activity-title">Nose & Throat Exam Procedure Sequence</h2>
+                    <h2 class="activity-title">Vision Process Sequence</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Click on each step in the correct order for a comprehensive 
-                    nose and throat examination. Follow proper clinical sequence.
+                    <strong>Instructions:</strong> Click on each step in the correct order from 1 to 5. 
+                    Follow the path of light through the eye to the brain.
                 </p>
                 
-                <div class="procedure-steps">
-                    <div class="procedure-step" data-step="1" data-order="1">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Patient History & Consent</div>
-                            <div class="procedure-description">Review symptoms, medical history, obtain consent for exam</div>
+                <div class="process-steps">
+                    <div class="process-step" data-step="1" data-order="1">
+                        <div class="step-number">?</div>
+                        <div class="step-content">
+                            <div class="step-title">Light Enters the Eye</div>
+                            <div class="step-description">Light passes through the cornea, then the pupil</div>
                         </div>
                     </div>
                     
-                    <div class="procedure-step" data-step="2" data-order="5">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">External Nose Inspection</div>
-                            <div class="procedure-description">Observe symmetry, skin condition, any deformities</div>
+                    <div class="process-step" data-step="2" data-order="4">
+                        <div class="step-number">?</div>
+                        <div class="step-content">
+                            <div class="step-title">Retina Converts Light</div>
+                            <div class="step-description">Photoreceptors (rods and cones) convert light to electrical signals</div>
                         </div>
                     </div>
                     
-                    <div class="procedure-step" data-step="3" data-order="2">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Prepare Equipment & Positioning</div>
-                            <div class="procedure-description">Gather otoscope/nasoscope, tongue depressors, position patient</div>
+                    <div class="process-step" data-step="3" data-order="2">
+                        <div class="step-number">?</div>
+                        <div class="step-content">
+                            <div class="step-title">Lens Focuses Light</div>
+                            <div class="step-description">The lens refracts (bends) light to focus it on the retina</div>
                         </div>
                     </div>
                     
-                    <div class="procedure-step" data-step="4" data-order="6">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Nasal Cavity Examination</div>
-                            <div class="procedure-description">Use nasoscope to inspect turbinates, septum, mucosa</div>
+                    <div class="process-step" data-step="4" data-order="5">
+                        <div class="step-number">?</div>
+                        <div class="step-content">
+                            <div class="step-title">Brain Interprets Signals</div>
+                            <div class="step-description">Visual cortex processes electrical signals into images we perceive</div>
                         </div>
                     </div>
                     
-                    <div class="procedure-step" data-step="5" data-order="3">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Hand Hygiene & PPE</div>
-                            <div class="procedure-description">Wash hands, don gloves, mask if respiratory symptoms present</div>
-                        </div>
-                    </div>
-                    
-                    <div class="procedure-step" data-step="6" data-order="7">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Throat Examination</div>
-                            <div class="procedure-description">Inspect tonsils, pharynx, uvula using tongue depressor</div>
-                        </div>
-                    </div>
-                    
-                    <div class="procedure-step" data-step="7" data-order="8">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Documentation & Patient Education</div>
-                            <div class="procedure-description">Record findings, discuss results, provide follow-up instructions</div>
-                        </div>
-                    </div>
-                    
-                    <div class="procedure-step" data-step="8" data-order="4">
-                        <div class="procedure-number">?</div>
-                        <div class="procedure-content">
-                            <div class="procedure-title">Palpation of Sinuses & Lymph Nodes</div>
-                            <div class="procedure-description">Gently palpate frontal/maxillary sinuses, cervical lymph nodes</div>
+                    <div class="process-step" data-step="5" data-order="3">
+                        <div class="step-number">?</div>
+                        <div class="step-content">
+                            <div class="step-title">Optic Nerve Transmits</div>
+                            <div class="step-description">Electrical signals travel via optic nerve to the brain</div>
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 24px;">
-                    <button class="activity-btn" id="checkProcedureBtn">
-                        ✓ Check Procedure Sequence
-                    </button>
-                </div>
+                <div class="feedback-message" id="processFeedback"></div>
                 
-                <div class="feedback-message" id="procedureFeedback"></div>
-                
-                <div style="margin-top: 24px; padding: 20px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm); font-size: 0.95rem;">
-                    <strong>Clinical Tip:</strong> Always use proper lighting for throat exams. For nasal examination, 
-                    use vasoconstrictor spray if mucosa is swollen. Document tonsil size using grading scale (1+ to 4+).
+                <div class="mt-3" style="padding: 12px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm);">
+                    <strong>Memory Aid:</strong> Remember "CLR OB" - Cornea → Lens → Retina → Optic nerve → Brain
                 </div>
             </section>
         </div>
@@ -1510,11 +1199,11 @@
         <!-- Results Panel -->
         <div class="results-panel" id="resultsPanel">
             <div class="results-header">
-                <div class="activity-icon" style="background: var(--color-success);">✓</div>
-                <h3 class="results-title">Module 4 Complete!</h3>
+                <div class="activity-icon" style="background: var(--color-success); width: 36px; height: 36px;">✓</div>
+                <h3 class="results-title">Module Complete!</h3>
             </div>
             <div class="results-content">
-                <p>Excellent work! You've completed the <strong>Nose, Throat & Sensory Loss Clinic</strong> module.</p>
+                <p>Excellent work! You've completed the <strong>Eye Care & Vision Assessment Clinic</strong> module.</p>
                 
                 <div class="score-display">
                     <div class="score-value" id="scoreValue">0%</div>
@@ -1523,42 +1212,300 @@
                 
                 <p><strong>What you've mastered:</strong></p>
                 <ul style="margin-left: 20px; margin-top: 8px; margin-bottom: 16px;">
-                    <li>✓ Throat culture collection technique & proper swabbing</li>
-                    <li>✓ Sensory loss communication strategies (vision & hearing)</li>
-                    <li>✓ ADA compliance for patients with disabilities</li>
-                    <li>✓ HIPAA privacy requirements & ethical responses</li>
-                    <li>✓ Comprehensive nose/throat examination sequence</li>
+                    <li>✓ Eye anatomy and structures</li>
+                    <li>✓ Differences between ophthalmologists, optometrists, and opticians</li>
+                    <li>✓ Four main refractive errors and their characteristics</li>
+                    <li>✓ The vision process from light entry to brain interpretation</li>
                 </ul>
                 
                 <div class="clinical-insight">
-                    <strong>Clinical Insight:</strong> When working with patients with sensory loss, always ask about 
-                    their preferred communication method. Document accommodations provided. For throat cultures, 
-                    rapid strep tests have high specificity but lower sensitivity - culture remains gold standard 
-                    for Group A Strep diagnosis.
+                    <strong>Clinical Insight:</strong> When documenting visual acuity, always use correct notation: 
+                    "OD" = right eye (oculus dexter), "OS" = left eye (oculus sinister), "OU" = both eyes (oculi uterque). 
+                    Recording 20/40 vision means the patient sees at 20 feet what a normal eye sees at 40 feet.
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- JavaScript remains the same -->
     <script>
-        // === STATE MANAGEMENT ===
+        // State Management
         let moduleState = {
-            throatCulture: { completed: false, score: 0, total: 3 },
-            communication: { completed: false, score: 0, total: 8 },
-            legalScenarios: { completed: false, score: 0, total: 3 },
-            procedures: { completed: false, score: 0, total: 8 },
+            anatomy: { completed: false, score: 0, total: 6 },
+            specialists: { completed: false, score: 0, total: 3 },
+            errors: { completed: false, score: 0, total: 4 },
+            process: { completed: false, score: 0, total: 5 },
             startTime: new Date(),
             activitiesCompleted: 0
         };
 
-        // === FIXED: ACTIVITY 1: THROAT CULTURE FUNCTIONS ===
-        function initializeThroatCultureActivity() {
-            let draggedTag = null;
+        // Correct Answers
+        const correctAnswers = {
+            anatomy: {
+                'label1': 'target1', // 1-Cornea
+                'label2': 'target2', // 2-Lens
+                'label3': 'target3', // 3-Retina
+                'label4': 'target4', // 4-Iris
+                'label5': 'target5', // 5-Pupil
+                'label6': 'target6'  // 6-Optic Nerve
+            },
+            specialists: {
+                '1': 'ophthalmologist',
+                '2': 'optometrist',
+                '3': 'optician'
+            },
+            errors: {
+                'myopia-card': 'myopia-desc',
+                'hyperopia-card': 'hyperopia-desc',
+                'astigmatism-card': 'astigmatism-desc',
+                'presbyopia-card': 'presbyopia-desc'
+            },
+            process: [1, 3, 5, 2, 4] // Correct order: 1, 3, 5, 2, 4
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAnatomyActivity();
+            initializeSpecialistsActivity();
+            initializeErrorsActivity();
+            initializeProcessActivity();
+            setupEventListeners();
+            updateProgress();
+            startTimer();
+        });
+
+        // Initialize Anatomy Activity - FIXED VERSION
+        function initializeAnatomyActivity() {
+            let draggedLabel = null;
             
-            // FIXED: Add draggable="true" and proper drag events
-            document.querySelectorAll('.swab-tag').forEach(tag => {
-                tag.addEventListener('dragstart', function(e) {
-                    draggedTag = this;
+            // Add drag events to number labels
+            document.querySelectorAll('.number-label').forEach(label => {
+                label.addEventListener('dragstart', function(e) {
+                    draggedLabel = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.id);
+                    
+                    // Visual feedback
+                    setTimeout(() => {
+                        this.style.opacity = '0.4';
+                    }, 0);
+                });
+                
+                label.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    this.style.opacity = '1';
+                    draggedLabel = null;
+                    
+                    // Remove all target highlights
+                    document.querySelectorAll('.target-zone').forEach(zone => {
+                        zone.style.fill = 'rgba(175, 75, 239, 0.1)';
+                    });
+                });
+            });
+            
+            // Add drop events to target zones
+            document.querySelectorAll('.target-zone').forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.fill = 'rgba(175, 75, 239, 0.3)';
+                });
+                
+                zone.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                });
+                
+                zone.addEventListener('dragleave', function() {
+                    this.style.fill = 'rgba(175, 75, 239, 0.1)';
+                });
+                
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.fill = 'rgba(175, 75, 239, 0.1)';
+                    
+                    if (draggedLabel) {
+                        const labelId = draggedLabel.id;
+                        const targetId = this.id;
+                        const correctTarget = correctAnswers.anatomy[labelId];
+                        
+                        // Check if dropped on correct target
+                        const isCorrect = targetId === correctTarget;
+                        
+                        // Visual feedback on label
+                        draggedLabel.classList.remove('dragging');
+                        draggedLabel.classList.add('placed');
+                        draggedLabel.style.opacity = '1';
+                        
+                        // Move label to target position
+                        const zoneRect = this.getBoundingClientRect();
+                        const diagramRect = document.getElementById('eyeDiagram').getBoundingClientRect();
+                        
+                        draggedLabel.style.top = `${zoneRect.top - diagramRect.top - 10}px`;
+                        draggedLabel.style.left = `${zoneRect.left - diagramRect.left - 40}px`;
+                        
+                        // Disable dragging after placement
+                        draggedLabel.draggable = false;
+                        draggedLabel.style.cursor = 'default';
+                        
+                        // Show feedback
+                        const structureName = draggedLabel.querySelector('.label-text').textContent;
+                        if (isCorrect) {
+                            showFeedback('anatomyFeedback', 
+                                `✓ Correct! ${structureName} is at position ${draggedLabel.querySelector('.label-number').textContent}.`, 
+                                'correct');
+                            draggedLabel.classList.add('correct');
+                        } else {
+                            showFeedback('anatomyFeedback', 
+                                `✗ Try again. That's not where the ${structureName} goes.`, 
+                                'incorrect');
+                            draggedLabel.classList.add('incorrect');
+                        }
+                        
+                        // Check if all labels placed
+                        const placedLabels = document.querySelectorAll('.number-label.placed').length;
+                        if (placedLabels === 6) {
+                            moduleState.anatomy.completed = true;
+                            updateProgress();
+                        }
+                    }
+                });
+            });
+            
+            // Check Answers Button
+            document.getElementById('checkAnatomyBtn').addEventListener('click', function() {
+                let correctCount = 0;
+                const totalLabels = 6;
+                
+                // Check each label position
+                document.querySelectorAll('.number-label').forEach(label => {
+                    const labelRect = label.getBoundingClientRect();
+                    const labelId = label.id;
+                    const correctTargetId = correctAnswers.anatomy[labelId];
+                    const target = document.getElementById(correctTargetId);
+                    
+                    if (target) {
+                        const targetRect = target.getBoundingClientRect();
+                        
+                        // Check if label is near its target (within 60px)
+                        const centerX1 = labelRect.left + labelRect.width / 2;
+                        const centerY1 = labelRect.top + labelRect.height / 2;
+                        const centerX2 = targetRect.left + targetRect.width / 2;
+                        const centerY2 = targetRect.top + targetRect.height / 2;
+                        
+                        const distance = Math.sqrt(
+                            Math.pow(centerX1 - centerX2, 2) + 
+                            Math.pow(centerY1 - centerY2, 2)
+                        );
+                        
+                        const isCorrect = distance < 80;
+                        
+                        if (isCorrect) {
+                            label.classList.add('correct');
+                            label.classList.remove('incorrect');
+                            correctCount++;
+                        } else {
+                            label.classList.add('incorrect');
+                            label.classList.remove('correct');
+                        }
+                    }
+                });
+                
+                // Update score
+                moduleState.anatomy.score = correctCount;
+                moduleState.anatomy.completed = true;
+                
+                // Show results
+                const score = Math.round((correctCount / totalLabels) * 100);
+                showFeedback('anatomyFeedback', 
+                    `You got ${correctCount} out of ${totalLabels} correct (${score}%)!`, 
+                    score >= 80 ? 'correct' : 'incorrect');
+                
+                // Show answer key
+                document.getElementById('anatomyAnswerKey').style.display = 'block';
+                
+                // Update overall progress
+                updateProgress();
+                
+                // Scroll to feedback
+                document.getElementById('anatomyFeedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        }
+
+        // Initialize Specialists Activity
+        function initializeSpecialistsActivity() {
+            let selectedScenario = null;
+            
+            // Scenario click events
+            document.querySelectorAll('.scenario').forEach(scenario => {
+                scenario.addEventListener('click', function() {
+                    // Remove previous selection
+                    document.querySelectorAll('.scenario').forEach(s => {
+                        s.style.background = 'white';
+                        s.style.borderColor = 'rgba(12, 10, 24, 0.1)';
+                    });
+                    
+                    // Highlight selected scenario
+                    this.style.background = 'rgba(175, 75, 239, 0.1)';
+                    this.style.borderColor = 'var(--color-primary)';
+                    selectedScenario = this;
+                });
+            });
+            
+            // Specialist card click events
+            document.querySelectorAll('.specialist-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    if (!selectedScenario) {
+                        showFeedback('specialistFeedback', 'Please select a scenario first!', 'incorrect');
+                        return;
+                    }
+                    
+                    const specialist = this.dataset.specialist;
+                    const scenarioNum = selectedScenario.dataset.scenario;
+                    const correctAnswer = correctAnswers.specialists[scenarioNum];
+                    
+                    // Check answer
+                    const isCorrect = specialist === correctAnswer;
+                    
+                    // Visual feedback
+                    document.querySelectorAll('.specialist-card').forEach(c => {
+                        c.classList.remove('selected', 'correct', 'incorrect');
+                    });
+                    
+                    this.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    
+                    // Show feedback message
+                    if (isCorrect) {
+                        showFeedback('specialistFeedback', 
+                            `✓ Correct! Scenario ${scenarioNum} should be handled by a ${correctAnswer}.`, 
+                            'correct');
+                        moduleState.specialists.score++;
+                    } else {
+                        showFeedback('specialistFeedback', 
+                            `✗ Not quite. Scenario ${scenarioNum} requires a ${correctAnswer}.`, 
+                            'incorrect');
+                    }
+                    
+                    // Update state
+                    moduleState.specialists.completed = true;
+                    updateProgress();
+                    
+                    // Reset for next selection
+                    selectedScenario = null;
+                    document.querySelectorAll('.scenario').forEach(s => {
+                        s.style.background = 'white';
+                        s.style.borderColor = 'rgba(12, 10, 24, 0.1)';
+                    });
+                });
+            });
+        }
+
+        // Initialize Errors Activity
+        function initializeErrorsActivity() {
+            let draggedCard = null;
+            
+            // Drag events for error cards
+            document.querySelectorAll('.error-card').forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    draggedCard = this;
                     this.classList.add('dragging');
                     e.dataTransfer.setData('text/plain', this.id);
                     
@@ -1567,685 +1514,366 @@
                     }, 0);
                 });
                 
-                tag.addEventListener('dragend', function() {
-                    this.classList.remove('dragging');
-                    this.style.opacity = '1';
-                    draggedTag = null;
-                });
-            });
-            
-            // FIXED: Throat area drop events
-            document.querySelectorAll('.throat-area').forEach(area => {
-                area.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = 'var(--color-primary)';
-                    this.style.backgroundColor = 'rgba(175, 75, 239, 0.05)';
-                });
-                
-                area.addEventListener('dragleave', function() {
-                    this.style.borderColor = '#ddd';
-                    this.style.backgroundColor = 'white';
-                });
-                
-                area.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    this.style.borderColor = '#ddd';
-                    this.style.backgroundColor = 'white';
-                    
-                    if (draggedTag) {
-                        // Create clone
-                        const tagClone = draggedTag.cloneNode(true);
-                        tagClone.classList.remove('dragging');
-                        tagClone.classList.add('placed');
-                        tagClone.draggable = false;
-                        tagClone.style.cursor = 'default';
-                        tagClone.style.opacity = '1';
-                        tagClone.style.margin = '10px';
-                        tagClone.style.width = '80%';
-                        
-                        // Clear area and add clone
-                        this.innerHTML = `
-                            <div class="area-title">${this.dataset.area === 'uvula' ? 'Uvula' : 
-                                this.dataset.area === 'left-tonsil' ? 'Left Tonsillar Pillar' :
-                                this.dataset.area === 'right-tonsil' ? 'Right Tonsillar Pillar' :
-                                'Posterior Pharynx'}</div>
-                        `;
-                        this.appendChild(tagClone);
-                        
-                        // Hide original (but keep for reset)
-                        draggedTag.style.visibility = 'hidden';
-                    }
-                });
-            });
-            
-            // FIXED: Check swabbing button
-            document.getElementById('checkSwabbingBtn').addEventListener('click', checkSwabbingAnswers);
-        }
-        
-        function checkSwabbingAnswers() {
-            const correctAreas = ['left-tonsil', 'right-tonsil', 'posterior-pharynx'];
-            const incorrectArea = 'uvula';
-            
-            let score = 0;
-            let feedback = '';
-            
-            // Check each area
-            correctAreas.forEach(areaId => {
-                const area = document.getElementById(`area-${areaId}`);
-                const hasTag = area.querySelector('.swab-tag') !== null;
-                
-                if (hasTag) {
-                    area.classList.remove('incorrect-drop');
-                    area.classList.add('correct-drop');
-                    score++;
-                } else {
-                    area.classList.remove('correct-drop');
-                    area.classList.add('incorrect-drop');
-                }
-            });
-            
-            // Check uvula (should NOT have tag)
-            const uvulaArea = document.getElementById(`area-${incorrectArea}`);
-            const uvulaHasTag = uvulaArea.querySelector('.swab-tag') !== null;
-            
-            if (!uvulaHasTag) {
-                uvulaArea.classList.remove('incorrect-drop');
-                uvulaArea.classList.add('correct-drop');
-                score++;
-            } else {
-                uvulaArea.classList.remove('correct-drop');
-                uvulaArea.classList.add('incorrect-drop');
-            }
-            
-            // Update module state
-            moduleState.throatCulture.score = Math.floor(score * 0.75); // 3 points max
-            moduleState.throatCulture.completed = true;
-            
-            // Provide feedback
-            if (score === 4) {
-                feedback = '✓ Perfect! All swabs placed correctly. Remember: swab both tonsillar pillars and posterior pharynx, avoid uvula.';
-            } else if (score >= 2) {
-                feedback = `✓ Good effort! ${score}/4 correct. Review proper throat culture technique.`;
-            } else {
-                feedback = `✗ Needs practice. ${score}/4 correct. Proper throat culture requires swabbing tonsillar pillars and posterior pharynx while avoiding contaminants.`;
-            }
-            
-            showFeedback('swabbingFeedback', feedback, score >= 2 ? 'correct' : 'incorrect');
-            updateProgress();
-        }
-
-        // === FIXED: ACTIVITY 2: COMMUNICATION FUNCTIONS ===
-        function initializeCommunicationActivity() {
-            let draggedCard = null;
-            
-            // FIXED: Communication card drag events
-            document.querySelectorAll('.communication-card').forEach(card => {
-                card.addEventListener('dragstart', function(e) {
-                    draggedCard = this;
-                    this.classList.add('dragging');
-                    e.dataTransfer.setData('text/plain', this.id);
-                    
-                    // Add active class to drop zones
-                    document.querySelectorAll('.drop-zone').forEach(zone => {
-                        zone.classList.add('active');
-                    });
-                });
-                
                 card.addEventListener('dragend', function() {
                     this.classList.remove('dragging');
+                    this.style.opacity = '1';
                     draggedCard = null;
                     
-                    // Remove active class from drop zones
-                    document.querySelectorAll('.drop-zone').forEach(zone => {
+                    // Remove zone highlights
+                    document.querySelectorAll('.description-zone').forEach(zone => {
                         zone.classList.remove('active');
                     });
                 });
             });
             
-            // FIXED: Drop zone events
-            document.querySelectorAll('.drop-zone').forEach(zone => {
+            // Drop events for description zones
+            document.querySelectorAll('.description-zone').forEach(zone => {
                 zone.addEventListener('dragover', function(e) {
                     e.preventDefault();
+                    this.classList.add('active');
+                });
+                
+                zone.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                });
+                
+                zone.addEventListener('dragleave', function() {
+                    this.classList.remove('active');
                 });
                 
                 zone.addEventListener('drop', function(e) {
                     e.preventDefault();
+                    this.classList.remove('active');
                     
                     if (draggedCard) {
-                        // Create clone
+                        const cardId = draggedCard.id;
+                        const zoneId = this.id;
+                        const correctZone = correctAnswers.errors[cardId];
+                        
+                        // Check if correct
+                        const isCorrect = zoneId === correctZone;
+                        
+                        // Visual feedback
+                        draggedCard.classList.remove('dragging');
+                        draggedCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+                        draggedCard.style.opacity = '1';
+                        
+                        // Move card to zone
                         const cardClone = draggedCard.cloneNode(true);
-                        cardClone.classList.remove('dragging');
-                        cardClone.draggable = true; // Allow re-dragging
-                        cardClone.style.cursor = 'grab';
-                        cardClone.style.margin = '5px';
-                        
-                        // Add new drag event to clone
-                        cardClone.addEventListener('dragstart', function(e) {
-                            this.classList.add('dragging');
-                            e.dataTransfer.setData('text/plain', this.id);
-                            
-                            document.querySelectorAll('.drop-zone').forEach(z => {
-                                z.classList.add('active');
-                            });
-                        });
-                        
-                        cardClone.addEventListener('dragend', function() {
-                            this.classList.remove('dragging');
-                            
-                            document.querySelectorAll('.drop-zone').forEach(z => {
-                                z.classList.remove('active');
-                            });
-                        });
-                        
+                        cardClone.classList.remove('dragging', 'draggable');
+                        cardClone.style.cursor = 'default';
+                        cardClone.style.marginTop = '8px';
                         this.appendChild(cardClone);
+                        
+                        // Disable original card
+                        draggedCard.style.display = 'none';
+                        
+                        // Show feedback
+                        if (isCorrect) {
+                            showFeedback('errorsFeedback', 
+                                '✓ Correct match! Well done.', 
+                                'correct');
+                            moduleState.errors.score++;
+                        } else {
+                            showFeedback('errorsFeedback', 
+                                '✗ Not quite. Try matching to a different description.', 
+                                'incorrect');
+                        }
+                        
+                        // Check if all cards placed
+                        const placedCards = document.querySelectorAll('.error-card[style*="display: none"]').length;
+                        if (placedCards === 4) {
+                            moduleState.errors.completed = true;
+                            updateProgress();
+                        }
                     }
                 });
             });
-            
-            // FIXED: Check communication button
-            document.getElementById('checkCommunicationBtn').addEventListener('click', checkCommunicationMatches);
-        }
-        
-        function checkCommunicationMatches() {
-            const correctMatches = {
-                'drop-vision': ['card-large-print', 'card-verbal-description', 'card-contrast-colors'],
-                'drop-hearing': ['card-face-patient', 'card-reduce-noise', 'card-assistive-listening'],
-                'both': ['card-teach-back', 'card-extra-time']
-            };
-            
-            let score = 0;
-            let totalMatches = 0;
-            
-            // Check vision drop zone
-            const visionZone = document.getElementById('drop-vision');
-            const visionCards = Array.from(visionZone.querySelectorAll('.communication-card'))
-                .map(card => card.id);
-            
-            correctMatches['drop-vision'].forEach(correctId => {
-                if (visionCards.includes(correctId)) {
-                    document.getElementById(correctId).classList.add('correct');
-                    score++;
-                }
-                totalMatches++;
-            });
-            
-            // Check hearing drop zone
-            const hearingZone = document.getElementById('drop-hearing');
-            const hearingCards = Array.from(hearingZone.querySelectorAll('.communication-card'))
-                .map(card => card.id);
-            
-            correctMatches['drop-hearing'].forEach(correctId => {
-                if (hearingCards.includes(correctId)) {
-                    document.getElementById(correctId).classList.add('correct');
-                    score++;
-                }
-                totalMatches++;
-            });
-            
-            // Cards that can be in either zone
-            const bothCards = visionCards.concat(hearingCards);
-            correctMatches['both'].forEach(correctId => {
-                if (bothCards.includes(correctId)) {
-                    document.getElementById(correctId).classList.add('correct');
-                    score++;
-                }
-                totalMatches++;
-            });
-            
-            // Update module state
-            moduleState.communication.score = Math.floor((score / totalMatches) * 8);
-            moduleState.communication.completed = true;
-            
-            // Provide feedback
-            const percentage = Math.round((score / totalMatches) * 100);
-            let feedback = '';
-            
-            if (percentage >= 90) {
-                feedback = `✓ Excellent! ${score}/${totalMatches} strategies correctly matched. You understand sensory loss communication well.`;
-            } else if (percentage >= 70) {
-                feedback = `✓ Good work! ${score}/${totalMatches} correct. Review strategies for patients with vision/hearing impairments.`;
-            } else {
-                feedback = `✗ Needs review. ${score}/${totalMatches} correct. Remember: vision strategies focus on visual adaptations, hearing strategies focus on auditory adaptations.`;
-            }
-            
-            showFeedback('communicationFeedback', feedback, percentage >= 70 ? 'correct' : 'incorrect');
-            updateProgress();
         }
 
-        // === ACTIVITY 3: LEGAL SCENARIOS FUNCTIONS ===
-        function initializeLegalActivity() {
-            // Legal option click events
-            document.querySelectorAll('.legal-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const scenario = this.dataset.scenario;
-                    
-                    // Remove selection from other options in same scenario
-                    document.querySelectorAll(`.legal-option[data-scenario="${scenario}"]`).forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Select this one
-                    this.classList.add('selected');
-                });
-            });
+        // Initialize Process Activity
+        function initializeProcessActivity() {
+            let currentStep = 0;
+            const correctOrder = correctAnswers.process;
+            const steps = document.querySelectorAll('.process-step');
             
-            // Check legal button
-            document.getElementById('checkLegalBtn').addEventListener('click', checkLegalAnswers);
-        }
-        
-        function checkLegalAnswers() {
-            let score = 0;
-            let totalScenarios = 3;
-            
-            // Check each scenario
-            for (let i = 1; i <= totalScenarios; i++) {
-                const selectedOption = document.querySelector(`.legal-option[data-scenario="${i}"].selected`);
-                
-                if (selectedOption && selectedOption.dataset.answer === 'correct') {
-                    selectedOption.classList.add('correct');
-                    score++;
-                } else if (selectedOption) {
-                    selectedOption.classList.add('incorrect');
-                    // Show correct answer
-                    document.querySelector(`.legal-option[data-scenario="${i}"][data-answer="correct"]`)
-                        .classList.add('correct');
-                }
-                
-                // Disable further clicks
-                document.querySelectorAll(`.legal-option[data-scenario="${i}"]`).forEach(opt => {
-                    opt.style.pointerEvents = 'none';
-                });
-            }
-            
-            // Update module state
-            moduleState.legalScenarios.score = score;
-            moduleState.legalScenarios.completed = true;
-            
-            // Provide feedback
-            let feedback = '';
-            if (score === totalScenarios) {
-                feedback = '✓ Perfect! All legal/ethical responses correct. You understand ADA/HIPAA requirements.';
-            } else if (score >= 2) {
-                feedback = `✓ Good! ${score}/${totalScenarios} correct. Review the scenarios marked in red.`;
-            } else {
-                feedback = `✗ Needs review. ${score}/${totalScenarios} correct. Remember: ADA requires reasonable accommodations, HIPAA protects patient privacy.`;
-            }
-            
-            showFeedback('legalFeedback', feedback, score >= 2 ? 'correct' : 'incorrect');
-            updateProgress();
-        }
-
-        // === ACTIVITY 4: PROCEDURE FUNCTIONS ===
-        function initializeProcedureActivity() {
-            let clickOrder = [];
-            let currentClick = 1;
-            const maxSteps = 8;
-            const correctOrder = [1, 3, 5, 8, 2, 4, 6, 7];
-            
-            // Procedure step click events
-            document.querySelectorAll('.procedure-step').forEach(step => {
+            steps.forEach(step => {
                 step.addEventListener('click', function() {
-                    // If already clicked, skip
-                    if (this.classList.contains('active')) return;
+                    const stepNum = parseInt(this.dataset.step);
+                    const expectedStep = correctOrder[currentStep];
                     
-                    // Mark as active in current order
-                    const stepNumber = parseInt(this.dataset.step);
-                    clickOrder.push(stepNumber);
-                    
-                    // Update display
-                    const numberSpan = this.querySelector('.procedure-number');
-                    numberSpan.textContent = currentClick;
-                    this.classList.add('active');
-                    
-                    currentClick++;
-                    
-                    // Check if all steps are clicked
-                    if (clickOrder.length === maxSteps) {
-                        checkProcedureSequence(clickOrder, correctOrder);
+                    // Check if clicked in correct order
+                    if (stepNum === expectedStep) {
+                        // Correct - mark this step
+                        this.classList.add('active');
+                        this.querySelector('.step-number').textContent = currentStep + 1;
+                        this.querySelector('.step-number').style.background = 'var(--color-success)';
+                        currentStep++;
+                        
+                        // Check if all steps completed
+                        if (currentStep === correctOrder.length) {
+                            moduleState.process.completed = true;
+                            moduleState.process.score = 5;
+                            showFeedback('processFeedback', 
+                                '✓ Perfect! You sequenced the vision process correctly.', 
+                                'correct');
+                            updateProgress();
+                        } else {
+                            showFeedback('processFeedback', 
+                                `✓ Good! Next find step ${currentStep + 1}.`, 
+                                'correct');
+                        }
+                    } else {
+                        // Incorrect
+                        showFeedback('processFeedback', 
+                            '✗ Not in the right order. Start with "Light Enters the Eye".', 
+                            'incorrect');
                     }
                 });
             });
-            
-            // Check procedure button
-            document.getElementById('checkProcedureBtn').addEventListener('click', function() {
-                if (clickOrder.length < maxSteps) {
-                    showFeedback('procedureFeedback', 
-                        `Please click all ${maxSteps} steps in the correct order first!`, 
-                        'incorrect');
-                    return;
-                }
-                checkProcedureSequence(clickOrder, correctOrder);
-            });
-        }
-        
-        function checkProcedureSequence(clickOrder, correctOrder) {
-            let correctCount = 0;
-            
-            // Compare sequences
-            for (let i = 0; i < clickOrder.length; i++) {
-                if (clickOrder[i] === correctOrder[i]) {
-                    correctCount++;
-                }
-            }
-            
-            // Calculate score
-            moduleState.procedures.score = correctCount;
-            moduleState.procedures.completed = true;
-            
-            // Visual feedback
-            document.querySelectorAll('.procedure-step').forEach((step, index) => {
-                const stepNumber = parseInt(step.dataset.step);
-                const numberSpan = step.querySelector('.procedure-number');
-                
-                if (stepNumber === correctOrder[index]) {
-                    numberSpan.style.background = 'var(--color-success)';
-                } else {
-                    numberSpan.style.background = 'var(--color-error)';
-                    const correctIndex = correctOrder.indexOf(stepNumber);
-                    if (correctIndex !== -1) {
-                        numberSpan.title = `Should be step ${correctIndex + 1}`;
-                    }
-                }
-            });
-            
-            // Show feedback
-            const percentage = Math.round((correctCount / 8) * 100);
-            let feedback = '';
-            
-            if (percentage === 100) {
-                feedback = `✓ Perfect! All ${correctCount}/8 steps in correct order.`;
-            } else if (percentage >= 75) {
-                feedback = `✓ Good! ${correctCount}/8 steps correct (${percentage}%). Review the steps marked in red.`;
-            } else {
-                feedback = `✗ Needs review. ${correctCount}/8 steps correct (${percentage}%). Proper sequence: History → Prep → Hygiene → Palpation → External → Nasal → Throat → Documentation.`;
-            }
-            
-            showFeedback('procedureFeedback', feedback, 
-                percentage >= 75 ? 'correct' : 'incorrect');
-            
-            updateProgress();
         }
 
-        // === INITIALIZE MODULE ===
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeThroatCultureActivity();
-            initializeCommunicationActivity();
-            initializeLegalActivity();
-            initializeProcedureActivity();
-            setupEventListeners();
-            updateProgress();
-            startTimer();
-        });
-
-        // === HELPER FUNCTIONS ===
+        // Setup Event Listeners
         function setupEventListeners() {
-            // Reset button
+            // Buttons
             document.getElementById('resetBtn').addEventListener('click', resetAllActivities);
-            
-            // Check all answers button
             document.getElementById('checkBtn').addEventListener('click', checkAllAnswers);
-            
-            // View results button
             document.getElementById('viewResultsBtn').addEventListener('click', showFinalResults);
         }
 
+        // Show Feedback Message
         function showFeedback(elementId, message, type) {
-            const element = document.getElementById(elementId);
-            element.textContent = message;
-            element.className = 'feedback-message';
-            element.classList.add(`feedback-${type}`);
-            element.style.display = 'block';
+            const feedbackEl = document.getElementById(elementId);
+            feedbackEl.textContent = message;
+            feedbackEl.className = `feedback-message feedback-${type}`;
+            feedbackEl.style.display = 'block';
             
-            if (type === 'incorrect') {
-                setTimeout(() => {
-                    element.style.display = 'none';
-                }, 5000);
-            }
+            // Scroll to feedback
+            feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                feedbackEl.style.display = 'none';
+            }, 4000);
         }
 
+        // Progress Tracking
         function updateProgress() {
             // Calculate completed activities
-            let completedCount = 0;
-            if (moduleState.throatCulture.completed) completedCount++;
-            if (moduleState.communication.completed) completedCount++;
-            if (moduleState.legalScenarios.completed) completedCount++;
-            if (moduleState.procedures.completed) completedCount++;
+            const completedActivities = [
+                moduleState.anatomy.completed,
+                moduleState.specialists.completed,
+                moduleState.errors.completed,
+                moduleState.process.completed
+            ].filter(Boolean).length;
             
-            document.getElementById('completedCount').textContent = completedCount;
+            moduleState.activitiesCompleted = completedActivities;
+            document.getElementById('completedCount').textContent = completedActivities;
             
             // Calculate accuracy
-            let totalScore = 0;
-            let totalPossible = 0;
-            
-            Object.values(moduleState).forEach(activity => {
-                if (activity.score !== undefined && activity.total) {
-                    totalScore += activity.score;
-                    totalPossible += activity.total;
-                }
-            });
-            
+            const totalScore = moduleState.anatomy.score + moduleState.specialists.score + 
+                              moduleState.errors.score + moduleState.process.score;
+            const totalPossible = moduleState.anatomy.total + moduleState.specialists.total + 
+                                 moduleState.errors.total + moduleState.process.total;
             const accuracy = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+            
             document.getElementById('accuracyScore').textContent = `${accuracy}%`;
             
             // Update progress tracker
-            if (completedCount >= 4) {
-                document.querySelectorAll('.progress-step').forEach(step => {
-                    step.classList.remove('active');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            progressSteps.forEach((step, index) => {
+                if (index < completedActivities) {
                     step.classList.add('completed');
-                });
-                
-                // Show "View Results" button
-                document.getElementById('checkBtn').style.display = 'none';
-                document.getElementById('viewResultsBtn').style.display = 'flex';
-            } else if (completedCount >= 1) {
-                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    step.classList.remove('active');
+                } else if (index === completedActivities) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
                     step.classList.remove('active', 'completed');
-                    if (index < completedCount) {
-                        step.classList.add('completed');
-                    }
-                    if (index === completedCount) {
-                        step.classList.add('active');
-                    }
-                });
-            }
-            
-            // Update module state
-            moduleState.activitiesCompleted = completedCount;
-        }
-
-        function startTimer() {
-            const timeElement = document.getElementById('timeSpent');
-            
-            setInterval(() => {
-                const now = new Date();
-                const diffMs = now - moduleState.startTime;
-                const diffMins = Math.floor(diffMs / 60000);
-                timeElement.textContent = `${diffMins} min`;
-            }, 60000);
-        }
-
-        function checkAllAnswers() {
-            // Trigger check for each activity if not already checked
-            if (!moduleState.throatCulture.completed) {
-                checkSwabbingAnswers();
-            }
-            
-            if (!moduleState.communication.completed) {
-                checkCommunicationMatches();
-            }
-            
-            if (!moduleState.legalScenarios.completed) {
-                checkLegalAnswers();
-            }
-            
-            if (!moduleState.procedures.completed) {
-                showFeedback('procedureFeedback', 
-                    'Complete the procedure sequence activity first!', 
-                    'incorrect');
-            }
-            
-            updateProgress();
-            
-            // If all activities completed, show results
-            if (moduleState.activitiesCompleted >= 4) {
-                showFinalResults();
-            }
-        }
-
-        function showFinalResults() {
-            // Calculate final score
-            let totalScore = 0;
-            let totalPossible = 0;
-            
-            Object.values(moduleState).forEach(activity => {
-                if (activity.score !== undefined && activity.total) {
-                    totalScore += activity.score;
-                    totalPossible += activity.total;
                 }
             });
             
-            const finalScore = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
-            
-            // Animate score counter
-            const scoreElement = document.getElementById('scoreValue');
-            animateCounter(scoreElement, 0, finalScore, 1500);
-            
-            // Set score text
-            const scoreText = document.getElementById('scoreText');
-            let performance = '';
-            
-            if (finalScore >= 90) performance = 'Outstanding!';
-            else if (finalScore >= 80) performance = 'Excellent!';
-            else if (finalScore >= 70) performance = 'Good!';
-            else performance = 'Keep practicing!';
-            
-            scoreText.textContent = `${performance} Your overall score`;
+            // Show view results button when all activities completed
+            if (completedActivities === 4) {
+                document.getElementById('viewResultsBtn').style.display = 'flex';
+            }
+        }
+
+        // Timer
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const diff = Math.floor((now - moduleState.startTime) / 1000 / 60);
+                document.getElementById('timeSpent').textContent = `${diff} min`;
+            }, 60000);
+        }
+
+        // Check All Answers
+        function checkAllAnswers() {
+            // Calculate overall score
+            const totalScore = moduleState.anatomy.score + moduleState.specialists.score + 
+                              moduleState.errors.score + moduleState.process.score;
+            const totalPossible = moduleState.anatomy.total + moduleState.specialists.total + 
+                                 moduleState.errors.total + moduleState.process.total;
+            const overallScore = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
             
             // Show results panel
-            document.getElementById('resultsPanel').classList.add('show');
+            showFinalResults(overallScore);
+        }
+
+        // Show Final Results
+        function showFinalResults(score) {
+            const resultsPanel = document.getElementById('resultsPanel');
+            const scoreValue = document.getElementById('scoreValue');
+            const scoreText = document.getElementById('scoreText');
+            
+            // Calculate score if not provided
+            if (!score) {
+                const totalScore = moduleState.anatomy.score + moduleState.specialists.score + 
+                                  moduleState.errors.score + moduleState.process.score;
+                const totalPossible = moduleState.anatomy.total + moduleState.specialists.total + 
+                                     moduleState.errors.total + moduleState.process.total;
+                score = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+            }
+            
+            resultsPanel.classList.add('show');
+            
+            // Animate score counter
+            let currentScore = 0;
+            const increment = score / 20;
+            
+            const timer = setInterval(() => {
+                currentScore += increment;
+                if (currentScore >= score) {
+                    currentScore = score;
+                    clearInterval(timer);
+                }
+                scoreValue.textContent = `${Math.round(currentScore)}%`;
+            }, 50);
+            
+            // Set score text based on performance
+            if (score >= 90) {
+                scoreText.textContent = "Excellent! You've mastered eye care concepts";
+            } else if (score >= 80) {
+                scoreText.textContent = "Very good! Strong understanding";
+            } else if (score >= 70) {
+                scoreText.textContent = "Good job! Ready for clinical practice";
+            } else if (score >= 60) {
+                scoreText.textContent = "Keep practicing! Review key concepts";
+            } else {
+                scoreText.textContent = "Try again! Focus on areas needing improvement";
+            }
             
             // Scroll to results
-            setTimeout(() => {
-                document.getElementById('resultsPanel').scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest'
-                });
-            }, 100);
+            resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function animateCounter(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = Math.floor(progress * (end - start) + start);
-                element.textContent = `${value}%`;
-                
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
+        // Reset All Activities
         function resetAllActivities() {
-            // Reset module state
+            // Reset state
             moduleState = {
-                throatCulture: { completed: false, score: 0, total: 3 },
-                communication: { completed: false, score: 0, total: 8 },
-                legalScenarios: { completed: false, score: 0, total: 3 },
-                procedures: { completed: false, score: 0, total: 8 },
+                anatomy: { completed: false, score: 0, total: 6 },
+                specialists: { completed: false, score: 0, total: 3 },
+                errors: { completed: false, score: 0, total: 4 },
+                process: { completed: false, score: 0, total: 5 },
                 startTime: new Date(),
                 activitiesCompleted: 0
             };
             
-            // Reset activity 1
-            document.querySelectorAll('.swab-tag').forEach(tag => {
-                tag.classList.remove('dragging', 'placed');
-                tag.style.visibility = 'visible';
-                tag.style.opacity = '1';
-                tag.draggable = true;
-                tag.style.cursor = 'grab';
-                tag.style.width = 'auto';
-                tag.style.margin = '0';
-            });
-            
-            // Reset throat areas
-            document.querySelectorAll('.throat-area').forEach(area => {
-                const areaId = area.id.replace('area-', '');
-                area.innerHTML = `
-                    <div class="area-title">${areaId === 'uvula' ? 'Uvula' : 
-                        areaId === 'left-tonsil' ? 'Left Tonsillar Pillar' :
-                        areaId === 'right-tonsil' ? 'Right Tonsillar Pillar' :
-                        'Posterior Pharynx'}</div>
-                    <div class="area-instruction">
-                        ${areaId === 'uvula' ? 'DO NOT SWAB (contaminant)' : 'Swab area thoroughly'}
-                    </div>
-                `;
-                area.classList.remove('correct-drop', 'incorrect-drop');
-                area.style.borderColor = '#ddd';
-                area.style.backgroundColor = 'white';
-            });
-            
-            // Reset activity 2
-            document.querySelectorAll('.communication-card').forEach(card => {
-                card.classList.remove('correct', 'incorrect', 'dragging');
-                card.draggable = true;
-                card.style.cursor = 'grab';
-                card.style.margin = '0';
-            });
-            
-            // Clear drop zones
-            document.querySelectorAll('.drop-zone').forEach(zone => {
-                zone.innerHTML = '<div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">' + 
-                    (zone.id === 'drop-vision' ? 'Drop Vision Strategies Here' : 'Drop Hearing Strategies Here') + 
-                    '</div>';
-            });
-            
-            // Reset activity 3
-            document.querySelectorAll('.legal-option').forEach(option => {
-                option.classList.remove('selected', 'correct', 'incorrect');
-                option.style.pointerEvents = 'auto';
-            });
-            
-            // Reset activity 4
-            document.querySelectorAll('.procedure-step').forEach(step => {
-                step.classList.remove('active');
-                const numberSpan = step.querySelector('.procedure-number');
-                numberSpan.textContent = '?';
-                numberSpan.style.background = 'var(--color-primary)';
-                numberSpan.title = '';
-            });
-            
-            // Clear feedback messages
-            document.querySelectorAll('.feedback-message').forEach(feedback => {
-                feedback.textContent = '';
-                feedback.className = 'feedback-message';
-                feedback.style.display = 'none';
-            });
-            
-            // Hide results panel
-            document.getElementById('resultsPanel').classList.remove('show');
-            
-            // Reset buttons
-            document.getElementById('checkBtn').style.display = 'flex';
-            document.getElementById('viewResultsBtn').style.display = 'none';
-            
-            // Reset progress tracker
-            document.querySelectorAll('.progress-step').forEach((step, index) => {
-                step.classList.remove('completed');
-                if (index === 0) {
-                    step.classList.add('active');
-                } else {
-                    step.classList.remove('active');
+            // Reset anatomy activity
+            document.querySelectorAll('.number-label').forEach(label => {
+                label.classList.remove('correct', 'incorrect', 'placed', 'dragging');
+                label.style.opacity = '1';
+                label.draggable = true;
+                label.style.cursor = 'move';
+                
+                // Reset positions to original
+                if (label.id === 'label1') {
+                    label.style.top = '20px';
+                    label.style.left = '10px';
+                }
+                if (label.id === 'label2') {
+                    label.style.top = '70px';
+                    label.style.left = '10px';
+                }
+                if (label.id === 'label3') {
+                    label.style.top = '120px';
+                    label.style.left = '10px';
+                }
+                if (label.id === 'label4') {
+                    label.style.top = '170px';
+                    label.style.left = '10px';
+                }
+                if (label.id === 'label5') {
+                    label.style.top = '220px';
+                    label.style.left = '10px';
+                }
+                if (label.id === 'label6') {
+                    label.style.top = '270px';
+                    label.style.left = '10px';
                 }
             });
             
-            // Update progress display
+            // Reset target zones
+            document.querySelectorAll('.target-zone').forEach(zone => {
+                zone.style.fill = 'rgba(175, 75, 239, 0.1)';
+            });
+            
+            // Hide answer key
+            document.getElementById('anatomyAnswerKey').style.display = 'none';
+            
+            // Reset specialists activity
+            document.querySelectorAll('.specialist-card').forEach(card => {
+                card.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.scenario').forEach(scenario => {
+                scenario.style.background = 'white';
+                scenario.style.borderColor = 'rgba(12, 10, 24, 0.1)';
+            });
+            
+            // Reset errors activity
+            document.querySelectorAll('.error-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect', 'dragging');
+                card.style.opacity = '1';
+                card.style.display = 'block';
+            });
+            
+            document.querySelectorAll('.description-zone').forEach(zone => {
+                // Remove any cloned cards
+                const cards = zone.querySelectorAll('.error-card');
+                cards.forEach(card => card.remove());
+                zone.classList.remove('active');
+            });
+            
+            // Reset process activity
+            document.querySelectorAll('.process-step').forEach(step => {
+                step.classList.remove('active');
+                step.querySelector('.step-number').textContent = '?';
+                step.querySelector('.step-number').style.background = 'var(--color-primary)';
+            });
+            
+            // Reset feedback messages
+            document.querySelectorAll('.feedback-message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+            
+            // Reset results panel
+            document.getElementById('resultsPanel').classList.remove('show');
+            document.getElementById('viewResultsBtn').style.display = 'none';
+            
+            // Reset process step counter
+            const steps = document.querySelectorAll('.process-step');
+            steps.forEach(step => {
+                step.addEventListener('click', null);
+            });
+            initializeProcessActivity();
+            
+            // Update UI
             updateProgress();
             
-            // Show reset confirmation
-            showFeedback('swabbingFeedback', '✓ All activities have been reset. Ready to start again!', 'correct');
+            // Show confirmation
+            showFeedback('anatomyFeedback', 'All activities have been reset. You can start fresh!', 'correct');
         }
     </script>
 </body>
