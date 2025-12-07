@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AlliedRx -- Chapter 13: Eye Care & Vision Assessment Clinic</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
         :root {
             --color-primary: #af4bef;
@@ -26,12 +26,17 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         body {
@@ -43,12 +48,24 @@
                 var(--color-bg) 100%
             );
             color: var(--color-text);
-            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
             body {
                 padding: 12px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            body {
+                padding: 8px;
             }
         }
 
@@ -75,16 +92,10 @@
             100% { transform: scale(1); }
         }
 
-        @keyframes checkmarkPop {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
         /* Main Page Container */
         .page {
             width: 100%;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             background: #ffffff;
             border-radius: var(--radius-lg);
@@ -105,15 +116,26 @@
             }
         }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 0;
-            }
+        @media (max-width: 768px) {
             .page {
-                border-radius: 0;
-                box-shadow: none;
-                padding: 18px 14px 22px;
+                padding: 20px;
                 gap: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 18px 16px 22px;
+                gap: 20px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .page {
+                padding: 16px 14px 20px;
+                gap: 18px;
+                border-radius: 16px;
             }
         }
 
@@ -134,6 +156,7 @@
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
+            max-width: 100%;
         }
 
         .brand-logo {
@@ -141,13 +164,14 @@
             width: auto;
             max-width: 100%;
             filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            flex-shrink: 0;
         }
 
         .course-meta {
             display: flex;
             flex-direction: column;
             gap: 2px;
-            max-width: 100%;
+            max-width: calc(100% - 60px);
         }
 
         .course-name {
@@ -156,6 +180,8 @@
             letter-spacing: 0.16em;
             color: var(--color-muted);
             white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .week-label {
@@ -168,6 +194,8 @@
             font-size: 0.76rem;
             color: var(--color-primary);
             white-space: normal;
+            max-width: 100%;
+            flex-wrap: wrap;
         }
 
         .week-label-dot {
@@ -189,41 +217,72 @@
             letter-spacing: 0.14em;
             color: var(--color-muted);
             white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .brand-logo {
+                height: 36px;
+            }
+            
+            .course-name {
+                font-size: 0.72rem;
+            }
+            
+            .week-label {
+                font-size: 0.72rem;
+            }
         }
 
         @media (max-width: 480px) {
             .brand-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
             }
+            
             .badge-mode {
-                margin-top: 6px;
+                margin-top: 0;
+                align-self: flex-start;
+            }
+            
+            .course-meta {
+                max-width: 100%;
+            }
+            
+            .brand {
+                width: 100%;
+                justify-content: space-between;
             }
         }
 
         /* Module Header */
         .module-header {
             animation: fadeInUp 0.5s ease-out 0.1s both;
+            width: 100%;
         }
 
         h1 {
-            font-size: clamp(2rem, 3vw, 2.4rem);
-            line-height: 1.05;
+            font-size: clamp(1.75rem, 3vw, 2.4rem);
+            line-height: 1.1;
             color: var(--color-primary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .module-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 1.5vw, 1.1rem);
             color: var(--color-muted);
-            max-width: 800px;
-            margin-bottom: 6px;
+            max-width: 100%;
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
 
         .module-description {
-            font-size: 0.98rem;
+            font-size: clamp(0.9rem, 1.2vw, 0.98rem);
             color: var(--color-muted);
-            max-width: 800px;
+            max-width: 100%;
             line-height: 1.6;
         }
 
@@ -231,9 +290,22 @@
         .progress-tracker {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             margin: 8px 0 20px;
             animation: fadeInUp 0.5s ease-out 0.2s both;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .progress-tracker::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .progress-tracker::-webkit-scrollbar-thumb {
+            background: rgba(175, 75, 239, 0.2);
+            border-radius: 2px;
         }
 
         .progress-step {
@@ -242,6 +314,8 @@
             gap: 8px;
             font-size: 0.85rem;
             color: var(--color-muted);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .progress-step.active {
@@ -264,6 +338,7 @@
             font-weight: 600;
             background: rgba(12, 10, 24, 0.06);
             color: var(--color-muted);
+            flex-shrink: 0;
         }
 
         .progress-step.active .step-icon {
@@ -278,9 +353,42 @@
 
         .step-divider {
             flex: 1;
+            min-width: 30px;
             height: 2px;
             background: rgba(12, 10, 24, 0.1);
-            margin: 0 8px;
+            margin: 0 4px;
+            flex-shrink: 1;
+        }
+
+        @media (max-width: 768px) {
+            .progress-tracker {
+                gap: 6px;
+            }
+            
+            .progress-step {
+                font-size: 0.8rem;
+            }
+            
+            .step-divider {
+                min-width: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-tracker {
+                justify-content: space-between;
+            }
+            
+            .step-divider {
+                display: none;
+            }
+            
+            .progress-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 4px;
+                min-width: 80px;
+            }
         }
 
         /* Activity Grid */
@@ -290,11 +398,13 @@
             gap: 24px;
             margin-bottom: 24px;
             animation: fadeInUp 0.5s ease-out 0.3s both;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .activity-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
         }
 
@@ -308,11 +418,27 @@
             flex-direction: column;
             gap: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .activity-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-medium);
+        }
+
+        @media (max-width: 768px) {
+            .activity-card {
+                padding: 20px;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .activity-card {
+                padding: 16px;
+                gap: 14px;
+            }
         }
 
         .activity-header {
@@ -333,53 +459,107 @@
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .activity-title {
-            font-size: 1.3rem;
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
             font-weight: 700;
             color: var(--color-text);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .activity-description {
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
             color: var(--color-muted);
             line-height: 1.6;
+            width: 100%;
         }
 
-        /* Eye Anatomy Diagram - FIXED VERSION */
+        /* Eye Anatomy Diagram - FIXED FOR MOBILE */
         .eye-diagram-container {
             background: white;
             border-radius: var(--radius-md);
-            padding: 20px;
+            padding: 15px;
             border: 2px solid rgba(12, 10, 24, 0.08);
             margin-top: 16px;
             position: relative;
-            min-height: 400px;
+            width: 100%;
+            overflow: visible !important;
+            box-sizing: border-box;
+            height: 400px;
         }
 
         .eye-diagram {
             width: 100%;
-            height: 350px;
+            height: 100%;
             position: relative;
+            overflow: visible !important;
+            touch-action: none;
         }
 
-        /* Number Labels Styling */
+        /* SVG Container - FIXED */
+        .eye-diagram svg {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 10;
+        }
+
+        /* Number Labels Styling - FIXED FOR MOBILE */
         .number-label {
             position: absolute;
-            width: 100px;
-            padding: 8px 12px;
+            width: 110px;
+            padding: 10px 12px;
             background: white;
             border: 2px solid var(--color-primary);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            gap: 8px;
-            cursor: move;
+            gap: 10px;
+            cursor: grab;
             user-select: none;
-            z-index: 20;
+            z-index: 100;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            box-sizing: border-box;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Initial positions for mobile */
+        .number-label:nth-child(1) { /* Cornea */
+            top: 20px !important;
+            left: 20px !important;
+            right: auto !important;
+        }
+        .number-label:nth-child(2) { /* Lens */
+            top: 80px !important;
+            left: 20px !important;
+            right: auto !important;
+        }
+        .number-label:nth-child(3) { /* Retina */
+            top: 140px !important;
+            left: 20px !important;
+            right: auto !important;
+        }
+        .number-label:nth-child(4) { /* Iris */
+            top: 200px !important;
+            left: 20px !important;
+            right: auto !important;
+        }
+        .number-label:nth-child(5) { /* Pupil */
+            top: 260px !important;
+            left: 20px !important;
+            right: auto !important;
+        }
+        .number-label:nth-child(6) { /* Optic Nerve */
+            top: 320px !important;
+            left: 20px !important;
+            right: auto !important;
         }
 
         .number-label:hover {
@@ -407,29 +587,31 @@
         }
 
         .label-number {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--color-primary);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             flex-shrink: 0;
         }
 
         .label-text {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--color-text);
+            white-space: nowrap;
         }
 
-        /* Target Zones */
+        /* Target Zones - Make them larger for mobile */
         .target-zone {
             pointer-events: all;
             cursor: pointer;
+            stroke-width: 2px !important;
         }
 
         .target-zone.active {
@@ -438,17 +620,108 @@
             stroke-dasharray: 5,5 !important;
         }
 
+        /* Mobile-specific fixes for eye diagram */
+        @media (max-width: 768px) {
+            .eye-diagram-container {
+                height: 380px;
+                padding: 12px;
+            }
+            
+            .number-label {
+                width: 100px;
+                padding: 8px 10px;
+                z-index: 200; /* Ensure labels are above SVG */
+            }
+            
+            .label-number {
+                width: 24px;
+                height: 24px;
+                font-size: 0.9rem;
+            }
+            
+            .label-text {
+                font-size: 0.85rem;
+            }
+            
+            /* SVG adjustments for mobile */
+            .eye-diagram svg {
+                transform: scale(0.9);
+                transform-origin: center center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .eye-diagram-container {
+                height: 350px;
+                padding: 10px;
+            }
+            
+            .number-label {
+                width: 90px;
+                padding: 6px 8px;
+            }
+            
+            .label-number {
+                width: 22px;
+                height: 22px;
+                font-size: 0.85rem;
+            }
+            
+            .label-text {
+                font-size: 0.8rem;
+            }
+            
+            /* Reposition labels for very small screens */
+            .number-label:nth-child(1) {
+                top: 10px !important;
+                left: 10px !important;
+            }
+            .number-label:nth-child(2) {
+                top: 70px !important;
+                left: 10px !important;
+            }
+            .number-label:nth-child(3) {
+                top: 130px !important;
+                left: 10px !important;
+            }
+            .number-label:nth-child(4) {
+                top: 190px !important;
+                left: 10px !important;
+            }
+            .number-label:nth-child(5) {
+                top: 250px !important;
+                left: 10px !important;
+            }
+            .number-label:nth-child(6) {
+                top: 310px !important;
+                left: 10px !important;
+            }
+            
+            .eye-diagram svg {
+                transform: scale(0.85);
+            }
+        }
+
         /* Specialist Comparison */
         .specialist-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
             margin-top: 20px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .specialist-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .specialist-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
         }
 
@@ -462,6 +735,8 @@
             gap: 12px;
             transition: all 0.3s ease;
             cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .specialist-card:hover {
@@ -496,6 +771,7 @@
             color: white;
             font-size: 1.5rem;
             margin: 0 auto;
+            flex-shrink: 0;
         }
 
         .specialist-title {
@@ -503,6 +779,8 @@
             font-weight: 700;
             color: var(--color-text);
             text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .specialist-description {
@@ -518,6 +796,7 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             margin-top: 20px;
+            width: 100%;
         }
 
         .error-card {
@@ -528,6 +807,9 @@
             cursor: grab;
             user-select: none;
             transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            touch-action: none;
         }
 
         .error-card:hover {
@@ -556,6 +838,8 @@
             font-weight: 700;
             color: var(--color-text);
             margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .error-description {
@@ -573,6 +857,7 @@
             margin-top: 8px;
             background: rgba(12, 10, 24, 0.06);
             color: var(--color-muted);
+            white-space: nowrap;
         }
 
         /* Description Zones for Errors */
@@ -583,6 +868,8 @@
             min-height: 80px;
             margin-bottom: 12px;
             transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .description-zone.active {
@@ -596,6 +883,7 @@
             flex-direction: column;
             gap: 16px;
             margin-top: 20px;
+            width: 100%;
         }
 
         .process-step {
@@ -608,6 +896,8 @@
             gap: 16px;
             transition: all 0.3s ease;
             cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .process-step:hover {
@@ -635,6 +925,7 @@
 
         .step-content {
             flex: 1;
+            min-width: 0;
         }
 
         .step-title {
@@ -642,6 +933,8 @@
             font-weight: 700;
             color: var(--color-text);
             margin-bottom: 4px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .step-description {
@@ -656,6 +949,8 @@
             gap: 12px;
             margin-top: 32px;
             animation: fadeInUp 0.5s ease-out 0.4s both;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -669,6 +964,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
+            box-sizing: border-box;
         }
 
         .btn-primary {
@@ -698,6 +995,31 @@
             transform: none !important;
         }
 
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 150px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
         /* Results Panel */
         .results-panel {
             background: rgba(12, 10, 24, 0.94);
@@ -707,6 +1029,8 @@
             margin-top: 24px;
             display: none;
             animation: fadeIn 0.6s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .results-panel.show {
@@ -724,6 +1048,8 @@
             font-size: 1.3rem;
             font-weight: 800;
             color: #ffffff;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .results-content {
@@ -743,17 +1069,21 @@
             padding: 16px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-sm);
+            flex-wrap: wrap;
         }
 
         .score-value {
             font-size: 2rem;
             font-weight: 800;
             color: var(--color-primary-soft);
+            flex-shrink: 0;
         }
 
         .score-text {
             font-size: 0.9rem;
             color: #c4b5fd;
+            flex: 1;
+            min-width: 200px;
         }
 
         /* Clinical Insight Card */
@@ -781,6 +1111,15 @@
             background: rgba(175, 75, 239, 0.03);
             border-radius: var(--radius-sm);
             animation: fadeInUp 0.5s ease-out 0.3s both;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .progress-summary {
+                gap: 16px;
+                padding: 12px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -817,6 +1156,8 @@
             font-size: 0.9rem;
             display: none;
             animation: fadeIn 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .feedback-correct {
@@ -833,43 +1174,126 @@
             display: block;
         }
 
-        /* Responsive Adjustments */
+        /* Scenario styling */
+        .scenario {
+            padding: 12px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .scenario:hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        /* Check button */
+        .check-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            align-self: flex-start;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        /* Answer key */
+        .answer-key {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
+            display: none;
+        }
+
+        .answer-key h4 {
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Additional responsive fixes */
         @media (max-width: 768px) {
-            .activity-grid {
-                gap: 20px;
-            }
-            .activity-card {
-                padding: 16px;
-            }
-            .specialist-grid {
-                gap: 12px;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
             .eye-diagram-container {
                 min-height: 300px;
+                padding: 16px;
             }
+            
             .eye-diagram {
                 height: 250px;
+            }
+            
+            .number-label {
+                width: 100px;
+                padding: 6px 8px;
+            }
+            
+            .label-text {
+                font-size: 0.8rem;
+            }
+            
+            .answer-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .check-btn {
+                max-width: 100%;
             }
         }
 
         @media (max-width: 480px) {
-            .progress-tracker {
-                flex-wrap: wrap;
-                justify-content: center;
+            .eye-diagram-container {
+                min-height: 280px;
+                padding: 12px;
             }
-            .step-divider {
-                display: none;
+            
+            .eye-diagram {
+                height: 220px;
             }
+            
             .number-label {
-                width: 80px;
-                padding: 6px 8px;
+                width: 90px;
+                padding: 5px 6px;
+            }
+            
+            .label-number {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+            
+            .label-text {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Fix for drag and drop on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .number-label:hover,
+            .specialist-card:hover,
+            .error-card:hover,
+            .process-step:hover {
+                transform: none;
+            }
+            
+            .btn:hover {
+                transform: none !important;
             }
         }
     </style>
@@ -955,53 +1379,53 @@
                 <div class="eye-diagram-container">
                     <div class="eye-diagram" id="eyeDiagram">
                         <!-- Diagram SVG -->
-                        <svg width="100%" height="100%" viewBox="0 0 400 350" style="position: absolute; top: 0; left: 0;">
+                        <svg width="100%" height="100%" viewBox="0 0 400 350" preserveAspectRatio="xMidYMid meet">
                             <!-- Eye outline -->
-                            <ellipse cx="200" cy="150" rx="120" ry="80" fill="none" stroke="#6c6880" stroke-width="2"/>
+                            <ellipse cx="200" cy="175" rx="120" ry="80" fill="none" stroke="#6c6880" stroke-width="2"/>
                             
                             <!-- Iris and pupil -->
-                            <circle cx="200" cy="150" r="40" fill="none" stroke="#af4bef" stroke-width="2"/>
-                            <circle cx="200" cy="150" r="15" fill="#8380f0"/>
+                            <circle cx="200" cy="175" r="40" fill="none" stroke="#af4bef" stroke-width="2"/>
+                            <circle cx="200" cy="175" r="15" fill="#8380f0"/>
                             
                             <!-- Target positions with visible markers -->
-                            <circle class="target-zone" id="target1" cx="120" cy="100" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
-                            <circle class="target-zone" id="target2" cx="200" cy="110" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
-                            <circle class="target-zone" id="target3" cx="250" cy="150" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
-                            <circle class="target-zone" id="target4" cx="200" cy="190" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
-                            <circle class="target-zone" id="target5" cx="200" cy="150" r="20" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
-                            <circle class="target-zone" id="target6" cx="280" cy="150" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target1" cx="120" cy="125" r="30" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target2" cx="200" cy="135" r="30" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target3" cx="250" cy="175" r="30" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target4" cx="200" cy="215" r="30" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target5" cx="200" cy="175" r="25" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
+                            <circle class="target-zone" id="target6" cx="280" cy="175" r="30" fill="rgba(175, 75, 239, 0.1)" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="5,5"/>
                             
                             <!-- Target numbers -->
-                            <text x="120" y="100" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">①</text>
-                            <text x="200" y="110" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">②</text>
-                            <text x="250" y="150" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">③</text>
-                            <text x="200" y="190" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">④</text>
-                            <text x="200" y="150" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">⑤</text>
-                            <text x="280" y="150" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">⑥</text>
+                            <text x="120" y="125" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">①</text>
+                            <text x="200" y="135" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">②</text>
+                            <text x="250" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">③</text>
+                            <text x="200" y="215" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">④</text>
+                            <text x="200" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">⑤</text>
+                            <text x="280" y="175" text-anchor="middle" dy=".3em" fill="var(--color-primary)" font-weight="bold" font-size="16">⑥</text>
                         </svg>
                         
-                        <!-- Draggable Number Labels -->
-                        <div class="number-label" id="label1" draggable="true" data-structure="cornea" data-target="target1" style="top: 50px; left: 320px;">
+                        <!-- Draggable Number Labels - Now positioned properly -->
+                        <div class="number-label" id="label1" draggable="true" data-structure="cornea" data-target="target1">
                             <span class="label-number">1</span>
                             <span class="label-text">Cornea</span>
                         </div>
-                        <div class="number-label" id="label2" draggable="true" data-structure="lens" data-target="target2" style="top: 100px; left: 320px;">
+                        <div class="number-label" id="label2" draggable="true" data-structure="lens" data-target="target2">
                             <span class="label-number">2</span>
                             <span class="label-text">Lens</span>
                         </div>
-                        <div class="number-label" id="label3" draggable="true" data-structure="retina" data-target="target3" style="top: 150px; left: 320px;">
+                        <div class="number-label" id="label3" draggable="true" data-structure="retina" data-target="target3">
                             <span class="label-number">3</span>
                             <span class="label-text">Retina</span>
                         </div>
-                        <div class="number-label" id="label4" draggable="true" data-structure="iris" data-target="target4" style="top: 200px; left: 320px;">
+                        <div class="number-label" id="label4" draggable="true" data-structure="iris" data-target="target4">
                             <span class="label-number">4</span>
                             <span class="label-text">Iris</span>
                         </div>
-                        <div class="number-label" id="label5" draggable="true" data-structure="pupil" data-target="target5" style="top: 250px; left: 320px;">
+                        <div class="number-label" id="label5" draggable="true" data-structure="pupil" data-target="target5">
                             <span class="label-number">5</span>
                             <span class="label-text">Pupil</span>
                         </div>
-                        <div class="number-label" id="label6" draggable="true" data-structure="optic-nerve" data-target="target6" style="top: 300px; left: 320px;">
+                        <div class="number-label" id="label6" draggable="true" data-structure="optic-nerve" data-target="target6">
                             <span class="label-number">6</span>
                             <span class="label-text">Optic Nerve</span>
                         </div>
@@ -1009,14 +1433,14 @@
                 </div>
                 
                 <!-- Check Answer Button -->
-                <button id="checkAnatomyBtn" style="margin-top: 20px; padding: 12px 24px; background: var(--color-primary); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; align-self: flex-start;">
+                <button id="checkAnatomyBtn" class="check-btn">
                     ✓ Check My Labels
                 </button>
                 
                 <!-- Answer Key -->
-                <div id="anatomyAnswerKey" style="margin-top: 20px; padding: 16px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm); display: none;">
-                    <h4 style="color: var(--color-primary); margin-bottom: 12px;">Answer Key:</h4>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 0.9rem;">
+                <div id="anatomyAnswerKey" class="answer-key">
+                    <h4>Answer Key:</h4>
+                    <div class="answer-grid">
                         <div><strong>① Cornea:</strong> Transparent front layer</div>
                         <div><strong>② Lens:</strong> Focuses light behind pupil</div>
                         <div><strong>③ Retina:</strong> Light-sensitive back layer</div>
@@ -1828,28 +2252,28 @@
                 
                 // Reset positions to original
                 if (label.id === 'label1') {
-                    label.style.top = '50px';
-                    label.style.left = '320px';
+                    label.style.top = '20px';
+                    label.style.left = '20px';
                 }
                 if (label.id === 'label2') {
-                    label.style.top = '100px';
-                    label.style.left = '320px';
+                    label.style.top = '80px';
+                    label.style.left = '20px';
                 }
                 if (label.id === 'label3') {
-                    label.style.top = '150px';
-                    label.style.left = '320px';
+                    label.style.top = '140px';
+                    label.style.left = '20px';
                 }
                 if (label.id === 'label4') {
                     label.style.top = '200px';
-                    label.style.left = '320px';
+                    label.style.left = '20px';
                 }
                 if (label.id === 'label5') {
-                    label.style.top = '250px';
-                    label.style.left = '320px';
+                    label.style.top = '260px';
+                    label.style.left = '20px';
                 }
                 if (label.id === 'label6') {
-                    label.style.top = '300px';
-                    label.style.left = '320px';
+                    label.style.top = '320px';
+                    label.style.left = '20px';
                 }
             });
             
