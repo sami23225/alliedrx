@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AlliedRx -- Chapter 13: Ear & Hearing Assessment Lab</title>
+    <title>ALLIEDRx -- Chapter 13: Nose, Throat & Sensory Loss Clinic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* KEEP ALL THE EXACT SAME CSS FROM BEFORE */
+        /* === ALLIEDRx BRANDING EXACT MATCH === */
         :root {
-            --color-primary: #af4bef;
-            --color-primary-soft: #d492ff;
-            --color-accent: #8380f0;
-            --color-success: #00b894;
+            --color-primary: #af4bef; /* Purple - main brand color */
+            --color-primary-soft: #d492ff; /* Light purple */
+            --color-accent: #8380f0; /* Blue-purple accent */
+            --color-success: #00b894; /* Green for correct/success */
             --color-warning: #fdcb6e;
-            --color-error: #e17055;
-            --color-bg: #f7f5fb;
-            --color-text: #2b2b2b;
-            --color-muted: #6c6880;
+            --color-error: #e17055; /* Red/Orange for errors */
+            --color-bg: #f7f5fb; /* Light background */
+            --color-text: #2b2b2b; /* Dark text */
+            --color-muted: #6c6880; /* Muted text */
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 12px;
@@ -53,7 +53,7 @@
             }
         }
 
-        /* Animations */
+        /* === ANIMATIONS === */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -82,13 +82,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* ADD BACK THE WAVE ANIMATION */
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100px); }
-        }
-
-        /* Main Page Container */
+        /* === MAIN PAGE CONTAINER === */
         .page {
             width: 100%;
             max-width: 1200px;
@@ -124,7 +118,7 @@
             }
         }
 
-        /* Header */
+        /* === ALLIEDRx HEADER/BRANDING === */
         .brand-row {
             display: flex;
             align-items: flex-start;
@@ -208,7 +202,7 @@
             }
         }
 
-        /* Module Header */
+        /* === MODULE HEADER === */
         .module-header {
             animation: fadeInUp 0.5s ease-out 0.1s both;
         }
@@ -234,7 +228,7 @@
             line-height: 1.6;
         }
 
-        /* Progress Tracker */
+        /* === PROGRESS TRACKER === */
         .progress-tracker {
             display: flex;
             align-items: center;
@@ -290,30 +284,62 @@
             margin: 0 8px;
         }
 
-        /* Activity Grid */
+        /* === PROGRESS SUMMARY === */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(175, 75, 239, 0.03);
+            border-radius: var(--radius-sm);
+            animation: fadeInUp 0.5s ease-out 0.3s both;
+        }
+
+        @media (max-width: 480px) {
+            .progress-summary {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+
+        .progress-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .progress-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .progress-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+        }
+
+        /* === ACTIVITY GRID === */
         .activity-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 24px;
+            grid-template-columns: 1fr;
+            gap: 32px;
             margin-bottom: 24px;
             animation: fadeInUp 0.5s ease-out 0.3s both;
         }
 
-        @media (max-width: 768px) {
-            .activity-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Activity Cards */
+        /* === ACTIVITY CARDS === */
         .activity-card {
             background: rgba(175, 75, 239, 0.03);
             border-radius: var(--radius-md);
             border: 1px solid rgba(175, 75, 239, 0.1);
-            padding: 24px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -343,28 +369,29 @@
         }
 
         .activity-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--color-text);
         }
 
         .activity-description {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--color-muted);
             line-height: 1.6;
+            margin-bottom: 8px;
         }
 
-        /* ===== HEARING LOSS DIAGNOSIS SCENARIOS ===== */
+        /* === ACTIVITY 1: THROAT CULTURE SCENARIO === */
         .scenario-container {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 28px;
         }
 
         .scenario {
             background: white;
             border-radius: var(--radius-md);
-            padding: 20px;
+            padding: 24px;
             border: 1px solid rgba(12, 10, 24, 0.08);
         }
 
@@ -378,12 +405,12 @@
         .patient-info {
             font-weight: 700;
             color: var(--color-primary);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 8px;
         }
 
         .patient-demographics {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--color-muted);
             margin-bottom: 12px;
         }
@@ -392,164 +419,214 @@
             color: var(--color-text);
             margin-bottom: 16px;
             line-height: 1.6;
+            font-size: 1rem;
         }
 
         .symptoms strong {
             color: var(--color-muted);
         }
 
-        .classification-section {
-            margin: 24px 0;
-        }
-
-        .classification-instruction {
-            font-size: 0.9rem;
+        .swabbing-instruction {
+            font-size: 1rem;
             color: var(--color-muted);
             margin-bottom: 16px;
             font-style: italic;
+            padding: 16px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
+            line-height: 1.5;
         }
 
-        .hearing-loss-types {
+        .throat-area-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 24px 0;
         }
 
         @media (max-width: 768px) {
-            .hearing-loss-types {
+            .throat-area-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .type-column {
+        .throat-area {
             background: white;
             border-radius: var(--radius-sm);
-            padding: 20px;
-            min-height: 140px;
-            border: 2px dashed #ddd;
-            transition: border-color 0.3s ease;
+            padding: 24px;
+            border: 3px dashed #ddd;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-        }
-
-        .type-column.active-drop {
-            border-color: var(--color-primary);
-            background-color: rgba(175, 75, 239, 0.05);
-        }
-
-        .type-title {
+            align-items: center;
             text-align: center;
-            font-weight: 700;
-            color: var(--color-muted);
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            min-height: 140px;
+            justify-content: center;
+            cursor: pointer;
         }
 
-        .symptom-tags {
+        .throat-area:hover {
+            border-color: var(--color-primary-soft);
+            background-color: rgba(175, 75, 239, 0.03);
+        }
+
+        .throat-area.correct-drop {
+            border-color: var(--color-success);
+            background-color: rgba(0, 184, 148, 0.05);
+        }
+
+        .throat-area.incorrect-drop {
+            border-color: var(--color-error);
+            background-color: rgba(225, 112, 85, 0.05);
+        }
+
+        .area-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .area-instruction {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        .swab-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin: 24px 0;
+            justify-content: center;
         }
 
-        .symptom-tag {
+        .swab-tag {
             background: white;
-            border: 2px solid var(--color-accent);
+            border: 3px solid var(--color-accent);
             color: var(--color-text);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-size: 1rem;
             cursor: grab;
             transition: all 0.2s ease;
             user-select: none;
+            font-weight: 600;
         }
 
-        .symptom-tag:hover {
+        .swab-tag:hover {
             background: var(--color-accent);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(131, 128, 240, 0.3);
         }
 
-        .symptom-tag.dragging {
+        .swab-tag.dragging {
             opacity: 0.5;
             transform: scale(0.95);
         }
 
-        .symptom-tag.placed {
+        .swab-tag.placed {
             background: var(--color-success);
             color: white;
             border-color: var(--color-success);
             cursor: default;
         }
 
-        .drop-zone {
-            flex: 1;
-            padding: 10px;
-            border: 2px dashed var(--color-primary-soft);
-            border-radius: var(--radius-sm);
-            min-height: 60px;
-            background: rgba(175, 75, 239, 0.03);
-        }
-
-        .disorder-matching {
+        /* === IMPROVED FEEDBACK SECTION - ALWAYS VISIBLE === */
+        .feedback-details {
             margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(12, 10, 24, 0.1);
-        }
-
-        .disorder-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .disorder-option {
-            background: white;
-            border: 2px solid rgba(12, 10, 24, 0.08);
+            padding: 20px;
+            background: rgba(175, 75, 239, 0.03);
             border-radius: var(--radius-sm);
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.9rem;
+            border-left: 4px solid var(--color-accent);
+            display: block; /* CHANGED FROM display: none */
+            animation: fadeIn 0.5s ease;
+            min-height: 100px;
         }
 
-        .disorder-option:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-2px);
-        }
-
-        .disorder-option.selected {
-            background: var(--color-success);
-            color: white;
-            border-color: var(--color-success);
-        }
-
-        .scenario-navigation {
+        .feedback-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
             display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 20px;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Hearing Loss Classification */
-        .hearing-grid {
+        .feedback-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feedback-item {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .feedback-item.correct:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        .feedback-item.incorrect:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: var(--color-error);
+            font-weight: bold;
+        }
+
+        .feedback-item.tip:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        /* === ACTIVITY 2: SENSORY LOSS COMMUNICATION === */
+        .communication-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .communication-section {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-primary-soft);
+        }
+
+        .sensory-types-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 24px;
+            margin-bottom: 32px;
         }
 
         @media (max-width: 768px) {
-            .hearing-grid {
+            .sensory-types-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .hearing-type {
+        .sensory-type {
             background: white;
             border-radius: var(--radius-md);
             padding: 20px;
@@ -560,18 +637,18 @@
             transition: all 0.3s ease;
         }
 
-        .hearing-type:hover {
+        .sensory-type:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-medium);
         }
 
-        .hearing-header {
+        .sensory-header {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .hearing-icon {
+        .sensory-icon {
             width: 40px;
             height: 40px;
             border-radius: 10px;
@@ -583,213 +660,197 @@
             font-size: 1.2rem;
         }
 
-        .hearing-title {
+        .sensory-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--color-text);
         }
 
-        .hearing-description {
-            font-size: 0.85rem;
+        .sensory-description {
+            font-size: 0.95rem;
             color: var(--color-muted);
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        /* Disorder Cards */
-        .disorder-cards {
+        .strategies-container {
+            margin-top: 24px;
+        }
+
+        .strategies-title {
+            font-size: 1.1rem;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .communication-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 16px;
-            margin-top: 20px;
         }
 
-        .disorder-card {
+        @media (max-width: 768px) {
+            .communication-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .communication-card {
             background: white;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-sm);
             padding: 16px;
             border: 2px solid rgba(12, 10, 24, 0.08);
             cursor: grab;
             user-select: none;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: 500;
         }
 
-        .disorder-card:hover {
+        .communication-card:hover {
             transform: translateY(-2px);
             border-color: var(--color-primary-soft);
             box-shadow: var(--shadow-medium);
         }
 
-        .disorder-card.dragging {
+        .communication-card.dragging {
             opacity: 0.7;
             transform: rotate(3deg);
         }
 
-        .disorder-card.correct {
+        .communication-card.correct {
             border-color: var(--color-success);
             background: rgba(0, 184, 148, 0.05);
         }
 
-        .disorder-card.incorrect {
+        .communication-card.incorrect {
             border-color: var(--color-error);
             background: rgba(225, 112, 85, 0.05);
         }
 
-        .disorder-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--color-text);
-            margin-bottom: 8px;
+        .drop-zones-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
         }
 
-        .disorder-description {
-            font-size: 0.85rem;
-            color: var(--color-muted);
+        @media (max-width: 768px) {
+            .drop-zones-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .drop-zone {
+            min-height: 120px;
+            border: 3px dashed var(--color-primary-soft);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            background: rgba(175, 75, 239, 0.03);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .drop-zone.active {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.08);
+        }
+
+        /* === ACTIVITY 3: ADA/HIPAA SCENARIOS === */
+        .legal-scenario {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .legal-question {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
             line-height: 1.5;
         }
 
-        .disorder-category {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 8px;
-            background: rgba(12, 10, 24, 0.06);
-            color: var(--color-muted);
+        .legal-options {
+            display: grid;
+            gap: 16px;
         }
 
-        /* Audiometer Simulation */
-        .audiometer-container {
+        .legal-option {
             background: white;
-            border-radius: var(--radius-md);
-            padding: 20px;
-            border: 2px solid rgba(12, 10, 24, 0.08);
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .frequency-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .frequency-slider {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--color-text);
-        }
-
-        .slider {
-            width: 100%;
-            height: 6px;
-            -webkit-appearance: none;
-            appearance: none;
-            background: linear-gradient(to right, var(--color-primary), var(--color-accent));
-            border-radius: 3px;
-            outline: none;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* IMPROVED WAVE DISPLAY WITH ANIMATION */
-        .wave-display {
-            height: 100px;
-            background: rgba(12, 10, 24, 0.02);
+            padding: 18px;
             border-radius: var(--radius-sm);
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(12, 10, 24, 0.06);
+            border: 2px solid rgba(12, 10, 24, 0.08);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            font-size: 1rem;
         }
 
-        .wave-svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .legal-option:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
         }
 
-        .wave-path {
-            fill: none;
-            stroke: var(--color-primary);
-            stroke-width: 2;
-            opacity: 0.7;
+        .legal-option.selected {
+            background: rgba(175, 75, 239, 0.05);
+            border-color: var(--color-primary);
         }
 
-        .wave-path.animated {
-            animation: waveMove 2s linear infinite;
+        .legal-option.correct {
+            background: rgba(0, 184, 148, 0.05);
+            border-color: var(--color-success);
         }
 
-        .volume-display {
+        .legal-option.incorrect {
+            background: rgba(225, 112, 85, 0.05);
+            border-color: var(--color-error);
+        }
+
+        .option-indicator {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-muted);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 20px;
-            padding: 12px;
-            background: rgba(175, 75, 239, 0.05);
-            border-radius: var(--radius-sm);
+            justify-content: center;
         }
 
-        .volume-bar {
+        .legal-option.selected .option-indicator {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .legal-option.correct .option-indicator {
+            background: var(--color-success);
+            border-color: var(--color-success);
+        }
+
+        .legal-option.incorrect .option-indicator {
+            background: var(--color-error);
+            border-color: var(--color-error);
+        }
+
+        .option-text {
             flex: 1;
-            height: 10px;
-            background: rgba(12, 10, 24, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
+            line-height: 1.5;
         }
 
-        .volume-fill {
-            height: 100%;
-            background: linear-gradient(to right, var(--color-success), var(--color-warning), var(--color-error));
-            width: 50%;
-            transition: width 0.3s ease;
-        }
-
-        .volume-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--color-text);
-            min-width: 60px;
-        }
-
-        /* Procedure Steps */
+        /* === ACTIVITY 4: PROCEDURE SEQUENCE === */
         .procedure-steps {
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .procedure-step {
@@ -840,30 +901,30 @@
         }
 
         .procedure-description {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--color-muted);
             line-height: 1.6;
         }
 
-        /* Action Buttons */
+        /* === ACTION BUTTONS === */
         .action-buttons {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             margin-top: 32px;
             animation: fadeInUp 0.5s ease-out 0.4s both;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-primary {
@@ -893,13 +954,13 @@
             transform: none !important;
         }
 
-        /* Results Panel */
+        /* === RESULTS PANEL === */
         .results-panel {
             background: rgba(12, 10, 24, 0.94);
             color: #e5e7eb;
             border-radius: var(--radius-md);
-            padding: 24px;
-            margin-top: 24px;
+            padding: 32px;
+            margin-top: 32px;
             display: none;
             animation: fadeIn 0.6s ease;
         }
@@ -912,17 +973,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .results-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #ffffff;
         }
 
         .results-content {
-            font-size: 0.9rem;
+            font-size: 1rem;
             line-height: 1.7;
         }
 
@@ -934,82 +995,45 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin: 20px 0;
-            padding: 16px;
+            margin: 24px 0;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-sm);
         }
 
         .score-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--color-primary-soft);
         }
 
         .score-text {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: #c4b5fd;
         }
 
-        /* Clinical Insight Card */
+        /* === CLINICAL INSIGHT CARD === */
         .clinical-insight {
-            margin-top: 20px;
+            margin-top: 24px;
             border-radius: var(--radius-sm);
             border: 1px solid rgba(255, 255, 255, 0.16);
             background: rgba(15, 23, 42, 0.7);
-            padding: 16px;
-            font-size: 0.85rem;
+            padding: 20px;
+            font-size: 0.95rem;
             color: #e5e7eb;
+            line-height: 1.6;
         }
 
         .clinical-insight strong {
             color: #fef3c7;
         }
 
-        /* Progress Summary */
-        .progress-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 16px;
-            padding: 16px;
-            background: rgba(175, 75, 239, 0.03);
-            border-radius: var(--radius-sm);
-            animation: fadeInUp 0.5s ease-out 0.3s both;
-        }
-
-        @media (max-width: 480px) {
-            .progress-summary {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-        }
-
-        .progress-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .progress-number {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-
-        .progress-label {
-            font-size: 0.75rem;
-            color: var(--color-muted);
-            text-align: center;
-        }
-
-        /* Feedback Messages */
+        /* === FEEDBACK MESSAGES === */
         .feedback-message {
-            padding: 12px 16px;
+            padding: 16px 20px;
             border-radius: var(--radius-sm);
-            margin-top: 12px;
-            font-size: 0.9rem;
+            margin-top: 16px;
+            font-size: 1rem;
             display: none;
             animation: fadeIn 0.3s ease;
         }
@@ -1028,16 +1052,36 @@
             display: block;
         }
 
-        /* Responsive Adjustments */
+        /* === ACTIVITY BUTTONS === */
+        .activity-btn {
+            padding: 12px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-btn:hover {
+            background: #9a3ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(175, 75, 239, 0.3);
+        }
+
+        /* === RESPONSIVE ADJUSTMENTS === */
         @media (max-width: 768px) {
             .activity-grid {
-                gap: 20px;
+                gap: 24px;
             }
             .activity-card {
-                padding: 16px;
-            }
-            .hearing-grid {
-                gap: 12px;
+                padding: 20px;
             }
             .action-buttons {
                 flex-direction: column;
@@ -1045,6 +1089,15 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            .throat-area-grid {
+                gap: 16px;
+            }
+            .swab-tags {
+                gap: 10px;
+            }
+            .communication-cards {
+                gap: 12px;
             }
         }
 
@@ -1056,11 +1109,16 @@
             .step-divider {
                 display: none;
             }
+            .sensory-types-grid {
+                gap: 16px;
+            }
+            .drop-zones-container {
+                gap: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- KEEP ALL THE EXACT SAME HTML BODY FROM BEFORE -->
     <main class="page" aria-labelledby="module-heading">
         <!-- Header -->
         <header class="brand-row">
@@ -1074,7 +1132,7 @@
                     <span class="course-name">Clinical Medical Assistant • Kinn's Chapter 13</span>
                     <div class="week-label">
                         <span class="week-label-dot"></span>
-                        <span>Interactive Module: Ear & Hearing Assessment Lab</span>
+                        <span>Interactive Module 4: Nose, Throat & Sensory Loss Clinic</span>
                     </div>
                 </div>
             </div>
@@ -1083,11 +1141,11 @@
 
         <!-- Module Header -->
         <section class="module-header">
-            <h1 id="module-heading">Ear & Hearing Assessment Lab</h1>
-            <p class="module-subtitle">Master ear anatomy, hearing loss types, ear disorders, and diagnostic procedures</p>
+            <h1 id="module-heading">Nose, Throat & Sensory Loss Clinic</h1>
+            <p class="module-subtitle">Master nose/throat examination, patient education for sensory loss, and ADA/HIPAA compliance</p>
             <p class="module-description">
-                This interactive module covers Objectives 9-12 from Chapter 13. You'll explore ear anatomy, 
-                differentiate hearing loss types, understand common ear disorders, and learn audiometric procedures.
+                This interactive module covers Objectives 13-15 from Chapter 13. You'll learn throat culture techniques, 
+                sensory loss communication strategies, and legal/ethical compliance requirements.
             </p>
         </section>
 
@@ -1095,17 +1153,22 @@
         <div class="progress-tracker">
             <div class="progress-step active">
                 <span class="step-icon">1</span>
-                <span>Hearing Loss Diagnosis</span>
+                <span>Throat Culture</span>
             </div>
             <div class="step-divider"></div>
             <div class="progress-step">
                 <span class="step-icon">2</span>
-                <span>Ear Disorders</span>
+                <span>Sensory Communication</span>
             </div>
             <div class="step-divider"></div>
             <div class="progress-step">
                 <span class="step-icon">3</span>
-                <span>Diagnostic Procedures</span>
+                <span>ADA/HIPAA Compliance</span>
+            </div>
+            <div class="step-divider"></div>
+            <div class="progress-step">
+                <span class="step-icon">4</span>
+                <span>Procedure Sequence</span>
             </div>
         </div>
 
@@ -1127,380 +1190,374 @@
 
         <!-- Activity Grid -->
         <div class="activity-grid">
-            <!-- ACTIVITY 1: HEARING LOSS DIAGNOSIS SCENARIOS -->
-            <section class="activity-card" aria-label="Hearing Loss Diagnosis Scenarios Activity">
+            <!-- ACTIVITY 1: THROAT CULTURE SCENARIO -->
+            <section class="activity-card" aria-label="Throat Culture Scenario Activity">
                 <div class="activity-header">
-                    <div class="activity-icon">👂</div>
-                    <h2 class="activity-title">Hearing Loss Diagnosis Scenarios</h2>
+                    <div class="activity-icon">🦠</div>
+                    <h2 class="activity-title">Throat Culture Collection Scenario</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Review patient cases and classify their hearing loss type. 
-                    Drag symptoms to the correct type, then select the likely disorder.
+                    <strong>Instructions:</strong> Review the patient case and drag swab tags to the correct throat 
+                    areas for proper culture collection. Avoid contaminating areas.
                 </p>
                 
                 <div class="scenario-container">
-                    <!-- SCENARIO 1 -->
-                    <div class="scenario" data-scenario="1">
+                    <div class="scenario">
                         <div class="scenario-header">
                             <div>
-                                <div class="patient-info">Patient 1: Sarah, 4 years old</div>
-                                <div class="patient-demographics">Pediatric patient with acute symptoms</div>
+                                <div class="patient-info">Patient: Jamie, 8 years old</div>
+                                <div class="patient-demographics">Pediatric patient with sore throat symptoms</div>
                             </div>
                         </div>
                         <div class="symptoms">
-                            <strong>Presenting Symptoms:</strong> Fever (38.5°C), right ear pain, pulling at right ear, irritable, decreased appetite.<br>
-                            <strong>History:</strong> Recent upper respiratory infection (cold) 5 days ago.<br>
-                            <strong>Otoscopic Findings:</strong> Tympanic membrane bulging, erythematous (red), diminished light reflex.
+                            <strong>Presenting Symptoms:</strong> Sore throat x 3 days, painful swallowing, fever 38.2°C, 
+                            anterior cervical lymphadenopathy (swollen neck glands).<br>
+                            <strong>History:</strong> No penicillin allergy, no recent antibiotic use.<br>
+                            <strong>Throat Appearance:</strong> Tonsils 3+ enlarged, erythematous, exudate present.
                         </div>
                         
-                        <div class="classification-section">
-                            <div class="classification-instruction">Drag the patient's primary symptoms to the correct hearing loss type:</div>
-                            <div class="symptom-tags">
-                                <div class="symptom-tag" data-symptom="acute-pain-fever" data-scenario="1">Acute pain & fever</div>
-                                <div class="symptom-tag" data-symptom="recent-uri" data-scenario="1">Recent URI</div>
-                                <div class="symptom-tag" data-symptom="bulging-tm" data-scenario="1">Bulging TM</div>
-                            </div>
-                            
-                            <div class="hearing-loss-types">
-                                <div class="type-column" data-type="conductive" data-scenario="1">
-                                    <div class="type-title">Conductive Hearing Loss</div>
-                                    <div class="drop-zone" data-scenario="1" data-type="conductive"></div>
-                                </div>
-                                <div class="type-column" data-type="sensorineural" data-scenario="1">
-                                    <div class="type-title">Sensorineural Hearing Loss</div>
-                                    <div class="drop-zone" data-scenario="1" data-type="sensorineural"></div>
-                                </div>
-                            </div>
+                        <div class="swabbing-instruction">
+                            <strong>Pro Tip:</strong> For accurate throat culture, swab BOTH tonsillar pillars and 
+                            posterior pharynx. Avoid the tongue, cheeks, and uvula to prevent contamination.
                         </div>
                         
-                        <div class="disorder-matching">
-                            <div class="classification-instruction">Based on your classification, select the most likely disorder:</div>
-                            <div class="disorder-options">
-                                <div class="disorder-option" data-disorder="otitis-media" data-scenario="1">Otitis Media</div>
-                                <div class="disorder-option" data-disorder="menieres" data-scenario="1">Meniere's Disease</div>
-                                <div class="disorder-option" data-disorder="cerumen" data-scenario="1">Impacted Cerumen</div>
-                                <div class="disorder-option" data-disorder="presbycusis" data-scenario="1">Presbycusis</div>
+                        <div class="throat-area-grid">
+                            <div class="throat-area" data-area="left-tonsil" id="area-left-tonsil">
+                                <div class="area-title">Left Tonsillar Pillar</div>
+                                <div class="area-instruction">Swab area thoroughly</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- SCENARIO 2 -->
-                    <div class="scenario" data-scenario="2">
-                        <div class="scenario-header">
-                            <div>
-                                <div class="patient-info">Patient 2: Mr. Chen, 72 years old</div>
-                                <div class="patient-demographics">Geriatric patient with gradual hearing changes</div>
+                            <div class="throat-area" data-area="right-tonsil" id="area-right-tonsil">
+                                <div class="area-title">Right Tonsillar Pillar</div>
+                                <div class="area-instruction">Swab area thoroughly</div>
                             </div>
-                        </div>
-                        <div class="symptoms">
-                            <strong>Presenting Symptoms:</strong> Gradual hearing loss over 5 years, difficulty understanding speech (especially in noise), "people seem to mumble".<br>
-                            <strong>History:</strong> Bilateral tinnitus (ringing) for 2 years, no ear pain, no vertigo.<br>
-                            <strong>Otoscopic Findings:</strong> Tympanic membranes normal, ear canals clear.
-                        </div>
-                        
-                        <div class="classification-section">
-                            <div class="classification-instruction">Drag the patient's primary symptoms to the correct hearing loss type:</div>
-                            <div class="symptom-tags">
-                                <div class="symptom-tag" data-symptom="gradual-loss" data-scenario="2">Gradual hearing loss</div>
-                                <div class="symptom-tag" data-symptom="speech-understanding" data-scenario="2">Difficulty understanding speech</div>
-                                <div class="symptom-tag" data-symptom="tinnitus" data-scenario="2">Tinnitus</div>
+                            <div class="throat-area" data-area="posterior-pharynx" id="area-posterior">
+                                <div class="area-title">Posterior Pharynx</div>
+                                <div class="area-instruction">Back of throat wall</div>
                             </div>
-                            
-                            <div class="hearing-loss-types">
-                                <div class="type-column" data-type="conductive" data-scenario="2">
-                                    <div class="type-title">Conductive Hearing Loss</div>
-                                    <div class="drop-zone" data-scenario="2" data-type="conductive"></div>
-                                </div>
-                                <div class="type-column" data-type="sensorineural" data-scenario="2">
-                                    <div class="type-title">Sensorineural Hearing Loss</div>
-                                    <div class="drop-zone" data-scenario="2" data-type="sensorineural"></div>
-                                </div>
+                            <div class="throat-area" data-area="uvula" id="area-uvula">
+                                <div class="area-title">Uvula</div>
+                                <div class="area-instruction">DO NOT SWAB (contaminant)</div>
                             </div>
                         </div>
                         
-                        <div class="disorder-matching">
-                            <div class="classification-instruction">Based on your classification, select the most likely disorder:</div>
-                            <div class="disorder-options">
-                                <div class="disorder-option" data-disorder="otitis-media" data-scenario="2">Otitis Media</div>
-                                <div class="disorder-option" data-disorder="menieres" data-scenario="2">Meniere's Disease</div>
-                                <div class="disorder-option" data-disorder="cerumen" data-scenario="2">Impacted Cerumen</div>
-                                <div class="disorder-option" data-disorder="presbycusis" data-scenario="2">Presbycusis</div>
+                        <div class="swab-tags">
+                            <div class="swab-tag" data-tag="culture-swab" id="tag-culture" draggable="true">
+                                Culture Swab
+                            </div>
+                            <div class="swab-tag" data-tag="sterile-tip" id="tag-sterile" draggable="true">
+                                Sterile Tip
+                            </div>
+                            <div class="swab-tag" data-tag="transport-medium" id="tag-transport" draggable="true">
+                                Transport Medium
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="scenario-navigation">
-                        <button class="btn btn-secondary" id="prev-scenario">← Previous Case</button>
-                        <button class="btn btn-primary" id="next-scenario">Next Case →</button>
+                        
+                        <div style="margin-top: 24px;">
+                            <button class="activity-btn" id="checkSwabbingBtn">
+                                ✓ Check Swabbing Technique
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
-                <button class="btn btn-primary" id="checkScenarioBtn" style="margin-top: 20px; align-self: flex-start;">
-                    ✓ Check Diagnosis
-                </button>
+                <!-- FEEDBACK SECTION - NOW ALWAYS VISIBLE -->
+                <div class="feedback-details" id="throatFeedbackDetails">
+                    <div class="feedback-title">
+                        <span>📋 Throat Culture Feedback:</span>
+                    </div>
+                    <div style="color: var(--color-muted); font-style: italic; margin-bottom: 12px;">
+                        Complete the activity above, then click "Check Swabbing Technique" to see detailed feedback here.
+                    </div>
+                    <ul class="feedback-list" id="throatFeedbackList">
+                        <!-- Feedback will appear here after checking -->
+                    </ul>
+                </div>
                 
-                <div class="feedback-message" id="scenarioFeedback"></div>
+                <div class="feedback-message" id="swabbingFeedback"></div>
             </section>
 
-            <!-- ACTIVITY 2: COMMON EAR DISORDERS -->
-            <section class="activity-card" aria-label="Common Ear Disorders Activity">
+            <!-- ACTIVITY 2: SENSORY LOSS COMMUNICATION -->
+            <section class="activity-card" aria-label="Sensory Loss Communication Activity">
                 <div class="activity-header">
-                    <div class="activity-icon">🏥</div>
-                    <h2 class="activity-title">Common Ear Disorders</h2>
+                    <div class="activity-icon">👁️👂</div>
+                    <h2 class="activity-title">Sensory Loss Communication Strategies</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Match each ear disorder with its correct description, symptoms, 
-                    and treatment. Click to select, then check your answers.
+                    <strong>Instructions:</strong> Match communication strategies to the appropriate sensory loss type. 
+                    Drag strategies to the correct drop zone.
                 </p>
                 
-                <div style="margin-top: 20px;">
-                    <div class="disorder-cards">
-                        <div class="disorder-card" id="card-otitis-media" data-disorder="otitis-media">
-                            <div class="disorder-title">Otitis Media</div>
-                            <div class="disorder-description">Middle ear infection common in children</div>
-                            <span class="disorder-category">Click to select</span>
-                        </div>
-                        
-                        <div class="disorder-card" id="card-impacted-cerumen" data-disorder="impacted-cerumen">
-                            <div class="disorder-title">Impacted Cerumen</div>
-                            <div class="disorder-description">Earwax buildup blocking ear canal</div>
-                            <span class="disorder-category">Click to select</span>
-                        </div>
-                        
-                        <div class="disorder-card" id="card-menieres" data-disorder="menieres">
-                            <div class="disorder-title">Meniere's Disease</div>
-                            <div class="disorder-description">Inner ear disorder affecting balance/hearing</div>
-                            <span class="disorder-category">Click to select</span>
-                        </div>
-                        
-                        <div class="disorder-card" id="card-tinnitus" data-disorder="tinnitus">
-                            <div class="disorder-title">Tinnitus</div>
-                            <div class="disorder-description">Ringing/buzzing in ears without external sound</div>
-                            <span class="disorder-category">Click to select</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Disorder Details -->
-                    <div style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div>
-                            <h4 style="font-size: 1rem; margin-bottom: 12px; color: var(--color-primary);">Descriptions</h4>
-                            <div class="description-zone" id="otitis-media-desc" data-disorder="otitis-media" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Description A:</strong> Fluid buildup behind tympanic membrane, often following URI
+                <div class="communication-container">
+                    <div class="communication-section">
+                        <h3 class="section-title">Sensory Loss Types</h3>
+                        <div class="sensory-types-grid">
+                            <!-- Vision Loss -->
+                            <div class="sensory-type">
+                                <div class="sensory-header">
+                                    <div class="sensory-icon">👁️</div>
+                                    <div class="sensory-title">Vision Impairment</div>
+                                </div>
+                                <div class="sensory-description">
+                                    Patients with low vision, macular degeneration, or blindness
+                                </div>
                             </div>
-                            <div class="description-zone" id="impacted-cerumen-desc" data-disorder="impacted-cerumen" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Description B:</strong> Excessive/properly formed cerumen causing blockage
-                            </div>
-                            <div class="description-zone" id="menieres-desc" data-disorder="menieres" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Description C:</strong> Episodic vertigo, tinnitus, hearing loss, ear fullness
-                            </div>
-                            <div class="description-zone" id="tinnitus-desc" data-disorder="tinnitus" style="padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Description D:</strong> Subjective perception of sound without external source
+                            
+                            <!-- Hearing Loss -->
+                            <div class="sensory-type">
+                                <div class="sensory-header">
+                                    <div class="sensory-icon">👂</div>
+                                    <div class="sensory-title">Hearing Impairment</div>
+                                </div>
+                                <div class="sensory-description">
+                                    Patients with hearing loss, presbycusis, or deafness
+                                </div>
                             </div>
                         </div>
-                        
-                        <div>
-                            <h4 style="font-size: 1rem; margin-bottom: 12px; color: var(--color-primary);">Treatments</h4>
-                            <div class="treatment-zone" id="otitis-media-treat" data-disorder="otitis-media" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Treatment A:</strong> Antibiotics, pain management, possible myringotomy
+
+                        <div class="drop-zones-container">
+                            <div class="drop-zone" id="drop-vision">
+                                <div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">
+                                    Drop Vision Strategies Here
+                                </div>
                             </div>
-                            <div class="treatment-zone" id="impacted-cerumen-treat" data-disorder="impacted-cerumen" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Treatment B:</strong> Cerumenolytic drops, irrigation, manual removal
-                            </div>
-                            <div class="treatment-zone" id="menieres-treat" data-disorder="menieres" style="margin-bottom: 12px; padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Treatment C:</strong> Diuretics, low-sodium diet, vestibular rehab
-                            </div>
-                            <div class="treatment-zone" id="tinnitus-treat" data-disorder="tinnitus" style="padding: 12px; border: 1px solid rgba(12, 10, 24, 0.1); border-radius: var(--radius-sm); cursor: pointer;">
-                                <strong>Treatment D:</strong> Sound therapy, hearing aids, counseling
+                            <div class="drop-zone" id="drop-hearing">
+                                <div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">
+                                    Drop Hearing Strategies Here
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Match Button -->
-                    <button id="matchDisordersBtn" style="margin-top: 20px; padding: 12px 24px; background: var(--color-accent); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; width: 100%;">
-                        🔄 Match Disorders with Descriptions & Treatments
+
+                    <div class="communication-section">
+                        <h3 class="section-title">Communication Strategy Cards</h3>
+                        <div class="strategies-container">
+                            <div class="communication-cards">
+                                <div class="communication-card" data-strategy="vision" id="card-large-print" draggable="true">
+                                    Provide large-print materials & ensure good lighting
+                                </div>
+                                <div class="communication-card" data-strategy="hearing" id="card-face-patient" draggable="true">
+                                    Face patient directly & speak clearly (not loudly)
+                                </div>
+                                <div class="communication-card" data-strategy="vision" id="card-verbal-description" draggable="true">
+                                    Give verbal descriptions of procedures & surroundings
+                                </div>
+                                <div class="communication-card" data-strategy="hearing" id="card-reduce-noise" draggable="true">
+                                    Reduce background noise & use written notes if needed
+                                </div>
+                                <div class="communication-card" data-strategy="hearing" id="card-assistive-listening" draggable="true">
+                                    Offer assistive listening devices or amplifier
+                                </div>
+                                <div class="communication-card" data-strategy="vision" id="card-contrast-colors" draggable="true">
+                                    Use high contrast colors for important information
+                                </div>
+                                <div class="communication-card" data-strategy="both" id="card-teach-back" draggable="true">
+                                    Use teach-back method to confirm understanding
+                                </div>
+                                <div class="communication-card" data-strategy="both" id="card-extra-time" draggable="true">
+                                    Allow extra time for processing information
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 24px;">
+                    <button class="activity-btn" id="checkCommunicationBtn">
+                        ✓ Check Communication Matches
                     </button>
                 </div>
                 
-                <div class="feedback-message" id="disordersFeedback"></div>
-                
-                <div style="margin-top: 20px; padding: 16px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm); font-size: 0.85rem;">
-                    <strong>Clinical Tip:</strong> Always use otoscope to visualize tympanic membrane before irrigation. 
-                    Never irrigate if TM is perforated. Document color, position, and light reflex of TM.
-                </div>
+                <div class="feedback-message" id="communicationFeedback"></div>
             </section>
 
-            <!-- ACTIVITY 3: AUDIOMETER SIMULATION -->
-            <section class="activity-card" aria-label="Audiometer Simulation Activity">
+            <!-- ACTIVITY 3: ADA/HIPAA SCENARIOS -->
+            <section class="activity-card" aria-label="ADA/HIPAA Scenarios Activity">
                 <div class="activity-header">
-                    <div class="activity-icon">📈</div>
-                    <h2 class="activity-title">Audiometer Hearing Test Simulation</h2>
+                    <div class="activity-icon">⚖️</div>
+                    <h2 class="activity-title">ADA/HIPAA Compliance Scenarios</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Adjust the frequency and volume sliders to simulate different 
-                    hearing test results. Observe how different frequencies affect perceived volume.
+                    <strong>Instructions:</strong> Select the correct legal/ethical response for each scenario 
+                    involving patients with sensory loss and privacy requirements.
                 </p>
                 
-                <div class="audiometer-container">
-                    <h4 style="color: var(--color-primary); margin-bottom: 16px;">Simulated Audiometer</h4>
-                    
-                    <div class="frequency-controls">
-                        <div class="frequency-slider">
-                            <div class="slider-label">
-                                <span>Frequency (Hz)</span>
-                                <span id="frequencyValue">1000 Hz</span>
-                            </div>
-                            <input type="range" min="125" max="8000" value="1000" step="125" class="slider" id="frequencySlider">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--color-muted);">
-                                <span>125 Hz (Low)</span>
-                                <span>1000 Hz (Speech)</span>
-                                <span>8000 Hz (High)</span>
-                            </div>
+                <div class="scenario-container">
+                    <!-- Scenario 1 -->
+                    <div class="legal-scenario">
+                        <div class="legal-question">
+                            1. A patient who is deaf and uses American Sign Language (ASL) comes for a 
+                            diabetes education appointment. What is the appropriate ADA accommodation?
                         </div>
-                        
-                        <div class="frequency-slider">
-                            <div class="slider-label">
-                                <span>Volume (dB HL)</span>
-                                <span id="volumeValue">40 dB HL</span>
+                        <div class="legal-options">
+                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Have a bilingual staff member try to communicate</div>
                             </div>
-                            <input type="range" min="0" max="120" value="40" step="5" class="slider" id="volumeSlider">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--color-muted);">
-                                <span>0 dB (Normal)</span>
-                                <span>40 dB (Mild Loss)</span>
-                                <span>120 dB (Severe)</span>
+                            <div class="legal-option" data-scenario="1" data-answer="correct">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Schedule a qualified sign language interpreter</div>
+                            </div>
+                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Write notes back and forth during the appointment</div>
+                            </div>
+                            <div class="legal-option" data-scenario="1" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Ask a family member to interpret if available</div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="wave-display">
-                        <svg class="wave-svg" viewBox="0 0 400 100" preserveAspectRatio="none">
-                            <path class="wave-path animated" id="wavePath" d="M0,50 Q50,20 100,50 T200,50 T300,50 T400,50" />
-                        </svg>
-                    </div>
-                    
-                    <div class="volume-display">
-                        <div class="volume-text">Perceived Volume:</div>
-                        <div class="volume-bar">
-                            <div class="volume-fill" id="volumeFill"></div>
+                    <!-- Scenario 2 -->
+                    <div class="legal-scenario">
+                        <div class="legal-question">
+                            2. A family member calls asking about their elderly mother's recent 
+                            hearing test results. The mother has moderate dementia. What is the HIPAA-compliant response?
                         </div>
-                        <div class="volume-text" id="perceivedVolume">Moderate</div>
-                    </div>
-                    
-                    <!-- Hearing Test Scenarios -->
-                    <div style="margin-top: 24px;">
-                        <h5 style="font-size: 0.9rem; margin-bottom: 12px; color: var(--color-text);">
-                            <strong>Test Scenarios:</strong> Adjust sliders to match these hearing test results
-                        </h5>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
-                            <button class="scenario-btn" data-frequency="500" data-volume="25" style="padding: 8px 12px; background: rgba(175, 75, 239, 0.1); border: 1px solid var(--color-primary); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem;">
-                                Normal Hearing<br>500 Hz @ 25 dB
-                            </button>
-                            <button class="scenario-btn" data-frequency="2000" data-volume="55" style="padding: 8px 12px; background: rgba(175, 75, 239, 0.1); border: 1px solid var(--color-primary); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem;">
-                                High-Frequency Loss<br>2000 Hz @ 55 dB
-                            </button>
-                            <button class="scenario-btn" data-frequency="1000" data-volume="70" style="padding: 8px 12px; background: rgba(175, 75, 239, 0.1); border: 1px solid var(--color-primary); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem;">
-                                Moderate Loss<br>1000 Hz @ 70 dB
-                            </button>
-                            <button class="scenario-btn" data-frequency="4000" data-volume="90" style="padding: 8px 12px; background: rgba(175, 75, 239, 0.1); border: 1px solid var(--color-primary); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem;">
-                                Noise-Induced Loss<br>4000 Hz @ 90 dB
-                            </button>
+                        <div class="legal-options">
+                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Provide results since they're immediate family</div>
+                            </div>
+                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Ask them to get written permission from the patient</div>
+                            </div>
+                            <div class="legal-option" data-scenario="2" data-answer="correct">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">"I cannot disclose protected health information without proper authorization"</div>
+                            </div>
+                            <div class="legal-option" data-scenario="2" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Provide general information but not specific results</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Audiogram Interpretation -->
-                    <div style="margin-top: 24px; padding: 16px; background: rgba(0, 184, 148, 0.05); border-radius: var(--radius-sm);">
-                        <h5 style="color: var(--color-success); margin-bottom: 8px;">Audiogram Interpretation Guide:</h5>
-                        <div style="font-size: 0.85rem; line-height: 1.6;">
-                            <p><strong>Normal Hearing:</strong> 0-25 dB HL at all frequencies</p>
-                            <p><strong>Mild Loss:</strong> 26-40 dB HL (difficulty with soft speech)</p>
-                            <p><strong>Moderate Loss:</strong> 41-70 dB HL (needs hearing aid)</p>
-                            <p><strong>Severe Loss:</strong> 71-90 dB HL (loud speech only)</p>
-                            <p><strong>Profound Loss:</strong> 91+ dB HL (may benefit from cochlear implant)</p>
+                    <!-- Scenario 3 -->
+                    <div class="legal-scenario">
+                        <div class="legal-question">
+                            3. A patient with low vision requests that their medical information be provided 
+                            in an accessible format. What ADA requirement applies?
+                        </div>
+                        <div class="legal-options">
+                            <div class="legal-option" data-scenario="3" data-answer="correct">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Provide information in large print, braille, or audio format</div>
+                            </div>
+                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Read the information aloud to the patient</div>
+                            </div>
+                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Ask a family member to read it to them</div>
+                            </div>
+                            <div class="legal-option" data-scenario="3" data-answer="incorrect">
+                                <div class="option-indicator"></div>
+                                <div class="option-text">Provide standard print and offer a magnifying glass</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="feedback-message" id="audiometerFeedback"></div>
+                <div style="margin-top: 24px;">
+                    <button class="activity-btn" id="checkLegalBtn">
+                        ✓ Check Legal Responses
+                    </button>
+                </div>
+                
+                <div class="feedback-message" id="legalFeedback"></div>
             </section>
 
-            <!-- ACTIVITY 4: EAR PROCEDURE STEPS -->
-            <section class="activity-card" aria-label="Ear Procedure Steps Activity">
+            <!-- ACTIVITY 4: NOSE/THROAT EXAM PROCEDURE -->
+            <section class="activity-card" aria-label="Nose/Throat Exam Procedure Activity">
                 <div class="activity-header">
                     <div class="activity-icon">🔄</div>
-                    <h2 class="activity-title">Ear Procedure Sequence</h2>
+                    <h2 class="activity-title">Nose & Throat Exam Procedure Sequence</h2>
                 </div>
                 <p class="activity-description">
-                    <strong>Instructions:</strong> Click on each step in the correct order for ear irrigation 
-                    and medication instillation. Follow proper clinical sequence.
+                    <strong>Instructions:</strong> Click on each step in the correct order for a comprehensive 
+                    nose and throat examination. Follow proper clinical sequence.
                 </p>
                 
                 <div class="procedure-steps">
                     <div class="procedure-step" data-step="1" data-order="1">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Patient Assessment & Consent</div>
-                            <div class="procedure-description">Verify need for procedure, obtain consent, explain steps</div>
+                            <div class="procedure-title">Patient History & Consent</div>
+                            <div class="procedure-description">Review symptoms, medical history, obtain consent for exam</div>
                         </div>
                     </div>
                     
                     <div class="procedure-step" data-step="2" data-order="5">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Otoscopic Examination</div>
-                            <div class="procedure-description">Visualize tympanic membrane, check for contraindications</div>
+                            <div class="procedure-title">External Nose Inspection</div>
+                            <div class="procedure-description">Observe symmetry, skin condition, any deformities</div>
                         </div>
                     </div>
                     
                     <div class="procedure-step" data-step="3" data-order="2">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Position Patient & Prepare Equipment</div>
-                            <div class="procedure-description">Semi-Fowler's position, drape, gather supplies</div>
+                            <div class="procedure-title">Prepare Equipment & Positioning</div>
+                            <div class="procedure-description">Gather otoscope/nasoscope, tongue depressors, position patient</div>
                         </div>
                     </div>
                     
                     <div class="procedure-step" data-step="4" data-order="6">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Perform Irrigation/Instillation</div>
-                            <div class="procedure-description">Administer solution/medication using proper technique</div>
+                            <div class="procedure-title">Nasal Cavity Examination</div>
+                            <div class="procedure-description">Use nasoscope to inspect turbinates, septum, mucosa</div>
                         </div>
                     </div>
                     
                     <div class="procedure-step" data-step="5" data-order="3">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Warm Solution to Body Temperature</div>
-                            <div class="procedure-description">Prevent vertigo by using 98.6°F (37°C) solution</div>
+                            <div class="procedure-title">Hand Hygiene & PPE</div>
+                            <div class="procedure-description">Wash hands, don gloves, mask if respiratory symptoms present</div>
                         </div>
                     </div>
                     
                     <div class="procedure-step" data-step="6" data-order="7">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Post-Procedure Care & Documentation</div>
-                            <div class="procedure-description">Instruct patient, clean area, document findings</div>
+                            <div class="procedure-title">Throat Examination</div>
+                            <div class="procedure-description">Inspect tonsils, pharynx, uvula using tongue depressor</div>
                         </div>
                     </div>
                     
-                    <div class="procedure-step" data-step="7" data-order="4">
+                    <div class="procedure-step" data-step="7" data-order="8">
                         <div class="procedure-number">?</div>
                         <div class="procedure-content">
-                            <div class="procedure-title">Check Solution Flow & Pressure</div>
-                            <div class="procedure-description">Test irrigation system, ensure gentle flow</div>
+                            <div class="procedure-title">Documentation & Patient Education</div>
+                            <div class="procedure-description">Record findings, discuss results, provide follow-up instructions</div>
+                        </div>
+                    </div>
+                    
+                    <div class="procedure-step" data-step="8" data-order="4">
+                        <div class="procedure-number">?</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">Palpation of Sinuses & Lymph Nodes</div>
+                            <div class="procedure-description">Gently palpate frontal/maxillary sinuses, cervical lymph nodes</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Check Sequence Button -->
-                <button id="checkSequenceBtn" style="margin-top: 20px; padding: 12px 24px; background: var(--color-primary); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; align-self: flex-start;">
-                    ✓ Check Procedure Sequence
-                </button>
+                <div style="margin-top: 24px;">
+                    <button class="activity-btn" id="checkProcedureBtn">
+                        ✓ Check Procedure Sequence
+                    </button>
+                </div>
                 
                 <div class="feedback-message" id="procedureFeedback"></div>
                 
-                <div style="margin-top: 20px; padding: 16px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm);">
-                    <strong>Safety Reminder:</strong> Never irrigate if tympanic membrane is perforated, if patient has tubes, 
-                    or with history of ear surgery. Always use body-temperature solution to prevent vertigo.
+                <div style="margin-top: 24px; padding: 20px; background: rgba(175, 75, 239, 0.05); border-radius: var(--radius-sm); font-size: 0.95rem;">
+                    <strong>Clinical Tip:</strong> Always use proper lighting for throat exams. For nasal examination, 
+                    use vasoconstrictor spray if mucosa is swollen. Document tonsil size using grading scale (1+ to 4+).
                 </div>
             </section>
         </div>
@@ -1525,10 +1582,10 @@
         <div class="results-panel" id="resultsPanel">
             <div class="results-header">
                 <div class="activity-icon" style="background: var(--color-success);">✓</div>
-                <h3 class="results-title">Module Complete!</h3>
+                <h3 class="results-title">Module 4 Complete!</h3>
             </div>
             <div class="results-content">
-                <p>Excellent work! You've completed the <strong>Ear & Hearing Assessment Lab</strong> module.</p>
+                <p>Excellent work! You've completed the <strong>Nose, Throat & Sensory Loss Clinic</strong> module.</p>
                 
                 <div class="score-display">
                     <div class="score-value" id="scoreValue">0%</div>
@@ -1537,78 +1594,44 @@
                 
                 <p><strong>What you've mastered:</strong></p>
                 <ul style="margin-left: 20px; margin-top: 8px; margin-bottom: 16px;">
-                    <li>✓ Hearing loss diagnosis: Conductive vs Sensorineural differentiation</li>
-                    <li>✓ Common ear disorders: Otitis, cerumen, Meniere's, tinnitus</li>
-                    <li>✓ Audiometer procedures: Frequency/volume interpretation</li>
-                    <li>✓ Ear irrigation & medication: Proper sequence and safety</li>
+                    <li>✓ Throat culture collection technique & proper swabbing</li>
+                    <li>✓ Sensory loss communication strategies (vision & hearing)</li>
+                    <li>✓ ADA compliance for patients with disabilities</li>
+                    <li>✓ HIPAA privacy requirements & ethical responses</li>
+                    <li>✓ Comprehensive nose/throat examination sequence</li>
                 </ul>
                 
                 <div class="clinical-insight">
-                    <strong>Clinical Insight:</strong> When documenting hearing test results, use standard notation: 
-                    Right ear = red = O, Left ear = blue = X on audiogram. Record both air conduction (AC) and 
-                    bone conduction (BC) results. Air-bone gap >10 dB suggests conductive component.
+                    <strong>Clinical Insight:</strong> When working with patients with sensory loss, always ask about 
+                    their preferred communication method. Document accommodations provided. For throat cultures, 
+                    rapid strep tests have high specificity but lower sensitivity - culture remains gold standard 
+                    for Group A Strep diagnosis.
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // ===== SCENARIO STATE MANAGEMENT =====
-        const scenarioState = {
-            currentScenario: 1,
-            totalScenarios: 2,
-            answers: {
-                scenario1: { type: null, disorder: null },
-                scenario2: { type: null, disorder: null }
-            },
-            completed: false,
-            score: 0,
-            maxScore: 4
-        };
-
-        // Fixed State Management for other activities
+        // === STATE MANAGEMENT ===
         let moduleState = {
-            scenario: { completed: false, score: 0, total: 4 },
-            disorders: { completed: false, score: 0, total: 4 },
-            audiometer: { completed: false, score: 0, total: 4 },
-            procedures: { completed: false, score: 0, total: 7 },
+            throatCulture: { completed: false, score: 0, total: 3 },
+            communication: { completed: false, score: 0, total: 8 },
+            legalScenarios: { completed: false, score: 0, total: 3 },
+            procedures: { completed: false, score: 0, total: 8 },
             startTime: new Date(),
             activitiesCompleted: 0
         };
 
-        // Fixed Correct Answers for scenarios
-        const scenarioAnswers = {
-            scenario1: { 
-                correctType: 'conductive',
-                correctDisorder: 'otitis-media'
-            },
-            scenario2: { 
-                correctType: 'sensorineural',
-                correctDisorder: 'presbycusis'
-            }
-        };
-
-        // Fixed Correct Answers for other activities
-        const correctAnswers = {
-            disorders: {
-                'otitis-media': { description: 'otitis-media-desc', treatment: 'otitis-media-treat' },
-                'impacted-cerumen': { description: 'impacted-cerumen-desc', treatment: 'impacted-cerumen-treat' },
-                'menieres': { description: 'menieres-desc', treatment: 'menieres-treat' },
-                'tinnitus': { description: 'tinnitus-desc', treatment: 'tinnitus-treat' }
-            },
-            procedures: [1, 3, 5, 7, 2, 4, 6]
-        };
-
-        // ===== SCENARIO FUNCTIONS =====
-        function initializeScenarioActivity() {
-            let draggedSymptom = null;
+        // === IMPROVED: ACTIVITY 1: THROAT CULTURE FUNCTIONS WITH DETAILED FEEDBACK ===
+        function initializeThroatCultureActivity() {
+            let draggedTag = null;
             
-            // Symptom tags drag events
-            document.querySelectorAll('.symptom-tag').forEach(tag => {
+            // Add draggable="true" and proper drag events
+            document.querySelectorAll('.swab-tag').forEach(tag => {
                 tag.addEventListener('dragstart', function(e) {
-                    draggedSymptom = this;
+                    draggedTag = this;
                     this.classList.add('dragging');
-                    e.dataTransfer.setData('text/plain', this.dataset.symptom);
+                    e.dataTransfer.setData('text/plain', this.id);
                     
                     setTimeout(() => {
                         this.style.opacity = '0.4';
@@ -1618,365 +1641,367 @@
                 tag.addEventListener('dragend', function() {
                     this.classList.remove('dragging');
                     this.style.opacity = '1';
-                    draggedSymptom = null;
-                    
-                    // Remove hover effects
-                    document.querySelectorAll('.type-column').forEach(col => {
-                        col.classList.remove('active-drop');
-                    });
+                    draggedTag = null;
                 });
             });
             
-            // Type columns drop events
-            document.querySelectorAll('.type-column').forEach(column => {
-                column.addEventListener('dragover', function(e) {
+            // Throat area drop events
+            document.querySelectorAll('.throat-area').forEach(area => {
+                area.addEventListener('dragover', function(e) {
                     e.preventDefault();
-                    this.classList.add('active-drop');
+                    this.style.borderColor = 'var(--color-primary)';
+                    this.style.backgroundColor = 'rgba(175, 75, 239, 0.05)';
                 });
                 
-                column.addEventListener('dragenter', function(e) {
-                    e.preventDefault();
+                area.addEventListener('dragleave', function() {
+                    this.style.borderColor = '#ddd';
+                    this.style.backgroundColor = 'white';
                 });
                 
-                column.addEventListener('dragleave', function() {
-                    this.classList.remove('active-drop');
-                });
-                
-                column.addEventListener('drop', function(e) {
+                area.addEventListener('drop', function(e) {
                     e.preventDefault();
-                    this.classList.remove('active-drop');
+                    this.style.borderColor = '#ddd';
+                    this.style.backgroundColor = 'white';
                     
-                    if (draggedSymptom) {
-                        const scenario = this.dataset.scenario;
-                        const type = this.dataset.type;
-                        const symptom = draggedSymptom.dataset.symptom;
+                    if (draggedTag) {
+                        // Create clone
+                        const tagClone = draggedTag.cloneNode(true);
+                        tagClone.classList.remove('dragging');
+                        tagClone.classList.add('placed');
+                        tagClone.draggable = false;
+                        tagClone.style.cursor = 'default';
+                        tagClone.style.opacity = '1';
+                        tagClone.style.margin = '10px';
+                        tagClone.style.width = '80%';
                         
-                        // Check if symptom belongs to current scenario
-                        if (draggedSymptom.dataset.scenario === scenario) {
-                            // Clear any existing symptom in this drop zone
-                            const dropZone = this.querySelector('.drop-zone');
-                            dropZone.innerHTML = '';
-                            
-                            // Create clone
-                            const symptomClone = draggedSymptom.cloneNode(true);
-                            symptomClone.classList.remove('dragging');
-                            symptomClone.classList.add('placed');
-                            symptomClone.draggable = false;
-                            symptomClone.style.cursor = 'default';
-                            symptomClone.style.opacity = '1';
-                            
-                            dropZone.appendChild(symptomClone);
-                            
-                            // Store answer
-                            scenarioState.answers[`scenario${scenario}`].type = type;
-                            
-                            // Hide original (but keep for reset)
-                            draggedSymptom.style.visibility = 'hidden';
-                        }
+                        // Clear area and add clone
+                        this.innerHTML = `
+                            <div class="area-title">${this.dataset.area === 'uvula' ? 'Uvula' : 
+                                this.dataset.area === 'left-tonsil' ? 'Left Tonsillar Pillar' :
+                                this.dataset.area === 'right-tonsil' ? 'Right Tonsillar Pillar' :
+                                'Posterior Pharynx'}</div>
+                        `;
+                        this.appendChild(tagClone);
+                        
+                        // Hide original (but keep for reset)
+                        draggedTag.style.visibility = 'hidden';
                     }
                 });
             });
             
-            // Disorder option click events
-            document.querySelectorAll('.disorder-option').forEach(option => {
+            // Check swabbing button
+            document.getElementById('checkSwabbingBtn').addEventListener('click', checkSwabbingAnswers);
+        }
+        
+        function checkSwabbingAnswers() {
+            const correctAreas = ['left-tonsil', 'right-tonsil', 'posterior-pharynx'];
+            const incorrectArea = 'uvula';
+            
+            let score = 0;
+            let feedbackItems = [];
+            
+            // Clear previous feedback
+            const feedbackList = document.getElementById('throatFeedbackList');
+            feedbackList.innerHTML = '';
+            
+            // Check each area and provide detailed feedback
+            correctAreas.forEach(areaId => {
+                const area = document.getElementById(`area-${areaId}`);
+                const hasTag = area.querySelector('.swab-tag') !== null;
+                const areaName = areaId === 'left-tonsil' ? 'Left Tonsillar Pillar' :
+                                 areaId === 'right-tonsil' ? 'Right Tonsillar Pillar' :
+                                 'Posterior Pharynx';
+                
+                if (hasTag) {
+                    area.classList.remove('incorrect-drop');
+                    area.classList.add('correct-drop');
+                    score++;
+                    
+                    const li = document.createElement('li');
+                    li.className = 'feedback-item correct';
+                    li.textContent = `${areaName}: Correct! This area should be swabbed for accurate culture collection.`;
+                    feedbackList.appendChild(li);
+                } else {
+                    area.classList.remove('correct-drop');
+                    area.classList.add('incorrect-drop');
+                    
+                    const li = document.createElement('li');
+                    li.className = 'feedback-item incorrect';
+                    li.textContent = `${areaName}: Missing swab. This area MUST be swabbed for proper throat culture.`;
+                    feedbackList.appendChild(li);
+                }
+            });
+            
+            // Check uvula (should NOT have tag)
+            const uvulaArea = document.getElementById(`area-${incorrectArea}`);
+            const uvulaHasTag = uvulaArea.querySelector('.swab-tag') !== null;
+            
+            if (!uvulaHasTag) {
+                uvulaArea.classList.remove('incorrect-drop');
+                uvulaArea.classList.add('correct-drop');
+                score++;
+                
+                const li = document.createElement('li');
+                li.className = 'feedback-item correct';
+                li.textContent = 'Uvula: Correct! The uvula should NOT be swabbed as it is a contaminant.';
+                feedbackList.appendChild(li);
+            } else {
+                uvulaArea.classList.remove('correct-drop');
+                uvulaArea.classList.add('incorrect-drop');
+                
+                const li = document.createElement('li');
+                li.className = 'feedback-item incorrect';
+                li.textContent = 'Uvula: Incorrect! The uvula should NOT be swabbed as it contains normal flora that can contaminate the culture.';
+                feedbackList.appendChild(li);
+            }
+            
+            // Add clinical tips
+            const tip1 = document.createElement('li');
+            tip1.className = 'feedback-item tip';
+            tip1.textContent = 'Clinical Tip: For accurate throat culture, swab BOTH tonsillar pillars AND the posterior pharynx. Avoid tongue, cheeks, and uvula.';
+            feedbackList.appendChild(tip1);
+            
+            if (score < 4) {
+                const tip2 = document.createElement('li');
+                tip2.className = 'feedback-item tip';
+                tip2.textContent = 'Remember: Proper technique reduces false negatives and ensures accurate diagnosis of Group A Strep.';
+                feedbackList.appendChild(tip2);
+            } else {
+                const tip3 = document.createElement('li');
+                tip3.className = 'feedback-item tip';
+                tip3.textContent = 'Excellent technique! This proper swabbing method maximizes bacterial yield for accurate culture results.';
+                feedbackList.appendChild(tip3);
+            }
+            
+            // Update module state
+            moduleState.throatCulture.score = Math.floor(score * 0.75); // 3 points max
+            moduleState.throatCulture.completed = true;
+            
+            // Update feedback title
+            const feedbackTitle = document.querySelector('#throatFeedbackDetails .feedback-title');
+            feedbackTitle.innerHTML = `<span>📋 Throat Culture Feedback: ${score}/4 Correct</span>`;
+            
+            // Provide summary feedback
+            let summaryFeedback = '';
+            if (score === 4) {
+                summaryFeedback = '✓ Perfect! All swabs placed correctly. Your technique ensures maximum bacterial yield for accurate culture.';
+            } else if (score >= 2) {
+                summaryFeedback = `✓ Good effort! ${score}/4 correct. Review the detailed feedback above to improve your technique.`;
+            } else {
+                summaryFeedback = `✗ Needs practice. ${score}/4 correct. Review proper throat culture technique in the feedback above.`;
+            }
+            
+            showFeedback('swabbingFeedback', summaryFeedback, score >= 2 ? 'correct' : 'incorrect');
+            updateProgress();
+        }
+
+        // === ACTIVITY 2: COMMUNICATION FUNCTIONS ===
+        function initializeCommunicationActivity() {
+            let draggedCard = null;
+            
+            // Communication card drag events
+            document.querySelectorAll('.communication-card').forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    draggedCard = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.id);
+                    
+                    // Add active class to drop zones
+                    document.querySelectorAll('.drop-zone').forEach(zone => {
+                        zone.classList.add('active');
+                    });
+                });
+                
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedCard = null;
+                    
+                    // Remove active class from drop zones
+                    document.querySelectorAll('.drop-zone').forEach(zone => {
+                        zone.classList.remove('active');
+                    });
+                });
+            });
+            
+            // Drop zone events
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    
+                    if (draggedCard) {
+                        // Create clone
+                        const cardClone = draggedCard.cloneNode(true);
+                        cardClone.classList.remove('dragging');
+                        cardClone.draggable = true; // Allow re-dragging
+                        cardClone.style.cursor = 'grab';
+                        cardClone.style.margin = '5px';
+                        
+                        // Add new drag event to clone
+                        cardClone.addEventListener('dragstart', function(e) {
+                            this.classList.add('dragging');
+                            e.dataTransfer.setData('text/plain', this.id);
+                            
+                            document.querySelectorAll('.drop-zone').forEach(z => {
+                                z.classList.add('active');
+                            });
+                        });
+                        
+                        cardClone.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                            
+                            document.querySelectorAll('.drop-zone').forEach(z => {
+                                z.classList.remove('active');
+                            });
+                        });
+                        
+                        this.appendChild(cardClone);
+                    }
+                });
+            });
+            
+            // Check communication button
+            document.getElementById('checkCommunicationBtn').addEventListener('click', checkCommunicationMatches);
+        }
+        
+        function checkCommunicationMatches() {
+            const correctMatches = {
+                'drop-vision': ['card-large-print', 'card-verbal-description', 'card-contrast-colors'],
+                'drop-hearing': ['card-face-patient', 'card-reduce-noise', 'card-assistive-listening'],
+                'both': ['card-teach-back', 'card-extra-time']
+            };
+            
+            let score = 0;
+            let totalMatches = 0;
+            
+            // Check vision drop zone
+            const visionZone = document.getElementById('drop-vision');
+            const visionCards = Array.from(visionZone.querySelectorAll('.communication-card'))
+                .map(card => card.id);
+            
+            correctMatches['drop-vision'].forEach(correctId => {
+                if (visionCards.includes(correctId)) {
+                    document.getElementById(correctId).classList.add('correct');
+                    score++;
+                }
+                totalMatches++;
+            });
+            
+            // Check hearing drop zone
+            const hearingZone = document.getElementById('drop-hearing');
+            const hearingCards = Array.from(hearingZone.querySelectorAll('.communication-card'))
+                .map(card => card.id);
+            
+            correctMatches['drop-hearing'].forEach(correctId => {
+                if (hearingCards.includes(correctId)) {
+                    document.getElementById(correctId).classList.add('correct');
+                    score++;
+                }
+                totalMatches++;
+            });
+            
+            // Cards that can be in either zone
+            const bothCards = visionCards.concat(hearingCards);
+            correctMatches['both'].forEach(correctId => {
+                if (bothCards.includes(correctId)) {
+                    document.getElementById(correctId).classList.add('correct');
+                    score++;
+                }
+                totalMatches++;
+            });
+            
+            // Update module state
+            moduleState.communication.score = Math.floor((score / totalMatches) * 8);
+            moduleState.communication.completed = true;
+            
+            // Provide feedback
+            const percentage = Math.round((score / totalMatches) * 100);
+            let feedback = '';
+            
+            if (percentage >= 90) {
+                feedback = `✓ Excellent! ${score}/${totalMatches} strategies correctly matched. You understand that vision strategies focus on visual adaptations while hearing strategies focus on auditory adaptations.`;
+            } else if (percentage >= 70) {
+                feedback = `✓ Good work! ${score}/${totalMatches} correct. Remember: For vision impairment, adapt visual materials. For hearing impairment, adapt communication methods. Some strategies work for both.`;
+            } else {
+                feedback = `✗ Needs review. ${score}/${totalMatches} correct. Key concept: Vision strategies = visual adaptations (large print, contrast). Hearing strategies = auditory adaptations (clear speech, noise reduction).`;
+            }
+            
+            showFeedback('communicationFeedback', feedback, percentage >= 70 ? 'correct' : 'incorrect');
+            updateProgress();
+        }
+
+        // === ACTIVITY 3: LEGAL SCENARIOS FUNCTIONS ===
+        function initializeLegalActivity() {
+            // Legal option click events
+            document.querySelectorAll('.legal-option').forEach(option => {
                 option.addEventListener('click', function() {
                     const scenario = this.dataset.scenario;
-                    const disorder = this.dataset.disorder;
                     
                     // Remove selection from other options in same scenario
-                    document.querySelectorAll(`.disorder-option[data-scenario="${scenario}"]`).forEach(opt => {
+                    document.querySelectorAll(`.legal-option[data-scenario="${scenario}"]`).forEach(opt => {
                         opt.classList.remove('selected');
-                        opt.style.borderColor = 'rgba(12, 10, 24, 0.08)';
-                        opt.style.background = 'white';
                     });
                     
                     // Select this one
                     this.classList.add('selected');
-                    this.style.borderColor = 'var(--color-primary)';
-                    this.style.background = 'rgba(175, 75, 239, 0.05)';
-                    
-                    // Store answer
-                    scenarioState.answers[`scenario${scenario}`].disorder = disorder;
                 });
             });
             
-            // Scenario navigation
-            document.getElementById('prev-scenario').addEventListener('click', function() {
-                if (scenarioState.currentScenario > 1) {
-                    scenarioState.currentScenario--;
-                    showScenario(scenarioState.currentScenario);
-                }
-            });
-            
-            document.getElementById('next-scenario').addEventListener('click', function() {
-                if (scenarioState.currentScenario < scenarioState.totalScenarios) {
-                    scenarioState.currentScenario++;
-                    showScenario(scenarioState.currentScenario);
-                }
-            });
-            
-            // Check scenario button
-            document.getElementById('checkScenarioBtn').addEventListener('click', checkScenarioAnswers);
+            // Check legal button
+            document.getElementById('checkLegalBtn').addEventListener('click', checkLegalAnswers);
         }
         
-        function showScenario(num) {
-            // Hide all scenarios
-            document.querySelectorAll('.scenario').forEach(scenario => {
-                scenario.style.display = 'none';
-            });
+        function checkLegalAnswers() {
+            let score = 0;
+            let totalScenarios = 3;
             
-            // Show selected scenario
-            document.querySelector(`.scenario[data-scenario="${num}"]`).style.display = 'block';
-            
-            // Update navigation buttons
-            document.getElementById('prev-scenario').disabled = num === 1;
-            document.getElementById('next-scenario').disabled = num === scenarioState.totalScenarios;
-            
-            // Update button text
-            document.getElementById('next-scenario').textContent = 
-                num < scenarioState.totalScenarios ? `Case ${num + 1} →` : 'Review All Cases';
-        }
-        
-        function checkScenarioAnswers() {
-            let totalScore = 0;
-            let scenarioFeedback = '';
-            
-            // Check both scenarios
-            for (let i = 1; i <= scenarioState.totalScenarios; i++) {
-                const scenarioKey = `scenario${i}`;
-                const userAnswer = scenarioState.answers[scenarioKey];
-                const correctAnswer = scenarioAnswers[scenarioKey];
+            // Check each scenario
+            for (let i = 1; i <= totalScenarios; i++) {
+                const selectedOption = document.querySelector(`.legal-option[data-scenario="${i}"].selected`);
+                const correctOption = document.querySelector(`.legal-option[data-scenario="${i}"][data-answer="correct"]`);
                 
-                let scenarioScore = 0;
-                
-                if (userAnswer.type === correctAnswer.correctType) {
-                    scenarioScore++;
+                if (selectedOption && selectedOption.dataset.answer === 'correct') {
+                    selectedOption.classList.add('correct');
+                    score++;
+                } else if (selectedOption) {
+                    selectedOption.classList.add('incorrect');
+                    // Show correct answer
+                    correctOption.classList.add('correct');
                 }
                 
-                if (userAnswer.disorder === correctAnswer.correctDisorder) {
-                    scenarioScore++;
-                }
-                
-                totalScore += scenarioScore;
-                
-                // Add to feedback
-                scenarioFeedback += `Case ${i}: ${scenarioScore}/2 correct. `;
+                // Disable further clicks
+                document.querySelectorAll(`.legal-option[data-scenario="${i}"]`).forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                });
             }
             
             // Update module state
-            moduleState.scenario.score = totalScore;
-            moduleState.scenario.completed = true;
+            moduleState.legalScenarios.score = score;
+            moduleState.legalScenarios.completed = true;
             
-            // Calculate percentage
-            const percentage = Math.round((totalScore / 4) * 100);
-            
-            // Show feedback
-            let feedbackMsg = '';
-            if (percentage === 100) {
-                feedbackMsg = `✓ Perfect diagnosis! ${scenarioFeedback} Total: ${totalScore}/4 correct (${percentage}%).`;
-            } else if (percentage >= 70) {
-                feedbackMsg = `✓ Good work! ${scenarioFeedback} Total: ${totalScore}/4 correct (${percentage}%).`;
+            // Provide feedback
+            let feedback = '';
+            if (score === totalScenarios) {
+                feedback = '✓ Perfect! All legal/ethical responses correct. You understand ADA accommodation requirements and HIPAA privacy rules.';
+            } else if (score >= 2) {
+                feedback = `✓ Good! ${score}/${totalScenarios} correct. Review any incorrect answers marked in red.`;
             } else {
-                feedbackMsg = `✗ Needs review. ${scenarioFeedback} Total: ${totalScore}/4 correct (${percentage}%). Review the symptom patterns.`;
+                feedback = `✗ Needs review. ${score}/${totalScenarios} correct. Key principles: ADA = reasonable accommodations, HIPAA = privacy protection.`;
             }
             
-            showFeedback('scenarioFeedback', feedbackMsg, 
-                percentage >= 70 ? 'correct' : 'incorrect');
-            
+            showFeedback('legalFeedback', feedback, score >= 2 ? 'correct' : 'incorrect');
             updateProgress();
         }
 
-        // ===== AUDIOMETER FUNCTIONS WITH RESTORED WAVE ANIMATION =====
-        function initializeAudiometerActivity() {
-            const frequencySlider = document.getElementById('frequencySlider');
-            const volumeSlider = document.getElementById('volumeSlider');
-            const frequencyValue = document.getElementById('frequencyValue');
-            const volumeValue = document.getElementById('volumeValue');
-            const volumeFill = document.getElementById('volumeFill');
-            const perceivedVolume = document.getElementById('perceivedVolume');
-            const wavePath = document.getElementById('wavePath');
-            
-            // Update wave animation based on frequency - RESTORED ANIMATION!
-            function updateWave() {
-                const frequency = parseInt(frequencySlider.value);
-                const wavelength = 1000 / (frequency / 100);
-                
-                // Create wave path
-                let path = 'M0,50';
-                for (let i = 1; i <= 4; i++) {
-                    const x = i * 100;
-                    const controlY = i % 2 === 0 ? 20 : 80;
-                    path += ` Q${x-50},${controlY} ${x},50`;
-                }
-                
-                wavePath.setAttribute('d', path);
-                
-                // RESTORED: Adjust animation speed based on frequency
-                const duration = 2000 / (frequency / 500);
-                wavePath.style.animationDuration = `${duration}ms`;
-            }
-            
-            // Update volume display
-            function updateVolume() {
-                const volume = parseInt(volumeSlider.value);
-                const percentage = (volume / 120) * 100;
-                volumeFill.style.width = `${percentage}%`;
-                
-                // Update perceived volume text
-                let perception = '';
-                if (volume <= 25) perception = 'Very Soft';
-                else if (volume <= 40) perception = 'Soft';
-                else if (volume <= 70) perception = 'Moderate';
-                else if (volume <= 90) perception = 'Loud';
-                else perception = 'Very Loud';
-                
-                perceivedVolume.textContent = perception;
-                
-                // Update color based on volume
-                if (volume <= 25) {
-                    volumeFill.style.background = 'var(--color-success)';
-                } else if (volume <= 40) {
-                    volumeFill.style.background = 'linear-gradient(to right, var(--color-success), var(--color-warning))';
-                } else if (volume <= 70) {
-                    volumeFill.style.background = 'var(--color-warning)';
-                } else {
-                    volumeFill.style.background = 'linear-gradient(to right, var(--color-warning), var(--color-error))';
-                }
-            }
-            
-            // Initialize values with animation
-            updateWave();
-            updateVolume();
-            
-            // Event listeners for sliders
-            frequencySlider.addEventListener('input', function() {
-                frequencyValue.textContent = `${this.value} Hz`;
-                updateWave(); // This updates both the shape AND animation speed
-            });
-            
-            volumeSlider.addEventListener('input', function() {
-                volumeValue.textContent = `${this.value} dB HL`;
-                updateVolume();
-            });
-            
-            // Scenario buttons
-            document.querySelectorAll('.scenario-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const frequency = this.dataset.frequency;
-                    const volume = this.dataset.volume;
-                    
-                    frequencySlider.value = frequency;
-                    volumeSlider.value = volume;
-                    
-                    frequencyValue.textContent = `${frequency} Hz`;
-                    volumeValue.textContent = `${volume} dB HL`;
-                    
-                    updateWave();
-                    updateVolume();
-                    
-                    // Check if scenario matches test
-                    checkScenario(frequency, volume);
-                });
-            });
-        }
-
-        // ===== OTHER ACTIVITY FUNCTIONS (UNCHANGED) =====
-        function initializeDisordersActivity() {
-            let selectedDisorder = null;
-            let selectedDescription = null;
-            let selectedTreatment = null;
-            
-            // Disorder card click events
-            document.querySelectorAll('.disorder-card[data-disorder]').forEach(card => {
-                card.addEventListener('click', function() {
-                    // Remove previous selection
-                    document.querySelectorAll('.disorder-card').forEach(c => {
-                        c.style.borderColor = 'rgba(12, 10, 24, 0.08)';
-                        c.style.background = 'white';
-                    });
-                    
-                    // Highlight selected
-                    this.style.borderColor = 'var(--color-primary)';
-                    this.style.background = 'rgba(175, 75, 239, 0.05)';
-                    selectedDisorder = this.dataset.disorder;
-                });
-            });
-            
-            // Description and treatment zone clicks
-            document.querySelectorAll('.description-zone').forEach(zone => {
-                zone.addEventListener('click', function() {
-                    // Remove previous selection
-                    document.querySelectorAll('.description-zone').forEach(z => {
-                        z.style.borderColor = 'rgba(12, 10, 24, 0.1)';
-                        z.style.background = 'white';
-                    });
-                    
-                    // Highlight selected
-                    this.style.borderColor = 'var(--color-primary)';
-                    this.style.background = 'rgba(175, 75, 239, 0.05)';
-                    selectedDescription = this.dataset.disorder;
-                });
-            });
-            
-            document.querySelectorAll('.treatment-zone').forEach(zone => {
-                zone.addEventListener('click', function() {
-                    // Remove previous selection
-                    document.querySelectorAll('.treatment-zone').forEach(z => {
-                        z.style.borderColor = 'rgba(12, 10, 24, 0.1)';
-                        z.style.background = 'white';
-                    });
-                    
-                    // Highlight selected
-                    this.style.borderColor = 'var(--color-primary)';
-                    this.style.background = 'rgba(175, 75, 239, 0.05)';
-                    selectedTreatment = this.dataset.disorder;
-                });
-            });
-            
-            // Match button
-            document.getElementById('matchDisordersBtn').addEventListener('click', function() {
-                if (!selectedDisorder || !selectedDescription || !selectedTreatment) {
-                    showFeedback('disordersFeedback', 'Please select a disorder, its description, and treatment!', 'incorrect');
-                    return;
-                }
-                
-                // Check if all three match
-                const isCorrect = (selectedDisorder === selectedDescription) && 
-                                  (selectedDisorder === selectedTreatment);
-                
-                if (isCorrect) {
-                    showFeedback('disordersFeedback', 
-                        `✓ Correct! ${getDisorderFullName(selectedDisorder)} matches the description and treatment.`, 
-                        'correct');
-                    moduleState.disorders.score++;
-                    
-                    // Visual confirmation
-                    document.querySelector(`[data-disorder="${selectedDisorder}"]`).style.borderColor = 'var(--color-success)';
-                    document.querySelector(`#${selectedDisorder}-desc`).style.borderColor = 'var(--color-success)';
-                    document.querySelector(`#${selectedDisorder}-treat`).style.borderColor = 'var(--color-success)';
-                } else {
-                    showFeedback('disordersFeedback', 
-                        `✗ Not quite. ${getDisorderFullName(selectedDisorder)} doesn't match your selections. Try again!`, 
-                        'incorrect');
-                }
-                
-                // Reset selections
-                selectedDisorder = null;
-                selectedDescription = null;
-                selectedTreatment = null;
-                
-                // Update state
-                if (moduleState.disorders.score === 4) {
-                    moduleState.disorders.completed = true;
-                    updateProgress();
-                }
-            });
-        }
-
-        function initializeProceduresActivity() {
+        // === ACTIVITY 4: PROCEDURE FUNCTIONS ===
+        function initializeProcedureActivity() {
             let clickOrder = [];
             let currentClick = 1;
-            const maxSteps = 7;
+            const maxSteps = 8;
+            const correctOrder = [1, 3, 5, 8, 2, 4, 6, 7];
             
             // Procedure step click events
             document.querySelectorAll('.procedure-step').forEach(step => {
@@ -1997,93 +2022,29 @@
                     
                     // Check if all steps are clicked
                     if (clickOrder.length === maxSteps) {
-                        checkProcedureSequence(clickOrder);
+                        checkProcedureSequence(clickOrder, correctOrder);
                     }
                 });
             });
             
-            // Check sequence button
-            document.getElementById('checkSequenceBtn').addEventListener('click', function() {
+            // Check procedure button
+            document.getElementById('checkProcedureBtn').addEventListener('click', function() {
                 if (clickOrder.length < maxSteps) {
                     showFeedback('procedureFeedback', 
                         `Please click all ${maxSteps} steps in the correct order first!`, 
                         'incorrect');
                     return;
                 }
-                checkProcedureSequence(clickOrder);
+                checkProcedureSequence(clickOrder, correctOrder);
             });
         }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeScenarioActivity();
-            initializeDisordersActivity();
-            initializeAudiometerActivity(); // Now with restored wave animation!
-            initializeProceduresActivity();
-            setupEventListeners();
-            updateProgress();
-            startTimer();
-            
-            // Show first scenario
-            showScenario(1);
-        });
-
-        function getDisorderFullName(shortName) {
-            const names = {
-                'otitis-media': 'Otitis Media',
-                'impacted-cerumen': 'Impacted Cerumen',
-                'menieres': 'Meniere\'s Disease',
-                'tinnitus': 'Tinnitus'
-            };
-            return names[shortName] || shortName;
-        }
-
-        function checkScenario(frequency, volume) {
-            let isCorrect = false;
-            let scenarioName = '';
-            
-            const scenarios = {
-                '500-25': { name: 'Normal Hearing', completed: false },
-                '2000-55': { name: 'High-Frequency Loss', completed: false },
-                '1000-70': { name: 'Moderate Loss', completed: false },
-                '4000-90': { name: 'Noise-Induced Loss', completed: false }
-            };
-            
-            const scenarioKey = `${frequency}-${volume}`;
-            
-            if (scenarios[scenarioKey]) {
-                isCorrect = true;
-                scenarioName = scenarios[scenarioKey].name;
-                
-                if (!scenarios[scenarioKey].completed) {
-                    moduleState.audiometer.score++;
-                    scenarios[scenarioKey].completed = true;
-                    moduleState.audiometer.completed = moduleState.audiometer.score >= 2;
-                    
-                    showFeedback('audiometerFeedback', 
-                        `✓ Correct! You've simulated ${scenarioName}.`, 
-                        'correct');
-                } else {
-                    showFeedback('audiometerFeedback', 
-                        `✓ You've already completed this scenario. Try another one!`, 
-                        'correct');
-                }
-            } else {
-                showFeedback('audiometerFeedback', 
-                    `✗ That doesn't match a known hearing test result. Try another scenario.`, 
-                    'incorrect');
-            }
-            
-            updateProgress();
-        }
-
-        function checkProcedureSequence(sequence) {
-            const correctOrder = correctAnswers.procedures;
+        
+        function checkProcedureSequence(clickOrder, correctOrder) {
             let correctCount = 0;
             
             // Compare sequences
-            for (let i = 0; i < sequence.length; i++) {
-                if (sequence[i] === correctOrder[i]) {
+            for (let i = 0; i < clickOrder.length; i++) {
+                if (clickOrder[i] === correctOrder[i]) {
                     correctCount++;
                 }
             }
@@ -2109,24 +2070,35 @@
             });
             
             // Show feedback
-            const percentage = Math.round((correctCount / 7) * 100);
+            const percentage = Math.round((correctCount / 8) * 100);
             let feedback = '';
             
             if (percentage === 100) {
-                feedback = `✓ Perfect! All ${correctCount}/7 steps in correct order.`;
-            } else if (percentage >= 70) {
-                feedback = `✓ Good! ${correctCount}/7 steps correct (${percentage}%). Review the steps marked in red.`;
+                feedback = `✓ Perfect! All ${correctCount}/8 steps in correct order. Proper sequence: History → Equipment → Hygiene → Palpation → External → Nasal → Throat → Documentation.`;
+            } else if (percentage >= 75) {
+                feedback = `✓ Good! ${correctCount}/8 steps correct (${percentage}%). Review the steps marked in red.`;
             } else {
-                feedback = `✗ Needs review. ${correctCount}/7 steps correct (${percentage}%). Hover over red numbers for hints.`;
+                feedback = `✗ Needs review. ${correctCount}/8 steps correct (${percentage}%). Correct sequence: 1. History → 2. Equipment → 3. Hygiene → 4. Palpation → 5. External → 6. Nasal → 7. Throat → 8. Documentation.`;
             }
             
             showFeedback('procedureFeedback', feedback, 
-                percentage >= 70 ? 'correct' : 'incorrect');
+                percentage >= 75 ? 'correct' : 'incorrect');
             
             updateProgress();
         }
 
-        // Setup Event Listeners
+        // === INITIALIZE MODULE ===
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeThroatCultureActivity();
+            initializeCommunicationActivity();
+            initializeLegalActivity();
+            initializeProcedureActivity();
+            setupEventListeners();
+            updateProgress();
+            startTimer();
+        });
+
+        // === HELPER FUNCTIONS ===
         function setupEventListeners() {
             // Reset button
             document.getElementById('resetBtn').addEventListener('click', resetAllActivities);
@@ -2155,9 +2127,9 @@
         function updateProgress() {
             // Calculate completed activities
             let completedCount = 0;
-            if (moduleState.scenario.completed) completedCount++;
-            if (moduleState.disorders.completed) completedCount++;
-            if (moduleState.audiometer.completed) completedCount++;
+            if (moduleState.throatCulture.completed) completedCount++;
+            if (moduleState.communication.completed) completedCount++;
+            if (moduleState.legalScenarios.completed) completedCount++;
             if (moduleState.procedures.completed) completedCount++;
             
             document.getElementById('completedCount').textContent = completedCount;
@@ -2186,7 +2158,7 @@
                 // Show "View Results" button
                 document.getElementById('checkBtn').style.display = 'none';
                 document.getElementById('viewResultsBtn').style.display = 'flex';
-            } else if (completedCount >= 2) {
+            } else if (completedCount >= 1) {
                 document.querySelectorAll('.progress-step').forEach((step, index) => {
                     step.classList.remove('active', 'completed');
                     if (index < completedCount) {
@@ -2215,22 +2187,16 @@
 
         function checkAllAnswers() {
             // Trigger check for each activity if not already checked
-            if (!moduleState.scenario.completed) {
-                checkScenarioAnswers();
+            if (!moduleState.throatCulture.completed) {
+                checkSwabbingAnswers();
             }
             
-            if (!moduleState.disorders.completed && moduleState.disorders.score >= 4) {
-                moduleState.disorders.completed = true;
+            if (!moduleState.communication.completed) {
+                checkCommunicationMatches();
             }
             
-            if (!moduleState.audiometer.completed) {
-                if (moduleState.audiometer.score > 0) {
-                    moduleState.audiometer.completed = true;
-                } else {
-                    showFeedback('audiometerFeedback', 
-                        'Complete at least one hearing test scenario first!', 
-                        'incorrect');
-                }
+            if (!moduleState.legalScenarios.completed) {
+                checkLegalAnswers();
             }
             
             if (!moduleState.procedures.completed) {
@@ -2304,84 +2270,73 @@
         }
 
         function resetAllActivities() {
-            // Reset scenario state
-            scenarioState.currentScenario = 1;
-            scenarioState.answers = {
-                scenario1: { type: null, disorder: null },
-                scenario2: { type: null, disorder: null }
-            };
-            scenarioState.completed = false;
-            scenarioState.score = 0;
-            
             // Reset module state
             moduleState = {
-                scenario: { completed: false, score: 0, total: 4 },
-                disorders: { completed: false, score: 0, total: 4 },
-                audiometer: { completed: false, score: 0, total: 4 },
-                procedures: { completed: false, score: 0, total: 7 },
+                throatCulture: { completed: false, score: 0, total: 3 },
+                communication: { completed: false, score: 0, total: 8 },
+                legalScenarios: { completed: false, score: 0, total: 3 },
+                procedures: { completed: false, score: 0, total: 8 },
                 startTime: new Date(),
                 activitiesCompleted: 0
             };
             
-            // Reset scenario activity
-            document.querySelectorAll('.symptom-tag').forEach(tag => {
+            // Reset activity 1
+            document.querySelectorAll('.swab-tag').forEach(tag => {
                 tag.classList.remove('dragging', 'placed');
                 tag.style.visibility = 'visible';
                 tag.style.opacity = '1';
                 tag.draggable = true;
                 tag.style.cursor = 'grab';
+                tag.style.width = 'auto';
+                tag.style.margin = '0';
+            });
+            
+            // Reset throat areas
+            document.querySelectorAll('.throat-area').forEach(area => {
+                const areaId = area.id.replace('area-', '');
+                area.innerHTML = `
+                    <div class="area-title">${areaId === 'uvula' ? 'Uvula' : 
+                        areaId === 'left-tonsil' ? 'Left Tonsillar Pillar' :
+                        areaId === 'right-tonsil' ? 'Right Tonsillar Pillar' :
+                        'Posterior Pharynx'}</div>
+                    <div class="area-instruction">
+                        ${areaId === 'uvula' ? 'DO NOT SWAB (contaminant)' : 'Swab area thoroughly'}
+                    </div>
+                `;
+                area.classList.remove('correct-drop', 'incorrect-drop');
+                area.style.borderColor = '#ddd';
+                area.style.backgroundColor = 'white';
+            });
+            
+            // Reset feedback section
+            const feedbackList = document.getElementById('throatFeedbackList');
+            feedbackList.innerHTML = '';
+            
+            const feedbackTitle = document.querySelector('#throatFeedbackDetails .feedback-title');
+            feedbackTitle.innerHTML = `<span>📋 Throat Culture Feedback:</span>`;
+            
+            // Reset activity 2
+            document.querySelectorAll('.communication-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect', 'dragging');
+                card.draggable = true;
+                card.style.cursor = 'grab';
+                card.style.margin = '0';
             });
             
             // Clear drop zones
             document.querySelectorAll('.drop-zone').forEach(zone => {
-                zone.innerHTML = '';
+                zone.innerHTML = '<div style="width: 100%; text-align: center; color: var(--color-muted); padding: 10px;">' + 
+                    (zone.id === 'drop-vision' ? 'Drop Vision Strategies Here' : 'Drop Hearing Strategies Here') + 
+                    '</div>';
             });
             
-            // Reset disorder selections
-            document.querySelectorAll('.disorder-option').forEach(option => {
-                option.classList.remove('selected');
-                option.style.borderColor = 'rgba(12, 10, 24, 0.08)';
-                option.style.background = 'white';
+            // Reset activity 3
+            document.querySelectorAll('.legal-option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+                option.style.pointerEvents = 'auto';
             });
             
-            // Reset disorders activity
-            document.querySelectorAll('.disorder-card[data-disorder]').forEach(card => {
-                card.style.borderColor = '';
-                card.style.background = '';
-            });
-            
-            document.querySelectorAll('.description-zone, .treatment-zone').forEach(zone => {
-                zone.style.borderColor = 'rgba(12, 10, 24, 0.1)';
-                zone.style.background = 'white';
-            });
-            
-            // Reset audiometer with wave animation
-            document.getElementById('frequencySlider').value = 1000;
-            document.getElementById('volumeSlider').value = 40;
-            document.getElementById('frequencyValue').textContent = '1000 Hz';
-            document.getElementById('volumeValue').textContent = '40 dB HL';
-            
-            const volumeFill = document.getElementById('volumeFill');
-            volumeFill.style.width = '33%';
-            volumeFill.style.background = 'linear-gradient(to right, var(--color-success), var(--color-warning))';
-            document.getElementById('perceivedVolume').textContent = 'Moderate';
-            
-            // Reset wave animation
-            const frequencySlider = document.getElementById('frequencySlider');
-            const wavePath = document.getElementById('wavePath');
-            const frequency = parseInt(frequencySlider.value);
-            const wavelength = 1000 / (frequency / 100);
-            let path = 'M0,50';
-            for (let i = 1; i <= 4; i++) {
-                const x = i * 100;
-                const controlY = i % 2 === 0 ? 20 : 80;
-                path += ` Q${x-50},${controlY} ${x},50`;
-            }
-            wavePath.setAttribute('d', path);
-            const duration = 2000 / (frequency / 500);
-            wavePath.style.animationDuration = `${duration}ms`;
-            
-            // Reset procedures
+            // Reset activity 4
             document.querySelectorAll('.procedure-step').forEach(step => {
                 step.classList.remove('active');
                 const numberSpan = step.querySelector('.procedure-number');
@@ -2418,10 +2373,7 @@
             updateProgress();
             
             // Show reset confirmation
-            showFeedback('scenarioFeedback', '✓ All activities have been reset. Ready to start again!', 'correct');
-            
-            // Show first scenario
-            showScenario(1);
+            showFeedback('swabbingFeedback', '✓ All activities have been reset. Ready to start again!', 'correct');
         }
     </script>
 </body>
