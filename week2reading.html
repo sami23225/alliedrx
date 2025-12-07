@@ -10,11 +10,14 @@
       --color-primary: #af4bef;
       --color-primary-soft: #d492ff;
       --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-error: #e17055;
       --color-bg: #f7f5fb;
       --color-text: #2b2b2b;
       --color-muted: #6c6880;
       --radius-lg: 24px;
       --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
     }
 
     * {
@@ -27,11 +30,11 @@
     body {
       width: 100%;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       padding: 24px;
       background: radial-gradient(
         circle at top left,
@@ -62,6 +65,44 @@
       gap: 28px;
       position: relative;
       overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
 
     @media (max-width: 900px) {
@@ -105,6 +146,7 @@
       margin-bottom: 8px;
       flex-wrap: wrap;
       width: 100%;
+      animation: fadeIn 0.6s ease-out 0.2s both;
     }
 
     .brand {
@@ -119,6 +161,11 @@
       width: auto;
       max-width: 100%;
       filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.05);
     }
 
     .course-meta {
@@ -146,14 +193,16 @@
       font-size: 0.76rem;
       color: var(--color-primary);
       white-space: normal;
+      animation: pulse 3s infinite;
     }
 
     .week-label-dot {
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: #00b894;
+      background: var(--color-success);
       flex-shrink: 0;
+      animation: blink 1.5s infinite;
     }
 
     .badge-mode {
@@ -166,6 +215,13 @@
       letter-spacing: 0.14em;
       color: var(--color-muted);
       white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .badge-mode:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
     }
 
     @media (max-width: 480px) {
@@ -183,6 +239,7 @@
       line-height: 1.05;
       color: var(--color-primary);
       margin-bottom: 6px;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
     .subtitle {
@@ -190,10 +247,54 @@
       color: var(--color-muted);
       max-width: 34rem;
       margin-bottom: 18px;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
     }
 
     .subtitle strong {
       color: var(--color-primary);
+    }
+
+    /* Progress tracker */
+    .progress-container {
+      margin: 20px 0;
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: 16px;
+      padding: 16px 18px;
+      border: 1px solid rgba(12, 10, 24, 0.06);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .progress-percent {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(12, 10, 24, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1s ease-out;
     }
 
     /* Reading cards */
@@ -217,6 +318,40 @@
       grid-template-columns: auto 1fr auto;
       gap: 12px;
       align-items: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reading-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .reading-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--color-primary-soft);
+    }
+
+    .reading-card:hover::before {
+      left: 100%;
+    }
+
+    .reading-card.completed {
+      border-color: var(--color-success);
+      background: linear-gradient(
+        135deg,
+        rgba(0, 184, 148, 0.07),
+        rgba(255, 255, 255, 0.95)
+      );
     }
 
     @media (max-width: 600px) {
@@ -245,6 +380,13 @@
       font-weight: 700;
       color: var(--color-primary);
       white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .reading-card:hover .chapter-pill {
+      background: var(--color-primary);
+      color: white;
+      transform: scale(1.05);
     }
 
     .chapter-main {
@@ -257,11 +399,17 @@
       font-size: 0.98rem;
       font-weight: 700;
       color: var(--color-text);
+      transition: color 0.3s ease;
+    }
+
+    .reading-card:hover .chapter-title {
+      color: var(--color-primary);
     }
 
     .chapter-text {
       font-size: 0.84rem;
       color: var(--color-muted);
+      line-height: 1.4;
     }
 
     .tag-time {
@@ -271,55 +419,99 @@
       font-size: 0.74rem;
       color: var(--color-muted);
       white-space: nowrap;
+      transition: all 0.3s ease;
     }
 
-    .reading-notes {
-      font-size: 0.85rem;
-      color: var(--color-muted);
-      line-height: 1.6;
+    .reading-card:hover .tag-time {
+      background: var(--color-primary);
+      color: white;
     }
 
-    .reading-notes strong {
-      color: var(--color-text);
-    }
-
+    /* Interactive checklist */
     .checklist-heading {
       font-size: 0.86rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--color-primary);
       font-weight: 600;
-      margin-top: 18px;
-      margin-bottom: 8px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      animation: slideInRight 0.6s ease-out 0.6s both;
     }
 
     .checklist {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 10px;
       font-size: 0.86rem;
       color: var(--color-text);
     }
 
     .checklist li {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: flex-start;
+      padding: 8px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .checklist li:hover {
+      background: rgba(175, 75, 239, 0.05);
+      transform: translateX(5px);
+    }
+
+    .checklist li.completed {
+      opacity: 0.7;
     }
 
     .check-dot {
-      margin-top: 4px;
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
-      border: 1px solid rgba(148, 163, 184, 0.9);
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid rgba(148, 163, 184, 0.9);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 0.72rem;
       color: rgba(148, 163, 184, 0.9);
       flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .checklist li:hover .check-dot {
+      border-color: var(--color-primary);
+    }
+
+    .checklist li.completed .check-dot {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+
+    .reading-notes {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      line-height: 1.6;
+      margin-top: 16px;
+      animation: fadeIn 0.6s ease-out 0.7s both;
+    }
+
+    .reading-notes strong {
+      color: var(--color-text);
+    }
+
+    .complete-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(175, 75, 239, 0.05);
+      border-radius: 12px;
+      border-left: 3px solid var(--color-primary);
+      animation: fadeIn 0.6s ease-out 0.8s both;
     }
 
     /* Right column */
@@ -330,6 +522,7 @@
       color: var(--color-primary);
       font-weight: 600;
       margin-bottom: 10px;
+      animation: slideInRight 0.6s ease-out 0.5s both;
     }
 
     .side-heading {
@@ -337,6 +530,7 @@
       font-weight: 800;
       color: var(--color-text);
       margin-bottom: 10px;
+      animation: slideInRight 0.6s ease-out 0.6s both;
     }
 
     .side-card {
@@ -348,6 +542,12 @@
       line-height: 1.7;
       box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
       margin-bottom: 14px;
+      transition: transform 0.3s ease;
+      animation: slideInRight 0.6s ease-out 0.7s both;
+    }
+
+    .side-card:hover {
+      transform: translateY(-2px);
     }
 
     .side-card strong {
@@ -360,50 +560,166 @@
       letter-spacing: 0.14em;
       color: #c4b5fd;
       font-weight: 600;
-      margin: 10px 0 10px;
+      margin: 14px 0 10px;
     }
 
     .side-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       font-size: 0.86rem;
     }
 
     .side-list li {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: flex-start;
+      transition: transform 0.3s ease;
+      padding: 4px 0;
+    }
+
+    .side-list li:hover {
+      transform: translateX(5px);
     }
 
     .dot {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       margin-top: 6px;
       border-radius: 999px;
-      background: #a5b4fc;
+      background: var(--color-accent);
       flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    .side-list li:hover .dot {
+      background: var(--color-primary);
+      transform: scale(1.3);
     }
 
     .note-card {
-      margin-top: 10px;
+      margin-top: 14px;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.18);
       background: rgba(15, 23, 42, 0.75);
-      padding: 10px 12px;
+      padding: 12px 14px;
       font-size: 0.8rem;
       color: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .note-card:hover {
+      border-color: var(--color-primary-soft);
+      background: rgba(15, 23, 42, 0.9);
     }
 
     .note-card strong {
       color: #fef3c7;
     }
 
-    .complete-hint {
-      font-size: 0.8rem;
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #9a3bd6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(12, 10, 24, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      font-size: 1.1em;
+    }
+
+    /* Completion celebration */
+    .completion-celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .celebration-content {
+      background: white;
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      max-width: 500px;
+      animation: fadeInUp 0.5s ease;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .celebration-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    .celebration-title {
+      font-size: 1.8rem;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+    }
+
+    .celebration-text {
       color: var(--color-muted);
-      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    .celebration-btn {
+      padding: 12px 24px;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .celebration-btn:hover {
+      background: #9a3bd6;
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -438,9 +754,21 @@
         the foundation for accurate record-keeping and specialized patient care.
       </p>
 
+      <!-- Progress tracker -->
+      <div class="progress-container">
+        <div class="progress-header">
+          <span class="progress-title">Reading Progress</span>
+          <span class="progress-percent" id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Reading cards -->
       <div class="reading-grid">
         <!-- Chapter 2: The Health Record -->
-        <article class="reading-card">
+        <article class="reading-card" id="chapter2-card" data-chapter="2">
           <div class="chapter-pill">Chapter 2</div>
           <div class="chapter-main">
             <div class="chapter-title">
@@ -452,11 +780,11 @@
               This is essential for every clinical encounter.
             </p>
           </div>
-          <div class="tag-time">Est. 50–65 min</div>
+          <div class="tag-time" id="chapter2-time">Est. 50–65 min</div>
         </article>
 
         <!-- Chapter 13: Ophthalmology and Otolaryngology -->
-        <article class="reading-card">
+        <article class="reading-card" id="chapter13-card" data-chapter="13">
           <div class="chapter-pill">Chapter 13</div>
           <div class="chapter-main">
             <div class="chapter-title">
@@ -468,7 +796,7 @@
               used in these clinical specialties.
             </p>
           </div>
-          <div class="tag-time">Est. 60–75 min</div>
+          <div class="tag-time" id="chapter13-time">Est. 60–75 min</div>
         </article>
       </div>
 
@@ -477,29 +805,42 @@
         Kinn's The Medical Assistant, 13th Edition
       </p>
 
+      <!-- Interactive checklist -->
       <p class="checklist-heading">How to work through this reading</p>
-      <ul class="checklist">
-        <li>
+      <ul class="checklist" id="reading-checklist">
+        <li data-index="0">
           <span class="check-dot">□</span>
           <span>Start with Chapter 2 to understand documentation standards before learning specialty procedures.</span>
         </li>
-        <li>
+        <li data-index="1">
           <span class="check-dot">□</span>
           <span>Create a terminology list for ophthalmology and otolaryngology terms as you read Chapter 13.</span>
         </li>
-        <li>
+        <li data-index="2">
           <span class="check-dot">□</span>
           <span>Practice drawing SOAP note templates while reading about documentation standards.</span>
         </li>
-        <li>
+        <li data-index="3">
           <span class="check-dot">□</span>
           <span>Note equipment names and purposes—you'll use these in clinical simulations.</span>
         </li>
-        <li>
+        <li data-index="4">
           <span class="check-dot">□</span>
           <span>Complete all chapter review questions and critical thinking exercises.</span>
         </li>
       </ul>
+
+      <!-- Action buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="mark-all-read">
+          <span class="btn-icon">✓</span>
+          Mark All as Read
+        </button>
+        <button class="btn btn-secondary" id="reset-progress">
+          <span class="btn-icon">↺</span>
+          Reset Progress
+        </button>
+      </div>
 
       <p class="complete-hint">
         Once you have finished both chapters, complete the associated 
@@ -553,5 +894,286 @@
       </div>
     </aside>
   </main>
+
+  <!-- Completion Celebration Modal -->
+  <div class="completion-celebration" id="celebration-modal">
+    <div class="celebration-content">
+      <div class="celebration-icon">🎉</div>
+      <h2 class="celebration-title">Reading Complete!</h2>
+      <p class="celebration-text">
+        Excellent work completing both Chapter 2 (The Health Record) and 
+        Chapter 13 (Ophthalmology and Otolaryngology). You've built a strong 
+        foundation in clinical documentation and specialty procedures.
+      </p>
+      <p class="celebration-text">
+        You're now ready for the documentation exercise and terminology quiz 
+        before advancing to Week 3.
+      </p>
+      <button class="celebration-btn" id="close-celebration">Continue to Exercises</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // State management
+      let readingState = {
+        chapter2: false,
+        chapter13: false,
+        checklist: [false, false, false, false, false]
+      };
+
+      // DOM elements
+      const chapter2Card = document.getElementById('chapter2-card');
+      const chapter13Card = document.getElementById('chapter13-card');
+      const checklistItems = document.querySelectorAll('#reading-checklist li');
+      const progressFill = document.getElementById('progress-fill');
+      const progressPercent = document.getElementById('progress-percent');
+      const markAllBtn = document.getElementById('mark-all-read');
+      const resetBtn = document.getElementById('reset-progress');
+      const celebrationModal = document.getElementById('celebration-modal');
+      const closeCelebrationBtn = document.getElementById('close-celebration');
+
+      // Calculate progress
+      function calculateProgress() {
+        const totalItems = 7; // 2 chapters + 5 checklist items
+        let completed = 0;
+        
+        if (readingState.chapter2) completed++;
+        if (readingState.chapter13) completed++;
+        
+        readingState.checklist.forEach(item => {
+          if (item) completed++;
+        });
+        
+        const percentage = Math.round((completed / totalItems) * 100);
+        
+        // Update progress bar
+        progressFill.style.width = `${percentage}%`;
+        progressPercent.textContent = `${percentage}%`;
+        
+        // Update progress bar color based on completion
+        if (percentage === 100) {
+          progressFill.style.background = 'linear-gradient(90deg, var(--color-success), #00d2a0)';
+          progressPercent.style.color = 'var(--color-success)';
+          showCelebration();
+        } else if (percentage >= 50) {
+          progressFill.style.background = 'linear-gradient(90deg, var(--color-primary), var(--color-accent))';
+          progressPercent.style.color = 'var(--color-primary)';
+        } else {
+          progressFill.style.background = 'linear-gradient(90deg, var(--color-primary), var(--color-accent))';
+          progressPercent.style.color = 'var(--color-primary)';
+        }
+        
+        return percentage;
+      }
+
+      // Toggle chapter completion
+      function toggleChapter(chapter) {
+        const card = chapter === 2 ? chapter2Card : chapter13Card;
+        const isCompleted = chapter === 2 ? readingState.chapter2 : readingState.chapter13;
+        
+        if (isCompleted) {
+          // Mark as incomplete
+          card.classList.remove('completed');
+          if (chapter === 2) {
+            readingState.chapter2 = false;
+            document.getElementById('chapter2-time').textContent = 'Est. 50–65 min';
+          } else {
+            readingState.chapter13 = false;
+            document.getElementById('chapter13-time').textContent = 'Est. 60–75 min';
+          }
+        } else {
+          // Mark as complete
+          card.classList.add('completed');
+          if (chapter === 2) {
+            readingState.chapter2 = true;
+            document.getElementById('chapter2-time').textContent = '✓ Completed';
+          } else {
+            readingState.chapter13 = true;
+            document.getElementById('chapter13-time').textContent = '✓ Completed';
+          }
+          
+          // Add animation
+          card.style.transform = 'scale(1.02)';
+          setTimeout(() => {
+            card.style.transform = '';
+          }, 300);
+        }
+        
+        calculateProgress();
+      }
+
+      // Toggle checklist item
+      function toggleChecklistItem(index) {
+        const item = checklistItems[index];
+        const dot = item.querySelector('.check-dot');
+        
+        readingState.checklist[index] = !readingState.checklist[index];
+        
+        if (readingState.checklist[index]) {
+          item.classList.add('completed');
+          dot.textContent = '✓';
+          dot.style.background = 'var(--color-success)';
+          dot.style.borderColor = 'var(--color-success)';
+          dot.style.color = 'white';
+        } else {
+          item.classList.remove('completed');
+          dot.textContent = '□';
+          dot.style.background = '';
+          dot.style.borderColor = 'rgba(148, 163, 184, 0.9)';
+          dot.style.color = 'rgba(148, 163, 184, 0.9)';
+        }
+        
+        calculateProgress();
+      }
+
+      // Mark all as read
+      function markAllAsRead() {
+        // Mark both chapters
+        readingState.chapter2 = true;
+        readingState.chapter13 = true;
+        chapter2Card.classList.add('completed');
+        chapter13Card.classList.add('completed');
+        document.getElementById('chapter2-time').textContent = '✓ Completed';
+        document.getElementById('chapter13-time').textContent = '✓ Completed';
+        
+        // Mark all checklist items
+        readingState.checklist = [true, true, true, true, true];
+        checklistItems.forEach((item, index) => {
+          item.classList.add('completed');
+          const dot = item.querySelector('.check-dot');
+          dot.textContent = '✓';
+          dot.style.background = 'var(--color-success)';
+          dot.style.borderColor = 'var(--color-success)';
+          dot.style.color = 'white';
+        });
+        
+        calculateProgress();
+        
+        // Celebration animation
+        const cards = document.querySelectorAll('.reading-card');
+        cards.forEach(card => {
+          card.style.transform = 'scale(1.05)';
+          setTimeout(() => {
+            card.style.transform = '';
+          }, 300);
+        });
+      }
+
+      // Reset progress
+      function resetProgress() {
+        // Reset chapters
+        readingState.chapter2 = false;
+        readingState.chapter13 = false;
+        chapter2Card.classList.remove('completed');
+        chapter13Card.classList.remove('completed');
+        document.getElementById('chapter2-time').textContent = 'Est. 50–65 min';
+        document.getElementById('chapter13-time').textContent = 'Est. 60–75 min';
+        
+        // Reset checklist
+        readingState.checklist = [false, false, false, false, false];
+        checklistItems.forEach((item, index) => {
+          item.classList.remove('completed');
+          const dot = item.querySelector('.check-dot');
+          dot.textContent = '□';
+          dot.style.background = '';
+          dot.style.borderColor = 'rgba(148, 163, 184, 0.9)';
+          dot.style.color = 'rgba(148, 163, 184, 0.9)';
+        });
+        
+        calculateProgress();
+      }
+
+      // Show celebration modal
+      function showCelebration() {
+        setTimeout(() => {
+          celebrationModal.style.display = 'flex';
+        }, 500);
+      }
+
+      // Close celebration modal
+      function closeCelebration() {
+        celebrationModal.style.display = 'none';
+      }
+
+      // Event listeners
+      chapter2Card.addEventListener('click', () => toggleChapter(2));
+      chapter13Card.addEventListener('click', () => toggleChapter(13));
+      
+      chapter2Card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleChapter(2);
+        }
+      });
+      
+      chapter13Card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleChapter(13);
+        }
+      });
+
+      checklistItems.forEach((item, index) => {
+        item.addEventListener('click', () => toggleChecklistItem(index));
+        
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleChecklistItem(index);
+          }
+        });
+      });
+
+      markAllBtn.addEventListener('click', markAllAsRead);
+      resetBtn.addEventListener('click', resetProgress);
+      closeCelebrationBtn.addEventListener('click', closeCelebration);
+
+      // Close modal when clicking outside
+      celebrationModal.addEventListener('click', (e) => {
+        if (e.target === celebrationModal) {
+          closeCelebration();
+        }
+      });
+
+      // Initialize with some progress for demo
+      setTimeout(() => {
+        // Mark first checklist item as completed for demo
+        toggleChecklistItem(0);
+      }, 1000);
+
+      // Add scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Observe reading cards
+      const readingCards = document.querySelectorAll('.reading-card');
+      readingCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+      });
+      
+      // Observe checklist items with delay
+      checklistItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+        observer.observe(item);
+      });
+    });
+  </script>
 </body>
 </html>
