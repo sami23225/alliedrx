@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Chapter 2: SOAP Note Documentation Mastery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-warning: #fdcb6e;
+      --color-error: #e17055;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-medium: 0 12px 30px rgba(23, 10, 61, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes checkmarkPop {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Main Page Container */
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 22px;
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 24px;
+      }
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-success);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    /* Module Header */
+    .module-header {
+      animation: fadeInUp 0.5s ease-out 0.1s both;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .module-subtitle {
+      font-size: 1.1rem;
+      color: var(--color-muted);
+      max-width: 800px;
+      margin-bottom: 6px;
+    }
+
+    .module-description {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 800px;
+      line-height: 1.6;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 20px;
+      animation: fadeInUp 0.5s ease-out 0.2s both;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    .progress-step.active {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .progress-step.completed {
+      color: var(--color-success);
+    }
+
+    .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-muted);
+    }
+
+    .progress-step.active .step-icon {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .progress-step.completed .step-icon {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .step-divider {
+      flex: 1;
+      height: 2px;
+      background: rgba(12, 10, 24, 0.1);
+      margin: 0 8px;
+    }
+
+    /* SOAP Note Grid */
+    .soap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.5s ease-out 0.3s both;
+    }
+
+    @media (max-width: 900px) {
+      .soap-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SOAP Note Builder */
+    .soap-builder {
+      background: rgba(175, 75, 239, 0.03);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(175, 75, 239, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .tool-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    /* Patient Case */
+    .patient-case {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+      animation: slideInLeft 0.5s ease-out 0.4s both;
+    }
+
+    .patient-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+    }
+
+    .patient-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .patient-info {
+      flex: 1;
+    }
+
+    .patient-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    .patient-details {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    .case-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    .case-content strong {
+      color: var(--color-primary);
+    }
+
+    /* SOAP Sections */
+    .soap-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .soap-section {
+      background: white;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(12, 10, 24, 0.1);
+      padding: 18px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .soap-section.active {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.03);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .section-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    .section-hint {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      font-style: italic;
+    }
+
+    .section-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .soap-section.active .section-content {
+      display: block;
+    }
+
+    /* Data Elements */
+    .data-elements {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .data-element {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      cursor: grab;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .data-element:hover {
+      border-color: var(--color-primary-soft);
+      background: rgba(175, 75, 239, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .data-element.dragging {
+      opacity: 0.7;
+      transform: rotate(2deg) scale(0.98);
+    }
+
+    .element-content {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--color-text);
+    }
+
+    .element-type {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .element-type.subjective {
+      background: rgba(255, 79, 207, 0.1);
+      color: #ff4fcf;
+    }
+
+    .element-type.objective {
+      background: rgba(0, 184, 148, 0.1);
+      color: var(--color-success);
+    }
+
+    .element-type.assessment {
+      background: rgba(253, 203, 110, 0.1);
+      color: var(--color-warning);
+    }
+
+    .element-type.plan {
+      background: rgba(131, 128, 240, 0.1);
+      color: var(--color-accent);
+    }
+
+    /* SOAP Note Form */
+    .soap-form {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-section {
+      background: white;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(12, 10, 24, 0.08);
+      padding: 16px;
+      min-height: 150px;
+      transition: all 0.3s ease;
+    }
+
+    .form-section.active {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.03);
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+    }
+
+    .form-section-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .form-section-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    .form-section-count {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .form-section-content {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-placeholder {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      text-align: center;
+      padding: 30px 20px;
+      opacity: 0.6;
+    }
+
+    .form-element {
+      background: rgba(175, 75, 239, 0.05);
+      border-radius: 8px;
+      padding: 12px;
+      border-left: 4px solid var(--color-primary);
+      animation: fadeInUp 0.3s ease;
+      cursor: grab;
+      transition: all 0.2s ease;
+    }
+
+    .form-element:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-element-content {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      color: var(--color-text);
+    }
+
+    /* Progress Summary */
+    .progress-summary {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(175, 75, 239, 0.03);
+      border-radius: var(--radius-sm);
+      animation: fadeInUp 0.5s ease-out 0.5s both;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .progress-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      text-align: center;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      animation: fadeInUp 0.5s ease-out 0.6s both;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #9a3ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(175, 75, 239, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(12, 10, 24, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Results Panel */
+    .results-panel {
+      background: rgba(12, 10, 24, 0.94);
+      color: #e5e7eb;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 24px;
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .results-panel.show {
+      display: block;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .results-content {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .results-content strong {
+      color: #ffffff;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+    }
+
+    .score-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary-soft);
+    }
+
+    .score-text {
+      font-size: 0.9rem;
+      color: #c4b5fd;
+    }
+
+    /* Clinical Insight Card */
+    .clinical-insight {
+      margin-top: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(15, 23, 42, 0.7);
+      padding: 16px;
+      font-size: 0.85rem;
+      color: #e5e7eb;
+    }
+
+    .clinical-insight strong {
+      color: #fef3c7;
+    }
+
+    /* SOAP Note Example */
+    .soap-example {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-top: 20px;
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .example-header {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .example-content {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      white-space: pre-line;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .soap-grid {
+        gap: 20px;
+      }
+      
+      .soap-builder,
+      .soap-form {
+        padding: 16px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .progress-summary {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .progress-item {
+        min-width: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .progress-tracker {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .step-divider {
+        display: none;
+      }
+      
+      .patient-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="module-heading">
+    <!-- Header -->
+    <header class="brand-row">
+      <div class="brand">
+        <img
+          src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+          alt="AlliedRx logo"
+          class="brand-logo"
+        />
+        <div class="course-meta">
+          <span class="course-name">Clinical Medical Assistant • Kinn's Chapter 2</span>
+          <div class="week-label">
+            <span class="week-label-dot"></span>
+            <span>Interactive Module 2: SOAP Note Documentation</span>
+          </div>
+        </div>
+      </div>
+
+      <span class="badge-mode">Campus & Online</span>
+    </header>
+
+    <!-- Module Header -->
+    <section class="module-header">
+      <h1 id="module-heading">SOAP Note Documentation Mastery</h1>
+      <p class="module-subtitle">Learn to properly document patient encounters using SOAP format</p>
+      <p class="module-description">
+        Master the art of clinical documentation by building SOAP notes from patient scenarios. 
+        Learn to differentiate between subjective and objective information, and practice proper 
+        documentation techniques.
+      </p>
+    </section>
+
+    <!-- Activity Progress Tracker -->
+    <div class="progress-tracker">
+      <div class="progress-step active">
+        <span class="step-icon">1</span>
+        <span>Case Review</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="progress-step">
+        <span class="step-icon">2</span>
+        <span>SOAP Building</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="progress-step">
+        <span class="step-icon">3</span>
+        <span>Results & Feedback</span>
+      </div>
+    </div>
+
+    <!-- Patient Case -->
+    <section class="patient-case">
+      <div class="patient-header">
+        <div class="patient-avatar">JR</div>
+        <div class="patient-info">
+          <div class="patient-name">James Rodriguez</div>
+          <div class="patient-details">45-year-old male • Established patient • Chief Complaint: Persistent cough</div>
+        </div>
+      </div>
+      
+      <div class="case-content">
+        <p><strong>Case Background:</strong> Mr. Rodriguez presents with a persistent cough that has lasted 2 weeks. He reports it started after recovering from what he thought was a "cold." The cough is worse at night and keeps him awake.</p>
+        
+        <p><strong>Today's Visit:</strong> During the encounter, you gather the following information. Your task is to organize it into a proper SOAP note format.</p>
+      </div>
+    </section>
+
+    <!-- SOAP Grid -->
+    <div class="soap-grid">
+      <!-- Left: SOAP Data Elements -->
+      <section class="soap-builder" aria-label="SOAP Data Elements">
+        <div class="tool-header">
+          <div class="tool-icon">📋</div>
+          <h2 class="tool-title">Available Data Elements</h2>
+        </div>
+        
+        <p style="font-size: 0.9rem; color: var(--color-muted); margin-bottom: 16px;">
+          Drag each piece of information to the correct SOAP section below.
+          Click on SOAP section headers to learn what belongs in each.
+        </p>
+        
+        <div class="soap-sections">
+          <!-- Subjective (S) -->
+          <div class="soap-section active" data-section="subjective">
+            <div class="section-header">
+              <div class="section-letter">S</div>
+              <div class="section-title">Subjective</div>
+              <div class="section-hint">Patient's symptoms & history</div>
+            </div>
+            <div class="section-content">
+              <div class="data-elements" id="subjectiveElements">
+                <div class="data-element" draggable="true" data-type="subjective" id="element-1">
+                  <div class="element-content">"Cough keeps me up at night, can't sleep more than 2-3 hours"</div>
+                  <div class="element-type subjective">Patient Quote</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="subjective" id="element-2">
+                  <div class="element-content">Reports cough started 2 weeks ago after recovering from cold symptoms</div>
+                  <div class="element-type subjective">Patient Report</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="subjective" id="element-3">
+                  <div class="element-content">Denies fever, chest pain, or shortness of breath</div>
+                  <div class="element-type subjective">Patient Denial</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="subjective" id="element-4">
+                  <div class="element-content">Rate cough severity as 7/10 on pain scale, worse when lying down</div>
+                  <div class="element-type subjective">Symptom Rating</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="subjective" id="element-5">
+                  <div class="element-content">Has tried OTC cough syrup with minimal relief</div>
+                  <div class="element-type subjective">Self-Treatment</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Objective (O) -->
+          <div class="soap-section" data-section="objective">
+            <div class="section-header">
+              <div class="section-letter">O</div>
+              <div class="section-title">Objective</div>
+              <div class="section-hint">Measurable findings & observations</div>
+            </div>
+            <div class="section-content">
+              <div class="data-elements" id="objectiveElements">
+                <div class="data-element" draggable="true" data-type="objective" id="element-6">
+                  <div class="element-content">Vital Signs: T 98.6°F, P 82, R 16, BP 128/84</div>
+                  <div class="element-type objective">Vital Signs</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="objective" id="element-7">
+                  <div class="element-content">Lungs: Clear to auscultation bilaterally, no wheezes or crackles</div>
+                  <div class="element-type objective">Physical Exam</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="objective" id="element-8">
+                  <div class="element-content">Throat: Mild erythema, no exudate</div>
+                  <div class="element-type objective">Physical Exam</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="objective" id="element-9">
+                  <div class="element-content">Pulse Oximetry: 98% on room air</div>
+                  <div class="element-type objective">Diagnostic Test</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="objective" id="element-10">
+                  <div class="element-content">General Appearance: Well-nourished, in no acute distress</div>
+                  <div class="element-type objective">Observation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Assessment (A) -->
+          <div class="soap-section" data-section="assessment">
+            <div class="section-header">
+              <div class="section-letter">A</div>
+              <div class="section-title">Assessment</div>
+              <div class="section-hint">Diagnosis & clinical impression</div>
+            </div>
+            <div class="section-content">
+              <div class="data-elements" id="assessmentElements">
+                <div class="data-element" draggable="true" data-type="assessment" id="element-11">
+                  <div class="element-content">Acute bronchitis, likely post-viral</div>
+                  <div class="element-type assessment">Primary Diagnosis</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="assessment" id="element-12">
+                  <div class="element-content">Rule out pneumonia (unlikely given clear lung sounds)</div>
+                  <div class="element-type assessment">Differential Diagnosis</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="assessment" id="element-13">
+                  <div class="element-content">Possible post-nasal drip contributing to cough</div>
+                  <div class="element-type assessment">Clinical Impression</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Plan (P) -->
+          <div class="soap-section" data-section="plan">
+            <div class="section-header">
+              <div class="section-letter">P</div>
+              <div class="section-title">Plan</div>
+              <div class="section-hint">Treatment & follow-up</div>
+            </div>
+            <div class="section-content">
+              <div class="data-elements" id="planElements">
+                <div class="data-element" draggable="true" data-type="plan" id="element-14">
+                  <div class="element-content">Prescribe Tessalon Perles 100mg TID x 5 days for cough</div>
+                  <div class="element-type plan">Medication</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="plan" id="element-15">
+                  <div class="element-content">Increase fluid intake, use humidifier at night</div>
+                  <div class="element-type plan">Patient Education</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="plan" id="element-16">
+                  <div class="element-content">Return in 1 week if symptoms worsen or persist</div>
+                  <div class="element-type plan">Follow-up</div>
+                </div>
+                
+                <div class="data-element" draggable="true" data-type="plan" id="element-17">
+                  <div class="element-content">Chest X-ray if cough persists beyond 2 more weeks</div>
+                  <div class="element-type plan">Diagnostic Plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: SOAP Note Form -->
+      <section class="soap-form" aria-label="SOAP Note Form">
+        <div class="tool-header">
+          <div class="tool-icon">📝</div>
+          <h2 class="tool-title">Build Your SOAP Note</h2>
+        </div>
+        
+        <p style="font-size: 0.9rem; color: var(--color-muted); margin-bottom: 16px;">
+          Drag data elements to build a complete SOAP note. Each section must contain appropriate information.
+        </p>
+        
+        <!-- Subjective Form Section -->
+        <div class="form-section" id="formSubjective" data-section="subjective">
+          <div class="form-section-title">
+            <div class="form-section-letter">S</div>
+            <div class="form-section-label">Subjective</div>
+            <div class="form-section-count" id="subjectiveCount">0 items</div>
+          </div>
+          <div class="form-section-content" id="formSubjectiveContent">
+            <div class="section-placeholder">Drag subjective information here</div>
+          </div>
+        </div>
+        
+        <!-- Objective Form Section -->
+        <div class="form-section" id="formObjective" data-section="objective">
+          <div class="form-section-title">
+            <div class="form-section-letter">O</div>
+            <div class="form-section-label">Objective</div>
+            <div class="form-section-count" id="objectiveCount">0 items</div>
+          </div>
+          <div class="form-section-content" id="formObjectiveContent">
+            <div class="section-placeholder">Drag objective findings here</div>
+          </div>
+        </div>
+        
+        <!-- Assessment Form Section -->
+        <div class="form-section" id="formAssessment" data-section="assessment">
+          <div class="form-section-title">
+            <div class="form-section-letter">A</div>
+            <div class="form-section-label">Assessment</div>
+            <div class="form-section-count" id="assessmentCount">0 items</div>
+          </div>
+          <div class="form-section-content" id="formAssessmentContent">
+            <div class="section-placeholder">Drag assessment/diagnosis here</div>
+          </div>
+        </div>
+        
+        <!-- Plan Form Section -->
+        <div class="form-section" id="formPlan" data-section="plan">
+          <div class="form-section-title">
+            <div class="form-section-letter">P</div>
+            <div class="form-section-label">Plan</div>
+            <div class="form-section-count" id="planCount">0 items</div>
+          </div>
+          <div class="form-section-content" id="formPlanContent">
+            <div class="section-placeholder">Drag treatment plan here</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SOAP Note Example -->
+    <div class="soap-example">
+      <div class="example-header">
+        <span>📋</span>
+        <span>Example of Proper SOAP Note Organization</span>
+      </div>
+      <div class="example-content">
+S: 45yo male c/o persistent cough x 2 weeks, worse at night. Rates 7/10. Denies fever, CP, SOB.
+O: T 98.6, P 82, R 16, BP 128/84. Lungs clear bilaterally. Throat mild erythema.
+A: Acute bronchitis, post-viral.
+P: Tessalon Perles 100mg TID x 5d. Increase fluids. RTC if symptoms worsen.</div>
+    </div>
+
+    <!-- Progress Summary -->
+    <div class="progress-summary">
+      <div class="progress-item">
+        <span class="progress-number" id="remainingElements">17</span>
+        <span class="progress-label">Elements Remaining</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="placedElements">0</span>
+        <span class="progress-label">Elements Placed</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="correctElements">0</span>
+        <span class="progress-label">Correct Placements</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="activityScore">0%</span>
+        <span class="progress-label">Current Score</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-secondary" id="resetBtn">
+        <span>↻</span>
+        Reset Activity
+      </button>
+      <button class="btn btn-primary" id="checkBtn" disabled>
+        <span>✓</span>
+        Check SOAP Note
+      </button>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="results-panel" id="resultsPanel">
+      <div class="results-header">
+        <div class="tool-icon" style="background: var(--color-success);">✓</div>
+        <h3 class="results-title">SOAP Note Complete!</h3>
+      </div>
+      
+      <div class="results-content">
+        <p>Excellent work! You've successfully built a comprehensive SOAP note for Mr. Rodriguez.</p>
+        
+        <div class="score-display">
+          <div class="score-value" id="scoreValue">0%</div>
+          <div class="score-text" id="scoreText">Complete the activity to see your score</div>
+        </div>
+        
+        <p><strong>SOAP Documentation Principles Mastered:</strong></p>
+        <ul style="margin-left: 20px; margin-top: 8px; margin-bottom: 16px;">
+          <li><strong>S (Subjective):</strong> Patient's symptoms, feelings, perceptions in their own words</li>
+          <li><strong>O (Objective):</strong> Measurable, observable findings from exams and tests</li>
+          <li><strong>A (Assessment):</strong> Clinical diagnosis based on S + O findings</li>
+          <li><strong>P (Plan):</strong> Treatment, education, follow-up based on assessment</li>
+        </ul>
+        
+        <div class="clinical-insight">
+          <strong>Clinical Insight:</strong> Always document subjective information in the patient's own words when possible (use quotes). 
+          Remember the rule: "If it's not documented, it didn't happen." SOAP notes are legal documents and 
+          should be complete, accurate, and timely.
+        </div>
+        
+        <div class="soap-example" style="margin-top: 20px;">
+          <div class="example-header">
+            <span>💡</span>
+            <span>Pro Tip for Clinical Practice</span>
+          </div>
+          <div class="example-content">
+• Always include date, time, and your credentials
+• Use objective language (avoid "patient claims" - use "patient reports")
+• Document negatives (what the patient denies)
+• Include patient education provided
+• Note follow-up instructions clearly</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // State Management
+    let draggedElement = null;
+    let placedElements = {
+      subjective: [],
+      objective: [],
+      assessment: [],
+      plan: []
+    };
+    
+    let totalElements = 17;
+    let activityCompleted = false;
+
+    // Correct placements mapping
+    const correctPlacements = {
+      'element-1': 'subjective',
+      'element-2': 'subjective',
+      'element-3': 'subjective',
+      'element-4': 'subjective',
+      'element-5': 'subjective',
+      'element-6': 'objective',
+      'element-7': 'objective',
+      'element-8': 'objective',
+      'element-9': 'objective',
+      'element-10': 'objective',
+      'element-11': 'assessment',
+      'element-12': 'assessment',
+      'element-13': 'assessment',
+      'element-14': 'plan',
+      'element-15': 'plan',
+      'element-16': 'plan',
+      'element-17': 'plan'
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      setupEventListeners();
+      updateUI();
+      setupSOAPSections();
+    });
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      // Drag and drop for data elements
+      document.querySelectorAll('.data-element').forEach(element => {
+        element.addEventListener('dragstart', handleDragStart);
+        element.addEventListener('dragend', handleDragEnd);
+      });
+
+      // Form sections as drop zones
+      document.querySelectorAll('.form-section').forEach(section => {
+        section.addEventListener('dragover', handleDragOver);
+        section.addEventListener('dragenter', handleDragEnter);
+        section.addEventListener('dragleave', handleDragLeave);
+        section.addEventListener('drop', handleDrop);
+      });
+
+      // SOAP section headers (click to expand/collapse)
+      document.querySelectorAll('.soap-section .section-header').forEach(header => {
+        header.addEventListener('click', function() {
+          const section = this.closest('.soap-section');
+          const isActive = section.classList.contains('active');
+          
+          // Close all sections
+          document.querySelectorAll('.soap-section').forEach(s => {
+            s.classList.remove('active');
+          });
+          
+          // Open clicked section if it wasn't active
+          if (!isActive) {
+            section.classList.add('active');
+          }
+        });
+      });
+
+      // Buttons
+      document.getElementById('resetBtn').addEventListener('click', resetActivity);
+      document.getElementById('checkBtn').addEventListener('click', checkSOAPNote);
+    }
+
+    // Setup SOAP Sections
+    function setupSOAPSections() {
+      // Open first section by default
+      document.querySelector('.soap-section').classList.add('active');
+    }
+
+    // Drag and Drop Functions
+    function handleDragStart(e) {
+      draggedElement = this;
+      this.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', this.id);
+      
+      // Visual feedback
+      setTimeout(() => {
+        this.style.opacity = '0.4';
+      }, 0);
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+      this.style.opacity = '1';
+      draggedElement = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+    }
+
+    function handleDragEnter(e) {
+      e.preventDefault();
+      this.classList.add('active');
+    }
+
+    function handleDragLeave() {
+      this.classList.remove('active');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('active');
+      
+      if (draggedElement) {
+        const elementId = draggedElement.id;
+        const targetSection = this.dataset.section || this.closest('.form-section').dataset.section;
+        
+        // Remove from previous location if placed
+        removeElementFromAllSections(elementId);
+        
+        // Add to new section
+        if (targetSection && placedElements.hasOwnProperty(targetSection)) {
+          placedElements[targetSection].push(elementId);
+          moveElementToSection(elementId, targetSection);
+        }
+        
+        // Update UI
+        updateUI();
+      }
+    }
+
+    // Remove element from all sections
+    function removeElementFromAllSections(elementId) {
+      // Remove from source elements (hide it)
+      const sourceElement = document.getElementById(elementId);
+      if (sourceElement) {
+        sourceElement.style.display = 'none';
+      }
+      
+      // Remove from placed arrays
+      Object.keys(placedElements).forEach(section => {
+        const index = placedElements[section].indexOf(elementId);
+        if (index > -1) {
+          placedElements[section].splice(index, 1);
+          
+          // Remove from form section visually
+          const formElement = document.getElementById(`form-${elementId}`);
+          if (formElement) {
+            formElement.remove();
+          }
+        }
+      });
+    }
+
+    // Move element to section (visual update)
+    function moveElementToSection(elementId, sectionType) {
+      const sourceElement = document.getElementById(elementId);
+      const formSectionContent = document.getElementById(`form${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}Content`);
+      const placeholder = formSectionContent.querySelector('.section-placeholder');
+      
+      // Remove placeholder if this is first element
+      if (placedElements[sectionType].length === 1 && placeholder) {
+        placeholder.remove();
+      }
+      
+      // Create form element
+      const formElement = document.createElement('div');
+      formElement.className = 'form-element';
+      formElement.id = `form-${elementId}`;
+      formElement.draggable = true;
+      formElement.innerHTML = `
+        <div class="form-element-content">${sourceElement.querySelector('.element-content').textContent}</div>
+      `;
+      
+      // Add drag events to form element
+      formElement.addEventListener('dragstart', handleDragStart);
+      formElement.addEventListener('dragend', handleDragEnd);
+      
+      // Add to form section
+      formSectionContent.appendChild(formElement);
+      
+      // Update progress tracker
+      updateProgressTracker();
+    }
+
+    // Update UI
+    function updateUI() {
+      // Calculate totals
+      const placedTotal = Object.values(placedElements).reduce((sum, arr) => sum + arr.length, 0);
+      const remaining = totalElements - placedTotal;
+      const correct = calculateCorrectPlacements();
+      const activityScore = calculateActivityScore();
+      
+      // Update progress summary
+      document.getElementById('remainingElements').textContent = remaining;
+      document.getElementById('placedElements').textContent = placedTotal;
+      document.getElementById('correctElements').textContent = correct;
+      document.getElementById('activityScore').textContent = `${activityScore}%`;
+      
+      // Update section counts
+      document.getElementById('subjectiveCount').textContent = `${placedElements.subjective.length} items`;
+      document.getElementById('objectiveCount').textContent = `${placedElements.objective.length} items`;
+      document.getElementById('assessmentCount').textContent = `${placedElements.assessment.length} items`;
+      document.getElementById('planCount').textContent = `${placedElements.plan.length} items`;
+      
+      // Enable check button if all elements placed
+      document.getElementById('checkBtn').disabled = placedTotal !== totalElements;
+      
+      // Update placeholders
+      updatePlaceholders();
+    }
+
+    // Update progress tracker
+    function updateProgressTracker() {
+      const placedTotal = Object.values(placedElements).reduce((sum, arr) => sum + arr.length, 0);
+      const progressSteps = document.querySelectorAll('.progress-step');
+      
+      // Update step 1 (Case Review)
+      if (placedTotal > 0) {
+        progressSteps[0].classList.add('completed');
+        progressSteps[0].classList.remove('active');
+        progressSteps[1].classList.add('active');
+      }
+      
+      // Update step 2 (SOAP Building) when all elements placed
+      if (placedTotal === totalElements) {
+        progressSteps[1].classList.add('completed');
+        progressSteps[1].classList.remove('active');
+        progressSteps[2].classList.add('active');
+      }
+    }
+
+    // Calculate correct placements
+    function calculateCorrectPlacements() {
+      let correct = 0;
+      
+      Object.keys(correctPlacements).forEach(elementId => {
+        const correctSection = correctPlacements[elementId];
+        if (placedElements[correctSection].includes(elementId)) {
+          correct++;
+        }
+      });
+      
+      return correct;
+    }
+
+    // Calculate activity score
+    function calculateActivityScore() {
+      const correct = calculateCorrectPlacements();
+      const score = Math.round((correct / totalElements) * 100);
+      return score;
+    }
+
+    // Update placeholders
+    function updatePlaceholders() {
+      const sections = ['subjective', 'objective', 'assessment', 'plan'];
+      
+      sections.forEach(section => {
+        const formSectionContent = document.getElementById(`form${section.charAt(0).toUpperCase() + section.slice(1)}Content`);
+        const hasPlaceholder = formSectionContent.querySelector('.section-placeholder');
+        const hasElements = placedElements[section].length > 0;
+        
+        if (!hasElements && !hasPlaceholder) {
+          // Add placeholder if empty
+          const placeholder = document.createElement('div');
+          placeholder.className = 'section-placeholder';
+          placeholder.textContent = `Drag ${section} information here`;
+          formSectionContent.appendChild(placeholder);
+        } else if (hasElements && hasPlaceholder) {
+          // Remove placeholder if has elements
+          hasPlaceholder.remove();
+        }
+      });
+    }
+
+    // Check SOAP Note
+    function checkSOAPNote() {
+      activityCompleted = true;
+      const score = calculateActivityScore();
+      
+      // Visual feedback for placements
+      Object.keys(correctPlacements).forEach(elementId => {
+        const correctSection = correctPlacements[elementId];
+        const isCorrect = placedElements[correctSection].includes(elementId);
+        const formElement = document.getElementById(`form-${elementId}`);
+        
+        if (formElement) {
+          formElement.style.borderLeftColor = isCorrect ? 'var(--color-success)' : 'var(--color-error)';
+          formElement.style.background = isCorrect ? 
+            'rgba(0, 184, 148, 0.1)' : 
+            'rgba(225, 112, 85, 0.1)';
+        }
+      });
+      
+      // Update all progress steps to completed
+      document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.add('completed');
+        step.classList.remove('active');
+      });
+      
+      // Show results
+      showResults(score);
+    }
+
+    // Show Results
+    function showResults(score) {
+      const resultsPanel = document.getElementById('resultsPanel');
+      const scoreValue = document.getElementById('scoreValue');
+      const scoreText = document.getElementById('scoreText');
+      
+      resultsPanel.classList.add('show');
+      
+      // Animate score counter
+      let currentScore = 0;
+      const increment = score / 20;
+      const timer = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= score) {
+          currentScore = score;
+          clearInterval(timer);
+        }
+        scoreValue.textContent = `${Math.round(currentScore)}%`;
+      }, 50);
+      
+      // Set score text
+      if (score >= 95) {
+        scoreText.textContent = "Excellent! Perfect SOAP documentation skills";
+      } else if (score >= 85) {
+        scoreText.textContent = "Very good! Strong SOAP documentation ability";
+      } else if (score >= 75) {
+        scoreText.textContent = "Good job! Solid understanding of SOAP format";
+      } else if (score >= 60) {
+        scoreText.textContent = "Keep practicing! Review SOAP components";
+      } else {
+        scoreText.textContent = "Try again! Review subjective vs objective information";
+      }
+    }
+
+    // Reset Activity
+    function resetActivity() {
+      // Reset state
+      placedElements = {
+        subjective: [],
+        objective: [],
+        assessment: [],
+        plan: []
+      };
+      
+      activityCompleted = false;
+      
+      // Reset source elements
+      document.querySelectorAll('.data-element').forEach(element => {
+        element.style.display = 'block';
+        element.style.opacity = '1';
+        element.classList.remove('dragging');
+      });
+      
+      // Clear form sections
+      ['subjective', 'objective', 'assessment', 'plan'].forEach(section => {
+        const contentDiv = document.getElementById(`form${section.charAt(0).toUpperCase() + section.slice(1)}Content`);
+        contentDiv.innerHTML = '<div class="section-placeholder">Drag ' + section + ' information here</div>';
+      });
+      
+      // Close all SOAP sections except first
+      document.querySelectorAll('.soap-section').forEach((section, index) => {
+        section.classList.remove('active');
+        if (index === 0) {
+          section.classList.add('active');
+        }
+      });
+      
+      // Reset progress tracker
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        step.classList.remove('completed', 'active');
+        if (index === 0) {
+          step.classList.add('active');
+        }
+      });
+      
+      // Hide results panel
+      document.getElementById('resultsPanel').classList.remove('show');
+      
+      // Reset UI
+      updateUI();
+      
+      // Reset button
+      document.getElementById('checkBtn').disabled = true;
+    }
+  </script>
+</body>
+</html>
