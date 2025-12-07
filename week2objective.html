@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Week 2 Objectives</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #ff4fcf;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 22px;
+      }
+    }
+
+    img,
+    .page,
+    .column,
+    .objective-card,
+    .week-overview {
+      max-width: 100%;
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #00b894;
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 34rem;
+      margin-bottom: 18px;
+    }
+
+    /* Objectives list */
+    .objectives-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .objective-card {
+      background: #08070a;
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 10px 16px 14px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (max-width: 480px) {
+      .objective-card {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+      }
+      .objective-icon {
+        justify-self: flex-end;
+      }
+    }
+
+    .objective-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #111827;
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .objective-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .objective-verb {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .objective-text {
+      font-size: 0.84rem;
+      color: #e5e7eb;
+    }
+
+    .objective-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(250, 250, 250, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #f9fafb;
+      background: linear-gradient(
+        135deg,
+        rgba(175, 75, 239, 0.1),
+        rgba(0, 0, 0, 0.4)
+      );
+    }
+
+    /* Right-hand content */
+    .objectives-header {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .section-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .week-overview {
+      background: rgba(12, 10, 24, 0.94);
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      color: #e5e7eb;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      margin-bottom: 16px;
+    }
+
+    .week-overview strong {
+      color: #ffffff;
+    }
+
+    .mini-heading {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin: 8px 0 10px;
+    }
+
+    .outcomes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: #f9fafb;
+    }
+
+    .outcomes-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .note-card {
+      margin-top: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(15, 23, 42, 0.7);
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      color: #e5e7eb;
+    }
+
+    .note-card strong {
+      color: #fef3c7;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="week2-heading">
+    <!-- LEFT COLUMN: title + objective cards -->
+    <section class="column" aria-label="Week 2 objectives list">
+      <header class="brand-row">
+        <div class="brand">
+          <img
+            src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+            alt="AlliedRx logo"
+            class="brand-logo"
+          />
+          <div class="course-meta">
+            <span class="course-name"> Campus & Distance Learning • CCMA</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 2 — Health Records & Ophthalmology/Otolaryngology</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Online &amp; Self-Paced</span>
+      </header>
+
+      <h1 id="week2-heading">Objectives</h1>
+      <p class="subtitle">
+        This week combines <strong>documentation fundamentals</strong> with 
+        <strong>specialty clinical care</strong>. Master health record management 
+        while learning eye and ear/nose/throat examination procedures.
+      </p>
+
+      <div class="objectives-list">
+        <!-- Objective 1 -->
+        <article class="objective-card">
+          <div class="objective-number">01</div>
+          <div class="objective-main">
+            <div class="objective-verb">Identify</div>
+            <p class="objective-text">
+              Identify and describe the components of a complete health record, 
+              including SOAP notes, progress notes, and diagnostic reports.
+            </p>
+          </div>
+          <div class="objective-icon" aria-hidden="true">
+            &rarr;
+          </div>
+        </article>
+
+        <!-- Objective 2 -->
+        <article class="objective-card">
+          <div class="objective-number">02</div>
+          <div class="objective-main">
+            <div class="objective-verb">Explain</div>
+            <p class="objective-text">
+              Explain HIPAA regulations and documentation requirements for 
+              maintaining confidentiality and accuracy in medical records.
+            </p>
+          </div>
+          <div class="objective-icon" aria-hidden="true">
+            &rarr;
+          </div>
+        </article>
+
+        <!-- Objective 3 -->
+        <article class="objective-card">
+          <div class="objective-number">03</div>
+          <div class="objective-main">
+            <div class="objective-verb">Differentiate</div>
+            <p class="objective-text">
+              Differentiate between common ophthalmology and otolaryngology 
+              procedures, equipment, and diagnostic tests used in clinical practice.
+            </p>
+          </div>
+          <div class="objective-icon" aria-hidden="true">
+            &rarr;
+          </div>
+        </article>
+
+        <!-- Objective 4 -->
+        <article class="objective-card">
+          <div class="objective-number">04</div>
+          <div class="objective-main">
+            <div class="objective-verb">Demonstrate</div>
+            <p class="objective-text">
+              Demonstrate proper documentation techniques for eye and ear exams, 
+              including visual acuity testing and otoscopic examinations.
+            </p>
+          </div>
+          <div class="objective-icon" aria-hidden="true">
+            &rarr;
+          </div>
+        </article>
+
+        <!-- Objective 5 -->
+        <article class="objective-card">
+          <div class="objective-number">05</div>
+          <div class="objective-main">
+            <div class="objective-verb">Recognize</div>
+            <p class="objective-text">
+              Recognize common pathologies of the eyes, ears, nose, and throat, 
+              and their corresponding medical terminology and abbreviations.
+            </p>
+          </div>
+          <div class="objective-icon" aria-hidden="true">
+            ✓
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: narrative + outcomes framing -->
+    <aside class="column" aria-label="Overview of this week's content">
+      <h2 class="objectives-header">What we're covering this week</h2>
+      <p class="section-tag">Clinical Documentation & Specialty Care</p>
+
+      <div class="week-overview">
+        <p>
+          Week 2 connects <strong>precise documentation</strong> with 
+          <strong>specialized clinical skills</strong>. You'll learn how accurate 
+          health records support patient care in ophthalmology (eye care) and 
+          otolaryngology (ear, nose, and throat care), where detailed records 
+          are essential for diagnosis and treatment.
+        </p>
+
+        <p>
+          These chapters work together because <strong>every clinical finding</strong> 
+          in eye and ENT exams requires meticulous documentation. From Snellen chart 
+          results to otoscopic observations, your recording accuracy directly impacts 
+          patient safety and treatment outcomes.
+        </p>
+
+        <p class="mini-heading">By the end of this week, you will be able to:</p>
+        <ul class="outcomes-list">
+          <li>
+            <span class="dot"></span>
+            <span>Document patient encounters using proper SOAP note format for ophthalmology and otolaryngology exams.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Prepare patients and assist with basic eye and ear examination procedures.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Maintain HIPAA compliance while managing sensitive visual and auditory health information.</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Identify appropriate documentation for referrals to ophthalmologists or otolaryngologists.</span>
+          </li>
+        </ul>
+
+        <div class="note-card">
+          <strong>Clinical Insight:</strong> In ophthalmology documentation, 
+          "OD" means right eye (oculus dexter), "OS" means left eye (oculus sinister), 
+          and "OU" means both eyes (oculi uterque). Confusing these abbreviations 
+          can lead to serious medication errors!
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
