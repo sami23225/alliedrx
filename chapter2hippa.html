@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Chapter 2: Release of Information Legal Clinic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-warning: #fdcb6e;
+      --color-error: #e17055;
+      --color-info: #0984e3;
+      --color-legal: #6c5ce7;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-medium: 0 12px 30px rgba(23, 10, 61, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    /* Main Page Container */
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 22px;
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 24px;
+      }
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-success);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    /* Module Header */
+    .module-header {
+      animation: fadeInUp 0.5s ease-out 0.1s both;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .module-subtitle {
+      font-size: 1.1rem;
+      color: var(--color-muted);
+      max-width: 800px;
+      margin-bottom: 6px;
+    }
+
+    .module-description {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 800px;
+      line-height: 1.6;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 20px;
+      animation: fadeInUp 0.5s ease-out 0.2s both;
+    }
+
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+    }
+
+    .progress-step.active {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .progress-step.completed {
+      color: var(--color-success);
+    }
+
+    .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-muted);
+    }
+
+    .progress-step.active .step-icon {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .progress-step.completed .step-icon {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .step-divider {
+      flex: 1;
+      height: 2px;
+      background: rgba(12, 10, 24, 0.1);
+      margin: 0 8px;
+    }
+
+    /* Legal Clinic Grid */
+    .clinic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.5s ease-out 0.3s both;
+    }
+
+    @media (max-width: 900px) {
+      .clinic-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Legal Clinic Container */
+    .clinic-container {
+      background: rgba(175, 75, 239, 0.03);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(175, 75, 239, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--color-legal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .tool-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    /* Scenario Container */
+    .scenario-container {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+      animation: slideInRight 0.5s ease-out 0.4s both;
+    }
+
+    .scenario-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+    }
+
+    .scenario-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--color-legal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+    }
+
+    .scenario-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    .scenario-difficulty {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .difficulty-basic {
+      background: rgba(0, 184, 148, 0.1);
+      color: var(--color-success);
+    }
+
+    .difficulty-intermediate {
+      background: rgba(253, 203, 110, 0.1);
+      color: var(--color-warning);
+    }
+
+    .difficulty-advanced {
+      background: rgba(225, 112, 85, 0.1);
+      color: var(--color-error);
+    }
+
+    .scenario-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      margin-bottom: 20px;
+    }
+
+    .scenario-content strong {
+      color: var(--color-legal);
+    }
+
+    /* Decision Options */
+    .decision-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .decision-option {
+      padding: 14px 16px;
+      border: 2px solid rgba(12, 10, 24, 0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--color-text);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .decision-option:hover {
+      border-color: var(--color-primary-soft);
+      background: rgba(175, 75, 239, 0.03);
+    }
+
+    .decision-option.selected {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.08);
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .decision-option.correct {
+      border-color: var(--color-success);
+      background: rgba(0, 184, 148, 0.08);
+    }
+
+    .decision-option.incorrect {
+      border-color: var(--color-error);
+      background: rgba(225, 112, 85, 0.08);
+      animation: shake 0.5s ease;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .option-letter {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(12, 10, 24, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text);
+      flex-shrink: 0;
+    }
+
+    .decision-option.selected .option-letter {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .decision-option.correct .option-letter {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .decision-option.incorrect .option-letter {
+      background: var(--color-error);
+      color: white;
+    }
+
+    /* Decision Feedback */
+    .decision-feedback {
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      margin-top: 12px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .feedback-correct {
+      background: rgba(0, 184, 148, 0.1);
+      border-left: 4px solid var(--color-success);
+    }
+
+    .feedback-incorrect {
+      background: rgba(225, 112, 85, 0.1);
+      border-left: 4px solid var(--color-error);
+    }
+
+    /* Release Form Builder */
+    .form-builder {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-intro {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    /* Form Sections */
+    .form-sections {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-section {
+      background: white;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(12, 10, 24, 0.08);
+      padding: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .form-section.active {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.03);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--color-legal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .section-status {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .section-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-section.active .section-content {
+      display: block;
+    }
+
+    /* Form Fields */
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .field-required::after {
+      content: "*";
+      color: var(--color-error);
+      margin-left: 2px;
+    }
+
+    .field-input {
+      padding: 10px 12px;
+      border: 1px solid rgba(12, 10, 24, 0.1);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--color-text);
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .field-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(175, 75, 239, 0.1);
+    }
+
+    .field-input.error {
+      border-color: var(--color-error);
+      background: rgba(225, 112, 85, 0.05);
+    }
+
+    .field-hint {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      margin-top: 2px;
+    }
+
+    .field-error {
+      font-size: 0.75rem;
+      color: var(--color-error);
+      margin-top: 2px;
+      display: none;
+    }
+
+    .field-input.error + .field-error {
+      display: block;
+    }
+
+    /* Checkbox Group */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(12, 10, 24, 0.2);
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-input:checked {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    .checkbox-label {
+      font-size: 0.85rem;
+      color: var(--color-text);
+    }
+
+    /* Generated Form Preview */
+    .form-preview {
+      background: white;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .form-preview.show {
+      display: block;
+    }
+
+    .preview-header {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-legal);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-content {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      white-space: pre-line;
+    }
+
+    /* Progress Summary */
+    .progress-summary {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(175, 75, 239, 0.03);
+      border-radius: var(--radius-sm);
+      animation: fadeInUp 0.5s ease-out 0.5s both;
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .progress-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .progress-label {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      text-align: center;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      animation: fadeInUp 0.5s ease-out 0.6s both;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #9a3ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(175, 75, 239, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(12, 10, 24, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .btn-legal {
+      background: var(--color-legal);
+      color: white;
+    }
+
+    .btn-legal:hover {
+      background: #5b4bd8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 92, 231, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Results Panel */
+    .results-panel {
+      background: rgba(12, 10, 24, 0.94);
+      color: #e5e7eb;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 24px;
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .results-panel.show {
+      display: block;
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .results-content {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .results-content strong {
+      color: #ffffff;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+    }
+
+    .score-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary-soft);
+    }
+
+    .score-text {
+      font-size: 0.9rem;
+      color: #c4b5fd;
+    }
+
+    /* Legal Guidelines Card */
+    .legal-guidelines {
+      margin-top: 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(15, 23, 42, 0.7);
+      padding: 16px;
+      font-size: 0.85rem;
+      color: #e5e7eb;
+    }
+
+    .legal-guidelines strong {
+      color: #fef3c7;
+    }
+
+    /* HIPAA Warning */
+    .hipaa-warning {
+      background: rgba(225, 112, 85, 0.1);
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--color-error);
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .warning-header {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-error);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .warning-content {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .clinic-grid {
+        gap: 20px;
+      }
+      
+      .clinic-container,
+      .scenario-container,
+      .form-builder {
+        padding: 16px;
+      }
+      
+      .progress-summary {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .progress-item {
+        min-width: 100px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .progress-tracker {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .step-divider {
+        display: none;
+      }
+      
+      .scenario-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      
+      .scenario-difficulty {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="module-heading">
+    <!-- Header -->
+    <header class="brand-row">
+      <div class="brand">
+        <img
+          src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+          alt="AlliedRx logo"
+          class="brand-logo"
+        />
+        <div class="course-meta">
+          <span class="course-name">Clinical Medical Assistant • Kinn's Chapter 2</span>
+          <div class="week-label">
+            <span class="week-label-dot"></span>
+            <span>Interactive Module 4: Release of Information Legal Clinic</span>
+          </div>
+        </div>
+      </div>
+
+      <span class="badge-mode">Campus & Online</span>
+    </header>
+
+    <!-- Module Header -->
+    <section class="module-header">
+      <h1 id="module-heading">Release of Information Legal Clinic</h1>
+      <p class="module-subtitle">Master HIPAA releases, legal documentation, and privacy compliance</p>
+      <p class="module-description">
+        Navigate complex legal scenarios involving patient information releases. Practice completing 
+        authorization forms, responding to subpoenas, and handling minor patient situations while 
+        maintaining HIPAA compliance.
+      </p>
+    </section>
+
+    <!-- Activity Progress Tracker -->
+    <div class="progress-tracker">
+      <div class="progress-step active">
+        <span class="step-icon">1</span>
+        <span>Legal Scenarios</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="progress-step">
+        <span class="step-icon">2</span>
+        <span>Form Completion</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="progress-step">
+        <span class="step-icon">3</span>
+        <span>Documentation Review</span>
+      </div>
+    </div>
+
+    <!-- Legal Clinic Grid -->
+    <div class="clinic-grid">
+      <!-- Left: Legal Decision Scenarios -->
+      <section class="clinic-container" aria-label="Legal Decision Scenarios">
+        <div class="tool-header">
+          <div class="tool-icon">⚖️</div>
+          <h2 class="tool-title">Legal Decision Scenarios</h2>
+        </div>
+        
+        <!-- Scenario 1: Basic HIPAA Release -->
+        <div class="scenario-container">
+          <div class="scenario-header">
+            <div class="scenario-icon">1</div>
+            <div class="scenario-title">Scenario 1: Basic HIPAA Authorization</div>
+            <div class="scenario-difficulty difficulty-basic">Basic</div>
+          </div>
+          
+          <div class="scenario-content">
+            <p><strong>Patient:</strong> Sarah Johnson, 35-year-old female</p>
+            <p><strong>Situation:</strong> Mrs. Johnson requests her complete medical records be sent to a new specialist she's seeing. She's signing the HIPAA release form in your office.</p>
+            <p><strong>Your task:</strong> What must you verify before releasing her records?</p>
+          </div>
+          
+          <div class="decision-options" id="scenario1Options">
+            <div class="decision-option" data-correct="true">
+              <div class="option-label">
+                <div class="option-letter">A</div>
+              </div>
+              <div class="option-content">
+                Verify her identity with photo ID, ensure the form is complete (dates, specific information being released, recipient information), and check that she's signing for herself (not a minor or incapacitated).
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">B</div>
+              </div>
+              <div class="option-content">
+                Just have her sign the form and send the records - she's in the office so identity is confirmed.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">C</div>
+              </div>
+              <div class="option-content">
+                Tell her you'll send the records after her next appointment when you have more current information.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">D</div>
+              </div>
+              <div class="option-content">
+                Send only the last year of records since that's probably what the specialist needs.
+              </div>
+            </div>
+          </div>
+          
+          <div class="decision-feedback" id="scenario1Feedback"></div>
+        </div>
+
+        <!-- Scenario 2: Minor Patient -->
+        <div class="scenario-container">
+          <div class="scenario-header">
+            <div class="scenario-icon">2</div>
+            <div class="scenario-title">Scenario 2: Minor Patient Request</div>
+            <div class="scenario-difficulty difficulty-intermediate">Intermediate</div>
+          </div>
+          
+          <div class="scenario-content">
+            <p><strong>Patient:</strong> Michael Chen, 16-year-old male</p>
+            <p><strong>Situation:</strong> Michael comes to the office alone and requests his immunization records for a school sports physical. His parents usually accompany him but aren't present today.</p>
+            <p><strong>Your task:</strong> How should you handle this request?</p>
+          </div>
+          
+          <div class="decision-options" id="scenario2Options">
+            <div class="decision-option" data-correct="true">
+              <div class="option-label">
+                <div class="option-letter">A</div>
+              </div>
+              <div class="option-content">
+                Explain that as a minor, he needs parental consent for record release. Offer to call his parents for verbal consent or provide a form for them to sign.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">B</div>
+              </div>
+              <div class="option-content">
+                Give him the records since he's almost an adult and it's just immunization information.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">C</div>
+              </div>
+              <div class="option-content">
+                Tell him to come back with his parents and refuse to discuss it further.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="true">
+              <div class="option-label">
+                <div class="option-letter">D</div>
+              </div>
+              <div class="option-content">
+                Check if your state has laws allowing minors to access certain records (like immunizations) and follow office policy for minor consent.
+              </div>
+            </div>
+          </div>
+          
+          <div class="decision-feedback" id="scenario2Feedback"></div>
+        </div>
+
+        <!-- Scenario 3: Subpoena Response -->
+        <div class="scenario-container">
+          <div class="scenario-header">
+            <div class="scenario-icon">3</div>
+            <div class="scenario-title">Scenario 3: Subpoena for Records</div>
+            <div class="scenario-difficulty difficulty-advanced">Advanced</div>
+          </div>
+          
+          <div class="scenario-content">
+            <p><strong>Situation:</strong> Your practice receives a subpoena for a patient's mental health records related to a court case. The subpoena is properly served but doesn't include a judge's signature or patient authorization.</p>
+            <p><strong>Your task:</strong> What is the appropriate response?</p>
+          </div>
+          
+          <div class="decision-options" id="scenario3Options">
+            <div class="decision-option" data-correct="true">
+              <div class="option-label">
+                <div class="option-letter">A</div>
+              </div>
+              <div class="option-content">
+                Notify the patient about the subpoena, consult with your practice attorney, and only release what's specifically requested if legally required. Mental health records have additional protections.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">B</div>
+              </div>
+              <div class="option-content">
+                Immediately send all requested records to comply with the subpoena to avoid legal trouble.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="false">
+              <div class="option-label">
+                <div class="option-letter">C</div>
+              </div>
+              <div class="option-content">
+                Ignore the subpoena since it doesn't have proper authorization.
+              </div>
+            </div>
+            
+            <div class="decision-option" data-correct="true">
+              <div class="option-label">
+                <div class="option-letter">D</div>
+              </div>
+              <div class="option-content">
+                Document the subpoena receipt in the patient's record and follow your practice's legal protocol for subpoena responses.
+              </div>
+            </div>
+          </div>
+          
+          <div class="decision-feedback" id="scenario3Feedback"></div>
+        </div>
+
+        <!-- HIPAA Warning -->
+        <div class="hipaa-warning">
+          <div class="warning-header">
+            <span>⚠️</span>
+            <span>HIPAA Violation Warning</span>
+          </div>
+          <div class="warning-content">
+            Unauthorized release of Protected Health Information (PHI) can result in:
+            • Civil penalties up to $1.5 million per violation
+            • Criminal charges including imprisonment
+            • Loss of professional licenses
+            • Permanent damage to practice reputation
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Release Form Builder -->
+      <section class="clinic-container" aria-label="Release Form Builder">
+        <div class="tool-header">
+          <div class="tool-icon">📄</div>
+          <h2 class="tool-title">HIPAA Authorization Form Builder</h2>
+        </div>
+        
+        <div class="form-builder">
+          <div class="form-intro">
+            <p><strong>Practice Exercise:</strong> Complete this HIPAA Authorization form for a patient requesting records be sent to a new provider.</p>
+            <p>Fill in all required fields marked with * and select appropriate checkboxes.</p>
+          </div>
+
+          <div class="form-sections">
+            <!-- Patient Information Section -->
+            <div class="form-section active" id="patientInfoSection">
+              <div class="section-header" onclick="toggleSection('patientInfoSection')">
+                <div class="section-title">
+                  <div class="section-icon">👤</div>
+                  <span>Patient Information</span>
+                </div>
+                <div class="section-status" id="patientInfoStatus">Required</div>
+              </div>
+              <div class="section-content">
+                <div class="form-fields">
+                  <div class="form-field">
+                    <label class="field-label field-required">Patient Full Name</label>
+                    <input type="text" class="field-input" id="patientName" placeholder="First Middle Last">
+                    <div class="field-hint">Legal name as it appears in records</div>
+                    <div class="field-error">Patient name is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Date of Birth</label>
+                    <input type="date" class="field-input" id="patientDOB">
+                    <div class="field-error">Date of birth is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Medical Record Number</label>
+                    <input type="text" class="field-input" id="patientMRN" placeholder="MRN-000000">
+                    <div class="field-error">MRN is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Release Information Section -->
+            <div class="form-section" id="releaseInfoSection">
+              <div class="section-header" onclick="toggleSection('releaseInfoSection')">
+                <div class="section-title">
+                  <div class="section-icon">📤</div>
+                  <span>Information to be Released</span>
+                </div>
+                <div class="section-status" id="releaseInfoStatus">Required</div>
+              </div>
+              <div class="section-content">
+                <div class="form-fields">
+                  <div class="checkbox-group">
+                    <p class="field-label">Select information to release:</p>
+                    
+                    <label class="checkbox-option">
+                      <input type="checkbox" class="checkbox-input" id="releaseMedical">
+                      <span class="checkbox-label">Complete medical record</span>
+                    </label>
+                    
+                    <label class="checkbox-option">
+                      <input type="checkbox" class="checkbox-input" id="releaseSpecific">
+                      <span class="checkbox-label">Specific dates: From</span>
+                      <input type="date" class="field-input" id="dateFrom" style="width: 120px; margin: 0 8px;">
+                      <span class="checkbox-label">to</span>
+                      <input type="date" class="field-input" id="dateTo" style="width: 120px; margin-left: 8px;">
+                    </label>
+                    
+                    <label class="checkbox-option">
+                      <input type="checkbox" class="checkbox-input" id="releaseLab">
+                      <span class="checkbox-label">Laboratory/test results only</span>
+                    </label>
+                    
+                    <label class="checkbox-option">
+                      <input type="checkbox" class="checkbox-input" id="releaseProgress">
+                      <span class="checkbox-label">Progress notes only</span>
+                    </label>
+                    
+                    <label class="checkbox-option">
+                      <input type="checkbox" class="checkbox-input" id="releaseOther">
+                      <span class="checkbox-label">Other (specify):</span>
+                      <input type="text" class="field-input" id="releaseOtherSpec" placeholder="Specify other information" style="flex: 1; margin-left: 8px;">
+                    </label>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Purpose of Disclosure</label>
+                    <select class="field-input" id="disclosurePurpose">
+                      <option value="">Select purpose</option>
+                      <option value="continuity">Continuity of care</option>
+                      <option value="insurance">Insurance purposes</option>
+                      <option value="legal">Legal proceedings</option>
+                      <option value="personal">Personal use</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <div class="field-error">Purpose is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipient Information Section -->
+            <div class="form-section" id="recipientInfoSection">
+              <div class="section-header" onclick="toggleSection('recipientInfoSection')">
+                <div class="section-title">
+                  <div class="section-icon">🏥</div>
+                  <span>Recipient Information</span>
+                </div>
+                <div class="section-status" id="recipientInfoStatus">Required</div>
+              </div>
+              <div class="section-content">
+                <div class="form-fields">
+                  <div class="form-field">
+                    <label class="field-label field-required">Recipient Name/Organization</label>
+                    <input type="text" class="field-input" id="recipientName" placeholder="Provider name or facility">
+                    <div class="field-error">Recipient name is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Address</label>
+                    <input type="text" class="field-input" id="recipientAddress" placeholder="Street address">
+                    <div class="field-error">Address is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                      <div>
+                        <label class="field-label field-required">City</label>
+                        <input type="text" class="field-input" id="recipientCity">
+                      </div>
+                      <div>
+                        <label class="field-label field-required">State</label>
+                        <input type="text" class="field-input" id="recipientState" maxlength="2" placeholder="XX">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">ZIP Code</label>
+                    <input type="text" class="field-input" id="recipientZip" placeholder="12345">
+                    <div class="field-error">ZIP code is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Expiration & Signature Section -->
+            <div class="form-section" id="signatureSection">
+              <div class="section-header" onclick="toggleSection('signatureSection')">
+                <div class="section-title">
+                  <div class="section-icon">✍️</div>
+                  <span>Expiration & Signature</span>
+                </div>
+                <div class="section-status" id="signatureStatus">Required</div>
+              </div>
+              <div class="section-content">
+                <div class="form-fields">
+                  <div class="form-field">
+                    <label class="field-label field-required">Expiration Date</label>
+                    <input type="date" class="field-input" id="expirationDate">
+                    <div class="field-hint">Authorization expires on this date or event (max 1 year for most releases)</div>
+                    <div class="field-error">Expiration date is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Patient/Representative Signature</label>
+                    <input type="text" class="field-input" id="patientSignature" placeholder="Type full legal name">
+                    <div class="field-hint">By typing name, patient certifies this is their electronic signature</div>
+                    <div class="field-error">Signature is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label field-required">Date Signed</label>
+                    <input type="date" class="field-input" id="signatureDate">
+                    <div class="field-error">Signature date is required</div>
+                  </div>
+                  
+                  <div class="form-field">
+                    <label class="field-label">Relationship to Patient (if representative)</label>
+                    <select class="field-input" id="relationship">
+                      <option value="">Select if applicable</option>
+                      <option value="self">Self</option>
+                      <option value="parent">Parent</option>
+                      <option value="guardian">Legal Guardian</option>
+                      <option value="power">Power of Attorney</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generated Form Preview -->
+          <div class="form-preview" id="formPreview">
+            <div class="preview-header">
+              <span>📋</span>
+              <span>Generated HIPAA Authorization Form</span>
+            </div>
+            <div class="preview-content" id="previewContent">
+              <!-- Preview content will be generated here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Legal Guidelines -->
+        <div class="legal-guidelines">
+          <strong>Required HIPAA Authorization Elements:</strong>
+          <ul style="margin-left: 20px; margin-top: 8px;">
+            <li>Specific description of information to be disclosed</li>
+            <li>Name of person/organization authorized to disclose</li>
+            <li>Name of person/organization to receive information</li>
+            <li>Purpose of the disclosure</li>
+            <li>Expiration date or event</li>
+            <li>Signature of patient or representative</li>
+            <li>Right to revoke authorization in writing</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Progress Summary -->
+    <div class="progress-summary">
+      <div class="progress-item">
+        <span class="progress-number" id="scenariosCompleted">0/3</span>
+        <span class="progress-label">Scenarios Completed</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="formCompletion">0%</span>
+        <span class="progress-label">Form Completion</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="correctDecisions">0</span>
+        <span class="progress-label">Correct Decisions</span>
+      </div>
+      <div class="progress-item">
+        <span class="progress-number" id="legalScore">0%</span>
+        <span class="progress-label">Legal Knowledge Score</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-secondary" id="resetBtn">
+        <span>↻</span>
+        Reset Module
+      </button>
+      <button class="btn btn-legal" id="generateFormBtn">
+        <span>📄</span>
+        Generate Form Preview
+      </button>
+      <button class="btn btn-primary" id="checkBtn" disabled>
+        <span>✓</span>
+        Check Legal Knowledge
+      </button>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="results-panel" id="resultsPanel">
+      <div class="results-header">
+        <div class="tool-icon" style="background: var(--color-success);">✓</div>
+        <h3 class="results-title">Legal Compliance Achieved!</h3>
+      </div>
+      
+      <div class="results-content">
+        <p>Excellent work! You've demonstrated strong understanding of HIPAA compliance and release of information procedures.</p>
+        
+        <div class="score-display">
+          <div class="score-value" id="scoreValue">0%</div>
+          <div class="score-text" id="scoreText">Complete the module to see your score</div>
+        </div>
+        
+        <p><strong>Key Legal Principles Mastered:</strong></p>
+        <ul style="margin-left: 20px; margin-top: 8px; margin-bottom: 16px;">
+          <li><strong>HIPAA Authorization Requirements:</strong> Specific elements required for valid releases</li>
+          <li><strong>Minor Patient Rights:</strong> Understanding state laws and parental consent requirements</li>
+          <li><strong>Subpoena Response Protocols:</strong> Legal procedures for court-ordered disclosures</li>
+          <li><strong>Patient Identity Verification:</strong> Preventing unauthorized access to PHI</li>
+          <li><strong>Record Documentation:</strong> Properly documenting all release activities</li>
+        </ul>
+        
+        <div class="legal-guidelines">
+          <strong>Critical Documentation Reminders:</strong>
+          • Always document the date, time, and method of record release
+          • Note who released the information and to whom
+          • Keep copy of signed authorization with expiration date
+          • Document patient notifications about subpoenas
+          • Record any verbal consent with witness signature
+          • File all release documentation chronologically in patient record
+        </div>
+        
+        <div class="hipaa-warning" style="margin-top: 20px;">
+          <div class="warning-header">
+            <span>💼</span>
+            <span>Professional Responsibility</span>
+          </div>
+          <div class="warning-content">
+            As a medical assistant, you are often the first line of defense in protecting patient privacy. 
+            Your attention to detail in release procedures protects patients, your practice, and your professional license. 
+            When in doubt: Verify, Document, Consult.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // State Management
+    let scenarioStates = {
+      1: { answered: false, correct: false, selected: null },
+      2: { answered: false, correct: false, selected: null },
+      3: { answered: false, correct: false, selected: null }
+    };
+    
+    let formCompletion = 0;
+    let totalCorrectDecisions = 0;
+    let moduleCompleted = false;
+
+    // Required form fields
+    const requiredFields = [
+      'patientName', 'patientDOB', 'patientMRN',
+      'disclosurePurpose', 'recipientName', 'recipientAddress',
+      'recipientCity', 'recipientState', 'recipientZip',
+      'expirationDate', 'patientSignature', 'signatureDate'
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      setupEventListeners();
+      updateUI();
+      setupFormValidation();
+    });
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      // Scenario option clicks
+      document.querySelectorAll('.decision-option').forEach(option => {
+        option.addEventListener('click', handleScenarioSelect);
+      });
+
+      // Form section toggles
+      document.querySelectorAll('.section-header').forEach(header => {
+        if (!header.onclick) {
+          header.addEventListener('click', function() {
+            const section = this.closest('.form-section');
+            toggleSection(section.id);
+          });
+        }
+      });
+
+      // Form input changes
+      document.querySelectorAll('.field-input, .checkbox-input').forEach(input => {
+        input.addEventListener('change', updateFormCompletion);
+        input.addEventListener('input', updateFormCompletion);
+      });
+
+      // Buttons
+      document.getElementById('resetBtn').addEventListener('click', resetModule);
+      document.getElementById('generateFormBtn').addEventListener('click', generateFormPreview);
+      document.getElementById('checkBtn').addEventListener('click', checkLegalKnowledge);
+    }
+
+    // Setup Form Validation
+    function setupFormValidation() {
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          field.addEventListener('blur', validateField);
+        }
+      });
+    }
+
+    // Handle Scenario Selection
+    function handleScenarioSelect() {
+      const scenarioId = this.closest('.scenario-container').querySelector('.scenario-icon').textContent;
+      const optionLetter = this.querySelector('.option-letter').textContent;
+      const isCorrect = this.dataset.correct === 'true';
+      
+      // Don't allow changes after answering
+      if (scenarioStates[scenarioId].answered) return;
+      
+      // Remove previous selections in this scenario
+      const scenarioOptions = this.closest('.decision-options');
+      scenarioOptions.querySelectorAll('.decision-option').forEach(opt => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+      });
+      
+      // Add new selection
+      this.classList.add('selected');
+      this.classList.add(isCorrect ? 'correct' : 'incorrect');
+      
+      // Update state
+      scenarioStates[scenarioId].answered = true;
+      scenarioStates[scenarioId].correct = isCorrect;
+      scenarioStates[scenarioId].selected = optionLetter;
+      
+      // Show feedback
+      showScenarioFeedback(scenarioId, isCorrect);
+      
+      // Update correct decisions count
+      if (isCorrect) totalCorrectDecisions++;
+      
+      // Update UI
+      updateUI();
+    }
+
+    // Show Scenario Feedback
+    function showScenarioFeedback(scenarioId, isCorrect) {
+      const feedbackDiv = document.getElementById(`scenario${scenarioId}Feedback`);
+      feedbackDiv.className = `decision-feedback ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+      
+      if (scenarioId === '1') {
+        feedbackDiv.innerHTML = isCorrect 
+          ? `<strong>Correct!</strong> Always verify identity with photo ID and ensure the HIPAA authorization form is complete with specific dates, information being released, and recipient details. Patients can only sign for themselves unless they have legal authority for someone else.`
+          : `<strong>Important:</strong> HIPAA requires proper identity verification and complete authorization forms. Never assume identity or send partial records without specific authorization.`;
+      } else if (scenarioId === '2') {
+        feedbackDiv.innerHTML = isCorrect
+          ? `<strong>Correct!</strong> Minors generally need parental consent for record releases. Some states have exceptions for certain types of care (reproductive health, mental health). Always check state laws and office policy.`
+          : `<strong>Important:</strong> Minor patient requests require special handling. Never release records without proper authorization, even for seemingly minor information.`;
+      } else if (scenarioId === '3') {
+        feedbackDiv.innerHTML = isCorrect
+          ? `<strong>Correct!</strong> Subpoenas require careful handling. Always notify the patient, consult legal counsel, and only release what's specifically required. Mental health records have additional protections under federal and state laws.`
+          : `<strong>Important:</strong> Subpoenas don't automatically override HIPAA. Proper legal review is required before releasing any records, especially sensitive ones like mental health information.`;
+      }
+      
+      feedbackDiv.style.display = 'block';
+    }
+
+    // Toggle Form Section
+    function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      const isActive = section.classList.contains('active');
+      
+      // Toggle this section
+      section.classList.toggle('active');
+      
+      // Update section status
+      updateSectionStatus(sectionId);
+    }
+
+    // Update Section Status
+    function updateSectionStatus(sectionId) {
+      const statusElement = document.getElementById(`${sectionId}Status`);
+      if (!statusElement) return;
+      
+      const section = document.getElementById(sectionId);
+      const inputs = section.querySelectorAll('input, select');
+      let completed = 0;
+      let required = 0;
+      
+      inputs.forEach(input => {
+        if (input.hasAttribute('required') || input.classList.contains('field-required')) {
+          required++;
+          if (input.value && input.value.trim() !== '') {
+            completed++;
+          } else if (input.type === 'checkbox' && input.checked) {
+            completed++;
+          }
+        }
+      });
+      
+      const percentage = required > 0 ? Math.round((completed / required) * 100) : 100;
+      statusElement.textContent = `${percentage}% Complete`;
+      statusElement.style.color = percentage === 100 ? 'var(--color-success)' : 
+                                 percentage >= 50 ? 'var(--color-warning)' : 
+                                 'var(--color-error)';
+    }
+
+    // Validate Field
+    function validateField() {
+      const field = this;
+      const isRequired = field.hasAttribute('required') || 
+                         field.parentElement.querySelector('.field-required');
+      
+      if (isRequired && !field.value.trim()) {
+        field.classList.add('error');
+        return false;
+      } else {
+        field.classList.remove('error');
+        return true;
+      }
+    }
+
+    // Update Form Completion
+    function updateFormCompletion() {
+      // Update individual section status
+      ['patientInfoSection', 'releaseInfoSection', 'recipientInfoSection', 'signatureSection'].forEach(sectionId => {
+        updateSectionStatus(sectionId);
+      });
+      
+      // Calculate overall form completion
+      let completed = 0;
+      let totalRequired = 0;
+      
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          totalRequired++;
+          if (field.value && field.value.trim() !== '') {
+            completed++;
+          }
+        }
+      });
+      
+      // Check at least one release option is selected
+      const releaseOptions = ['releaseMedical', 'releaseSpecific', 'releaseLab', 'releaseProgress', 'releaseOther'];
+      let releaseSelected = false;
+      releaseOptions.forEach(optionId => {
+        const option = document.getElementById(optionId);
+        if (option && option.checked) {
+          releaseSelected = true;
+        }
+      });
+      
+      if (releaseSelected) completed++;
+      totalRequired++;
+      
+      formCompletion = Math.round((completed / totalRequired) * 100);
+      updateUI();
+    }
+
+    // Generate Form Preview
+    function generateFormPreview() {
+      // Validate form first
+      let isValid = true;
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field && !field.value.trim()) {
+          field.classList.add('error');
+          isValid = false;
+        }
+      });
+      
+      if (!isValid) {
+        alert('Please complete all required fields marked with *');
+        return;
+      }
+      
+      // Get form values
+      const patientName = document.getElementById('patientName').value;
+      const patientDOB = formatDate(document.getElementById('patientDOB').value);
+      const patientMRN = document.getElementById('patientMRN').value;
+      const disclosurePurpose = document.getElementById('disclosurePurpose').value;
+      const recipientName = document.getElementById('recipientName').value;
+      const recipientAddress = document.getElementById('recipientAddress').value;
+      const recipientCity = document.getElementById('recipientCity').value;
+      const recipientState = document.getElementById('recipientState').value;
+      const recipientZip = document.getElementById('recipientZip').value;
+      const expirationDate = formatDate(document.getElementById('expirationDate').value);
+      const patientSignature = document.getElementById('patientSignature').value;
+      const signatureDate = formatDate(document.getElementById('signatureDate').value);
+      const relationship = document.getElementById('relationship').value;
+      
+      // Determine what information is being released
+      let releaseInfo = [];
+      if (document.getElementById('releaseMedical').checked) releaseInfo.push('Complete medical record');
+      if (document.getElementById('releaseLab').checked) releaseInfo.push('Laboratory and test results');
+      if (document.getElementById('releaseProgress').checked) releaseInfo.push('Progress notes');
+      if (document.getElementById('releaseOther').checked) {
+        const otherSpec = document.getElementById('releaseOtherSpec').value;
+        if (otherSpec) releaseInfo.push(otherSpec);
+      }
+      
+      // Build preview content
+      const previewContent = `
+HIPAA AUTHORIZATION FOR USE OR DISCLOSURE OF PROTECTED HEALTH INFORMATION
+
+I, ${patientName} (MRN: ${patientMRN}), authorize AlliedRx Medical Center to disclose my protected health information as described below.
+
+1. INFORMATION TO BE DISCLOSED:
+   ${releaseInfo.length > 0 ? releaseInfo.join('\n   ') : 'Specific information not selected'}
+
+2. PURPOSE OF DISCLOSURE:
+   ${disclosurePurpose || 'Not specified'}
+
+3. RECIPIENT OF INFORMATION:
+   ${recipientName}
+   ${recipientAddress}
+   ${recipientCity}, ${recipientState} ${recipientZip}
+
+4. EXPIRATION:
+   This authorization will expire on: ${expirationDate}
+
+5. SIGNATURE:
+   Patient/Representative: ${patientSignature}
+   Date: ${signatureDate}
+   ${relationship && relationship !== 'self' ? `Relationship to Patient: ${relationship}` : ''}
+
+6. PATIENT RIGHTS:
+   • I understand I may revoke this authorization in writing at any time
+   • Revocation does not affect actions taken before receipt of revocation
+   • Information disclosed may be subject to redisclosure by recipient
+   • I understand treatment cannot be conditioned on signing this authorization
+
+--- END OF AUTHORIZATION ---
+      `.trim();
+      
+      // Display preview
+      document.getElementById('previewContent').textContent = previewContent;
+      document.getElementById('formPreview').classList.add('show');
+      
+      // Scroll to preview
+      document.getElementById('formPreview').scrollIntoView({ behavior: 'smooth' });
+      
+      // Update form completion to 100%
+      formCompletion = 100;
+      updateUI();
+    }
+
+    // Format date for display
+    function formatDate(dateString) {
+      if (!dateString) return 'Not specified';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    // Update UI
+    function updateUI() {
+      // Calculate totals
+      const scenariosCompleted = Object.values(scenarioStates).filter(s => s.answered).length;
+      const correctDecisions = Object.values(scenarioStates).filter(s => s.correct).length;
+      
+      // Calculate legal knowledge score
+      const scenarioScore = (correctDecisions / 3) * 60; // 60% of total
+      const formScore = (formCompletion / 100) * 40; // 40% of total
+      const legalScore = Math.round(scenarioScore + formScore);
+      
+      // Update progress summary
+      document.getElementById('scenariosCompleted').textContent = `${scenariosCompleted}/3`;
+      document.getElementById('formCompletion').textContent = `${formCompletion}%`;
+      document.getElementById('correctDecisions').textContent = correctDecisions;
+      document.getElementById('legalScore').textContent = `${legalScore}%`;
+      
+      // Update progress tracker
+      updateProgressTracker();
+      
+      // Enable check button if all scenarios answered and form complete
+      const allScenariosAnswered = scenariosCompleted === 3;
+      const formComplete = formCompletion === 100;
+      document.getElementById('checkBtn').disabled = !(allScenariosAnswered && formComplete);
+    }
+
+    // Update Progress Tracker
+    function updateProgressTracker() {
+      const scenariosCompleted = Object.values(scenarioStates).filter(s => s.answered).length;
+      const progressSteps = document.querySelectorAll('.progress-step');
+      
+      // Step 1: Legal Scenarios
+      if (scenariosCompleted > 0) {
+        progressSteps[0].classList.add('completed');
+        progressSteps[0].classList.remove('active');
+        progressSteps[1].classList.add('active');
+      }
+      
+      // Step 2: Form Completion
+      if (formCompletion >= 100) {
+        progressSteps[1].classList.add('completed');
+        progressSteps[1].classList.remove('active');
+        progressSteps[2].classList.add('active');
+      }
+      
+      // Step 3: Documentation Review (when module complete)
+      if (scenariosCompleted === 3 && formCompletion === 100) {
+        progressSteps[2].classList.add('completed');
+        progressSteps[2].classList.remove('active');
+      }
+    }
+
+    // Check Legal Knowledge
+    function checkLegalKnowledge() {
+      moduleCompleted = true;
+      
+      // Calculate final score
+      const correctDecisions = Object.values(scenarioStates).filter(s => s.correct).length;
+      const scenarioScore = (correctDecisions / 3) * 60;
+      const formScore = 40; // Form is 100% complete if we got here
+      const finalScore = Math.round(scenarioScore + formScore);
+      
+      // Update all progress steps to completed
+      document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.add('completed');
+        step.classList.remove('active');
+      });
+      
+      // Show results
+      showResults(finalScore);
+    }
+
+    // Show Results
+    function showResults(score) {
+      const resultsPanel = document.getElementById('resultsPanel');
+      const scoreValue = document.getElementById('scoreValue');
+      const scoreText = document.getElementById('scoreText');
+      
+      resultsPanel.classList.add('show');
+      
+      // Animate score counter
+      let currentScore = 0;
+      const increment = score / 20;
+      const timer = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= score) {
+          currentScore = score;
+          clearInterval(timer);
+        }
+        scoreValue.textContent = `${Math.round(currentScore)}%`;
+      }, 50);
+      
+      // Set score text
+      if (score >= 95) {
+        scoreText.textContent = "Excellent! Master-level HIPAA compliance knowledge";
+      } else if (score >= 85) {
+        scoreText.textContent = "Very good! Strong understanding of legal requirements";
+      } else if (score >= 75) {
+        scoreText.textContent = "Good job! Solid grasp of release procedures";
+      } else if (score >= 60) {
+        scoreText.textContent = "Keep practicing! Review HIPAA authorization requirements";
+      } else {
+        scoreText.textContent = "Needs improvement! Study Chapter 2 legal content carefully";
+      }
+      
+      // Scroll to results
+      resultsPanel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Reset Module
+    function resetModule() {
+      // Reset scenario states
+      scenarioStates = {
+        1: { answered: false, correct: false, selected: null },
+        2: { answered: false, correct: false, selected: null },
+        3: { answered: false, correct: false, selected: null }
+      };
+      
+      // Reset form
+      document.querySelectorAll('.field-input, .checkbox-input').forEach(input => {
+        if (input.type === 'checkbox') {
+          input.checked = false;
+        } else {
+          input.value = '';
+        }
+        input.classList.remove('error');
+      });
+      
+      // Reset form completion
+      formCompletion = 0;
+      totalCorrectDecisions = 0;
+      moduleCompleted = false;
+      
+      // Reset scenario selections and feedback
+      document.querySelectorAll('.decision-option').forEach(option => {
+        option.classList.remove('selected', 'correct', 'incorrect');
+      });
+      
+      document.querySelectorAll('.decision-feedback').forEach(feedback => {
+        feedback.style.display = 'none';
+      });
+      
+      // Reset section statuses
+      ['patientInfoSection', 'releaseInfoSection', 'recipientInfoSection', 'signatureSection'].forEach(sectionId => {
+        const statusElement = document.getElementById(`${sectionId}Status`);
+        if (statusElement) {
+          statusElement.textContent = 'Required';
+          statusElement.style.color = '';
+        }
+        
+        // Close all sections except first
+        const section = document.getElementById(sectionId);
+        if (sectionId === 'patientInfoSection') {
+          section.classList.add('active');
+        } else {
+          section.classList.remove('active');
+        }
+      });
+      
+      // Hide form preview
+      document.getElementById('formPreview').classList.remove('show');
+      
+      // Reset progress tracker
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        step.classList.remove('completed', 'active');
+        if (index === 0) {
+          step.classList.add('active');
+        }
+      });
+      
+      // Hide results panel
+      document.getElementById('resultsPanel').classList.remove('show');
+      
+      // Reset UI
+      updateUI();
+      
+      // Reset button
+      document.getElementById('checkBtn').disabled = true;
+    }
+  </script>
+</body>
+</html>
