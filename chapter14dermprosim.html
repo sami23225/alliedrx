@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AlliedRx — Module 2: Dermatologic Procedures Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-info: #0984e3;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Progress Summary */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .summary-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid rgba(12, 10, 24, 0.06);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--color-primary-soft);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Activity Grid */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+
+        .activity-card.completed {
+            border-color: var(--color-success);
+        }
+
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-icon {
+            font-size: 1.5rem;
+        }
+
+        .activity-description {
+            font-size: 0.95rem;
+            color: var(--color-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* === ACTIVITY 1: Punch Biopsy Procedure Sequence === */
+        .sequence-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sequence-container {
+                flex-direction: column;
+            }
+        }
+
+        .steps-column,
+        .order-column {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .column-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .step-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            user-select: none;
+        }
+
+        .step-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .step-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .step-item.placed {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            opacity: 0.8;
+            cursor: default;
+        }
+
+        .order-list {
+            min-height: 300px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .order-list.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .order-item {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .order-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* === ACTIVITY 2: Suture Technique Selection === */
+        .scenario-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .scenario-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .scenario-description {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .wound-image {
+            width: 100%;
+            max-width: 300px;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .suture-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .suture-option {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .suture-option:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .suture-option.selected {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .suture-option.wrong {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+            animation: shake 0.5s ease;
+        }
+
+        .suture-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .suture-description {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .suture-details {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+        }
+
+        /* === ACTIVITY 3: Wound Dressing Application === */
+        .wound-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .wound-container {
+                flex-direction: column;
+            }
+        }
+
+        .wound-diagram {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            position: relative;
+            height: 350px;
+        }
+
+        .wound-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #ffebee 0%, #ffcdd2 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dressing-layer {
+            position: absolute;
+            border: 2px dashed rgba(12, 10, 24, 0.3);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .dressing-layer.filled {
+            border: 2px solid var(--color-success);
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .dressing-layer.wrong {
+            border: 2px solid var(--color-error);
+            background: rgba(225, 112, 85, 0.1);
+        }
+
+        .non-adherent { top: 10%; left: 10%; width: 80%; height: 30%; }
+        .absorbent { top: 35%; left: 15%; width: 70%; height: 25%; }
+        .gauze { top: 60%; left: 5%; width: 90%; height: 25%; }
+        .tape { top: 85%; left: 20%; width: 60%; height: 10%; }
+
+        .dressing-bank {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .dressing-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+            user-select: none;
+        }
+
+        .dressing-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .dressing-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .dressing-item.placed {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* === ACTIVITY 4: Instrument Identification & Use === */
+        .instrument-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .instrument-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            cursor: grab;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .instrument-card:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-3px);
+        }
+
+        .instrument-card.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .instrument-icon {
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .instrument-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 5px;
+        }
+
+        .instrument-use {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+        }
+
+        .procedure-dropzones {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .procedure-dropzones {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .procedure-dropzones {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .procedure-zone {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            min-height: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .procedure-zone.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .procedure-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .procedure-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Feedback */
+        .feedback-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            margin-top: 25px;
+            display: none;
+        }
+
+        .feedback-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feedback-icon {
+            font-size: 1.3rem;
+        }
+
+        .feedback-icon.correct {
+            color: var(--color-success);
+        }
+
+        .feedback-icon.incorrect {
+            color: var(--color-error);
+        }
+
+        .feedback-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .feedback-content strong {
+            color: var(--color-primary);
+        }
+
+        .clinical-tip {
+            background: rgba(253, 203, 110, 0.1);
+            border-left: 4px solid var(--color-warning);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .clinical-tip-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-warning);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clinical-tip-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: var(--color-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .results-panel.show {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .clinical-insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .insights-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary-soft);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 999px;
+            background: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        /* Safety Warning */
+        .safety-warning {
+            background: rgba(225, 112, 85, 0.1);
+            border: 2px solid var(--color-error);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            color: var(--color-error);
+            flex-shrink: 0;
+        }
+
+        .warning-content {
+            flex: 1;
+        }
+
+        .warning-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 5px;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Week 3</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Chapter 14: Assisting in Dermatology</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus &amp; Online</span>
+        </header>
+
+        <h1 id="module-heading">Dermatologic Procedures Simulator</h1>
+        <p class="module-subtitle">
+            Master essential dermatologic procedures through interactive simulation of biopsy techniques,
+            suture selection, wound dressing, and instrument use.
+        </p>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Biopsy Sequence</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Suture Selection</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Wound Dressing</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Instrument ID</div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <span class="summary-number" id="completed-count">0</span>
+                <span class="summary-label">Activities Completed</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="accuracy-rate">0%</span>
+                <span class="summary-label">Current Accuracy</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="time-spent">0:00</span>
+                <span class="summary-label">Time Spent</span>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Activity 1: Punch Biopsy Procedure Sequence -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🔪</span>
+                    Punch Biopsy Procedure Sequence
+                </h3>
+                <p class="activity-description">
+                    Arrange the steps of a punch biopsy in the correct clinical order. Proper sequencing ensures
+                    patient safety, specimen integrity, and optimal healing.
+                </p>
+
+                <div class="sequence-container">
+                    <!-- Steps Column -->
+                    <div class="steps-column">
+                        <div class="column-title">Procedure Steps</div>
+                        <div class="step-list">
+                            <div class="step-item" data-step="1" draggable="true">Obtain informed consent</div>
+                            <div class="step-item" data-step="2" draggable="true">Cleanse and anesthetize site</div>
+                            <div class="step-item" data-step="3" draggable="true">Stretch skin perpendicular to tension lines</div>
+                            <div class="step-item" data-step="4" draggable="true">Rotate punch biopsy tool</div>
+                            <div class="step-item" data-step="5" draggable="true">Remove tissue specimen</div>
+                            <div class="step-item" data-step="6" draggable="true">Apply pressure or suture</div>
+                            <div class="step-item" data-step="7" draggable="true">Apply dressing</div>
+                            <div class="step-item" data-step="8" draggable="true">Label specimen container</div>
+                        </div>
+                    </div>
+
+                    <!-- Order Column -->
+                    <div class="order-column">
+                        <div class="column-title">Correct Sequence Order</div>
+                        <div class="order-list" id="biopsy-sequence"></div>
+                    </div>
+                </div>
+
+                <!-- Clinical Tip -->
+                <div class="clinical-tip">
+                    <div class="clinical-tip-title">
+                        <span>💡</span>
+                        Key Procedure Points
+                    </div>
+                    <div class="clinical-tip-content">
+                        <strong>Consent:</strong> Always document informed consent including risks (bleeding, infection, scarring).<br>
+                        <strong>Anesthesia:</strong> Use 1-2% lidocaine with epinephrine (avoid fingers/toes/ears/nose).<br>
+                        <strong>Specimen handling:</strong> Place in formalin immediately; never crush with forceps.<br>
+                        <strong>Closure:</strong> 4mm+ punches usually require suture; smaller may heal by secondary intention.
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-1">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Biopsy Sequence Mastered!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Correct Sequence:</strong><br>
+                        1. <strong>Obtain informed consent</strong> – Document risks, benefits, alternatives<br>
+                        2. <strong>Cleanse and anesthetize</strong> – Chlorhexidine or betadine; wait 3-5 minutes after lidocaine<br>
+                        3. <strong>Stretch skin</strong> – Perpendicular to tension lines to create elliptical defect for easier closure<br>
+                        4. <strong>Rotate punch tool</strong> – Apply firm pressure, rotate clockwise/counterclockwise until through dermis<br>
+                        5. <strong>Remove specimen</strong> – Use skin hook or needle to lift, cut base with iris scissors<br>
+                        6. <strong>Apply pressure/suture</strong> – Hemostasis first; simple interrupted sutures for closure<br>
+                        7. <strong>Apply dressing</strong> – Non-adherent dressing (Adaptic, petrolatum gauze)<br>
+                        8. <strong>Label specimen</strong> – Patient name, DOB, date, site, clinician name<br><br>
+                        <strong>Common Errors:</strong> Forgetting consent, inadequate anesthesia time, crushing specimen,
+                        incorrect suture removal timing (face 5-7 days, trunk 7-14 days).
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 2: Suture Technique Selection -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🪡</span>
+                    Suture Technique Selection
+                </h3>
+                <p class="activity-description">
+                    Select the appropriate suture material and technique for each wound scenario. Consider
+                    location, tension, contamination risk, and cosmetic outcome.
+                </p>
+
+                <!-- Scenario 1 -->
+                <div class="scenario-container">
+                    <div class="scenario-title">Scenario 1: Facial Laceration</div>
+                    <div class="scenario-description">
+                        <strong>Patient:</strong> 28-year-old female with 3cm linear laceration on cheek from glass.<br>
+                        <strong>Examination:</strong> Clean wound edges, minimal tension, good perfusion.<br>
+                        <strong>Goal:</strong> Optimal cosmetic outcome, minimal scarring.
+                    </div>
+                    <div class="wound-image">👩‍⚕️</div>
+                    
+                    <div class="suture-options">
+                        <div class="suture-option" data-option="1">
+                            <div class="suture-name">Non‑absorbable Monofilament</div>
+                            <div class="suture-description">Nylon or polypropylene; low tissue reaction</div>
+                            <div class="suture-details">Size: 5‑0 or 6‑0 | Removal: 5‑7 days | Technique: Simple interrupted</div>
+                        </div>
+                        <div class="suture-option" data-option="2">
+                            <div class="suture-name">Absorbable Monofilament</div>
+                            <div class="suture-description">Poliglecaprone; buried subcutaneous layer</div>
+                            <div class="suture-details">Size: 4‑0 | Absorption: 90 days | Technique: Subcuticular</div>
+                        </div>
+                        <div class="suture-option" data-option="3">
+                            <div class="suture-name">Absorbable Braided</div>
+                            <div class="suture-description">Vicryl; for deep tissue closure</div>
+                            <div class="suture-details">Size: 3‑0 | Absorption: 60 days | Technique: Deep dermal</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Warning -->
+                <div class="safety-warning">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-content">
+                        <div class="warning-title">Suture Selection Critical Points</div>
+                        <div class="warning-text">
+                            • <strong>Face:</strong> Use smallest gauge possible (6‑0) for cosmetic areas<br>
+                            • <strong>High‑tension areas:</strong> Use larger gauge (3‑0, 4‑0) and consider layered closure<br>
+                            • <strong>Contaminated wounds:</strong> Avoid braided sutures (harbor bacteria)<br>
+                            • <strong>Children/anxious patients:</strong> Consider absorbable to avoid removal trauma
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-2">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Suture Selection Correct!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Optimal Choice for Scenario 1:</strong> <strong>Non‑absorbable Monofilament (5‑0 or 6‑0 Nylon)</strong><br><br>
+                        <strong>Rationale:</strong><br>
+                        • Facial wounds require fine cosmetic closure – 6‑0 nylon minimizes scarring<br>
+                        • Monofilament causes less tissue reaction than braided sutures<br>
+                        • Non‑absorbable allows precise control of removal timing (5‑7 days for face)<br>
+                        • Simple interrupted technique provides precise edge approximation<br><br>
+                        <strong>Alternative Considerations:</strong><br>
+                        • Subcuticular running suture with absorbable monofilament (Monocryl) for wounds under tension<br>
+                        • Tissue adhesive (Dermabond) for small, low‑tension facial lacerations<br>
+                        • Staples contraindicated on face due to poor cosmetic outcome<br><br>
+                        <strong>Documentation:</strong> "3cm linear laceration R cheek closed with 6‑0 nylon simple interrupted sutures.
+                        Wound cleansed, approximated without tension. Patient instructed on wound care and suture removal in 5‑7 days."
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 3: Wound Dressing Application -->
+            <section class="activity-card" id="activity-3" data-activity="3">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 3</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🩹</span>
+                    Wound Dressing Application
+                </h3>
+                <p class="activity-description">
+                    Apply wound dressing layers in the correct order from wound bed outward. Proper layering
+                    promotes healing, prevents infection, and manages exudate.
+                </p>
+
+                <div class="wound-container">
+                    <!-- Wound Diagram -->
+                    <div class="wound-diagram">
+                        <div class="wound-area">
+                            <div class="dressing-layer non-adherent" data-layer="non-adherent"></div>
+                            <div class="dressing-layer absorbent" data-layer="absorbent"></div>
+                            <div class="dressing-layer gauze" data-layer="gauze"></div>
+                            <div class="dressing-layer tape" data-layer="tape"></div>
+                        </div>
+                    </div>
+
+                    <!-- Dressing Bank -->
+                    <div class="dressing-bank">
+                        <div class="column-title">Dressing Layers</div>
+                        <div class="dressing-item" data-layer="non-adherent" draggable="true">Non‑adherent Dressing</div>
+                        <div class="dressing-item" data-layer="absorbent" draggable="true">Absorbent Pad</div>
+                        <div class="dressing-item" data-layer="gauze" draggable="true">Rolled Gauze</div>
+                        <div class="dressing-item" data-layer="tape" draggable="true">Tape/Bandage</div>
+                    </div>
+                </div>
+
+                <!-- Clinical Tip -->
+                <div class="clinical-tip">
+                    <div class="clinical-tip-title">
+                        <span>💡</span>
+                        Dressing Selection Guide
+                    </div>
+                    <div class="clinical-tip-content">
+                        <strong>Non‑adherent layer:</strong> Adaptic, petrolatum gauze, silicone – prevents sticking to wound bed<br>
+                        <strong>Absorbent layer:</strong> Combine, ABD pad – manages exudate, cushions wound<br>
+                        <strong>Securing layer:</strong> Roll gauze, cohesive bandage – provides compression, keeps clean<br>
+                        <strong>Anchoring:</strong> Paper tape (sensitive skin), silicone tape (fragile skin), avoid circumferential wrapping<br>
+                        <strong>Change frequency:</strong> Daily for contaminated wounds, 2‑3 days for clean wounds
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-3">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Dressing Application Correct!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Correct Dressing Order (Wound Bed → Outward):</strong><br>
+                        1. <strong>Non‑adherent dressing</strong> – Directly on wound bed; prevents adherence, minimizes trauma during changes<br>
+                        2. <strong>Absorbent pad</div> – Manages exudate; change when strike‑through occurs (exudate reaches edge)<br>
+                        3. <strong>Rolled gauze</strong> – Provides light compression, secures inner layers<br>
+                        4. <strong>Tape/bandage</strong> – Anchors dressing; avoid circumferential wrapping on extremities<br><br>
+                        
+                        <strong>Wound‑Specific Considerations:</strong><br>
+                        • <strong>Dry wounds:</strong> Hydrogel or hydrocolloid to maintain moisture<br>
+                        • <strong>Heavily exudating:</strong> Alginate or foam dressings<br>
+                        • <strong>Infected wounds:</strong> Antimicrobial dressings (silver, iodine)<br>
+                        • <strong>Diabetic ulcers:</strong> Off‑loading + advanced dressings (collagen, growth factors)<br><br>
+                        
+                        <strong>Patient Education Points:</strong><br>
+                        • "Keep dressing clean and dry"<br>
+                        • "Change dressing if soiled or exudate leaks through"<br>
+                        • "Report increased pain, redness, swelling, or foul odor"<br>
+                        • "Elevate extremity if possible to reduce swelling"
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 4: Instrument Identification & Use -->
+            <section class="activity-card" id="activity-4" data-activity="4">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 4</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🛠️</span>
+                    Instrument Identification & Use
+                </h3>
+                <p class="activity-description">
+                    Match dermatology instruments to their appropriate procedures. Correct instrument selection
+                    ensures procedural efficiency, patient safety, and optimal outcomes.
+                </p>
+
+                <!-- Instrument Cards -->
+                <div class="instrument-container">
+                    <div class="instrument-card" data-instrument="punch" draggable="true">
+                        <div class="instrument-icon">⭕</div>
+                        <div class="instrument-name">Punch Biopsy Tool</div>
+                        <div class="instrument-use">Cylindrical blade for full‑thickness skin samples</div>
+                    </div>
+                    <div class="instrument-card" data-instrument="curette" draggable="true">
+                        <div class="instrument-icon">🥄</div>
+                        <div class="instrument-name">Dermal Curette</div>
+                        <div class="instrument-use">Scoop for removing benign lesions, debris</div>
+                    </div>
+                    <div class="instrument-card" data-instrument="scissors" draggable="true">
+                        <div class="instrument-icon">✂️</div>
+                        <div class="instrument-name">Iris Scissors</div>
+                        <div class="instrument-use">Fine dissection, suture cutting</div>
+                    </div>
+                    <div class="instrument-card" data-instrument="forceps" draggable="true">
+                        <div class="instrument-icon">🤏</div>
+                        <div class="instrument-name">Tissue Forceps</div>
+                        <div class="instrument-use">Grasping tissue without crushing</div>
+                    </div>
+                    <div class="instrument-card" data-instrument="hook" draggable="true">
+                        <div class="instrument-icon">🎣</div>
+                        <div class="instrument-name">Skin Hook</div>
+                        <div class="instrument-use">Retracting skin edges without trauma</div>
+                    </div>
+                    <div class="instrument-card" data-instrument="electrosurgical" draggable="true">
+                        <div class="instrument-icon">⚡</div>
+                        <div class="instrument-name">Electrosurgical Unit</div>
+                        <div class="instrument-use">Cutting, coagulation, lesion destruction</div>
+                    </div>
+                </div>
+
+                <!-- Procedure Dropzones -->
+                <div class="procedure-dropzones">
+                    <div class="procedure-zone" data-procedure="biopsy">
+                        <div class="procedure-title">Punch Biopsy</div>
+                        <div class="procedure-content"></div>
+                    </div>
+                    <div class="procedure-zone" data-procedure="curettage">
+                        <div class="procedure-title">Curettage & Electrodesiccation</div>
+                        <div class="procedure-content"></div>
+                    </div>
+                    <div class="procedure-zone" data-procedure="suture">
+                        <div class="procedure-title">Suture Placement</div>
+                        <div class="procedure-content"></div>
+                    </div>
+                </div>
+
+                <!-- Clinical Tip -->
+                <div class="clinical-tip">
+                    <div class="clinical-tip-title">
+                        <span>💡</span>
+                        Instrument Handling Tips
+                    </div>
+                    <div class="clinical-tip-content">
+                        <strong>Sterility:</strong> All instruments contacting sterile tissue must be sterile.<br>
+                        <strong>Punch sizes:</strong> 2mm (small lesions), 4mm (standard), 6mm+ (larger samples).<br>
+                        <strong>Forceps types:</strong> Toothed (Adson) for skin, smooth (Dressing) for delicate tissue.<br>
+                        <strong>Scissors:</strong> Curved for dissection, straight for suture cutting.<br>
+                        <strong>Electrosurgical settings:</strong> Cut (continuous), Coagulate (pulsed), Blend (mixed).
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-4">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Instrument Matching Correct!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Procedure‑Instrument Matching:</strong><br><br>
+                        <strong>Punch Biopsy:</strong><br>
+                        • <strong>Punch biopsy tool</strong> (3‑8mm) – Creates cylindrical specimen<br>
+                        • <strong>Skin hook</strong> – Lifts specimen without crushing<br>
+                        • <strong>Iris scissors</strong> – Cuts specimen base<br>
+                        • <strong>Tissue forceps</strong> – Handles specimen for pathology<br><br>
+                        
+                        <strong>Curettage & Electrodesiccation:</strong><br>
+                        • <strong>Dermal curette</strong> (small, medium, large) – Scoops out lesion<br>
+                        • <strong>Electrosurgical unit</strong> – Electrodesiccates base for hemostasis<br>
+                        • <strong>Tissue forceps</strong> – Removes specimen<br><br>
+                        
+                        <strong>Suture Placement:</strong><br>
+                        • <strong>Needle driver</strong> – Holds curved needle<br>
+                        • <strong>Tissue forceps</strong> – Stabilizes tissue edges<br>
+                        • <strong>Iris scissors</strong> – Cuts suture<br>
+                        • <strong>Skin hook</strong> – Optional for retraction<br><br>
+                        
+                        <strong>Maintenance & Safety:</strong><br>
+                        • Clean instruments immediately after use<br>
+                        • Sharpen punch tools regularly<br>
+                        • Check electrosurgical unit grounding pad placement<br>
+                        • Dispose of single‑use items (blades, needles) in sharps container
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-secondary" id="check-answers-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+            <button class="btn btn-primary" id="view-results-btn">
+                <span class="btn-icon">📊</span>
+                View Final Results
+            </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+            <div class="results-header">
+                <h2 class="results-title">Dermatologic Procedures Results</h2>
+                <div class="score-display" id="final-score">0%</div>
+            </div>
+            <div class="clinical-insights">
+                <h3 class="insights-title">
+                    <span>🩺</span> Procedural Proficiency Insights
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Biopsy Sequencing:</strong> Consent and anesthesia verification are critical first steps. Documenting specimen handling (no crushing, immediate formalin) is legally required.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Suture Selection:</strong> Face = finest gauge (6‑0), trunk = 4‑0, scalp = 3‑0. Monofilament for contaminated wounds, absorbable for children/anxious patients.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Wound Dressing Principles:</strong> "Moist wound healing" is standard. Non‑adherent layer prevents trauma during changes. Change frequency depends on exudate, not calendar days.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Instrument Mastery:</strong> Skin hooks minimize tissue trauma vs. forceps. Electrosurgical units require proper grounding pad placement to prevent burns.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Documentation:</strong> Always document: procedure name, instruments used, anesthesia type/amount, specimen handling, closure method, dressing type, patient instructions.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>📋</span> Patient Education & Follow‑up
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Post‑Procedure Instructions:</strong> "Keep dry 24‑48 hours. Clean with mild soap/water. Apply antibiotic ointment. Watch for redness, swelling, pus, fever."</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Suture Removal Timing:</strong> Face 5‑7d, Scalp 7‑10d, Trunk 7‑14d, Extremities 10‑14d. Longer if diabetic, on steroids, or poor healing.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Pathology Follow‑up:</strong> Establish system to track biopsy results. Patient must be notified of ALL results (normal and abnormal). Document notification attempt.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Complication Recognition:</strong> Infection (increased pain, erythema, purulence), Hematoma (swelling, bruising), Dehiscence (wound opening), Hypertrophic scarring.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>🚨</span> Safety & Risk Management
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Anesthesia Maximums:</strong> Lidocaine with epinephrine 7mg/kg (500mg max). Without epinephrine 4.5mg/kg (300mg max). Calculate before injecting.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Bleeding Risk:</strong> Check medications (anticoagulants, antiplatelets). Consider holding warfarin for procedures if INR >3.5. Have hemostatic agents ready (Gelfoam, Surgicel).</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Allergy Precautions:</strong> Always ask about latex, adhesive, antibiotic, and local anesthetic allergies. Use alternatives as needed.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Specimen Errors:</strong> Wrong site labeling is a "never event." Use site‑specific labels (diagram, photograph) and two‑person verification when possible.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 8, score: 0 }, // 8 biopsy steps
+                    2: { completed: false, correct: 0, total: 1, score: 0 }, // 1 suture scenario
+                    3: { completed: false, correct: 0, total: 4, score: 0 }, // 4 dressing layers
+                    4: { completed: false, correct: 0, total: 6, score: 0 }  // 6 instrument matches
+                },
+                startedAt: new Date(),
+                timeSpent: 0
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const completedCount = document.getElementById('completed-count');
+            const accuracyRate = document.getElementById('accuracy-rate');
+            const timeSpent = document.getElementById('time-spent');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkBtn = document.getElementById('check-answers-btn');
+            const resultsBtn = document.getElementById('view-results-btn');
+            const resultsPanel = document.getElementById('results-panel');
+            const finalScore = document.getElementById('final-score');
+
+            // Timer for time spent
+            function updateTimer() {
+                const now = new Date();
+                const diff = Math.floor((now - state.startedAt) / 1000);
+                state.timeSpent = diff;
+                const minutes = Math.floor(diff / 60);
+                const seconds = diff % 60;
+                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+
+            // Update Progress Summary
+            function updateProgressSummary() {
+                let completed = 0;
+                let totalCorrect = 0;
+                let totalItems = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                    totalCorrect += activity.correct;
+                    totalItems += activity.total;
+                });
+
+                completedCount.textContent = completed;
+                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+                accuracyRate.textContent = `${accuracy}%`;
+
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+
+            // === ACTIVITY 1: Punch Biopsy Procedure Sequence ===
+            function initActivity1() {
+                const stepItems = document.querySelectorAll('#activity-1 .step-item');
+                const orderList = document.getElementById('biopsy-sequence');
+                const feedback = document.getElementById('feedback-1');
+                const status = document.querySelector('#activity-1 .activity-status');
+
+                // Correct order of steps
+                const correctOrder = [1, 2, 3, 4, 5, 6, 7, 8];
+                let placedSteps = [];
+                let correctCount = 0;
+
+                // Setup drag for step items
+                stepItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            step: this.dataset.step,
+                            text: this.textContent
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop for order list
+                orderList.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('hover');
+                });
+
+                orderList.addEventListener('dragleave', function() {
+                    this.classList.remove('hover');
+                });
+
+                orderList.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('hover');
+
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    const stepNum = parseInt(data.step);
+
+                    // Check if step already placed
+                    if (placedSteps.includes(stepNum)) return;
+
+                    // Add to placed steps
+                    placedSteps.push(stepNum);
+
+                    // Create order item
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'order-item';
+                    orderItem.innerHTML = `
+                        <div class="order-number">${placedSteps.length}</div>
+                        <div class="order-text">${data.text}</div>
+                    `;
+                    orderList.appendChild(orderItem);
+
+                    // Mark original item as placed
+                    const originalItem = document.querySelector(`#activity-1 .step-item[data-step="${stepNum}"]`);
+                    if (originalItem) {
+                        originalItem.classList.add('placed');
+                        originalItem.style.cursor = 'default';
+                    }
+
+                    // Check if all steps placed
+                    if (placedSteps.length === 8) {
+                        // Check correctness
+                        correctCount = 0;
+                        for (let i = 0; i < 8; i++) {
+                            if (placedSteps[i] === correctOrder[i]) correctCount++;
+                        }
+
+                        state.activities[1].completed = true;
+                        state.activities[1].correct = correctCount;
+                        state.activities[1].score = Math.round((correctCount / 8) * 100);
+                        status.textContent = 'Completed';
+                        status.style.color = '#00b894';
+                        document.querySelector('#activity-1').classList.add('completed');
+                        feedback.classList.add('show');
+                        updateProgressSummary();
+                    }
+                });
+            }
+
+            // === ACTIVITY 2: Suture Technique Selection ===
+            function initActivity2() {
+                const sutureOptions = document.querySelectorAll('#activity-2 .suture-option');
+                const feedback = document.getElementById('feedback-2');
+                const status = document.querySelector('#activity-2 .activity-status');
+
+                // Correct option for Scenario 1
+                const correctOption = '1'; // Non‑absorbable Monofilament
+
+                sutureOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        if (state.activities[2].completed) return;
+
+                        const selectedOption = this.dataset.option;
+
+                        // Remove selection from other options
+                        sutureOptions.forEach(opt => {
+                            opt.classList.remove('selected', 'wrong');
+                        });
+
+                        // Mark selected option
+                        this.classList.add('selected');
+
+                        // Check if correct
+                        if (selectedOption === correctOption) {
+                            state.activities[2].completed = true;
+                            state.activities[2].correct = 1;
+                            state.activities[2].score = 100;
+                            status.textContent = 'Completed';
+                            status.style.color = '#00b894';
+                            document.querySelector('#activity-2').classList.add('completed');
+                            feedback.classList.add('show');
+                            updateProgressSummary();
+                        } else {
+                            this.classList.add('wrong');
+                        }
+                    });
+                });
+            }
+
+            // === ACTIVITY 3: Wound Dressing Application ===
+            function initActivity3() {
+                const dressingItems = document.querySelectorAll('#activity-3 .dressing-item');
+                const dressingLayers = document.querySelectorAll('#activity-3 .dressing-layer');
+                const feedback = document.getElementById('feedback-3');
+                const status = document.querySelector('#activity-3 .activity-status');
+
+                // Correct layer placements
+                const correctPlacements = {
+                    'non-adherent': 'non-adherent',
+                    'absorbent': 'absorbent',
+                    'gauze': 'gauze',
+                    'tape': 'tape'
+                };
+
+                let placedLayers = 0;
+                let correctPlacementsCount = 0;
+
+                // Setup drag for dressing items
+                dressingItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            layer: this.dataset.layer,
+                            text: this.textContent
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop for dressing layers
+                dressingLayers.forEach(layer => {
+                    layer.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('hover');
+                    });
+
+                    layer.addEventListener('dragleave', function() {
+                        this.classList.remove('hover');
+                    });
+
+                    layer.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('hover');
+
+                        // Check if layer already filled
+                        if (this.classList.contains('filled')) return;
+
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const targetLayer = this.dataset.layer;
+
+                        // Check if placement is correct
+                        const isCorrect = correctPlacements[data.layer] === targetLayer;
+
+                        // Fill layer
+                        this.textContent = data.text;
+                        if (isCorrect) {
+                            this.classList.add('filled');
+                            correctPlacementsCount++;
+                        } else {
+                            this.classList.add('wrong');
+                        }
+
+                        // Mark original item as placed
+                        const originalItem = document.querySelector(`#activity-3 .dressing-item[data-layer="${data.layer}"]`);
+                        if (originalItem) {
+                            originalItem.classList.add('placed');
+                            originalItem.style.opacity = '0.5';
+                            originalItem.style.cursor = 'default';
+                        }
+
+                        placedLayers++;
+
+                        // Check completion
+                        if (placedLayers === 4) {
+                            state.activities[3].completed = true;
+                            state.activities[3].correct = correctPlacementsCount;
+                            state.activities[3].score = Math.round((correctPlacementsCount / 4) * 100);
+                            status.textContent = 'Completed';
+                            status.style.color = '#00b894';
+                            document.querySelector('#activity-3').classList.add('completed');
+                            feedback.classList.add('show');
+                            updateProgressSummary();
+                        }
+                    });
+                });
+            }
+
+            // === ACTIVITY 4: Instrument Identification & Use ===
+            function initActivity4() {
+                const instrumentCards = document.querySelectorAll('#activity-4 .instrument-card');
+                const procedureZones = document.querySelectorAll('#activity-4 .procedure-zone');
+                const feedback = document.getElementById('feedback-4');
+                const status = document.querySelector('#activity-4 .activity-status');
+
+                // Correct instrument-procedure matches
+                const correctMatches = {
+                    'punch': 'biopsy',
+                    'hook': 'biopsy',
+                    'scissors': 'biopsy',
+                    'curette': 'curettage',
+                    'electrosurgical': 'curettage',
+                    'forceps': 'suture'
+                };
+
+                let placedInstruments = 0;
+                let correctMatchesCount = 0;
+
+                // Setup drag for instrument cards
+                instrumentCards.forEach(card => {
+                    card.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            instrument: this.dataset.instrument,
+                            html: this.outerHTML
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    card.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop for procedure zones
+                procedureZones.forEach(zone => {
+                    zone.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('hover');
+                    });
+
+                    zone.addEventListener('dragleave', function() {
+                        this.classList.remove('hover');
+                    });
+
+                    zone.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('hover');
+
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const targetProcedure = this.dataset.procedure;
+
+                        // Check if instrument already placed somewhere
+                        const originalCard = document.querySelector(`#activity-4 .instrument-card[data-instrument="${data.instrument}"]`);
+                        if (originalCard && originalCard.style.display === 'none') return;
+
+                        // Check if correct match
+                        const isCorrect = correctMatches[data.instrument] === targetProcedure;
+
+                        // Add instrument to zone
+                        const instrumentDiv = document.createElement('div');
+                        instrumentDiv.innerHTML = data.html;
+                        instrumentDiv.querySelector('.instrument-card').classList.remove('dragging');
+                        instrumentDiv.querySelector('.instrument-card').style.cursor = 'default';
+                        instrumentDiv.querySelector('.instrument-card').style.opacity = '0.7';
+                        this.querySelector('.procedure-content').appendChild(instrumentDiv);
+
+                        // Hide original card
+                        if (originalCard) {
+                            originalCard.style.display = 'none';
+                            placedInstruments++;
+                            if (isCorrect) correctMatchesCount++;
+                        }
+
+                        // Check completion
+                        if (placedInstruments === 6) {
+                            state.activities[4].completed = true;
+                            state.activities[4].correct = correctMatchesCount;
+                            state.activities[4].score = Math.round((correctMatchesCount / 6) * 100);
+                            status.textContent = 'Completed';
+                            status.style.color = '#00b894';
+                            document.querySelector('#activity-4').classList.add('completed');
+                            feedback.classList.add('show');
+                            updateProgressSummary();
+                        }
+                    });
+                });
+            }
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                Object.keys(state.activities).forEach(key => {
+                    state.activities[key] = {
+                        completed: false,
+                        correct: 0,
+                        total: parseInt(key) === 1 ? 8 : parseInt(key) === 2 ? 1 : parseInt(key) === 3 ? 4 : 6,
+                        score: 0
+                    };
+                });
+
+                // Reset UI
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                    const feedback = card.querySelector('.feedback-container');
+                    feedback.classList.remove('show');
+                });
+
+                // Reset Activity 1
+                const orderList = document.getElementById('biopsy-sequence');
+                orderList.innerHTML = '';
+                orderList.classList.remove('hover');
+                document.querySelectorAll('#activity-1 .step-item').forEach(item => {
+                    item.classList.remove('placed', 'dragging');
+                    item.style.cursor = 'grab';
+                });
+
+                // Reset Activity 2
+                document.querySelectorAll('#activity-2 .suture-option').forEach(option => {
+                    option.classList.remove('selected', 'wrong');
+                });
+
+                // Reset Activity 3
+                document.querySelectorAll('#activity-3 .dressing-layer').forEach(layer => {
+                    layer.classList.remove('filled', 'wrong', 'hover');
+                    layer.textContent = '';
+                });
+                document.querySelectorAll('#activity-3 .dressing-item').forEach(item => {
+                    item.classList.remove('placed', 'dragging');
+                    item.style.opacity = '1';
+                    item.style.cursor = 'grab';
+                    item.style.display = 'block';
+                });
+
+                // Reset Activity 4
+                document.querySelectorAll('#activity-4 .procedure-content').forEach(content => {
+                    content.innerHTML = '';
+                });
+                document.querySelectorAll('#activity-4 .instrument-card').forEach(card => {
+                    card.style.display = '';
+                    card.classList.remove('dragging');
+                });
+
+                // Reset results
+                resultsPanel.classList.remove('show');
+
+                // Update progress
+                updateProgressSummary();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 with perfect score
+                if (!state.activities[1].completed) {
+                    const feedback = document.getElementById('feedback-1');
+                    const status = document.querySelector('#activity-1 .activity-status');
+                    const orderList = document.getElementById('biopsy-sequence');
+                    
+                    // Correct order
+                    const correctOrder = [
+                        'Obtain informed consent',
+                        'Cleanse and anesthetize site',
+                        'Stretch skin perpendicular to tension lines',
+                        'Rotate punch biopsy tool',
+                        'Remove tissue specimen',
+                        'Apply pressure or suture',
+                        'Apply dressing',
+                        'Label specimen container'
+                    ];
+
+                    // Clear and add in correct order
+                    orderList.innerHTML = '';
+                    correctOrder.forEach((text, index) => {
+                        const orderItem = document.createElement('div');
+                        orderItem.className = 'order-item';
+                        orderItem.innerHTML = `
+                            <div class="order-number">${index + 1}</div>
+                            <div class="order-text">${text}</div>
+                        `;
+                        orderList.appendChild(orderItem);
+                    });
+
+                    // Mark all steps as placed
+                    document.querySelectorAll('#activity-1 .step-item').forEach(item => {
+                        item.classList.add('placed');
+                        item.style.cursor = 'default';
+                    });
+
+                    state.activities[1].completed = true;
+                    state.activities[1].correct = 8;
+                    state.activities[1].score = 100;
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                    feedback.classList.add('show');
+                }
+
+                // Complete Activity 2 with perfect score
+                if (!state.activities[2].completed) {
+                    const feedback = document.getElementById('feedback-2');
+                    const status = document.querySelector('#activity-2 .activity-status');
+
+                    // Select correct option
+                    document.querySelector('#activity-2 .suture-option[data-option="1"]').classList.add('selected');
+
+                    state.activities[2].completed = true;
+                    state.activities[2].correct = 1;
+                    state.activities[2].score = 100;
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    feedback.classList.add('show');
+                }
+
+                // Complete Activity 3 with perfect score
+                if (!state.activities[3].completed) {
+                    const feedback = document.getElementById('feedback-3');
+                    const status = document.querySelector('#activity-3 .activity-status');
+
+                    // Fill all layers correctly
+                    const layers = ['non-adherent', 'absorbent', 'gauze', 'tape'];
+                    const texts = ['Non‑adherent Dressing', 'Absorbent Pad', 'Rolled Gauze', 'Tape/Bandage'];
+                    
+                    layers.forEach((layer, index) => {
+                        const layerEl = document.querySelector(`#activity-3 .dressing-layer[data-layer="${layer}"]`);
+                        const itemEl = document.querySelector(`#activity-3 .dressing-item[data-layer="${layer}"]`);
+                        
+                        if (layerEl && itemEl) {
+                            layerEl.textContent = texts[index];
+                            layerEl.classList.add('filled');
+                            itemEl.classList.add('placed');
+                            itemEl.style.opacity = '0.5';
+                            itemEl.style.cursor = 'default';
+                        }
+                    });
+
+                    state.activities[3].completed = true;
+                    state.activities[3].correct = 4;
+                    state.activities[3].score = 100;
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-3').classList.add('completed');
+                    feedback.classList.add('show');
+                }
+
+                // Complete Activity 4 with perfect score
+                if (!state.activities[4].completed) {
+                    const feedback = document.getElementById('feedback-4');
+                    const status = document.querySelector('#activity-4 .activity-status');
+
+                    // Correct matches
+                    const matches = {
+                        'biopsy': ['punch', 'hook', 'scissors'],
+                        'curettage': ['curette', 'electrosurgical'],
+                        'suture': ['forceps']
+                    };
+
+                    // Place instruments in correct zones
+                    Object.keys(matches).forEach(procedure => {
+                        const zone = document.querySelector(`#activity-4 .procedure-zone[data-procedure="${procedure}"]`);
+                        if (zone) {
+                            matches[procedure].forEach(instrument => {
+                                const card = document.querySelector(`#activity-4 .instrument-card[data-instrument="${instrument}"]`);
+                                if (card && card.style.display !== 'none') {
+                                    const cardClone = card.cloneNode(true);
+                                    cardClone.style.opacity = '0.7';
+                                    cardClone.style.cursor = 'default';
+                                    zone.querySelector('.procedure-content').appendChild(cardClone);
+                                    card.style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+
+                    state.activities[4].completed = true;
+                    state.activities[4].correct = 6;
+                    state.activities[4].score = 100;
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-4').classList.add('completed');
+                    feedback.classList.add('show');
+                }
+
+                updateProgressSummary();
+            }
+
+            // View Final Results
+            function viewFinalResults() {
+                let totalScore = 0;
+                let activityCount = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) {
+                        totalScore += activity.score;
+                        activityCount++;
+                    }
+                });
+
+                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+                finalScore.textContent = `${averageScore}%`;
+
+                resultsPanel.classList.add('show');
+                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Initialize all activities
+            initActivity1();
+            initActivity2();
+            initActivity3();
+            initActivity4();
+
+            // Event listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkBtn.addEventListener('click', checkAllAnswers);
+            resultsBtn.addEventListener('click', viewFinalResults);
+
+            // Initial progress update
+            updateProgressSummary();
+        });
+    </script>
+</body>
+</html>
