@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Module 3: Asepsis Technique Clinic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-error: #e17055;
+      --color-warning: #fdcb6e;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --color-dark: #0c0a18;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+      --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes checkmarkPop {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(175, 75, 239, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(175, 75, 239, 0.8); }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+      }
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      width: 100%;
+      animation: fadeIn 0.6s ease-out 0.2s both;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-success);
+      flex-shrink: 0;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .badge-mode:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+
+    .module-subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 600px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .progress-tracker::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 50px;
+      right: 50px;
+      height: 3px;
+      background: rgba(12, 10, 24, 0.08);
+      z-index: 1;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid rgba(12, 10, 24, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-muted);
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.active .step-circle {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .progress-step.completed .step-circle {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .progress-step.active .step-label {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    /* Progress Summary */
+    .progress-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+      animation: fadeInUp 0.6s ease-out 0.5s both;
+    }
+
+    .summary-card {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      border: 1px solid rgba(12, 10, 24, 0.06);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+      border-color: var(--color-primary-soft);
+    }
+
+    .summary-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .summary-label {
+      font-size: 0.8rem;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Activity Grid */
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .activity-card {
+      background: white;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .activity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--color-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--color-primary-soft);
+    }
+
+    .activity-card:hover::before {
+      opacity: 1;
+    }
+
+    .activity-card.completed {
+      border-color: var(--color-success);
+    }
+
+    .activity-card.completed::before {
+      background: var(--color-success);
+      opacity: 1;
+    }
+
+    .activity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .activity-number {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .activity-status {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-muted);
+    }
+
+    .activity-card.completed .activity-status {
+      background: rgba(0, 184, 148, 0.1);
+      color: var(--color-success);
+    }
+
+    .activity-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .activity-description {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Activity 1: Glove Removal Simulation - FIXED */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .step-item {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 2px solid rgba(12, 10, 24, 0.1);
+      cursor: grab;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .step-item:hover {
+      background: rgba(175, 75, 239, 0.08);
+      border-color: var(--color-primary-soft);
+      transform: translateY(-2px);
+    }
+
+    .step-item.dragging {
+      opacity: 0.7;
+      transform: scale(0.98);
+    }
+
+    .step-item.placed {
+      background: rgba(0, 184, 148, 0.1);
+      border-color: var(--color-success);
+      cursor: default;
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(12, 10, 24, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text);
+      flex-shrink: 0;
+    }
+
+    .step-item.placed .step-number {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    .steps-dropzone {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      border: 2px dashed rgba(12, 10, 24, 0.1);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .steps-dropzone.hover {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.05);
+    }
+
+    .steps-dropzone.empty::after {
+      content: 'Drag glove removal steps here in correct order';
+      color: var(--color-muted);
+      text-align: center;
+      font-size: 0.9rem;
+      margin: auto;
+    }
+
+    /* Activity 2: Medical vs Surgical Asepsis */
+    .asepsis-categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .asepsis-categories {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .asepsis-category {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 2px dashed rgba(12, 10, 24, 0.1);
+      min-height: 180px;
+      transition: all 0.3s ease;
+    }
+
+    .asepsis-category.hover {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.05);
+    }
+
+    .asepsis-category.medical {
+      border-color: rgba(0, 184, 148, 0.3);
+    }
+
+    .asepsis-category.surgical {
+      border-color: rgba(131, 128, 240, 0.3);
+    }
+
+    .asepsis-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+      text-align: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+    }
+
+    .asepsis-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .asepsis-item {
+      background: rgba(12, 10, 24, 0.05);
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      cursor: grab;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .asepsis-item:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      transform: translateY(-2px);
+    }
+
+    .asepsis-item.dragging {
+      opacity: 0.7;
+      transform: scale(0.95);
+    }
+
+    /* Activity 3: Hand Hygiene Technique Trainer - ENHANCED */
+    .handhygiene-scenario {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(12, 10, 24, 0.08);
+    }
+
+    .scenario-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+    }
+
+    .scenario-description {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .moments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .moments-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .moment-item {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .moment-item:hover {
+      background: rgba(175, 75, 239, 0.08);
+      border-color: var(--color-primary-soft);
+      transform: translateY(-2px);
+    }
+
+    .moment-item.selected {
+      background: rgba(0, 184, 148, 0.1);
+      border-color: var(--color-success);
+    }
+
+    .moment-item.wrong {
+      background: rgba(225, 112, 85, 0.1);
+      border-color: var(--color-error);
+      animation: shake 0.5s ease;
+    }
+
+    .moment-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 5px;
+    }
+
+    .moment-text {
+      font-size: 0.8rem;
+      color: var(--color-text);
+    }
+
+    /* Enhanced Timer Section */
+    .timer-container {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border: 1px solid rgba(12, 10, 24, 0.08);
+    }
+
+    .timer-display {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+    }
+
+    .timer-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-primary);
+      background: white;
+      color: var(--color-primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .timer-btn:hover {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .timer-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Handwashing Instructions Box */
+    .instructions-box {
+      background: rgba(0, 184, 148, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--color-success);
+    }
+
+    .instructions-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-success);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instructions-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .instructions-list li {
+      font-size: 0.85rem;
+      color: var(--color-text);
+      margin-bottom: 6px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .instructions-list li:before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--color-success);
+      font-weight: bold;
+    }
+
+    /* Activity 4: Instrument Processing Flowchart */
+    .flowchart-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .flow-step {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 2px dashed rgba(12, 10, 24, 0.1);
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .flow-step.hover {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.05);
+    }
+
+    .flow-step.filled {
+      border: 2px solid var(--color-primary-soft);
+      background: rgba(175, 75, 239, 0.08);
+    }
+
+    .flow-step-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background: white;
+      padding: 0 8px;
+    }
+
+    .flow-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .flow-item {
+      background: rgba(12, 10, 24, 0.05);
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 0.85rem;
+      cursor: grab;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .flow-item:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      transform: translateY(-2px);
+    }
+
+    .flow-item.dragging {
+      opacity: 0.7;
+      transform: scale(0.95);
+    }
+
+    /* Activity 5: Emergency Eye Wash Station - FIXED ORDER */
+    .eyewash-container {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .eyewash-container::before {
+      content: '🚨 EMERGENCY 🚨';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--color-error);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    .eyewash-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .eyewash-step {
+      background: rgba(12, 10, 24, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eyewash-step:hover {
+      background: rgba(175, 75, 239, 0.08);
+      border-color: var(--color-primary-soft);
+      transform: translateX(5px);
+    }
+
+    .eyewash-step.selected {
+      background: rgba(0, 184, 148, 0.1);
+      border-color: var(--color-success);
+    }
+
+    .eyewash-step.wrong {
+      background: rgba(225, 112, 85, 0.1);
+      border-color: var(--color-error);
+      animation: shake 0.5s ease;
+    }
+
+    .eyewash-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(12, 10, 24, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-text);
+      flex-shrink: 0;
+    }
+
+    .eyewash-step.selected .eyewash-number {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .eyewash-text {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      flex: 1;
+    }
+
+    /* Feedback */
+    .feedback-container {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      margin-top: 20px;
+      display: none;
+    }
+
+    .feedback-container.show {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .feedback-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-icon {
+      font-size: 1.2rem;
+    }
+
+    .feedback-icon.correct {
+      color: var(--color-success);
+    }
+
+    .feedback-icon.incorrect {
+      color: var(--color-error);
+    }
+
+    .feedback-content {
+      font-size: 0.85rem;
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    .feedback-content strong {
+      color: var(--color-primary);
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #9a3bd6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(12, 10, 24, 0.06);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(12, 10, 24, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      font-size: 1.1em;
+    }
+
+    /* Results Panel */
+    .results-panel {
+      background: var(--color-dark);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 30px;
+      margin-top: 30px;
+      display: none;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .results-panel.show {
+      display: block;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--color-primary-soft);
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .clinical-insights {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .insights-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-primary-soft);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .insights-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .insights-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .insight-dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* Safety Warning */
+    .safety-warning {
+      background: rgba(225, 112, 85, 0.1);
+      border: 2px solid var(--color-error);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-top: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      animation: glow 2s infinite;
+    }
+
+    .warning-icon {
+      font-size: 1.5rem;
+      color: var(--color-error);
+      flex-shrink: 0;
+    }
+
+    .warning-content {
+      flex: 1;
+    }
+
+    .warning-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-error);
+      margin-bottom: 5px;
+    }
+
+    .warning-text {
+      font-size: 0.85rem;
+      color: var(--color-text);
+    }
+
+    /* Timer Animation */
+    .timer-progress {
+      width: 100%;
+      height: 8px;
+      background: rgba(12, 10, 24, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .timer-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1s linear;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="module-heading">
+    <!-- Header -->
+    <header class="brand-row">
+      <div class="brand">
+        <img
+          src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+          alt="AlliedRx logo"
+          class="brand-logo"
+        />
+        <div class="course-meta">
+          <span class="course-name">Clinical Medical Assistant • Week 3</span>
+          <div class="week-label">
+            <span class="week-label-dot"></span>
+            <span>Chapter 3: Infection Control</span>
+          </div>
+        </div>
+      </div>
+      <span class="badge-mode">Campus &amp; Online</span>
+    </header>
+
+    <h1 id="module-heading">Asepsis Technique Clinic</h1>
+    <p class="module-subtitle">
+      Master essential infection control skills through hands-on practice with glove removal, 
+      asepsis techniques, hand hygiene, instrument processing, and emergency eye wash procedures.
+    </p>
+
+    <!-- Progress Tracker -->
+    <div class="progress-tracker">
+      <div class="progress-step active" data-step="1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Glove Removal</div>
+      </div>
+      <div class="progress-step" data-step="2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Asepsis Types</div>
+      </div>
+      <div class="progress-step" data-step="3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Hand Hygiene</div>
+      </div>
+      <div class="progress-step" data-step="4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Instruments</div>
+      </div>
+      <div class="progress-step" data-step="5">
+        <div class="step-circle">5</div>
+        <div class="step-label">Eye Wash</div>
+      </div>
+    </div>
+
+    <!-- Progress Summary -->
+    <div class="progress-summary">
+      <div class="summary-card">
+        <span class="summary-number" id="completed-count">0</span>
+        <span class="summary-label">Activities Completed</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-number" id="accuracy-rate">0%</span>
+        <span class="summary-label">Current Accuracy</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-number" id="time-spent">0:00</span>
+        <span class="summary-label">Time Spent</span>
+      </div>
+    </div>
+
+    <!-- Activity Grid -->
+    <div class="activity-grid">
+      <!-- Activity 1: Glove Removal Simulation - FIXED -->
+      <section class="activity-card" id="activity-1" data-activity="1">
+        <div class="activity-header">
+          <span class="activity-number">Activity 1</span>
+          <span class="activity-status">Not Started</span>
+        </div>
+        <h3 class="activity-title">Glove Removal Simulation</h3>
+        <p class="activity-description">
+          Drag glove removal steps into the correct sequence to prevent self-contamination. 
+          Proper glove removal is critical for infection control.
+        </p>
+
+        <!-- Steps Dropzone -->
+        <div class="steps-dropzone empty" id="glove-dropzone"></div>
+
+        <!-- Step Items - ADDED draggable="true" -->
+        <div class="steps-container" id="glove-steps">
+          <div class="step-item draggable" data-step="1" draggable="true">
+            <div class="step-number">1</div>
+            <div class="step-text">Grasp outside of one glove with gloved hand</div>
+          </div>
+          <div class="step-item draggable" data-step="2" draggable="true">
+            <div class="step-number">2</div>
+            <div class="step-text">Peel off glove turning it inside out</div>
+          </div>
+          <div class="step-item draggable" data-step="3" draggable="true">
+            <div class="step-number">3</div>
+            <div class="step-text">Hold removed glove in gloved hand</div>
+          </div>
+          <div class="step-item draggable" data-step="4" draggable="true">
+            <div class="step-number">4</div>
+            <div class="step-text">Slide fingers under remaining glove at wrist</div>
+          </div>
+          <div class="step-item draggable" data-step="5" draggable="true">
+            <div class="step-number">5</div>
+            <div class="step-text">Peel off second glove turning it inside out</div>
+          </div>
+          <div class="step-item draggable" data-step="6" draggable="true">
+            <div class="step-number">6</div>
+            <div class="step-text">Dispose of gloves in biohazard container</div>
+          </div>
+        </div>
+
+        <!-- Safety Warning -->
+        <div class="safety-warning" id="contamination-warning" style="display: none;">
+          <div class="warning-icon">⚠️</div>
+          <div class="warning-content">
+            <div class="warning-title">Contamination Risk!</div>
+            <div class="warning-text">
+              Improper glove removal can lead to self-contamination. Always keep contaminated 
+              surfaces away from your skin and dispose of gloves immediately after removal.
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-container" id="feedback-1">
+          <div class="feedback-title">
+            <span class="feedback-icon correct">✓</span>
+            Proper Sequence Achieved!
+          </div>
+          <div class="feedback-content">
+            <strong>Correct Glove Removal Sequence:</strong><br>
+            1. Grasp outside of one glove with gloved hand<br>
+            2. Peel off glove turning it inside out<br>
+            3. Hold removed glove in gloved hand<br>
+            4. Slide fingers under remaining glove at wrist<br>
+            5. Peel off second glove turning it inside out<br>
+            6. Dispose of gloves in biohazard container<br><br>
+            <strong>Key Point:</strong> The first glove should be balled up inside the second glove, 
+            with only clean surfaces touching your skin.
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity 2: Medical vs Surgical Asepsis -->
+      <section class="activity-card" id="activity-2" data-activity="2">
+        <div class="activity-header">
+          <span class="activity-number">Activity 2</span>
+          <span class="activity-status">Not Started</span>
+        </div>
+        <h3 class="activity-title">Medical vs. Surgical Asepsis</h3>
+        <p class="activity-description">
+          Drag procedures to their correct category: Medical Asepsis (clean technique) or 
+          Surgical Asepsis (sterile technique). Understand when each is required.
+        </p>
+
+        <!-- Asepsis Categories -->
+        <div class="asepsis-categories">
+          <div class="asepsis-category medical" data-category="medical" id="medical-category">
+            <div class="asepsis-title">Medical Asepsis</div>
+            <div class="asepsis-content"></div>
+          </div>
+          <div class="asepsis-category surgical" data-category="surgical" id="surgical-category">
+            <div class="asepsis-title">Surgical Asepsis</div>
+            <div class="asepsis-content"></div>
+          </div>
+        </div>
+
+        <!-- Asepsis Items -->
+        <div class="asepsis-items">
+          <div class="asepsis-item draggable" data-category="medical" draggable="true">Handwashing</div>
+          <div class="asepsis-item draggable" data-category="surgical" draggable="true">Surgical Scrub</div>
+          <div class="asepsis-item draggable" data-category="medical" draggable="true">Clean Gloves</div>
+          <div class="asepsis-item draggable" data-category="surgical" draggable="true">Sterile Gloves</div>
+          <div class="asepsis-item draggable" data-category="medical" draggable="true">Disinfection</div>
+          <div class="asepsis-item draggable" data-category="surgical" draggable="true">Sterilization</div>
+          <div class="asepsis-item draggable" data-category="medical" draggable="true">Daily Cleaning</div>
+          <div class="asepsis-item draggable" data-category="surgical" draggable="true">Surgical Draping</div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-container" id="feedback-2">
+          <div class="feedback-title">
+            <span class="feedback-icon correct">✓</span>
+            Asepsis Classified!
+          </div>
+          <div class="feedback-content">
+            <strong>Medical Asepsis (Clean Technique):</strong> Reduces number of pathogens<br>
+            • Handwashing, clean gloves, disinfection, daily cleaning<br>
+            • Used for: Routine patient care, vital signs, medication administration<br><br>
+            <strong>Surgical Asepsis (Sterile Technique):</strong> Eliminates all microorganisms<br>
+            • Surgical scrub, sterile gloves, sterilization, surgical draping<br>
+            • Used for: Surgery, catheter insertion, wound dressing changes, invasive procedures<br><br>
+            <strong>Critical Error:</strong> Using medical asepsis for sterile procedures can cause infections.
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity 3: Hand Hygiene Technique Trainer - ENHANCED -->
+      <section class="activity-card" id="activity-3" data-activity="3">
+        <div class="activity-header">
+          <span class="activity-number">Activity 3</span>
+          <span class="activity-status">Not Started</span>
+        </div>
+        <h3 class="activity-title">Hand Hygiene Technique Trainer</h3>
+        <p class="activity-description">
+          Practice WHO's 5 Moments for Hand Hygiene. Select appropriate moments for clinical scenarios 
+          and time your handwashing technique. <strong>Follow the detailed instructions below.</strong>
+        </p>
+
+        <!-- Enhanced Instructions -->
+        <div class="instructions-box">
+          <div class="instructions-title">
+            <span>🫧</span>
+            Complete Handwashing Protocol (40-60 seconds total)
+          </div>
+          <ul class="instructions-list">
+            <li><strong>Wet hands</strong> with clean, running water (warm or cold)</li>
+            <li><strong>Apply soap</strong> and lather thoroughly - enough to cover all surfaces</li>
+            <li><strong>Rub hands palm to palm</strong> (5 seconds)</li>
+            <li><strong>Right palm over left dorsum</strong> with interlaced fingers, and vice versa (5 seconds each)</li>
+            <li><strong>Palm to palm</strong> with fingers interlaced (5 seconds)</li>
+            <li><strong>Backs of fingers to opposing palms</strong> with fingers interlocked (5 seconds)</li>
+            <li><strong>Rotational rubbing of left thumb clasped in right palm</strong>, and vice versa (5 seconds each)</li>
+            <li><strong>Rotational rubbing backwards and forwards</strong> with clasped fingers of right hand in left palm, and vice versa (5 seconds each)</li>
+            <li><strong>Rinse thoroughly</strong> under running water</li>
+            <li><strong>Dry hands</strong> with single-use towel</li>
+            <li><strong>Use towel to turn off faucet</strong> to avoid recontamination</li>
+          </ul>
+        </div>
+
+        <!-- Scenario -->
+        <div class="handhygiene-scenario">
+          <div class="scenario-title">Scenario: Post-Patient Contact</div>
+          <div class="scenario-description">
+            You just finished taking vital signs for a patient. The patient coughed during the procedure. 
+            Select which of WHO's 5 Moments apply to this situation.
+          </div>
+        </div>
+
+        <!-- WHO 5 Moments -->
+        <div class="moments-grid">
+          <div class="moment-item" data-moment="1">
+            <div class="moment-number">1</div>
+            <div class="moment-text">Before touching a patient</div>
+          </div>
+          <div class="moment-item" data-moment="2">
+            <div class="moment-number">2</div>
+            <div class="moment-text">Before clean/aseptic procedure</div>
+          </div>
+          <div class="moment-item" data-moment="3">
+            <div class="moment-number">3</div>
+            <div class="moment-text">After body fluid exposure risk</div>
+          </div>
+          <div class="moment-item" data-moment="4">
+            <div class="moment-number">4</div>
+            <div class="moment-text">After touching a patient</div>
+          </div>
+          <div class="moment-item" data-moment="5">
+            <div class="moment-number">5</div>
+            <div class="moment-text">After touching patient surroundings</div>
+          </div>
+        </div>
+
+        <!-- Timer with Enhanced Instructions -->
+        <div class="timer-container">
+          <div class="timer-display" id="timer-display">40s</div>
+          <div class="timer-progress">
+            <div class="timer-progress-bar" id="timer-bar"></div>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--color-muted); margin: 10px 0;">
+            <strong>Clinical Tip:</strong> Use the "Happy Birthday" song twice (20 seconds) for alcohol-based hand rubs. 
+            For soap and water, use the full 40-60 seconds as shown in the instructions above.
+          </p>
+          <button class="timer-btn" id="start-timer">Start 40-Second Handwashing Practice</button>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-container" id="feedback-3">
+          <div class="feedback-title">
+            <span class="feedback-icon correct">✓</span>
+            Hand Hygiene Mastered!
+          </div>
+          <div class="feedback-content">
+            <strong>WHO 5 Moments for Hand Hygiene:</strong><br>
+            1. <strong>Before touching a patient</strong> - Prevents pathogen transmission to patient<br>
+            2. <strong>Before clean/aseptic procedure</strong> - Prevents infection during procedures<br>
+            3. <strong>After body fluid exposure risk</strong> - Protects yourself from contamination<br>
+            4. <strong>After touching a patient</strong> - Prevents pathogen spread to environment<br>
+            5. <strong>After touching patient surroundings</strong> - Protects yourself from environment<br><br>
+            <strong>For this scenario:</strong> Moments 3 (after exposure risk from cough) and 4 (after touching patient) apply.<br>
+            <strong>Proper technique:</strong> 40-60 seconds minimum for soap and water, covering all surfaces including between fingers and under nails.
+            <strong>Alcohol-based rub:</strong> 20-30 seconds until hands are dry.
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity 4: Instrument Processing Flowchart -->
+      <section class="activity-card" id="activity-4" data-activity="4">
+        <div class="activity-header">
+          <span class="activity-number">Activity 4</span>
+          <span class="activity-status">Not Started</span>
+        </div>
+        <h3 class="activity-title">Instrument Processing Flowchart</h3>
+        <p class="activity-description">
+          Arrange instrument processing steps in correct sequence. Proper processing prevents 
+          cross-contamination and ensures sterility for patient safety.
+        </p>
+
+        <!-- Flowchart Steps -->
+        <div class="flowchart-container">
+          <div class="flow-step" data-step="1" id="flow-1">
+            <div class="flow-step-label">Step 1</div>
+            <div class="flow-content"></div>
+          </div>
+          <div class="flow-step" data-step="2" id="flow-2">
+            <div class="flow-step-label">Step 2</div>
+            <div class="flow-content"></div>
+          </div>
+          <div class="flow-step" data-step="3" id="flow-3">
+            <div class="flow-step-label">Step 3</div>
+            <div class="flow-content"></div>
+          </div>
+          <div class="flow-step" data-step="4" id="flow-4">
+            <div class="flow-step-label">Step 4</div>
+            <div class="flow-content"></div>
+          </div>
+          <div class="flow-step" data-step="5" id="flow-5">
+            <div class="flow-step-label">Step 5</div>
+            <div class="flow-content"></div>
+          </div>
+          <div class="flow-step" data-step="6" id="flow-6">
+            <div class="flow-step-label">Step 6</div>
+            <div class="flow-content"></div>
+          </div>
+        </div>
+
+        <!-- Flow Items -->
+        <div class="flow-items">
+          <div class="flow-item draggable" data-step="1" draggable="true">Point-of-use treatment</div>
+          <div class="flow-item draggable" data-step="2" draggable="true">Cleaning/scrubbing</div>
+          <div class="flow-item draggable" data-step="3" draggable="true">Rinsing</div>
+          <div class="flow-item draggable" data-step="4" draggable="true">Drying</div>
+          <div class="flow-item draggable" data-step="5" draggable="true">Packaging</div>
+          <div class="flow-item draggable" data-step="6" draggable="true">Sterilization</div>
+        </div>
+
+        <!-- Safety Warning -->
+        <div class="safety-warning" id="instrument-warning" style="display: none;">
+          <div class="warning-icon">🔬</div>
+          <div class="warning-content">
+            <div class="warning-title">Processing Error</div>
+            <div class="warning-text">
+              Skipping or rearranging instrument processing steps can result in incomplete sterilization, 
+              leading to healthcare-associated infections and patient harm.
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-container" id="feedback-4">
+          <div class="feedback-title">
+            <span class="feedback-icon correct">✓</span>
+            Processing Sequence Correct!
+          </div>
+          <div class="feedback-content">
+            <strong>Correct Instrument Processing Sequence:</strong><br>
+            1. <strong>Point-of-use treatment</strong> - Prevents drying of contaminants<br>
+            2. <strong>Cleaning/scrubbing</strong> - Removes organic material<br>
+            3. <strong>Rinsing</strong> - Removes cleaning solution residue<br>
+            4. <strong>Drying</strong> - Prevents dilution of sterilant<br>
+            5. <strong>Packaging</strong> - Maintains sterility after processing<br>
+            6. <strong>Sterilization</strong> - Eliminates all microorganisms<br><br>
+            <strong>Critical:</strong> Clean before sterilize! Organic material can shield microorganisms from sterilization.
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity 5: Emergency Eye Wash Station - FIXED ORDER -->
+      <section class="activity-card" id="activity-5" data-activity="5">
+        <div class="activity-header">
+          <span class="activity-number">Activity 5</span>
+          <span class="activity-status">Not Started</span>
+        </div>
+        <h3 class="activity-title">Emergency Eye Wash Station</h3>
+        <p class="activity-description">
+          Click steps in correct order for emergency eye wash procedure. Chemical exposure requires 
+          immediate and proper response to prevent permanent damage.
+        </p>
+
+        <!-- Eye Wash Steps - CORRECTED ORDER -->
+        <div class="eyewash-container">
+          <div class="eyewash-steps" id="eyewash-sequence">
+            <!-- CORRECT ORDER: -->
+            <div class="eyewash-step" data-step="1">
+              <div class="eyewash-number">1</div>
+              <div class="eyewash-text">Immediately flush eyes with water for 15+ minutes</div>
+            </div>
+            <div class="eyewash-step" data-step="2">
+              <div class="eyewash-number">2</div>
+              <div class="eyewash-text">Hold eyelids open with fingers to ensure complete flushing</div>
+            </div>
+            <div class="eyewash-step" data-step="3">
+              <div class="eyewash-number">3</div>
+              <div class="eyewash-text">Remove contact lenses if present (if easily removable)</div>
+            </div>
+            <div class="eyewash-step" data-step="4">
+              <div class="eyewash-number">4</div>
+              <div class="eyewash-text">Alert for assistance while continuing to flush</div>
+            </div>
+            <div class="eyewash-step" data-step="5">
+              <div class="eyewash-number">5</div>
+              <div class="eyewash-text">Continue flushing until medical help arrives</div>
+            </div>
+            <div class="eyewash-step" data-step="6">
+              <div class="eyewash-number">6</div>
+              <div class="eyewash-text">Seek immediate medical attention after initial flushing</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sequence Display -->
+        <div class="steps-dropzone empty" id="eyewash-dropzone" style="min-height: 100px;"></div>
+
+        <!-- Emergency Warning -->
+        <div class="safety-warning">
+          <div class="warning-icon">🚨</div>
+          <div class="warning-content">
+            <div class="warning-title">EMERGENCY PROTOCOL</div>
+            <div class="warning-text">
+              <strong>FLUSH FIRST!</strong> For chemical eye exposure, begin flushing IMMEDIATELY - within 10-15 seconds. 
+              Every second counts - delay can cause permanent vision damage. Use body-temperature solution if possible.
+              <strong>DO NOT delay flushing to remove contacts or seek help first.</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-container" id="feedback-5">
+          <div class="feedback-title">
+            <span class="feedback-icon correct">✓</span>
+            Emergency Procedure Correct!
+          </div>
+          <div class="feedback-content">
+            <strong>Correct Eye Wash Emergency Procedure:</strong><br>
+            1. <strong>Immediately flush eyes</strong> - Begin flushing within 10-15 seconds<br>
+            2. <strong>Hold eyelids open</strong> - Ensure complete flushing of all surfaces<br>
+            3. <strong>Remove contacts if present</strong> - Only if easily removable without stopping flushing<br>
+            4. <strong>Alert for assistance</strong> - Call for help while continuing to flush<br>
+            5. <strong>Continue flushing</strong> - Minimum 15 minutes, 20-30 for alkali chemicals<br>
+            6. <strong>Seek medical attention</strong> - Even if symptoms improve<br><br>
+            <strong>Critical Times:</strong> Alkali chemicals (lye, ammonia) require 20-30 minute flushing. 
+            Document exposure details (chemical, concentration, duration) for medical providers.
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn btn-secondary" id="reset-all-btn">
+        <span class="btn-icon">↻</span>
+        Reset All Activities
+      </button>
+      <button class="btn btn-secondary" id="check-answers-btn">
+        <span class="btn-icon">✓</span>
+        Check All Answers
+      </button>
+      <button class="btn btn-primary" id="view-results-btn">
+        <span class="btn-icon">📊</span>
+        View Final Results
+      </button>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="results-panel" id="results-panel">
+      <div class="results-header">
+        <h2 class="results-title">Asepsis Technique Results</h2>
+        <div class="score-display" id="final-score">0%</div>
+      </div>
+      
+      <div class="clinical-insights">
+        <h3 class="insights-title">
+          <span>🩺</span> Clinical Proficiency Insights
+        </h3>
+        <ul class="insights-list">
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Glove Removal:</strong> Always assume gloves are contaminated. The "inside-out" technique ensures contaminated surfaces never touch your skin.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Asepsis Selection:</strong> Medical asepsis = clean technique (reduces pathogens). Surgical asepsis = sterile technique (eliminates all microorganisms). Never confuse the two.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Hand Hygiene Timing:</strong> Alcohol-based rubs work in 20-30 seconds, but soap and water require 40-60 seconds. Always wash when hands are visibly soiled or after C. diff care.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Instrument Processing:</strong> Sterilization kills everything; disinfection kills most pathogens. Critical instruments (break skin/mucosa) must be sterilized. Semi-critical (touch mucosa) require high-level disinfection.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Emergency Response:</strong> For chemical eye exposure, flushing must begin within 10-15 seconds. Document the chemical, concentration, and exposure duration for medical providers.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="clinical-insights" style="margin-top: 20px;">
+        <h3 class="insights-title">
+          <span>📋</span> Documentation & Compliance
+        </h3>
+        <ul class="insights-list">
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Competency Validation:</strong> Asepsis techniques must be validated annually through observed competency checks. Document training dates and evaluator signatures.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Supply Documentation:</strong> Log sterilization dates, cycle numbers, and expiration dates. Unwrapped sterile items expire in 24 hours; wrapped items in 30 days.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Emergency Drills:</strong> Conduct quarterly emergency procedure drills including eyewash station activation. Document drill participation and response times.</span>
+          </li>
+          <li>
+            <span class="insight-dot"></span>
+            <span><strong>Quality Indicators:</strong> Monitor hand hygiene compliance (target >95%), sterilization biological indicators (monthly), and exposure incident reports.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // State Management
+      const state = {
+        activities: {
+          1: { completed: false, correct: 0, total: 6, score: 0 },
+          2: { completed: false, correct: 0, total: 8, score: 0 },
+          3: { completed: false, correct: 0, total: 7, score: 0 },
+          4: { completed: false, correct: 0, total: 6, score: 0 },
+          5: { completed: false, correct: 0, total: 6, score: 0 }
+        },
+        startedAt: new Date(),
+        timeSpent: 0,
+        handTimer: null,
+        timerRunning: false,
+        currentStep: 0
+      };
+
+      // DOM Elements
+      const progressSteps = document.querySelectorAll('.progress-step');
+      const activityCards = document.querySelectorAll('.activity-card');
+      const completedCount = document.getElementById('completed-count');
+      const accuracyRate = document.getElementById('accuracy-rate');
+      const timeSpent = document.getElementById('time-spent');
+      const resetBtn = document.getElementById('reset-all-btn');
+      const checkBtn = document.getElementById('check-answers-btn');
+      const resultsBtn = document.getElementById('view-results-btn');
+      const resultsPanel = document.getElementById('results-panel');
+      const finalScore = document.getElementById('final-score');
+      const timerDisplay = document.getElementById('timer-display');
+      const timerBar = document.getElementById('timer-bar');
+      const startTimerBtn = document.getElementById('start-timer');
+
+      // Timer for time spent
+      function updateTimer() {
+        const now = new Date();
+        const diff = Math.floor((now - state.startedAt) / 1000);
+        state.timeSpent = diff;
+        
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff % 60;
+        timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }
+      setInterval(updateTimer, 1000);
+
+      // Update Progress Summary
+      function updateProgressSummary() {
+        let completed = 0;
+        let totalCorrect = 0;
+        let totalItems = 0;
+        
+        Object.values(state.activities).forEach(activity => {
+          if (activity.completed) completed++;
+          totalCorrect += activity.correct;
+          totalItems += activity.total;
+        });
+        
+        completedCount.textContent = completed;
+        const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+        accuracyRate.textContent = `${accuracy}%`;
+        
+        // Update progress steps
+        progressSteps.forEach((step, index) => {
+          if (index < completed) {
+            step.classList.add('completed');
+            step.classList.remove('active');
+          } else if (index === completed) {
+            step.classList.add('active');
+            step.classList.remove('completed');
+          } else {
+            step.classList.remove('active', 'completed');
+          }
+        });
+      }
+
+      // Activity 1: Glove Removal Simulation - FIXED
+      function initActivity1() {
+        const stepItems = document.querySelectorAll('#activity-1 .step-item');
+        const dropzone = document.getElementById('glove-dropzone');
+        const warning = document.getElementById('contamination-warning');
+        const feedback = document.getElementById('feedback-1');
+        const status = document.querySelector('#activity-1 .activity-status');
+        
+        const correctOrder = ['1', '2', '3', '4', '5', '6'];
+        let placedSteps = [];
+        
+        // Setup drag and drop
+        stepItems.forEach(item => {
+          item.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+              step: this.dataset.step,
+              text: this.querySelector('.step-text').textContent
+            }));
+            this.classList.add('dragging');
+          });
+          
+          item.addEventListener('dragend', function() {
+            this.classList.remove('dragging');
+          });
+        });
+        
+        dropzone.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          this.classList.add('hover');
+          this.classList.remove('empty');
+        });
+        
+        dropzone.addEventListener('dragleave', function() {
+          this.classList.remove('hover');
+        });
+        
+        dropzone.addEventListener('drop', function(e) {
+          e.preventDefault();
+          this.classList.remove('hover');
+          
+          const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+          
+          // Check if step already placed
+          if (!placedSteps.includes(data.step)) {
+            placedSteps.push(data.step);
+            
+            // Create and add step to dropzone
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step-item placed';
+            stepDiv.innerHTML = `
+              <div class="step-number">${data.step}</div>
+              <div class="step-text">${data.text}</div>
+            `;
+            this.appendChild(stepDiv);
+            
+            // Hide original step
+            const originalStep = document.querySelector(`#activity-1 .step-item[data-step="${data.step}"]`);
+            if (originalStep) {
+              originalStep.style.display = 'none';
+            }
+            
+            // Check completion
+            if (placedSteps.length === 6) {
+              // Check if order is correct
+              const isCorrect = JSON.stringify(placedSteps) === JSON.stringify(correctOrder);
+              
+              state.activities[1].completed = true;
+              state.activities[1].correct = isCorrect ? 6 : 3;
+              state.activities[1].score = isCorrect ? 100 : 50;
+              
+              status.textContent = 'Completed';
+              status.style.color = '#00b894';
+              document.querySelector('#activity-1').classList.add('completed');
+              feedback.classList.add('show');
+              
+              if (!isCorrect) {
+                warning.style.display = 'flex';
+              }
+              
+              updateProgressSummary();
+            }
+          }
+        });
+      }
+
+      // Activity 2: Medical vs Surgical Asepsis
+      function initActivity2() {
+        const asepsisItems = document.querySelectorAll('#activity-2 .asepsis-item');
+        const medicalCategory = document.getElementById('medical-category');
+        const surgicalCategory = document.getElementById('surgical-category');
+        const feedback = document.getElementById('feedback-2');
+        const status = document.querySelector('#activity-2 .activity-status');
+        
+        const correctCategories = {
+          'Handwashing': 'medical',
+          'Surgical Scrub': 'surgical',
+          'Clean Gloves': 'medical',
+          'Sterile Gloves': 'surgical',
+          'Disinfection': 'medical',
+          'Sterilization': 'surgical',
+          'Daily Cleaning': 'medical',
+          'Surgical Draping': 'surgical'
+        };
+        
+        let placedItems = 0;
+        let correctPlacements = 0;
+        
+        // Setup drag and drop
+        asepsisItems.forEach(item => {
+          item.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+              text: this.textContent,
+              category: this.dataset.category
+            }));
+            this.classList.add('dragging');
+          });
+          
+          item.addEventListener('dragend', function() {
+            this.classList.remove('dragging');
+          });
+        });
+        
+        [medicalCategory, surgicalCategory].forEach(category => {
+          category.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('hover');
+          });
+          
+          category.addEventListener('dragleave', function() {
+            this.classList.remove('hover');
+          });
+          
+          category.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('hover');
+            
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            const targetCategory = this.dataset.category;
+            
+            // Check if item already placed
+            const existingItems = Array.from(this.querySelectorAll('.asepsis-content div'));
+            const alreadyPlaced = existingItems.some(div => div.textContent === data.text);
+            
+            if (!alreadyPlaced) {
+              // Check if placement is correct
+              const isCorrect = correctCategories[data.text] === targetCategory;
+              
+              const div = document.createElement('div');
+              div.textContent = data.text;
+              div.style.padding = '6px 10px';
+              div.style.margin = '4px 0';
+              div.style.background = isCorrect ? 
+                (targetCategory === 'medical' ? 'rgba(0, 184, 148, 0.1)' : 'rgba(131, 128, 240, 0.1)') : 
+                'rgba(225, 112, 85, 0.1)';
+              div.style.borderRadius = '8px';
+              div.style.fontSize = '0.8rem';
+              this.querySelector('.asepsis-content').appendChild(div);
+              
+              // Hide original item
+              const originalItem = Array.from(asepsisItems).find(item => 
+                item.textContent === data.text && item.style.display !== 'none'
+              );
+              if (originalItem) {
+                originalItem.style.display = 'none';
+                placedItems++;
+                if (isCorrect) correctPlacements++;
+              }
+              
+              // Check completion
+              if (placedItems === 8) {
+                state.activities[2].completed = true;
+                state.activities[2].correct = correctPlacements;
+                state.activities[2].score = Math.round((correctPlacements / 8) * 100);
+                
+                status.textContent = 'Completed';
+                status.style.color = '#00b894';
+                document.querySelector('#activity-2').classList.add('completed');
+                feedback.classList.add('show');
+                
+                updateProgressSummary();
+              }
+            }
+          });
+        });
+      }
+
+      // Activity 3: Hand Hygiene Technique Trainer - ENHANCED
+      function initActivity3() {
+        const momentItems = document.querySelectorAll('#activity-3 .moment-item');
+        const feedback = document.getElementById('feedback-3');
+        const status = document.querySelector('#activity-3 .activity-status');
+        
+        let selectedMoments = [];
+        const correctMoments = ['3', '4']; // After exposure risk, after touching patient
+        
+        // Timer functionality - UPDATED to 40 seconds
+        let timerSeconds = 40;
+        startTimerBtn.addEventListener('click', function() {
+          if (state.timerRunning) return;
+          
+          state.timerRunning = true;
+          startTimerBtn.disabled = true;
+          startTimerBtn.textContent = 'Washing...';
+          
+          let secondsLeft = timerSeconds;
+          timerBar.style.width = '0%';
+          
+          const timer = setInterval(() => {
+            secondsLeft--;
+            const progress = ((timerSeconds - secondsLeft) / timerSeconds) * 100;
+            
+            timerDisplay.textContent = `${secondsLeft}s`;
+            timerBar.style.width = `${progress}%`;
+            
+            if (secondsLeft <= 0) {
+              clearInterval(timer);
+              timerDisplay.textContent = 'Complete!';
+              timerBar.style.width = '100%';
+              startTimerBtn.disabled = false;
+              startTimerBtn.textContent = 'Restart Timer';
+              state.timerRunning = false;
+              
+              // Award points for completing timer
+              if (!state.activities[3].completed) {
+                state.activities[3].correct += 1;
+              }
+            }
+          }, 1000);
+        });
+        
+        // Moment selection
+        momentItems.forEach(item => {
+          item.addEventListener('click', function() {
+            if (state.activities[3].completed) return;
+            
+            const moment = this.dataset.moment;
+            
+            if (this.classList.contains('selected')) {
+              // Deselect
+              this.classList.remove('selected');
+              selectedMoments = selectedMoments.filter(m => m !== moment);
+            } else {
+              // Select
+              this.classList.add('selected');
+              selectedMoments.push(moment);
+              
+              // Check if selection is correct
+              if (!correctMoments.includes(moment)) {
+                this.classList.add('wrong');
+                setTimeout(() => {
+                  this.classList.remove('wrong');
+                }, 500);
+              }
+            }
+            
+            // Check if all correct moments are selected
+            const allCorrectSelected = correctMoments.every(m => selectedMoments.includes(m));
+            const noIncorrectSelected = selectedMoments.every(m => correctMoments.includes(m));
+            
+            if (allCorrectSelected && noIncorrectSelected && selectedMoments.length === correctMoments.length) {
+              state.activities[3].completed = true;
+              state.activities[3].correct += correctMoments.length;
+              state.activities[3].score = Math.round((state.activities[3].correct / 7) * 100);
+              
+              status.textContent = 'Completed';
+              status.style.color = '#00b894';
+              document.querySelector('#activity-3').classList.add('completed');
+              feedback.classList.add('show');
+              
+              momentItems.forEach(item => {
+                item.style.cursor = 'default';
+                item.style.pointerEvents = 'none';
+              });
+              
+              updateProgressSummary();
+            }
+          });
+        });
+      }
+
+      // Activity 4: Instrument Processing Flowchart
+      function initActivity4() {
+        const flowItems = document.querySelectorAll('#activity-4 .flow-item');
+        const flowSteps = document.querySelectorAll('#activity-4 .flow-step');
+        const warning = document.getElementById('instrument-warning');
+        const feedback = document.getElementById('feedback-4');
+        const status = document.querySelector('#activity-4 .activity-status');
+        
+        let placedItems = 0;
+        let correctPlacements = 0;
+        
+        // Setup drag and drop
+        flowItems.forEach(item => {
+          item.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+              step: this.dataset.step,
+              text: this.textContent
+            }));
+            this.classList.add('dragging');
+          });
+          
+          item.addEventListener('dragend', function() {
+            this.classList.remove('dragging');
+          });
+        });
+        
+        flowSteps.forEach(step => {
+          step.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('hover');
+          });
+          
+          step.addEventListener('dragleave', function() {
+            this.classList.remove('hover');
+          });
+          
+          step.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('hover');
+            
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            const targetStep = this.dataset.step;
+            
+            // Check if step already has content
+            if (this.querySelector('.flow-content').children.length === 0) {
+              // Check if placement is correct
+              const isCorrect = data.step === targetStep;
+              
+              const div = document.createElement('div');
+              div.textContent = data.text;
+              div.style.padding = '8px 12px';
+              div.style.background = isCorrect ? 'rgba(0, 184, 148, 0.1)' : 'rgba(225, 112, 85, 0.1)';
+              div.style.borderRadius = '8px';
+              div.style.fontSize = '0.85rem';
+              div.style.textAlign = 'center';
+              this.querySelector('.flow-content').appendChild(div);
+              
+              this.classList.add('filled');
+              
+              // Hide original item
+              const originalItem = Array.from(flowItems).find(item => 
+                item.textContent === data.text && item.style.display !== 'none'
+              );
+              if (originalItem) {
+                originalItem.style.display = 'none';
+                placedItems++;
+                if (isCorrect) correctPlacements++;
+              }
+              
+              // Check completion
+              if (placedItems === 6) {
+                state.activities[4].completed = true;
+                state.activities[4].correct = correctPlacements;
+                state.activities[4].score = Math.round((correctPlacements / 6) * 100);
+                
+                status.textContent = 'Completed';
+                status.style.color = '#00b894';
+                document.querySelector('#activity-4').classList.add('completed');
+                feedback.classList.add('show');
+                
+                if (correctPlacements < 6) {
+                  warning.style.display = 'flex';
+                }
+                
+                updateProgressSummary();
+              }
+            }
+          });
+        });
+      }
+
+      // Activity 5: Emergency Eye Wash Station - FIXED ORDER
+      function initActivity5() {
+        const eyewashSteps = document.querySelectorAll('#activity-5 .eyewash-step');
+        const dropzone = document.getElementById('eyewash-dropzone');
+        const feedback = document.getElementById('feedback-5');
+        const status = document.querySelector('#activity-5 .activity-status');
+        
+        // CORRECT ORDER: Flush first, then other steps
+        const correctOrder = ['1', '2', '3', '4', '5', '6'];
+        let placedSteps = [];
+        let currentStep = 0;
+        
+        eyewashSteps.forEach(step => {
+          step.addEventListener('click', function() {
+            if (state.activities[5].completed) return;
+            
+            const stepNumber = this.dataset.step;
+            const expectedStep = correctOrder[currentStep];
+            
+            if (stepNumber === expectedStep) {
+              // Correct step
+              this.classList.add('selected');
+              placedSteps.push(stepNumber);
+              currentStep++;
+              
+              // Add to dropzone
+              const stepDiv = document.createElement('div');
+              stepDiv.className = 'step-item placed';
+              stepDiv.innerHTML = `
+                <div class="step-number">${stepNumber}</div>
+                <div class="step-text">${this.querySelector('.eyewash-text').textContent}</div>
+              `;
+              dropzone.appendChild(stepDiv);
+              dropzone.classList.remove('empty');
+              
+              // Check completion
+              if (placedSteps.length === 6) {
+                state.activities[5].completed = true;
+                state.activities[5].correct = 6;
+                state.activities[5].score = 100;
+                
+                status.textContent = 'Completed';
+                status.style.color = '#00b894';
+                document.querySelector('#activity-5').classList.add('completed');
+                feedback.classList.add('show');
+                
+                updateProgressSummary();
+              }
+            } else {
+              // Incorrect step
+              this.classList.add('wrong');
+              setTimeout(() => {
+                this.classList.remove('wrong');
+              }, 500);
+            }
+          });
+        });
+      }
+
+      // Reset All Activities
+      function resetAllActivities() {
+        // Reset state
+        Object.keys(state.activities).forEach(key => {
+          state.activities[key] = { 
+            completed: false, 
+            correct: 0, 
+            total: parseInt(key) === 1 ? 6 : parseInt(key) === 2 ? 8 : parseInt(key) === 3 ? 7 : parseInt(key) === 4 ? 6 : 6, 
+            score: 0 
+          };
+        });
+        
+        state.timerRunning = false;
+        
+        // Reset UI
+        activityCards.forEach(card => {
+          card.classList.remove('completed');
+          const status = card.querySelector('.activity-status');
+          status.textContent = 'Not Started';
+          status.style.color = '';
+          
+          const feedback = card.querySelector('.feedback-container');
+          feedback.classList.remove('show');
+        });
+        
+        // Reset Activity 1
+        const dropzone1 = document.getElementById('glove-dropzone');
+        dropzone1.innerHTML = '';
+        dropzone1.classList.add('empty');
+        document.querySelectorAll('#activity-1 .step-item').forEach(item => {
+          item.style.display = '';
+          item.classList.remove('placed');
+        });
+        document.getElementById('contamination-warning').style.display = 'none';
+        
+        // Reset Activity 2
+        document.querySelectorAll('#activity-2 .asepsis-content').forEach(content => {
+          content.innerHTML = '';
+        });
+        document.querySelectorAll('#activity-2 .asepsis-item').forEach(item => {
+          item.style.display = '';
+        });
+        
+        // Reset Activity 3
+        document.querySelectorAll('#activity-3 .moment-item').forEach(item => {
+          item.classList.remove('selected', 'wrong');
+          item.style.cursor = 'pointer';
+          item.style.pointerEvents = 'auto';
+        });
+        timerDisplay.textContent = '40s';
+        timerBar.style.width = '0%';
+        startTimerBtn.disabled = false;
+        startTimerBtn.textContent = 'Start 40-Second Handwashing Practice';
+        
+        // Reset Activity 4
+        document.querySelectorAll('#activity-4 .flow-content').forEach(content => {
+          content.innerHTML = '';
+        });
+        document.querySelectorAll('#activity-4 .flow-step').forEach(step => {
+          step.classList.remove('filled', 'hover');
+        });
+        document.querySelectorAll('#activity-4 .flow-item').forEach(item => {
+          item.style.display = '';
+        });
+        document.getElementById('instrument-warning').style.display = 'none';
+        
+        // Reset Activity 5
+        const dropzone5 = document.getElementById('eyewash-dropzone');
+        dropzone5.innerHTML = '';
+        dropzone5.classList.add('empty');
+        document.querySelectorAll('#activity-5 .eyewash-step').forEach(step => {
+          step.classList.remove('selected', 'wrong');
+        });
+        
+        // Reset results
+        resultsPanel.classList.remove('show');
+        
+        // Update progress
+        updateProgressSummary();
+      }
+
+      // Check All Answers
+      function checkAllAnswers() {
+        // Trigger completion for all activities
+        if (!state.activities[1].completed) {
+          const feedback = document.getElementById('feedback-1');
+          const status = document.querySelector('#activity-1 .activity-status');
+          
+          state.activities[1].completed = true;
+          state.activities[1].correct = 6;
+          state.activities[1].score = 100;
+          
+          status.textContent = 'Completed';
+          status.style.color = '#00b894';
+          document.querySelector('#activity-1').classList.add('completed');
+          feedback.classList.add('show');
+        }
+        
+        if (!state.activities[2].completed) {
+          const feedback = document.getElementById('feedback-2');
+          const status = document.querySelector('#activity-2 .activity-status');
+          
+          state.activities[2].completed = true;
+          state.activities[2].correct = 8;
+          state.activities[2].score = 100;
+          
+          status.textContent = 'Completed';
+          status.style.color = '#00b894';
+          document.querySelector('#activity-2').classList.add('completed');
+          feedback.classList.add('show');
+        }
+        
+        if (!state.activities[3].completed) {
+          const feedback = document.getElementById('feedback-3');
+          const status = document.querySelector('#activity-3 .activity-status');
+          
+          // Select correct moments
+          document.querySelectorAll('#activity-3 .moment-item[data-moment="3"], #activity-3 .moment-item[data-moment="4"]').forEach(item => {
+            item.classList.add('selected');
+          });
+          
+          state.activities[3].completed = true;
+          state.activities[3].correct = 7;
+          state.activities[3].score = 100;
+          
+          status.textContent = 'Completed';
+          status.style.color = '#00b894';
+          document.querySelector('#activity-3').classList.add('completed');
+          feedback.classList.add('show');
+        }
+        
+        if (!state.activities[4].completed) {
+          const feedback = document.getElementById('feedback-4');
+          const status = document.querySelector('#activity-4 .activity-status');
+          
+          state.activities[4].completed = true;
+          state.activities[4].correct = 6;
+          state.activities[4].score = 100;
+          
+          status.textContent = 'Completed';
+          status.style.color = '#00b894';
+          document.querySelector('#activity-4').classList.add('completed');
+          feedback.classList.add('show');
+        }
+        
+        if (!state.activities[5].completed) {
+          const feedback = document.getElementById('feedback-5');
+          const status = document.querySelector('#activity-5 .activity-status');
+          
+          state.activities[5].completed = true;
+          state.activities[5].correct = 6;
+          state.activities[5].score = 100;
+          
+          status.textContent = 'Completed';
+          status.style.color = '#00b894';
+          document.querySelector('#activity-5').classList.add('completed');
+          feedback.classList.add('show');
+        }
+        
+        updateProgressSummary();
+      }
+
+      // View Final Results
+      function viewFinalResults() {
+        let totalScore = 0;
+        let activityCount = 0;
+        
+        Object.values(state.activities).forEach(activity => {
+          if (activity.completed) {
+            totalScore += activity.score;
+            activityCount++;
+          }
+        });
+        
+        const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+        finalScore.textContent = `${averageScore}%`;
+        resultsPanel.classList.add('show');
+        
+        // Scroll to results
+        resultsPanel.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Initialize all activities
+      initActivity1();
+      initActivity2();
+      initActivity3();
+      initActivity4();
+      initActivity5();
+      
+      // Event listeners
+      resetBtn.addEventListener('click', resetAllActivities);
+      checkBtn.addEventListener('click', checkAllAnswers);
+      resultsBtn.addEventListener('click', viewFinalResults);
+      
+      // Initial progress update
+      updateProgressSummary();
+    });
+  </script>
+</body>
+</html>
