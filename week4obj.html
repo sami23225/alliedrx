@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Week 4 Objectives: Communication & Gastroenterology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-error: #e17055;
+      --color-warning: #fdcb6e;
+      --color-info: #0984e3;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-hover: 0 25px 60px rgba(175, 75, 239, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+      background: radial-gradient(
+        circle at top left,
+        #ffffff 0,
+        #f1ecff 40%,
+        var(--color-bg) 100%
+      );
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px 30px;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 30px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+      min-height: 90vh;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { background-color: rgba(175, 75, 239, 0.08); }
+      50% { background-color: rgba(175, 75, 239, 0.15); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 18px 14px 22px;
+        gap: 22px;
+      }
+    }
+
+    img,
+    .page,
+    .column,
+    .objective-card,
+    .week-overview {
+      max-width: 100%;
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-column {
+      animation: slideInLeft 0.6s ease-out;
+    }
+
+    .right-column {
+      animation: slideInRight 0.6s ease-out;
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      width: 100%;
+      grid-column: 1 / -1;
+      animation: fadeIn 0.6s ease-out 0.2s both;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+      animation: pulse 2s infinite;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-success);
+      flex-shrink: 0;
+      animation: blink 1.5s infinite;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .badge-mode:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+      grid-column: 1 / -1;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      max-width: 800px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+      grid-column: 1 / -1;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Chapter navigation */
+    .chapter-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      animation: slideInRight 0.6s ease-out 0.5s both;
+      grid-column: 1 / -1;
+    }
+
+    .chapter-btn {
+      padding: 10px 20px;
+      border-radius: 16px;
+      background: rgba(12, 10, 24, 0.05);
+      border: 2px solid rgba(12, 10, 24, 0.1);
+      color: var(--color-text);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chapter-btn:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .chapter-btn.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .chapter-icon {
+      font-size: 1.1rem;
+    }
+
+    /* Progress counter */
+    .progress-counter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(175, 75, 239, 0.05);
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(175, 75, 239, 0.1);
+      animation: slideInRight 0.6s ease-out 0.6s both;
+    }
+
+    .counter-item {
+      text-align: center;
+      animation: countUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    .counter-item:nth-child(1) { animation-delay: 0.8s; }
+    .counter-item:nth-child(2) { animation-delay: 1s; }
+    .counter-item:nth-child(3) { animation-delay: 1.2s; }
+
+    .counter-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      display: block;
+    }
+
+    .counter-label {
+      font-size: 0.75rem;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Chapter headers */
+    .chapter-header {
+      margin-top: 24px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(12, 10, 24, 0.1);
+    }
+
+    .chapter-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chapter-title.chapter-4 {
+      color: #6366f1;
+    }
+
+    .chapter-title.chapter-15 {
+      color: var(--color-success);
+    }
+
+    .chapter-count {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      font-weight: normal;
+    }
+
+    /* Objectives list */
+    .objectives-container {
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 8px;
+      margin-bottom: 20px;
+    }
+
+    .objectives-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .objectives-container::-webkit-scrollbar-track {
+      background: rgba(12, 10, 24, 0.05);
+      border-radius: 3px;
+    }
+
+    .objectives-container::-webkit-scrollbar-thumb {
+      background: var(--color-primary-soft);
+      border-radius: 3px;
+    }
+
+    .objectives-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .objective-card {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 14px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .objective-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .objective-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .objective-card:hover::before {
+      left: 100%;
+    }
+
+    .objective-card.active {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      border-left: 4px solid var(--color-accent);
+    }
+
+    .objective-card.chapter-4 {
+      border-top: 3px solid #6366f1;
+    }
+
+    .objective-card.chapter-15 {
+      border-top: 3px solid var(--color-success);
+    }
+
+    @media (max-width: 480px) {
+      .objective-card {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+      }
+      .objective-icon {
+        justify-self: flex-end;
+      }
+    }
+
+    .objective-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      color: #111827;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .objective-card:hover .objective-number {
+      transform: rotate(5deg) scale(1.1);
+    }
+
+    .objective-card.chapter-4 .objective-number {
+      background: linear-gradient(135deg, #818cf8, #6366f1);
+      color: white;
+    }
+
+    .objective-card.chapter-15 .objective-number {
+      background: linear-gradient(135deg, #34d399, #10b981);
+      color: white;
+    }
+
+    .objective-card.active .objective-number {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      color: white;
+    }
+
+    .objective-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .objective-verb {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #c4b5fd;
+      transition: color 0.3s ease;
+    }
+
+    .objective-card.chapter-4 .objective-verb {
+      color: #a5b4fc;
+    }
+
+    .objective-card.chapter-15 .objective-verb {
+      color: #6ee7b7;
+    }
+
+    .objective-card.active .objective-verb {
+      color: #ffffff;
+    }
+
+    .objective-text {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .objective-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(250, 250, 250, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #f9fafb;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      margin-top: 4px;
+    }
+
+    .objective-card:hover .objective-icon {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.1);
+    }
+
+    .objective-card.active .objective-icon {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      transform: scale(1.1);
+    }
+
+    /* Right-hand content */
+    .objectives-header {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--color-text);
+      margin-bottom: 8px;
+      animation: slideInRight 0.6s ease-out 0.7s both;
+    }
+
+    .section-tag {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 12px;
+      animation: slideInRight 0.6s ease-out 0.8s both;
+    }
+
+    .week-overview {
+      background: rgba(12, 10, 24, 0.96);
+      border-radius: 18px;
+      padding: 20px;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.7);
+      margin-bottom: 20px;
+      animation: slideInRight 0.6s ease-out 0.9s both;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .week-overview:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px rgba(15, 23, 42, 0.8);
+    }
+
+    .week-overview strong {
+      color: #ffffff;
+    }
+
+    .mini-heading {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin: 12px 0 14px;
+    }
+
+    .outcomes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #f9fafb;
+    }
+
+    .outcomes-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      transition: transform 0.3s ease;
+      padding: 6px 0;
+    }
+
+    .outcomes-list li:hover {
+      transform: translateX(5px);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: var(--color-accent);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+    }
+
+    .outcomes-list li:hover .dot {
+      background: var(--color-primary);
+      transform: scale(1.5);
+    }
+
+    .note-card {
+      margin-top: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.7);
+      padding: 14px 16px;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .note-card:hover {
+      border-color: var(--color-primary-soft);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .note-card strong {
+      color: #fef3c7;
+    }
+
+    /* Patient scenarios */
+    .patient-scenarios {
+      background: rgba(12, 10, 24, 0.96);
+      border-radius: 18px;
+      padding: 20px;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.7);
+      margin-bottom: 20px;
+      animation: slideInRight 0.6s ease-out 1s both;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .patient-scenarios:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px rgba(15, 23, 42, 0.8);
+    }
+
+    .patient-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--color-accent);
+      transition: all 0.3s ease;
+    }
+
+    .patient-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+    }
+
+    .patient-name {
+      font-weight: 700;
+      color: #a5a3f8;
+      margin-bottom: 4px;
+      font-size: 1rem;
+    }
+
+    .patient-role {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .patient-challenge {
+      font-size: 0.88rem;
+      color: #e5e7eb;
+      font-style: italic;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 2px solid rgba(165, 163, 248, 0.3);
+    }
+
+    .patient-questions {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      padding-left: 20px;
+    }
+
+    .patient-questions li {
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    .patient-questions li:before {
+      content: "•";
+      color: var(--color-accent);
+      position: absolute;
+      left: -15px;
+    }
+
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-btn.primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .action-btn.primary:hover {
+      background: #9a3bd6;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+    }
+
+    .action-btn.secondary {
+      background: rgba(12, 10, 24, 0.08);
+      color: var(--color-text);
+      border: 1px solid rgba(12, 10, 24, 0.1);
+    }
+
+    .action-btn.secondary:hover {
+      background: rgba(12, 10, 24, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Completion celebration */
+    .completion-celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .celebration-content {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      max-width: 500px;
+      animation: fadeInUp 0.5s ease;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .celebration-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    .celebration-title {
+      font-size: 2rem;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+    }
+
+    .celebration-text {
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .celebration-btn {
+      padding: 14px 28px;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .celebration-btn:hover {
+      background: #9a3bd6;
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(175, 75, 239, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="week4-heading">
+    <!-- Header spanning both columns -->
+    <header class="brand-row">
+      <div class="brand">
+        <img
+          src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+          alt="AlliedRx logo"
+          class="brand-logo"
+        />
+        <div class="course-meta">
+          <span class="course-name">Clinical Medical Assistant • Week 4</span>
+          <div class="week-label">
+            <span class="week-label-dot"></span>
+            <span>Chapter 4: Therapeutic Communication • Chapter 15: Gastroenterology</span>
+          </div>
+        </div>
+      </div>
+
+      <span class="badge-mode">Campus &amp; Online</span>
+    </header>
+
+    <h1 id="week4-heading">Week 4 Objectives: Communication & Gastroenterology</h1>
+    <p class="subtitle">
+      Master <strong>therapeutic communication</strong> for effective patient interviews and 
+      explore <strong>gastroenterology procedures</strong> including GI system anatomy, 
+      common disorders, and patient preparation. <strong>28 objectives</strong> across two chapters.
+    </p>
+
+    <!-- Chapter navigation -->
+    <div class="chapter-nav">
+      <button class="chapter-btn active" data-chapter="all">
+        <span class="chapter-icon">📚</span>
+        All Chapters (4 & 15)
+      </button>
+      <button class="chapter-btn" data-chapter="4">
+        <span class="chapter-icon">🗣️</span>
+        Chapter 4: Therapeutic Communication (15 objectives)
+      </button>
+      <button class="chapter-btn" data-chapter="15">
+        <span class="chapter-icon">🩺</span>
+        Chapter 15: Gastroenterology (13 objectives)
+      </button>
+    </div>
+
+    <!-- LEFT COLUMN: All objectives -->
+    <section class="column left-column" aria-label="Week 4 objectives list">
+      <!-- Progress counter -->
+      <div class="progress-counter">
+        <div class="counter-item">
+          <span class="counter-number" id="total-objectives">28</span>
+          <span class="counter-label">Total Objectives</span>
+        </div>
+        <div class="counter-item">
+          <span class="counter-number">2</span>
+          <span class="counter-label">Chapters</span>
+        </div>
+        <div class="counter-item">
+          <span class="counter-number">40+</span>
+          <span class="counter-label">Key Terms</span>
+        </div>
+      </div>
+
+      <!-- Chapter 4 Header -->
+      <div class="chapter-header">
+        <h2 class="chapter-title chapter-4">
+          <span>🗣️ Chapter 4: Therapeutic Communication</span>
+          <span class="chapter-count">(15 objectives)</span>
+        </h2>
+      </div>
+
+      <!-- Objectives Container with Scroll -->
+      <div class="objectives-container">
+        <div class="objectives-list" id="objectives-container">
+          <!-- Chapter 4 Objectives (1-15) -->
+          <article class="objective-card chapter-4" data-chapter="4" id="obj1">
+            <div class="objective-number">01</div>
+            <div class="objective-main">
+              <div class="objective-verb">Define</div>
+              <p class="objective-text">
+                Define, spell, and pronounce terms related to therapeutic communication, 
+                patient assessment, and documentation.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📖</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj2">
+            <div class="objective-number">02</div>
+            <div class="objective-main">
+              <div class="objective-verb">Employ</div>
+              <p class="objective-text">
+                Employ the concept of holistic care in the patient assessment process.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🌱</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj3">
+            <div class="objective-number">03</div>
+            <div class="objective-main">
+              <div class="objective-verb">Describe</div>
+              <p class="objective-text">
+                Describe the components of the patient's medical history and how to collect 
+                history information.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📋</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj4">
+            <div class="objective-number">04</div>
+            <div class="objective-main">
+              <div class="objective-verb">Discuss</div>
+              <p class="objective-text">
+                Discuss how to successfully understand and communicate with patients and 
+                display sensitivity to diverse populations.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🌍</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj5">
+            <div class="objective-number">05</div>
+            <div class="objective-main">
+              <div class="objective-verb">Demonstrate</div>
+              <p class="objective-text">
+                Demonstrate therapeutic communication feedback techniques to obtain information 
+                when gathering a patient history.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">💬</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj6">
+            <div class="objective-number">06</div>
+            <div class="objective-main">
+              <div class="objective-verb">Respond</div>
+              <p class="objective-text">
+                Respond to nonverbal communication when interacting with patients.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">👁️</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj7">
+            <div class="objective-number">07</div>
+            <div class="objective-main">
+              <div class="objective-verb">Identify</div>
+              <p class="objective-text">
+                Identify barriers to communication and their impact on patient assessment; 
+                compare open-ended and closed-ended questions.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🚧</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj8">
+            <div class="objective-number">08</div>
+            <div class="objective-main">
+              <div class="objective-verb">Discuss & Demonstrate</div>
+              <p class="objective-text">
+                Discuss the patient interview, identify barriers to communication, detect 
+                defense mechanisms, and demonstrate professional interviewing techniques.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🎤</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj9">
+            <div class="objective-number">09</div>
+            <div class="objective-main">
+              <div class="objective-verb">Discuss</div>
+              <p class="objective-text">
+                Discuss the use of therapeutic communication techniques with patients across 
+                the lifespan.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">👶👵</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj10">
+            <div class="objective-number">10</div>
+            <div class="objective-main">
+              <div class="objective-verb">Compare</div>
+              <p class="objective-text">
+                Compare and contrast signs and symptoms.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">⚖️</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj11">
+            <div class="objective-number">11</div>
+            <div class="objective-main">
+              <div class="objective-verb">Document</div>
+              <p class="objective-text">
+                Document patient care accurately in the medical record.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📝</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj12">
+            <div class="objective-number">12</div>
+            <div class="objective-main">
+              <div class="objective-verb">Identify & Use</div>
+              <p class="objective-text">
+                Identify and define medical terms and abbreviations related to body systems; 
+                use medical terminology correctly.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🏥</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj13">
+            <div class="objective-number">13</div>
+            <div class="objective-main">
+              <div class="objective-verb">Differentiate</div>
+              <p class="objective-text">
+                Differentiate the documentation systems used in ambulatory care practices.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🗂️</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj14">
+            <div class="objective-number">14</div>
+            <div class="objective-main">
+              <div class="objective-verb">Explain</div>
+              <p class="objective-text">
+                Explain "meaningful use" as it applies to the electronic health record (EHR).
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">💻</div>
+          </article>
+
+          <article class="objective-card chapter-4" data-chapter="4" id="obj15">
+            <div class="objective-number">15</div>
+            <div class="objective-main">
+              <div class="objective-verb">Describe</div>
+              <p class="objective-text">
+                Describe the role of patient education, in addition to legal and ethical issues, 
+                in the patient assessment process.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">⚖️📚</div>
+          </article>
+
+          <!-- Chapter 15 Header -->
+          <div class="chapter-header" style="margin-top: 32px;">
+            <h2 class="chapter-title chapter-15">
+              <span>🩺 Chapter 15: Gastroenterology</span>
+              <span class="chapter-count">(13 objectives)</span>
+            </h2>
+          </div>
+
+          <!-- Chapter 15 Objectives (16-28) -->
+          <article class="objective-card chapter-15" data-chapter="15" id="obj16">
+            <div class="objective-number">16</div>
+            <div class="objective-main">
+              <div class="objective-verb">Define</div>
+              <p class="objective-text">
+                Define, spell, and pronounce terms listed in the gastroenterology vocabulary.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📖</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj17">
+            <div class="objective-number">17</div>
+            <div class="objective-main">
+              <div class="objective-verb">Describe</div>
+              <p class="objective-text">
+                Describe the primary functions of the GI system.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🔬</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj18">
+            <div class="objective-number">18</div>
+            <div class="objective-main">
+              <div class="objective-verb">Identify & Describe</div>
+              <p class="objective-text">
+                Identify the anatomic structures that make up the GI system and describe 
+                the physiology of each.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🗺️</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj19">
+            <div class="objective-number">19</div>
+            <div class="objective-main">
+              <div class="objective-verb">Differentiate</div>
+              <p class="objective-text">
+                Differentiate among the abdominal quadrants and regions.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">➕</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj20">
+            <div class="objective-number">20</div>
+            <div class="objective-main">
+              <div class="objective-verb">Summarize & Perform</div>
+              <p class="objective-text">
+                Summarize the typical symptoms and characteristics of GI complaints and 
+                perform telephone screening for patients with GI complaints.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📞</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj21">
+            <div class="objective-number">21</div>
+            <div class="objective-main">
+              <div class="objective-verb">Distinguish</div>
+              <p class="objective-text">
+                Distinguish among cancers of the GI tract.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🎗️</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj22">
+            <div class="objective-number">22</div>
+            <div class="objective-main">
+              <div class="objective-verb">List & Describe</div>
+              <p class="objective-text">
+                List common esophageal and gastric disorders; describe signs/symptoms, 
+                diagnostic tests, and treatments.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📋</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj23">
+            <div class="objective-number">23</div>
+            <div class="objective-main">
+              <div class="objective-verb">List & Describe</div>
+              <p class="objective-text">
+                List intestinal disorders; describe signs/symptoms, diagnostic tests, and treatments.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">📋</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj24">
+            <div class="objective-number">24</div>
+            <div class="objective-main">
+              <div class="objective-verb">Classify & List</div>
+              <p class="objective-text">
+                Classify disorders of the liver and gallbladder, and list signs/symptoms, 
+                diagnostic tests, and treatments.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🏷️</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj25">
+            <div class="objective-number">25</div>
+            <div class="objective-main">
+              <div class="objective-verb">Summarize</div>
+              <p class="objective-text">
+                Summarize the medical assistant's role in the GI examination.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">👩‍⚕️</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj26">
+            <div class="objective-number">26</div>
+            <div class="objective-main">
+              <div class="objective-verb">Explain & Demonstrate</div>
+              <p class="objective-text">
+                Explain common diagnostic procedures for the GI system and demonstrate 
+                assisting with endoscopic colon examination.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">🔍</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj27">
+            <div class="objective-number">27</div>
+            <div class="objective-main">
+              <div class="objective-verb">Describe</div>
+              <p class="objective-text">
+                Describe the medical assistant's role in the proctologic examination.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">👨‍⚕️</div>
+          </article>
+
+          <article class="objective-card chapter-15" data-chapter="15" id="obj28">
+            <div class="objective-number">28</div>
+            <div class="objective-main">
+              <div class="objective-verb">Describe</div>
+              <p class="objective-text">
+                Describe patient education, legal and ethical issues related to assisting 
+                in gastroenterology.
+              </p>
+            </div>
+            <div class="objective-icon" aria-hidden="true">⚖️📚</div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="action-btn primary" id="mark-all-btn">
+          <span>✓</span>
+          Mark All as Complete
+        </button>
+        <button class="action-btn secondary" id="reset-all-btn">
+          <span>↻</span>
+          Reset All Objectives
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: narrative + patient scenarios -->
+    <aside class="column right-column" aria-label="Overview of this week's content">
+      <h2 class="objectives-header">Week 4 Focus Areas</h2>
+      <p class="section-tag">Clinical Communication & GI Procedures</p>
+
+      <div class="week-overview">
+        <p>
+          This week combines <strong>therapeutic communication skills</strong> with 
+          <strong>gastroenterology procedures</strong>. You'll learn to conduct effective 
+          patient interviews while mastering GI system anatomy, common disorders, and 
+          diagnostic preparation.
+        </p>
+
+        <p class="mini-heading">Key Competencies This Week:</p>
+        <ul class="outcomes-list">
+          <li>
+            <span class="dot"></span>
+            <span>Apply active listening and nonverbal communication techniques to gather comprehensive patient histories</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Navigate cultural sensitivity and communication barriers in diverse patient populations</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Master GI system anatomy including abdominal quadrants and regions</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Prepare patients for gastroenterology procedures with clear instructions and education</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Document patient encounters accurately using appropriate medical terminology</span>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <span>Recognize common GI disorders and understand their diagnostic pathways</span>
+          </li>
+        </ul>
+
+        <div class="note-card">
+          <strong>Clinical Connection:</strong> These skills work together in practice. 
+          Effective communication helps gather accurate GI symptom histories, while 
+          understanding gastroenterology enables you to ask informed follow-up questions 
+          during patient interviews. Master both to provide comprehensive patient care.
+        </div>
+      </div>
+
+      <h2 class="objectives-header" style="margin-top: 24px;">Patient Scenarios</h2>
+      <p class="section-tag">Real-World Application</p>
+
+      <div class="patient-scenarios">
+        <div class="patient-card">
+          <div class="patient-name">Chris Isaacson, MA (MMA)</div>
+          <div class="patient-role">Medical Assistant, Ambulatory Care Clinic</div>
+          <p class="patient-challenge">
+            "I'm having difficulty gathering comprehensive information from patients. 
+            They don't always respond openly, and the attending physician isn't satisfied 
+            with my documentation."
+          </p>
+          <ul class="patient-questions">
+            <li>How can I develop helping relationships for more comprehensive histories?</li>
+            <li>Would greater sensitivity to diverse populations help?</li>
+            <li>How can active listening and attention to nonverbal behaviors improve my communication?</li>
+          </ul>
+        </div>
+
+        <div class="patient-card">
+          <div class="patient-name">Joan Rothman, MA (AAMA)</div>
+          <div class="patient-role">Medical Assistant, Gastroenterology Practice</div>
+          <p class="patient-challenge">
+            "I need to create educational packets for GI diagnostic studies and ensure 
+            patients are properly prepared for procedures."
+          </p>
+          <ul class="patient-questions">
+            <li>What should I include in educational packets for GI examinations?</li>
+            <li>What GI disorders should I expect in this specialty practice?</li>
+            <li>How can I help new staff members understand GI procedures?</li>
+          </ul>
+        </div>
+
+        <div class="note-card" style="margin-top: 16px;">
+          <strong>Learning Strategy:</strong> As you study, consider how Chris and Joan's 
+          challenges connect to this week's objectives. What communication techniques would 
+          help Chris? What GI knowledge does Joan need for her educational packets? Try to 
+          answer their questions as you complete each objective.
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Completion Celebration Modal -->
+  <div class="completion-celebration" id="celebration-modal">
+    <div class="celebration-content">
+      <div class="celebration-icon">🎯</div>
+      <h2 class="celebration-title">All 28 Objectives Mastered!</h2>
+      <p class="celebration-text">
+        Outstanding achievement! You've completed all 28 Week 4 objectives, building essential 
+        skills in both therapeutic communication and gastroenterology procedures.
+      </p>
+      <p class="celebration-text">
+        You're now prepared to conduct effective patient interviews, assist with 
+        GI diagnostic procedures, and provide comprehensive patient education in clinical settings.
+      </p>
+      <button class="celebration-btn" id="close-celebration">Continue to Reading Assignments</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // State management
+      const totalObjectives = 28;
+      let completedObjectives = {};
+      let totalCompleted = 0;
+
+      // Initialize completed objectives object
+      for (let i = 1; i <= totalObjectives; i++) {
+        completedObjectives[`obj${i}`] = false;
+      }
+
+      // DOM elements
+      const objectiveCards = document.querySelectorAll('.objective-card');
+      const chapterButtons = document.querySelectorAll('.chapter-btn');
+      const counterNumber = document.getElementById('total-objectives');
+      const celebrationModal = document.getElementById('celebration-modal');
+      const closeCelebrationBtn = document.getElementById('close-celebration');
+      const markAllBtn = document.getElementById('mark-all-btn');
+      const resetAllBtn = document.getElementById('reset-all-btn');
+
+      // Filter functionality by chapter
+      chapterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Update active button
+          chapterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          const chapter = this.getAttribute('data-chapter');
+          
+          // Show/hide chapter headers
+          document.querySelectorAll('.chapter-header').forEach(header => {
+            if (chapter === 'all') {
+              header.style.display = 'block';
+            } else if (header.querySelector('.chapter-4') && chapter === '4') {
+              header.style.display = 'block';
+            } else if (header.querySelector('.chapter-15') && chapter === '15') {
+              header.style.display = 'block';
+            } else {
+              header.style.display = 'none';
+            }
+          });
+          
+          // Filter cards
+          objectiveCards.forEach(card => {
+            if (chapter === 'all') {
+              card.style.display = 'grid';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 10);
+            } else {
+              if (card.getAttribute('data-chapter') === chapter) {
+                card.style.display = 'grid';
+                setTimeout(() => {
+                  card.style.opacity = '1';
+                  card.style.transform = 'translateY(0)';
+                }, 10);
+              } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                  card.style.display = 'none';
+                }, 300);
+              }
+            }
+          });
+        });
+      });
+
+      // Toggle objective completion
+      function toggleObjective(cardId, showAnimation = true) {
+        const card = document.getElementById(cardId);
+        const isCompleted = completedObjectives[cardId];
+        
+        if (isCompleted) {
+          // Mark as incomplete
+          card.classList.remove('active');
+          completedObjectives[cardId] = false;
+          totalCompleted--;
+          updateCounter();
+        } else {
+          // Mark as complete
+          card.classList.add('active');
+          completedObjectives[cardId] = true;
+          totalCompleted++;
+          updateCounter();
+          
+          // Add animation if requested
+          if (showAnimation) {
+            const icon = card.querySelector('.objective-icon');
+            icon.style.transform = 'scale(1.2) rotate(10deg)';
+            setTimeout(() => {
+              icon.style.transform = 'scale(1.1)';
+            }, 300);
+          }
+          
+          // Check if all objectives are completed
+          if (totalCompleted === totalObjectives) {
+            setTimeout(() => {
+              showCelebration();
+            }, 500);
+          }
+        }
+      }
+
+      // Mark all objectives as complete
+      function markAllComplete() {
+        for (let i = 1; i <= totalObjectives; i++) {
+          const cardId = `obj${i}`;
+          if (!completedObjectives[cardId]) {
+            toggleObjective(cardId, false);
+          }
+        }
+        
+        // Show celebration after marking all
+        setTimeout(() => {
+          showCelebration();
+        }, 300);
+      }
+
+      // Reset all objectives
+      function resetAllObjectives() {
+        objectiveCards.forEach(card => {
+          card.classList.remove('active');
+        });
+        
+        // Reset state
+        for (let i = 1; i <= totalObjectives; i++) {
+          completedObjectives[`obj${i}`] = false;
+        }
+        
+        totalCompleted = 0;
+        updateCounter();
+      }
+
+      // Update counter
+      function updateCounter() {
+        // Animate the counter number
+        counterNumber.style.color = '#00b894';
+        setTimeout(() => {
+          counterNumber.style.color = 'var(--color-primary)';
+        }, 300);
+        
+        counterNumber.textContent = totalCompleted;
+      }
+
+      // Show celebration modal
+      function showCelebration() {
+        celebrationModal.style.display = 'flex';
+      }
+
+      // Close celebration modal
+      function closeCelebration() {
+        celebrationModal.style.display = 'none';
+      }
+
+      // Interactive objective cards
+      objectiveCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const cardId = this.id;
+          toggleObjective(cardId);
+        });
+        
+        // Add keyboard navigation
+        card.setAttribute('tabindex', '0');
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const cardId = this.id;
+            toggleObjective(cardId);
+          }
+        });
+      });
+
+      // Animate counter numbers
+      function animateCounter(element, target, duration) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(start);
+          }
+        }, 16);
+      }
+      
+      // Start counter animation after page load
+      setTimeout(() => {
+        const counterElements = document.querySelectorAll('.counter-number');
+        const targets = [28, 2, 40];
+        
+        counterElements.forEach((element, index) => {
+          animateCounter(element, targets[index], 1000);
+        });
+      }, 1500);
+
+      // Add hover effect to outcomes list items
+      const outcomesItems = document.querySelectorAll('.outcomes-list li');
+      outcomesItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+          const dot = this.querySelector('.dot');
+          dot.style.transform = 'scale(1.5)';
+          dot.style.background = 'var(--color-primary)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          const dot = this.querySelector('.dot');
+          dot.style.transform = 'scale(1)';
+          dot.style.background = 'var(--color-accent)';
+        });
+      });
+
+      // Add scroll animation for cards
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Observe all objective cards
+      objectiveCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+      });
+
+      // Event listeners
+      markAllBtn.addEventListener('click', markAllComplete);
+      resetAllBtn.addEventListener('click', resetAllObjectives);
+      closeCelebrationBtn.addEventListener('click', closeCelebration);
+      
+      // Close modal when clicking outside
+      celebrationModal.addEventListener('click', (e) => {
+        if (e.target === celebrationModal) {
+          closeCelebration();
+        }
+      });
+
+      // Initialize with a few objectives completed for demo
+      setTimeout(() => {
+        // Mark first objective of each chapter as completed
+        toggleObjective('obj1', false);  // Chapter 4 objective 1
+        toggleObjective('obj5', false);  // Chapter 4 objective 5
+        toggleObjective('obj16', false); // Chapter 15 objective 1
+        toggleObjective('obj20', false); // Chapter 15 objective 5
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
