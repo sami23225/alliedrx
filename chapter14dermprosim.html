@@ -1356,7 +1356,7 @@
                     <div class="feedback-content">
                         <strong>Correct Dressing Order (Wound Bed → Outward):</strong><br>
                         1. <strong>Non‑adherent dressing</strong> – Directly on wound bed; prevents adherence, minimizes trauma during changes<br>
-                        2. <strong>Absorbent pad</div> – Manages exudate; change when strike‑through occurs (exudate reaches edge)<br>
+                        2. <strong>Absorbent pad</strong> – Manages exudate; change when strike‑through occurs (exudate reaches edge)<br>
                         3. <strong>Rolled gauze</strong> – Provides light compression, secures inner layers<br>
                         4. <strong>Tape/bandage</strong> – Anchors dressing; avoid circumferential wrapping on extremities<br><br>
                         
@@ -1664,6 +1664,17 @@
 
                 // Correct order of steps
                 const correctOrder = [1, 2, 3, 4, 5, 6, 7, 8];
+                const stepTexts = {
+                    1: 'Obtain informed consent',
+                    2: 'Cleanse and anesthetize site',
+                    3: 'Stretch skin perpendicular to tension lines',
+                    4: 'Rotate punch biopsy tool',
+                    5: 'Remove tissue specimen',
+                    6: 'Apply pressure or suture',
+                    7: 'Apply dressing',
+                    8: 'Label specimen container'
+                };
+                
                 let placedSteps = [];
                 let correctCount = 0;
 
@@ -1735,6 +1746,43 @@
                         status.textContent = 'Completed';
                         status.style.color = '#00b894';
                         document.querySelector('#activity-1').classList.add('completed');
+                        
+                        // Update feedback based on correctness
+                        const feedbackTitle = feedback.querySelector('.feedback-title');
+                        const feedbackContent = feedback.querySelector('.feedback-content');
+                        
+                        if (correctCount === 8) {
+                            feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Biopsy Sequence Mastered!';
+                            feedbackContent.innerHTML = `
+                                <strong>Correct Sequence:</strong><br>
+                                1. <strong>Obtain informed consent</strong> – Document risks, benefits, alternatives<br>
+                                2. <strong>Cleanse and anesthetize</strong> – Chlorhexidine or betadine; wait 3-5 minutes after lidocaine<br>
+                                3. <strong>Stretch skin</strong> – Perpendicular to tension lines to create elliptical defect for easier closure<br>
+                                4. <strong>Rotate punch tool</strong> – Apply firm pressure, rotate clockwise/counterclockwise until through dermis<br>
+                                5. <strong>Remove specimen</strong> – Use skin hook or needle to lift, cut base with iris scissors<br>
+                                6. <strong>Apply pressure/suture</strong> – Hemostasis first; simple interrupted sutures for closure<br>
+                                7. <strong>Apply dressing</strong> – Non-adherent dressing (Adaptic, petrolatum gauze)<br>
+                                8. <strong>Label specimen</strong> – Patient name, DOB, date, site, clinician name<br><br>
+                                <strong>Common Errors:</strong> Forgetting consent, inadequate anesthesia time, crushing specimen,
+                                incorrect suture removal timing (face 5-7 days, trunk 7-14 days).
+                            `;
+                        } else {
+                            feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Biopsy Sequence Needs Review';
+                            feedbackContent.innerHTML = `
+                                <strong>You placed ${correctCount} out of 8 steps correctly.</strong><br><br>
+                                The correct sequence is:<br>
+                                1. Obtain informed consent<br>
+                                2. Cleanse and anesthetize site<br>
+                                3. Stretch skin perpendicular to tension lines<br>
+                                4. Rotate punch biopsy tool<br>
+                                5. Remove tissue specimen<br>
+                                6. Apply pressure or suture<br>
+                                7. Apply dressing<br>
+                                8. Label specimen container<br><br>
+                                Review the steps and try again.
+                            `;
+                        }
+                        
                         feedback.classList.add('show');
                         updateProgressSummary();
                     }
@@ -1772,10 +1820,44 @@
                             status.textContent = 'Completed';
                             status.style.color = '#00b894';
                             document.querySelector('#activity-2').classList.add('completed');
+                            
+                            // Set success feedback
+                            const feedbackTitle = feedback.querySelector('.feedback-title');
+                            const feedbackContent = feedback.querySelector('.feedback-content');
+                            feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Suture Selection Correct!';
+                            feedbackContent.innerHTML = `
+                                <strong>Optimal Choice for Scenario 1:</strong> <strong>Non‑absorbable Monofilament (5‑0 or 6‑0 Nylon)</strong><br><br>
+                                <strong>Rationale:</strong><br>
+                                • Facial wounds require fine cosmetic closure – 6‑0 nylon minimizes scarring<br>
+                                • Monofilament causes less tissue reaction than braided sutures<br>
+                                • Non‑absorbable allows precise control of removal timing (5‑7 days for face)<br>
+                                • Simple interrupted technique provides precise edge approximation<br><br>
+                                <strong>Alternative Considerations:</strong><br>
+                                • Subcuticular running suture with absorbable monofilament (Monocryl) for wounds under tension<br>
+                                • Tissue adhesive (Dermabond) for small, low‑tension facial lacerations<br>
+                                • Staples contraindicated on face due to poor cosmetic outcome<br><br>
+                                <strong>Documentation:</strong> "3cm linear laceration R cheek closed with 6‑0 nylon simple interrupted sutures.
+                                Wound cleansed, approximated without tension. Patient instructed on wound care and suture removal in 5‑7 days."
+                            `;
                             feedback.classList.add('show');
                             updateProgressSummary();
                         } else {
+                            // Show immediate incorrect feedback
                             this.classList.add('wrong');
+                            feedback.classList.add('show');
+                            const feedbackTitle = feedback.querySelector('.feedback-title');
+                            const feedbackContent = feedback.querySelector('.feedback-content');
+                            feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Suture Selection Incorrect';
+                            feedbackContent.innerHTML = `
+                                <strong>Scenario 1: Facial Laceration</strong><br>
+                                The correct choice is <strong>Non‑absorbable Monofilament (5‑0 or 6‑0 Nylon)</strong>.<br><br>
+                                <strong>Rationale:</strong><br>
+                                • Facial wounds require fine cosmetic closure – 6‑0 nylon minimizes scarring<br>
+                                • Monofilament causes less tissue reaction than braided sutures<br>
+                                • Non‑absorbable allows precise control of removal timing (5‑7 days for face)<br>
+                                • Simple interrupted technique provides precise edge approximation<br><br>
+                                Review the scenario and try again.
+                            `;
                         }
                     });
                 });
@@ -1865,6 +1947,45 @@
                             status.textContent = 'Completed';
                             status.style.color = '#00b894';
                             document.querySelector('#activity-3').classList.add('completed');
+                            
+                            // Update feedback based on correctness
+                            const feedbackTitle = feedback.querySelector('.feedback-title');
+                            const feedbackContent = feedback.querySelector('.feedback-content');
+                            
+                            if (correctPlacementsCount === 4) {
+                                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Dressing Application Correct!';
+                                feedbackContent.innerHTML = `
+                                    <strong>Correct Dressing Order (Wound Bed → Outward):</strong><br>
+                                    1. <strong>Non‑adherent dressing</strong> – Directly on wound bed; prevents adherence, minimizes trauma during changes<br>
+                                    2. <strong>Absorbent pad</strong> – Manages exudate; change when strike‑through occurs (exudate reaches edge)<br>
+                                    3. <strong>Rolled gauze</strong> – Provides light compression, secures inner layers<br>
+                                    4. <strong>Tape/bandage</strong> – Anchors dressing; avoid circumferential wrapping on extremities<br><br>
+                                    
+                                    <strong>Wound‑Specific Considerations:</strong><br>
+                                    • <strong>Dry wounds:</strong> Hydrogel or hydrocolloid to maintain moisture<br>
+                                    • <strong>Heavily exudating:</strong> Alginate or foam dressings<br>
+                                    • <strong>Infected wounds:</strong> Antimicrobial dressings (silver, iodine)<br>
+                                    • <strong>Diabetic ulcers:</strong> Off‑loading + advanced dressings (collagen, growth factors)<br><br>
+                                    
+                                    <strong>Patient Education Points:</strong><br>
+                                    • "Keep dressing clean and dry"<br>
+                                    • "Change dressing if soiled or exudate leaks through"<br>
+                                    • "Report increased pain, redness, swelling, or foul odor"<br>
+                                    • "Elevate extremity if possible to reduce swelling"
+                                `;
+                            } else {
+                                feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Dressing Application Needs Review';
+                                feedbackContent.innerHTML = `
+                                    <strong>You placed ${correctPlacementsCount} out of 4 layers correctly.</strong><br><br>
+                                    The correct order is (from wound bed outward):<br>
+                                    1. Non‑adherent Dressing<br>
+                                    2. Absorbent Pad<br>
+                                    3. Rolled Gauze<br>
+                                    4. Tape/Bandage<br><br>
+                                    Review the dressing layers and try again.
+                                `;
+                            }
+                            
                             feedback.classList.add('show');
                             updateProgressSummary();
                         }
@@ -1955,6 +2076,50 @@
                             status.textContent = 'Completed';
                             status.style.color = '#00b894';
                             document.querySelector('#activity-4').classList.add('completed');
+                            
+                            // Update feedback based on correctness
+                            const feedbackTitle = feedback.querySelector('.feedback-title');
+                            const feedbackContent = feedback.querySelector('.feedback-content');
+                            
+                            if (correctMatchesCount === 6) {
+                                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Instrument Matching Correct!';
+                                feedbackContent.innerHTML = `
+                                    <strong>Procedure‑Instrument Matching:</strong><br><br>
+                                    <strong>Punch Biopsy:</strong><br>
+                                    • <strong>Punch biopsy tool</strong> (3‑8mm) – Creates cylindrical specimen<br>
+                                    • <strong>Skin hook</strong> – Lifts specimen without crushing<br>
+                                    • <strong>Iris scissors</strong> – Cuts specimen base<br>
+                                    • <strong>Tissue forceps</strong> – Handles specimen for pathology<br><br>
+                                    
+                                    <strong>Curettage & Electrodesiccation:</strong><br>
+                                    • <strong>Dermal curette</strong> (small, medium, large) – Scoops out lesion<br>
+                                    • <strong>Electrosurgical unit</strong> – Electrodesiccates base for hemostasis<br>
+                                    • <strong>Tissue forceps</strong> – Removes specimen<br><br>
+                                    
+                                    <strong>Suture Placement:</strong><br>
+                                    • <strong>Needle driver</strong> – Holds curved needle<br>
+                                    • <strong>Tissue forceps</strong> – Stabilizes tissue edges<br>
+                                    • <strong>Iris scissors</strong> – Cuts suture<br>
+                                    • <strong>Skin hook</strong> – Optional for retraction<br><br>
+                                    
+                                    <strong>Maintenance & Safety:</strong><br>
+                                    • Clean instruments immediately after use<br>
+                                    • Sharpen punch tools regularly<br>
+                                    • Check electrosurgical unit grounding pad placement<br>
+                                    • Dispose of single‑use items (blades, needles) in sharps container
+                                `;
+                            } else {
+                                feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Instrument Matching Needs Review';
+                                feedbackContent.innerHTML = `
+                                    <strong>You matched ${correctMatchesCount} out of 6 instruments correctly.</strong><br><br>
+                                    The correct matches are:<br>
+                                    • Punch Biopsy: Punch biopsy tool, Skin hook, Iris scissors<br>
+                                    • Curettage & Electrodesiccation: Dermal curette, Electrosurgical unit<br>
+                                    • Suture Placement: Tissue forceps<br><br>
+                                    Review the instruments and their uses and try again.
+                                `;
+                            }
+                            
                             feedback.classList.add('show');
                             updateProgressSummary();
                         }
