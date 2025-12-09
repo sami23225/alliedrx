@@ -1813,605 +1813,940 @@
         </div>
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // State Management
-            const state = {
-                activities: {
-                    1: { completed: false, correct: 0, total: 8, score: 0 }, // 8 skin structure matches
-                    2: { completed: false, correct: 0, total: 8, score: 0 }, // 8 lesions
-                    3: { completed: false, correct: 0, total: 5, score: 0 }, // 1 case with 5 criteria + action
-                    4: { completed: false, correct: 0, total: 5, score: 0 }  // 5 disorders
-                },
-                startedAt: new Date(),
-                timeSpent: 0,
-                currentCase: 1,
-                selectedRisk: null,
-                activity1Matches: {} // Track which structure matched which function
-            };
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // State Management
+    const state = {
+        activities: {
+            1: { completed: false, correct: 0, total: 8, score: 0, checked: false },
+            2: { completed: false, correct: 0, total: 8, score: 0, checked: false },
+            3: { completed: false, correct: 0, total: 1, score: 0, checked: false }, // Just 1 case decision
+            4: { completed: false, correct: 0, total: 5, score: 0, checked: false }
+        },
+        startedAt: new Date(),
+        timeSpent: 0,
+        activity1Matches: {}, // Track matches for Activity 1
+        activity2Placements: {}, // Track placements for Activity 2
+        activity3Selection: null, // Track selection for Activity 3
+        activity4Matches: {} // Track matches for Activity 4
+    };
 
-            // DOM Elements
-            const progressSteps = document.querySelectorAll('.progress-step');
-            const activityCards = document.querySelectorAll('.activity-card');
-            const completedCount = document.getElementById('completed-count');
-            const accuracyRate = document.getElementById('accuracy-rate');
-            const timeSpent = document.getElementById('time-spent');
-            const resetBtn = document.getElementById('reset-all-btn');
-            const checkBtn = document.getElementById('check-answers-btn');
-            const resultsBtn = document.getElementById('view-results-btn');
-            const resultsPanel = document.getElementById('results-panel');
-            const finalScore = document.getElementById('final-score');
+    // DOM Elements
+    const progressSteps = document.querySelectorAll('.progress-step');
+    const activityCards = document.querySelectorAll('.activity-card');
+    const completedCount = document.getElementById('completed-count');
+    const accuracyRate = document.getElementById('accuracy-rate');
+    const timeSpent = document.getElementById('time-spent');
+    const resetBtn = document.getElementById('reset-all-btn');
+    const checkBtn = document.getElementById('check-answers-btn');
+    const resultsBtn = document.getElementById('view-results-btn');
+    const resultsPanel = document.getElementById('results-panel');
+    const finalScore = document.getElementById('final-score');
 
-            // Timer for time spent
-            function updateTimer() {
-                const now = new Date();
-                const diff = Math.floor((now - state.startedAt) / 1000);
-                state.timeSpent = diff;
-                const minutes = Math.floor(diff / 60);
-                const seconds = diff % 60;
-                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    // Timer for time spent
+    function updateTimer() {
+        const now = new Date();
+        const diff = Math.floor((now - state.startedAt) / 1000);
+        state.timeSpent = diff;
+        const minutes = Math.floor(diff / 60);
+        const seconds = diff % 60;
+        timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+    setInterval(updateTimer, 1000);
+
+    // Update Progress Summary
+    function updateProgressSummary() {
+        let completed = 0;
+        let totalCorrect = 0;
+        let totalItems = 0;
+
+        Object.values(state.activities).forEach(activity => {
+            if (activity.completed) completed++;
+            totalCorrect += activity.correct;
+            totalItems += activity.total;
+        });
+
+        completedCount.textContent = completed;
+        const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+        accuracyRate.textContent = `${accuracy}%`;
+
+        // Update progress steps
+        progressSteps.forEach((step, index) => {
+            if (index < completed) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+            } else if (index === completed) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active', 'completed');
             }
-            setInterval(updateTimer, 1000);
+        });
+    }
 
-            // Update Progress Summary
-            function updateProgressSummary() {
-                let completed = 0;
-                let totalCorrect = 0;
-                let totalItems = 0;
+    // === ACTIVITY 1: Skin Structure & Function Matching (FIXED) ===
+    function initActivity1() {
+        const structureItems = document.querySelectorAll('#activity-1 .structure-item');
+        const functionItems = document.querySelectorAll('#activity-1 .function-item');
+        const feedback = document.getElementById('feedback-1');
+        const status = document.querySelector('#activity-1 .activity-status');
+        const feedbackTitle = feedback.querySelector('.feedback-title');
+        const feedbackContent = feedback.querySelector('.feedback-content');
 
-                Object.values(state.activities).forEach(activity => {
-                    if (activity.completed) completed++;
-                    totalCorrect += activity.correct;
-                    totalItems += activity.total;
-                });
+        // Correct matching pairs
+        const correctMatchesMap = {
+            'epidermis': 'Outermost layer; barrier protection, contains melanocytes',
+            'dermis': 'Contains collagen, elastin, blood vessels, nerves, and glands',
+            'hypodermis': 'Fat layer for insulation, cushioning, and energy storage',
+            'hair-follicle': 'Anchors hair; associated with sebaceous glands',
+            'sebaceous-gland': 'Produces sebum (oil) to lubricate skin and hair',
+            'sweat-gland': 'Regulates body temperature through perspiration',
+            'nerve-ending': 'Sensory receptors for touch, pain, temperature',
+            'blood-vessels': 'Supply nutrients, remove waste, regulate temperature'
+        };
 
-                completedCount.textContent = completed;
-                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
-                accuracyRate.textContent = `${accuracy}%`;
+        // Shuffle the function items to randomize order
+        const functionsContainer = document.querySelector('#activity-1 .functions-list');
+        const functionItemsArray = Array.from(functionItems);
+        
+        // Fisher-Yates shuffle
+        for (let i = functionItemsArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            functionsContainer.insertBefore(functionItemsArray[j], functionItemsArray[i]);
+            // Update the array to match new order
+            [functionItemsArray[i], functionItemsArray[j]] = [functionItemsArray[j], functionItemsArray[i]];
+        }
 
-                // Update progress steps
-                progressSteps.forEach((step, index) => {
-                    if (index < completed) {
-                        step.classList.add('completed');
-                        step.classList.remove('active');
-                    } else if (index === completed) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                    } else {
-                        step.classList.remove('active', 'completed');
+        // Reset matches
+        state.activity1Matches = {};
+
+        // Setup drag for structure items
+        structureItems.forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    type: 'structure',
+                    structure: this.dataset.structure,
+                    text: this.textContent
+                }));
+                this.classList.add('dragging');
+            });
+
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+
+        // Setup drop for function items
+        functionItems.forEach(item => {
+            item.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+
+            item.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+
+            item.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
+
+                // Check if already matched
+                if (this.classList.contains('matched')) {
+                    // Remove previous match if exists
+                    const prevStructure = Object.keys(state.activity1Matches).find(
+                        key => state.activity1Matches[key]?.functionElement === this
+                    );
+                    if (prevStructure) {
+                        delete state.activity1Matches[prevStructure];
+                        const prevStructureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${prevStructure}"]`);
+                        if (prevStructureEl) prevStructureEl.classList.remove('matched');
                     }
-                });
-            }
+                }
 
-            // === NEW ACTIVITY 1: Skin Structure & Function Matching ===
-            function initActivity1() {
-                const structureItems = document.querySelectorAll('#activity-1 .structure-item');
-                const functionItems = document.querySelectorAll('#activity-1 .function-item');
-                const feedback = document.getElementById('feedback-1');
-                const status = document.querySelector('#activity-1 .activity-status');
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                if (data.type !== 'structure') return;
 
-                let matchesMade = 0;
-                let correctMatches = 0;
+                const structure = data.structure;
+                const functionText = this.textContent;
 
-                // Correct matching pairs
-                const correctMatchesMap = {
-                    'epidermis': 'Outermost layer; barrier protection, contains melanocytes',
-                    'dermis': 'Contains collagen, elastin, blood vessels, nerves, and glands',
-                    'hypodermis': 'Fat layer for insulation, cushioning, and energy storage',
-                    'hair-follicle': 'Anchors hair; associated with sebaceous glands',
-                    'sebaceous-gland': 'Produces sebum (oil) to lubricate skin and hair',
-                    'sweat-gland': 'Regulates body temperature through perspiration',
-                    'nerve-ending': 'Sensory receptors for touch, pain, temperature',
-                    'blood-vessels': 'Supply nutrients, remove waste, regulate temperature'
+                // Store match
+                state.activity1Matches[structure] = {
+                    functionText: functionText,
+                    functionElement: this,
+                    correct: correctMatchesMap[structure] === functionText
                 };
 
-                // Setup drag for structure items
-                structureItems.forEach(item => {
-                    item.addEventListener('dragstart', function(e) {
-                        e.dataTransfer.setData('text/plain', JSON.stringify({
-                            type: 'structure',
-                            structure: this.dataset.structure,
-                            text: this.textContent
-                        }));
-                        this.classList.add('dragging');
-                    });
+                // Visual feedback
+                this.classList.add('matched');
+                
+                // Mark structure as matched
+                const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
+                if (structureEl) {
+                    structureEl.classList.add('matched');
+                }
 
-                    item.addEventListener('dragend', function() {
-                        this.classList.remove('dragging');
-                    });
-                });
+                // Update status
+                if (!state.activities[1].checked) {
+                    status.textContent = 'In Progress';
+                    status.style.color = 'var(--color-warning)';
+                }
+            });
 
-                // Setup drop for function items
-                functionItems.forEach(item => {
-                    item.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                        this.classList.add('hover');
-                    });
-
-                    item.addEventListener('dragleave', function() {
-                        this.classList.remove('hover');
-                    });
-
-                    item.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        this.classList.remove('hover');
-
-                        // Check if already matched
-                        if (this.classList.contains('matched')) return;
-
-                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                        if (data.type !== 'structure') return;
-
-                        const structure = data.structure;
-                        const functionText = this.textContent;
-
-                        // Check if correct match
-                        const isCorrect = correctMatchesMap[structure] === functionText;
-
-                        // Visual feedback
-                        if (isCorrect) {
-                            this.classList.add('correct-match');
-                            // Mark structure as matched
-                            const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
-                            if (structureEl) {
-                                structureEl.classList.add('matched');
-                            }
-                            correctMatches++;
-                        } else {
-                            this.classList.add('incorrect-match');
-                            setTimeout(() => {
-                                this.classList.remove('incorrect-match');
-                            }, 1000);
-                        }
-
-                        this.classList.add('matched');
-                        matchesMade++;
-
-                        // Store match
-                        state.activity1Matches[structure] = {
-                            functionText: functionText,
-                            correct: isCorrect
-                        };
-
-                        // Check completion
-                        if (matchesMade === 8) {
-                            state.activities[1].completed = true;
-                            state.activities[1].correct = correctMatches;
-                            state.activities[1].score = Math.round((correctMatches / 8) * 100);
-                            status.textContent = 'Completed';
-                            status.style.color = '#00b894';
-                            document.querySelector('#activity-1').classList.add('completed');
-                            feedback.classList.add('show');
-                            updateProgressSummary();
-                        }
-                    });
-                });
-            }
-
-            // Activity 2: Lesion Classification Game (Unchanged from original)
-            function initActivity2() {
-                const lesionCards = document.querySelectorAll('#activity-2 .lesion-card');
-                const primaryCategory = document.getElementById('primary-category');
-                const secondaryCategory = document.getElementById('secondary-category');
-                const feedback = document.getElementById('feedback-2');
-                const status = document.querySelector('#activity-2 .activity-status');
-
-                const correctCategories = {
-                    'macule': 'primary',
-                    'papule': 'primary',
-                    'vesicle': 'primary',
-                    'pustule': 'primary',
-                    'scale': 'secondary',
-                    'crust': 'secondary',
-                    'erosion': 'secondary',
-                    'ulcer': 'secondary'
-                };
-
-                let placedCards = 0;
-                let correctPlacements = 0;
-
-                // Setup drag and drop for lesion cards
-                lesionCards.forEach(card => {
-                    card.addEventListener('dragstart', function(e) {
-                        e.dataTransfer.setData('text/plain', JSON.stringify({
-                            lesion: this.dataset.lesion,
-                            type: this.dataset.type,
-                            html: this.outerHTML
-                        }));
-                        this.classList.add('dragging');
-                    });
-
-                    card.addEventListener('dragend', function() {
-                        this.classList.remove('dragging');
-                    });
-                });
-
-                // Setup category drop zones
-                [primaryCategory, secondaryCategory].forEach(category => {
-                    category.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                        this.classList.add('hover');
-                    });
-
-                    category.addEventListener('dragleave', function() {
-                        this.classList.remove('hover');
-                    });
-
-                    category.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        this.classList.remove('hover');
-
-                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                        const targetCategory = this.dataset.category;
-
-                        // Check if placement is correct
-                        const isCorrect = data.type === targetCategory;
-
-                        // Add card to category
-                        const cardDiv = document.createElement('div');
-                        cardDiv.innerHTML = data.html;
-                        cardDiv.querySelector('.lesion-card').classList.remove('dragging');
-                        cardDiv.querySelector('.lesion-card').style.cursor = 'default';
-                        cardDiv.querySelector('.lesion-card').style.opacity = '0.7';
-                        this.querySelector('.category-content').appendChild(cardDiv);
-
-                        // Hide original card
-                        const originalCard = document.querySelector(`#activity-2 .lesion-card[data-lesion="${data.lesion}"]`);
-                        if (originalCard && originalCard.style.display !== 'none') {
-                            originalCard.style.display = 'none';
-                            placedCards++;
-                            if (isCorrect) correctPlacements++;
-                        }
-
-                        // Check completion
-                        if (placedCards === 8) {
-                            state.activities[2].completed = true;
-                            state.activities[2].correct = correctPlacements;
-                            state.activities[2].score = Math.round((correctPlacements / 8) * 100);
-                            status.textContent = 'Completed';
-                            status.style.color = '#00b894';
-                            document.querySelector('#activity-2').classList.add('completed');
-                            feedback.classList.add('show');
-                            updateProgressSummary();
-                        }
-                    });
-                });
-            }
-
-            // Activity 3: ABCDE Rule Application (Unchanged)
-            function initActivity3() {
-                const assessmentOptions = document.querySelectorAll('#activity-3 .assessment-option');
-                const feedback = document.getElementById('feedback-3');
-                const status = document.querySelector('#activity-3 .activity-status');
-
-                // Correct assessment for Case 1: High Risk (5/5 ABCDE criteria)
-                const correctAssessment = 'high';
-
-                assessmentOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        if (state.activities[3].completed) return;
-
-                        const riskLevel = this.dataset.risk;
-
-                        // Remove selection from other options
-                        assessmentOptions.forEach(opt => {
-                            opt.classList.remove('selected', 'wrong');
-                        });
-
-                        // Mark selected option
-                        this.classList.add('selected');
-
-                        // Check if correct
-                        if (riskLevel === correctAssessment) {
-                            state.activities[3].completed = true;
-                            state.activities[3].correct = 5; // 5 ABCDE criteria + correct action
-                            state.activities[3].score = 100;
-                            status.textContent = 'Completed';
-                            status.style.color = '#00b894';
-                            document.querySelector('#activity-3').classList.add('completed');
-                            feedback.classList.add('show');
-                            updateProgressSummary();
-                        } else {
-                            this.classList.add('wrong');
-                        }
-                    });
-                });
-            }
-
-            // Activity 4: Inflammatory Disorder Matching (Unchanged)
-            function initActivity4() {
-                const disorderCards = document.querySelectorAll('#activity-4 .disorder-card');
-                const disorderZones = document.querySelectorAll('#activity-4 .disorder-zone');
-                const feedback = document.getElementById('feedback-4');
-                const status = document.querySelector('#activity-4 .activity-status');
-
-                let placedCards = 0;
-                let correctPlacements = 0;
-
-                // Setup drag and drop for disorder cards
-                disorderCards.forEach(card => {
-                    card.addEventListener('dragstart', function(e) {
-                        e.dataTransfer.setData('text/plain', JSON.stringify({
-                            disorder: this.dataset.disorder,
-                            html: this.outerHTML
-                        }));
-                        this.classList.add('dragging');
-                    });
-
-                    card.addEventListener('dragend', function() {
-                        this.classList.remove('dragging');
-                    });
-                });
-
-                // Setup disorder drop zones
-                disorderZones.forEach(zone => {
-                    zone.addEventListener('dragover', function(e) {
-                        e.preventDefault();
-                        this.classList.add('hover');
-                    });
-
-                    zone.addEventListener('dragleave', function() {
-                        this.classList.remove('hover');
-                    });
-
-                    zone.addEventListener('drop', function(e) {
-                        e.preventDefault();
-                        this.classList.remove('hover');
-
-                        // Check if zone already has content
-                        if (this.querySelector('.disorder-match').textContent !== 'Match symptoms here') return;
-
-                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                        const targetDisorder = this.dataset.disorder;
-
-                        // Check if placement is correct
-                        const isCorrect = data.disorder === targetDisorder;
-
-                        // Update zone content
-                        this.querySelector('.disorder-match').textContent = 'Matched!';
-                        if (isCorrect) {
-                            this.classList.add('filled');
-                        } else {
-                            this.classList.add('wrong');
-                        }
-
-                        // Hide original card
-                        const originalCard = document.querySelector(`#activity-4 .disorder-card[data-disorder="${data.disorder}"]`);
-                        if (originalCard && originalCard.style.display !== 'none') {
-                            originalCard.style.display = 'none';
-                            placedCards++;
-                            if (isCorrect) correctPlacements++;
-                        }
-
-                        // Check completion
-                        if (placedCards === 5) {
-                            state.activities[4].completed = true;
-                            state.activities[4].correct = correctPlacements;
-                            state.activities[4].score = Math.round((correctPlacements / 5) * 100);
-                            status.textContent = 'Completed';
-                            status.style.color = '#00b894';
-                            document.querySelector('#activity-4').classList.add('completed');
-                            feedback.classList.add('show');
-                            updateProgressSummary();
-                        }
-                    });
-                });
-            }
-
-            // Reset All Activities
-            function resetAllActivities() {
-                // Reset state
-                Object.keys(state.activities).forEach(key => {
-                    state.activities[key] = {
-                        completed: false,
-                        correct: 0,
-                        total: parseInt(key) === 1 ? 8 : parseInt(key) === 2 ? 8 : parseInt(key) === 3 ? 5 : 5,
-                        score: 0
-                    };
-                });
-                state.activity1Matches = {};
-
-                // Reset UI
-                activityCards.forEach(card => {
-                    card.classList.remove('completed');
-                    const status = card.querySelector('.activity-status');
-                    status.textContent = 'Not Started';
-                    status.style.color = '';
-                    const feedback = card.querySelector('.feedback-container');
-                    feedback.classList.remove('show');
-                });
-
-                // Reset Activity 1
-                document.querySelectorAll('#activity-1 .structure-item').forEach(item => {
-                    item.classList.remove('matched', 'dragging');
-                    item.style.opacity = '1';
-                    item.style.cursor = 'grab';
-                });
-                document.querySelectorAll('#activity-1 .function-item').forEach(item => {
-                    item.classList.remove('matched', 'correct-match', 'incorrect-match', 'hover');
-                    item.style.opacity = '1';
-                    item.style.cursor = 'default';
-                });
-
-                // Reset Activity 2
-                document.querySelectorAll('#activity-2 .category-content').forEach(content => {
-                    content.innerHTML = '';
-                });
-                document.querySelectorAll('#activity-2 .lesion-card').forEach(card => {
-                    card.style.display = '';
-                    card.classList.remove('dragging');
-                });
-
-                // Reset Activity 3
-                document.querySelectorAll('#activity-3 .assessment-option').forEach(option => {
-                    option.classList.remove('selected', 'wrong');
-                });
-
-                // Reset Activity 4
-                document.querySelectorAll('#activity-4 .disorder-zone').forEach(zone => {
-                    zone.classList.remove('filled', 'wrong', 'hover');
-                    zone.querySelector('.disorder-match').textContent = 'Match symptoms here';
-                });
-                document.querySelectorAll('#activity-4 .disorder-card').forEach(card => {
-                    card.style.display = '';
-                    card.classList.remove('dragging');
-                });
-
-                // Reset results
-                resultsPanel.classList.remove('show');
-
-                // Update progress
-                updateProgressSummary();
-            }
-
-            // Check All Answers
-            function checkAllAnswers() {
-                // Complete Activity 1 with perfect score
-                if (!state.activities[1].completed) {
-                    const feedback = document.getElementById('feedback-1');
-                    const status = document.querySelector('#activity-1 .activity-status');
+            // Allow clicking to remove match
+            item.addEventListener('click', function(e) {
+                if (!this.classList.contains('matched')) return;
+                
+                // Find which structure is matched to this function
+                const structure = Object.keys(state.activity1Matches).find(
+                    key => state.activity1Matches[key]?.functionElement === this
+                );
+                
+                if (structure) {
+                    // Remove match
+                    delete state.activity1Matches[structure];
+                    this.classList.remove('matched', 'correct-match', 'incorrect-match');
                     
-                    // Correct matching pairs
-                    const correctMatchesMap = {
-                        'epidermis': 'Outermost layer; barrier protection, contains melanocytes',
-                        'dermis': 'Contains collagen, elastin, blood vessels, nerves, and glands',
-                        'hypodermis': 'Fat layer for insulation, cushioning, and energy storage',
-                        'hair-follicle': 'Anchors hair; associated with sebaceous glands',
-                        'sebaceous-gland': 'Produces sebum (oil) to lubricate skin and hair',
-                        'sweat-gland': 'Regulates body temperature through perspiration',
-                        'nerve-ending': 'Sensory receptors for touch, pain, temperature',
-                        'blood-vessels': 'Supply nutrients, remove waste, regulate temperature'
-                    };
-
-                    // Auto-match all correctly
-                    Object.keys(correctMatchesMap).forEach(structure => {
-                        const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
-                        const functionText = correctMatchesMap[structure];
-                        const functionEl = Array.from(document.querySelectorAll('#activity-1 .function-item'))
-                            .find(item => item.textContent === functionText);
-                        
-                        if (structureEl && functionEl) {
-                            structureEl.classList.add('matched');
-                            functionEl.classList.add('matched', 'correct-match');
-                        }
-                    });
-
-                    state.activities[1].completed = true;
-                    state.activities[1].correct = 8;
-                    state.activities[1].score = 100;
-                    status.textContent = 'Completed';
-                    status.style.color = '#00b894';
-                    document.querySelector('#activity-1').classList.add('completed');
-                    feedback.classList.add('show');
-                }
-
-                // Complete Activity 2 with perfect score
-                if (!state.activities[2].completed) {
-                    const feedback = document.getElementById('feedback-2');
-                    const status = document.querySelector('#activity-2 .activity-status');
-
-                    // Move all lesions to correct categories
-                    document.querySelectorAll('#activity-2 .lesion-card').forEach(card => {
-                        const type = card.dataset.type;
-                        const category = type === 'primary' ? document.getElementById('primary-category') : document.getElementById('secondary-category');
-                        
-                        if (card.style.display !== 'none') {
-                            const cardClone = card.cloneNode(true);
-                            cardClone.style.opacity = '0.7';
-                            cardClone.style.cursor = 'default';
-                            category.querySelector('.category-content').appendChild(cardClone);
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    state.activities[2].completed = true;
-                    state.activities[2].correct = 8;
-                    state.activities[2].score = 100;
-                    status.textContent = 'Completed';
-                    status.style.color = '#00b894';
-                    document.querySelector('#activity-2').classList.add('completed');
-                    feedback.classList.add('show');
-                }
-
-                // Complete Activity 3 with perfect score
-                if (!state.activities[3].completed) {
-                    const feedback = document.getElementById('feedback-3');
-                    const status = document.querySelector('#activity-3 .activity-status');
-
-                    // Select correct assessment
-                    document.querySelector('#activity-3 .assessment-option[data-risk="high"]').classList.add('selected');
-
-                    state.activities[3].completed = true;
-                    state.activities[3].correct = 5;
-                    state.activities[3].score = 100;
-                    status.textContent = 'Completed';
-                    status.style.color = '#00b894';
-                    document.querySelector('#activity-3').classList.add('completed');
-                    feedback.classList.add('show');
-                }
-
-                // Complete Activity 4 with perfect score
-                if (!state.activities[4].completed) {
-                    const feedback = document.getElementById('feedback-4');
-                    const status = document.querySelector('#activity-4 .activity-status');
-
-                    // Match all disorders correctly
-                    document.querySelectorAll('#activity-4 .disorder-card').forEach(card => {
-                        const disorder = card.dataset.disorder;
-                        const zone = document.querySelector(`#activity-4 .disorder-zone[data-disorder="${disorder}"]`);
-                        
-                        if (card.style.display !== 'none' && zone) {
-                            zone.querySelector('.disorder-match').textContent = 'Matched!';
-                            zone.classList.add('filled');
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    state.activities[4].completed = true;
-                    state.activities[4].correct = 5;
-                    state.activities[4].score = 100;
-                    status.textContent = 'Completed';
-                    status.style.color = '#00b894';
-                    document.querySelector('#activity-4').classList.add('completed');
-                    feedback.classList.add('show');
-                }
-
-                updateProgressSummary();
-            }
-
-            // View Final Results
-            function viewFinalResults() {
-                let totalScore = 0;
-                let activityCount = 0;
-
-                Object.values(state.activities).forEach(activity => {
-                    if (activity.completed) {
-                        totalScore += activity.score;
-                        activityCount++;
+                    // Remove structure matched class
+                    const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
+                    if (structureEl) structureEl.classList.remove('matched');
+                    
+                    // Update status
+                    if (!state.activities[1].checked) {
+                        status.textContent = 'In Progress';
+                        status.style.color = 'var(--color-warning)';
                     }
-                });
+                }
+            });
+        });
 
-                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
-                finalScore.textContent = `${averageScore}%`;
-
-                resultsPanel.classList.add('show');
-                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+        // Add check button for Activity 1
+        const checkActivity1Btn = document.createElement('button');
+        checkActivity1Btn.className = 'activity-check-btn';
+        checkActivity1Btn.innerHTML = '<span>✓</span> Check Activity 1 Answers';
+        checkActivity1Btn.style.marginTop = '20px';
+        checkActivity1Btn.style.padding = '10px 20px';
+        checkActivity1Btn.style.background = 'var(--color-primary)';
+        checkActivity1Btn.style.color = 'white';
+        checkActivity1Btn.style.border = 'none';
+        checkActivity1Btn.style.borderRadius = 'var(--radius-sm)';
+        checkActivity1Btn.style.cursor = 'pointer';
+        checkActivity1Btn.style.fontSize = '0.9rem';
+        checkActivity1Btn.style.fontWeight = '600';
+        
+        checkActivity1Btn.addEventListener('click', function() {
+            if (state.activities[1].checked) return;
+            
+            let correctCount = 0;
+            const totalMatches = Object.keys(state.activity1Matches).length;
+            
+            // Check each match
+            Object.keys(state.activity1Matches).forEach(structure => {
+                const match = state.activity1Matches[structure];
+                if (match.correct) {
+                    match.functionElement.classList.add('correct-match');
+                    match.functionElement.classList.remove('incorrect-match');
+                    correctCount++;
+                } else {
+                    match.functionElement.classList.add('incorrect-match');
+                    match.functionElement.classList.remove('correct-match');
+                }
+            });
+            
+            // Update state
+            state.activities[1].correct = correctCount;
+            state.activities[1].score = Math.round((correctCount / 8) * 100);
+            state.activities[1].checked = true;
+            
+            // Check if all matches are made
+            if (totalMatches === 8) {
+                state.activities[1].completed = true;
+                status.textContent = correctCount === 8 ? 'Completed ✓' : 'Completed ✗';
+                status.style.color = correctCount === 8 ? 'var(--color-success)' : 'var(--color-error)';
+                document.querySelector('#activity-1').classList.add('completed');
+            } else {
+                status.textContent = 'Checked - Incomplete';
+                status.style.color = 'var(--color-warning)';
             }
-
-            // Initialize all activities
-            initActivity1();
-            initActivity2();
-            initActivity3();
-            initActivity4();
-
-            // Event listeners
-            resetBtn.addEventListener('click', resetAllActivities);
-            checkBtn.addEventListener('click', checkAllAnswers);
-            resultsBtn.addEventListener('click', viewFinalResults);
-
-            // Initial progress update
+            
+            // Show feedback
+            feedback.classList.add('show');
+            if (correctCount === 8) {
+                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Perfect! All Matches Correct';
+                feedbackContent.innerHTML = `
+                    <strong>Excellent work!</strong> You've correctly matched all skin structures to their functions:<br><br>
+                    <strong>Clinical Correlations:</strong><br>
+                    • <strong>Epidermis:</strong> Thickened in psoriasis (acanthosis), damaged in burns (partial‑thickness).<br>
+                    • <strong>Dermis:</strong> Houses immune cells; inflammation here causes conditions like lupus.<br>
+                    • <strong>Hypodermis:</strong> Site for subcutaneous injections; depth affects absorption rate.<br>
+                    • <strong>Hair Follicle:</strong> Portal for bacterial entry in folliculitis; target for laser hair removal.<br>
+                    • <strong>Sebaceous Gland:</strong> Overactive in acne; sebum production hormonally regulated.<br>
+                    • <strong>Sweat Gland:</strong> Dysfunction leads to hyperhidrosis or anhidrosis.<br>
+                    • <strong>Nerve Ending:</strong> Neuropathic pain arises from nerve damage in dermis/hypodermis.<br>
+                    • <strong>Blood Vessels:</strong> Vasodilation in inflammation causes erythema; vasoconstriction in shock causes pallor.<br><br>
+                    <strong>Memory Tip:</strong> "Epi‑dermis" = upon the dermis (outermost). "Hypo‑dermis" = below the dermis (deepest).
+                `;
+            } else {
+                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/8 Correct`;
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You got ${correctCount} out of 8 matches correct.<br><br>
+                    <strong>Incorrect matches:</strong><br>
+                    ${getIncorrectMatchesFeedback()}<br>
+                    <strong>Study tip:</strong> Remember that the epidermis is the outermost protective layer, 
+                    the dermis contains connective tissue and glands, and the hypodermis is the fatty layer underneath.
+                `;
+            }
+            
             updateProgressSummary();
         });
-    </script>
+        
+        // Insert check button after the matching container
+        const matchingContainer = document.querySelector('#activity-1 .matching-container');
+        matchingContainer.parentNode.insertBefore(checkActivity1Btn, matchingContainer.nextSibling);
+        
+        function getIncorrectMatchesFeedback() {
+            let feedback = '';
+            Object.keys(state.activity1Matches).forEach(structure => {
+                const match = state.activity1Matches[structure];
+                if (!match.correct) {
+                    const correctFunction = correctMatchesMap[structure];
+                    feedback += `• "${structure.replace('-', ' ')}" should match: "${correctFunction}"<br>`;
+                }
+            });
+            return feedback || 'All matches are correct!';
+        }
+    }
+
+    // === ACTIVITY 2: Lesion Classification Game (FIXED) ===
+    function initActivity2() {
+        const lesionCards = document.querySelectorAll('#activity-2 .lesion-card');
+        const primaryCategory = document.getElementById('primary-category');
+        const secondaryCategory = document.getElementById('secondary-category');
+        const feedback = document.getElementById('feedback-2');
+        const status = document.querySelector('#activity-2 .activity-status');
+        const feedbackTitle = feedback.querySelector('.feedback-title');
+        const feedbackContent = feedback.querySelector('.feedback-content');
+
+        // Correct categories
+        const correctCategories = {
+            'macule': 'primary',
+            'papule': 'primary',
+            'vesicle': 'primary',
+            'pustule': 'primary',
+            'scale': 'secondary',
+            'crust': 'secondary',
+            'erosion': 'secondary',
+            'ulcer': 'secondary'
+        };
+
+        // Reset placements
+        state.activity2Placements = {};
+
+        // Setup drag and drop for lesion cards
+        lesionCards.forEach(card => {
+            card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    lesion: this.dataset.lesion,
+                    type: this.dataset.type,
+                    element: this
+                }));
+                this.classList.add('dragging');
+            });
+
+            card.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+
+        // Setup category drop zones
+        [primaryCategory, secondaryCategory].forEach(category => {
+            category.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+
+            category.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+
+            category.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
+
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const targetCategory = this.dataset.category;
+
+                // Check if this lesion is already placed elsewhere
+                if (state.activity2Placements[data.lesion]) {
+                    // Remove from previous category
+                    const prevCategory = state.activity2Placements[data.lesion].category;
+                    const prevCategoryEl = document.querySelector(`#${prevCategory}-category`);
+                    if (prevCategoryEl) {
+                        const cardInCategory = prevCategoryEl.querySelector(`[data-lesion="${data.lesion}"]`);
+                        if (cardInCategory) cardInCategory.remove();
+                    }
+                }
+
+                // Check if placement is correct
+                const isCorrect = data.type === targetCategory;
+
+                // Add card to category
+                const cardClone = data.element.cloneNode(true);
+                cardClone.classList.remove('dragging');
+                cardClone.style.cursor = 'default';
+                cardClone.style.opacity = '0.7';
+                cardClone.draggable = false;
+                this.querySelector('.category-content').appendChild(cardClone);
+
+                // Store placement
+                state.activity2Placements[data.lesion] = {
+                    category: targetCategory,
+                    correct: isCorrect,
+                    element: data.element
+                };
+
+                // Hide original card (but keep in DOM for resetting)
+                data.element.style.visibility = 'hidden';
+                data.element.style.position = 'absolute';
+                data.element.style.pointerEvents = 'none';
+
+                // Update status
+                if (!state.activities[2].checked) {
+                    status.textContent = 'In Progress';
+                    status.style.color = 'var(--color-warning)';
+                }
+            });
+        });
+
+        // Add check button for Activity 2
+        const checkActivity2Btn = document.createElement('button');
+        checkActivity2Btn.className = 'activity-check-btn';
+        checkActivity2Btn.innerHTML = '<span>✓</span> Check Activity 2 Answers';
+        checkActivity2Btn.style.marginTop = '20px';
+        checkActivity2Btn.style.padding = '10px 20px';
+        checkActivity2Btn.style.background = 'var(--color-primary)';
+        checkActivity2Btn.style.color = 'white';
+        checkActivity2Btn.style.border = 'none';
+        checkActivity2Btn.style.borderRadius = 'var(--radius-sm)';
+        checkActivity2Btn.style.cursor = 'pointer';
+        checkActivity2Btn.style.fontSize = '0.9rem';
+        checkActivity2Btn.style.fontWeight = '600';
+        
+        const warningDiv = document.querySelector('#activity-2 .derm-warning');
+        warningDiv.parentNode.insertBefore(checkActivity2Btn, warningDiv);
+        
+        checkActivity2Btn.addEventListener('click', function() {
+            if (state.activities[2].checked) return;
+            
+            let correctCount = 0;
+            const totalPlacements = Object.keys(state.activity2Placements).length;
+            
+            // Check each placement
+            Object.keys(state.activity2Placements).forEach(lesion => {
+                const placement = state.activity2Placements[lesion];
+                if (placement.correct) {
+                    correctCount++;
+                }
+            });
+            
+            // Update state
+            state.activities[2].correct = correctCount;
+            state.activities[2].score = Math.round((correctCount / 8) * 100);
+            state.activities[2].checked = true;
+            
+            // Check if all placements are made
+            if (totalPlacements === 8) {
+                state.activities[2].completed = true;
+                status.textContent = correctCount === 8 ? 'Completed ✓' : 'Completed ✗';
+                status.style.color = correctCount === 8 ? 'var(--color-success)' : 'var(--color-error)';
+                document.querySelector('#activity-2').classList.add('completed');
+            } else {
+                status.textContent = 'Checked - Incomplete';
+                status.style.color = 'var(--color-warning)';
+            }
+            
+            // Show feedback
+            feedback.classList.add('show');
+            if (correctCount === 8) {
+                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Lesion Classification Correct!';
+                feedbackContent.innerHTML = `
+                    <strong>Primary Lesions:</strong> Develop initially from disease process<br>
+                    • <strong>Macule:</strong> Flat, color change only (freckle, petechiae)<br>
+                    • <strong>Papule:</strong> Elevated, solid &lt;1cm (mole, wart)<br>
+                    • <strong>Vesicle:</strong> Fluid-filled &lt;1cm (herpes simplex, chickenpox)<br>
+                    • <strong>Pustule:</strong> Pus-filled (acne, folliculitis)<br><br>
+                    <strong>Secondary Lesions:</strong> Evolve from primary lesions<br>
+                    • <strong>Scale:</strong> Flaking skin (psoriasis, dandruff)<br>
+                    • <strong>Crust:</strong> Dried serum/blood/pus (impetigo)<br>
+                    • <strong>Erosion:</strong> Moist, depressed area (ruptured blister)<br>
+                    • <strong>Ulcer:</strong> Full-thickness loss (venous stasis ulcer)<br><br>
+                    <strong>Memory Aid:</strong> Primary = Initial presentation, Secondary = After changes
+                    (scratching, infection, healing).
+                `;
+            } else {
+                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/8 Correct`;
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You got ${correctCount} out of 8 lesions correctly classified.<br><br>
+                    <strong>Study tip:</strong><br>
+                    • Primary lesions develop initially (macule, papule, vesicle, pustule)<br>
+                    • Secondary lesions evolve from primary lesions (scale, crust, erosion, ulcer)<br>
+                    • Remember: If you can feel it when you close your eyes, it's likely a papule (elevated)<br>
+                    • If it's flat but colored, it's a macule
+                `;
+            }
+            
+            updateProgressSummary();
+        });
+    }
+
+    // === ACTIVITY 3: ABCDE Rule Application (FIXED) ===
+    function initActivity3() {
+        const assessmentOptions = document.querySelectorAll('#activity-3 .assessment-option');
+        const feedback = document.getElementById('feedback-3');
+        const status = document.querySelector('#activity-3 .activity-status');
+        const feedbackTitle = feedback.querySelector('.feedback-title');
+        const feedbackContent = feedback.querySelector('.feedback-content');
+
+        // Correct assessment for Case 1: High Risk (5/5 ABCDE criteria)
+        const correctAssessment = 'high';
+
+        // Reset selection
+        state.activity3Selection = null;
+
+        assessmentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                if (state.activities[3].checked) return;
+
+                const riskLevel = this.dataset.risk;
+
+                // Remove selection from other options
+                assessmentOptions.forEach(opt => {
+                    opt.classList.remove('selected', 'wrong', 'correct');
+                });
+
+                // Mark selected option
+                this.classList.add('selected');
+                state.activity3Selection = riskLevel;
+                
+                // Update status
+                status.textContent = 'Answered';
+                status.style.color = 'var(--color-warning)';
+            });
+        });
+
+        // Add check button for Activity 3
+        const checkActivity3Btn = document.createElement('button');
+        checkActivity3Btn.className = 'activity-check-btn';
+        checkActivity3Btn.innerHTML = '<span>✓</span> Check Activity 3 Answer';
+        checkActivity3Btn.style.marginTop = '20px';
+        checkActivity3Btn.style.padding = '10px 20px';
+        checkActivity3Btn.style.background = 'var(--color-primary)';
+        checkActivity3Btn.style.color = 'white';
+        checkActivity3Btn.style.border = 'none';
+        checkActivity3Btn.style.borderRadius = 'var(--radius-sm)';
+        checkActivity3Btn.style.cursor = 'pointer';
+        checkActivity3Btn.style.fontSize = '0.9rem';
+        checkActivity3Btn.style.fontWeight = '600';
+        
+        const takeawaysDiv = document.querySelector('#activity-3 .takeaways');
+        takeawaysDiv.parentNode.insertBefore(checkActivity3Btn, takeawaysDiv);
+        
+        checkActivity3Btn.addEventListener('click', function() {
+            if (state.activities[3].checked) return;
+            
+            if (!state.activity3Selection) {
+                alert('Please select an assessment option first.');
+                return;
+            }
+            
+            const isCorrect = state.activity3Selection === correctAssessment;
+            
+            // Update state
+            state.activities[3].correct = isCorrect ? 1 : 0;
+            state.activities[3].score = isCorrect ? 100 : 0;
+            state.activities[3].checked = true;
+            state.activities[3].completed = true;
+            
+            // Visual feedback
+            assessmentOptions.forEach(option => {
+                option.classList.remove('selected', 'wrong', 'correct');
+                if (option.dataset.risk === state.activity3Selection) {
+                    option.classList.add(isCorrect ? 'correct' : 'wrong');
+                }
+                if (option.dataset.risk === correctAssessment) {
+                    option.classList.add('correct');
+                }
+            });
+            
+            status.textContent = isCorrect ? 'Completed ✓' : 'Completed ✗';
+            status.style.color = isCorrect ? 'var(--color-success)' : 'var(--color-error)';
+            document.querySelector('#activity-3').classList.add('completed');
+            
+            // Show feedback
+            feedback.classList.add('show');
+            if (isCorrect) {
+                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> ABCDE Rule Applied Correctly!';
+                feedbackContent.innerHTML = `
+                    <strong>Case Analysis:</strong><br>
+                    • <strong>Asymmetry:</strong> Present - irregular shape<br>
+                    • <strong>Border:</strong> Present - irregular, notched edges<br>
+                    • <strong>Color:</strong> Present - multiple shades (brown, dark brown, black)<br>
+                    • <strong>Diameter:</strong> Present - 8mm (&gt;6mm threshold)<br>
+                    • <strong>Evolving:</strong> Present - changed over 6 months<br><br>
+                    <strong>Assessment:</strong> HIGH RISK (5/5 criteria)<br>
+                    <strong>Action:</strong> Urgent biopsy required. Refer to dermatology for excisional biopsy
+                    with 2mm margins. Document all ABCDE findings and patient's risk factors (sun exposure).<br><br>
+                    <strong>Additional Warning Signs:</strong><br>
+                    • "Ugly Duckling" sign (lesion looks different from others)<br>
+                    • Bleeding, itching, or pain in a mole<br>
+                    • New lesion after age 40<br>
+                    • Family history of melanoma
+                `;
+            } else {
+                feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Incorrect Assessment';
+                feedbackContent.innerHTML = `
+                    <strong>Correct Answer:</strong> High Risk (Urgent biopsy recommended)<br><br>
+                    <strong>Why this is correct:</strong><br>
+                    The lesion meets all 5 ABCDE criteria:<br>
+                    1. <strong>A</strong>symmetry: Irregular shape<br>
+                    2. <strong>B</strong>order: Irregular, notched edges<br>
+                    3. <strong>C</strong>olor: Multiple colors (brown, dark brown, black)<br>
+                    4. <strong>D</strong>iameter: 8mm (&gt;6mm threshold)<br>
+                    5. <strong>E</strong>volving: Changed over 6 months<br><br>
+                    <strong>Clinical Note:</strong> Any lesion with 4 or more ABCDE criteria requires urgent biopsy.
+                    The "E" (evolving) criterion is particularly important - any changing lesion warrants evaluation.
+                `;
+            }
+            
+            updateProgressSummary();
+        });
+    }
+
+    // === ACTIVITY 4: Inflammatory Disorder Matching (FIXED) ===
+    function initActivity4() {
+        const disorderCards = document.querySelectorAll('#activity-4 .disorder-card');
+        const disorderZones = document.querySelectorAll('#activity-4 .disorder-zone');
+        const feedback = document.getElementById('feedback-4');
+        const status = document.querySelector('#activity-4 .activity-status');
+        const feedbackTitle = feedback.querySelector('.feedback-title');
+        const feedbackContent = feedback.querySelector('.feedback-content');
+
+        // Reset matches
+        state.activity4Matches = {};
+
+        // Setup drag and drop for disorder cards
+        disorderCards.forEach(card => {
+            card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    disorder: this.dataset.disorder,
+                    element: this
+                }));
+                this.classList.add('dragging');
+            });
+
+            card.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+
+        // Setup disorder drop zones
+        disorderZones.forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+
+            zone.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
+
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const targetDisorder = this.dataset.disorder;
+
+                // Check if zone already has a different card
+                if (state.activity4Matches[targetDisorder]) {
+                    // Remove previous card from this zone
+                    const prevCard = state.activity4Matches[targetDisorder].element;
+                    prevCard.style.display = '';
+                    prevCard.classList.remove('matched');
+                }
+
+                // Check if this card is already placed elsewhere
+                if (state.activity4Matches[data.disorder]) {
+                    // Remove from previous zone
+                    const prevZone = state.activity4Matches[data.disorder].zoneElement;
+                    prevZone.querySelector('.disorder-match').textContent = 'Match symptoms here';
+                    prevZone.classList.remove('filled', 'wrong');
+                }
+
+                // Check if placement is correct
+                const isCorrect = data.disorder === targetDisorder;
+
+                // Update zone content
+                this.querySelector('.disorder-match').textContent = 'Matched!';
+                
+                // Store match
+                state.activity4Matches[targetDisorder] = {
+                    disorder: data.disorder,
+                    correct: isCorrect,
+                    element: data.element,
+                    zoneElement: this
+                };
+
+                // Hide original card
+                data.element.style.display = 'none';
+                data.element.classList.add('matched');
+
+                // Update status
+                if (!state.activities[4].checked) {
+                    status.textContent = 'In Progress';
+                    status.style.color = 'var(--color-warning)';
+                }
+            });
+        });
+
+        // Add check button for Activity 4
+        const checkActivity4Btn = document.createElement('button');
+        checkActivity4Btn.className = 'activity-check-btn';
+        checkActivity4Btn.innerHTML = '<span>✓</span> Check Activity 4 Answers';
+        checkActivity4Btn.style.marginTop = '20px';
+        checkActivity4Btn.style.padding = '10px 20px';
+        checkActivity4Btn.style.background = 'var(--color-primary)';
+        checkActivity4Btn.style.color = 'white';
+        checkActivity4Btn.style.border = 'none';
+        checkActivity4Btn.style.borderRadius = 'var(--radius-sm)';
+        checkActivity4Btn.style.cursor = 'pointer';
+        checkActivity4Btn.style.fontSize = '0.9rem';
+        checkActivity4Btn.style.fontWeight = '600';
+        
+        const clinicalTip = document.querySelector('#activity-4 .clinical-tip');
+        clinicalTip.parentNode.insertBefore(checkActivity4Btn, clinicalTip);
+        
+        checkActivity4Btn.addEventListener('click', function() {
+            if (state.activities[4].checked) return;
+            
+            let correctCount = 0;
+            const totalMatches = Object.keys(state.activity4Matches).length;
+            
+            // Check each match
+            Object.keys(state.activity4Matches).forEach(zoneDisorder => {
+                const match = state.activity4Matches[zoneDisorder];
+                if (match.correct) {
+                    match.zoneElement.classList.add('filled');
+                    match.zoneElement.classList.remove('wrong');
+                    correctCount++;
+                } else {
+                    match.zoneElement.classList.add('wrong');
+                    match.zoneElement.classList.remove('filled');
+                }
+            });
+            
+            // Update state
+            state.activities[4].correct = correctCount;
+            state.activities[4].score = Math.round((correctCount / 5) * 100);
+            state.activities[4].checked = true;
+            
+            // Check if all matches are made
+            if (totalMatches === 5) {
+                state.activities[4].completed = true;
+                status.textContent = correctCount === 5 ? 'Completed ✓' : 'Completed ✗';
+                status.style.color = correctCount === 5 ? 'var(--color-success)' : 'var(--color-error)';
+                document.querySelector('#activity-4').classList.add('completed');
+            } else {
+                status.textContent = 'Checked - Incomplete';
+                status.style.color = 'var(--color-warning)';
+            }
+            
+            // Show feedback
+            feedback.classList.add('show');
+            if (correctCount === 5) {
+                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Disorders Matched Correctly!';
+                feedbackContent.innerHTML = `
+                    <strong>Inflammatory Skin Disorders Review:</strong><br><br>
+                    <strong>Psoriasis:</strong><br>
+                    • <em>Pathophysiology:</em> T-cell mediated, rapid keratinocyte turnover (3-4 days vs. normal 28)<br>
+                    • <em>Classic Presentation:</em> Well-demarcated erythematous plaques with silvery micaceous scale<br>
+                    • <em>Common Sites:</em> Extensor surfaces (elbows, knees), scalp, sacrum<br>
+                    • <em>Associated:</em> Nail pitting, arthritis, higher CV risk<br><br>
+                    <strong>Eczema (Atopic Dermatitis):</strong><br>
+                    • <em>Pathophysiology:</em> Skin barrier dysfunction, immune dysregulation<br>
+                    • <em>Classic Presentation:</em> Pruritic, erythematous patches with excoriation, lichenification<br>
+                    • <em>Common Sites:</em> Flexural areas (antecubital, popliteal), face in children<br>
+                    • <em>Associated:</em> Personal/family history of atopy (asthma, allergic rhinitis)<br><br>
+                    <strong>Acne Vulgaris:</strong><br>
+                    • <em>Pathophysiology:</em> Follicular hyperkeratinization, excess sebum, C. acnes, inflammation<br>
+                    • <em>Lesions:</em> Comedones (open/closed), inflammatory papules/pustules, nodules/cysts<br>
+                    • <em>Distribution:</em> Face, chest, back - areas with high sebaceous gland density<br>
+                    • <em>Treatment Ladder:</em> Topicals → oral antibiotics → isotretinoin (severe)<br><br>
+                    <strong>Rosacea:</strong><br>
+                    • <em>Subtypes:</em> Erythematotelangiectatic, papulopustular, phymatous, ocular<br>
+                    • <em>Triggers:</em> Sun, heat, alcohol, spicy foods, stress, certain skincare products<br>
+                    • <em>Key Feature:</strong> Flushing with persistent central facial erythema<br>
+                    • <em>Important:</em> NOT acne - different pathophysiology and treatment<br><br>
+                    <strong>Contact Dermatitis:</strong><br>
+                    • <em>Types:</em> Irritant (chemical damage) vs. Allergic (type IV hypersensitivity)<br>
+                    • <em>Distribution:</em> Corresponds to allergen contact (jewelry=nickel, plants=linear)<br>
+                    • <em>Diagnosis:</em> Patch testing for allergic type<br>
+                    • <em>Management:</em> Avoid allergen, topical steroids, cool compresses
+                `;
+            } else {
+                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/5 Correct`;
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You got ${correctCount} out of 5 disorders correctly matched.<br><br>
+                    <strong>Key distinguishing features:</strong><br>
+                    • <strong>Psoriasis:</strong> Silvery scales on elbows/knees/scalp<br>
+                    • <strong>Eczema:</strong> Itchy, in flexural areas, family history of allergies<br>
+                    • <strong>Acne:</strong> Comedones (blackheads/whiteheads) on face/chest/back<br>
+                    • <strong>Rosacea:</strong> Facial redness/flushing, triggered by heat/alcohol<br>
+                    • <strong>Contact Dermatitis:</strong> Rash at contact site, history of allergen exposure<br><br>
+                    <strong>Study tip:</strong> Location and pattern are key to differentiating inflammatory skin disorders.
+                `;
+            }
+            
+            updateProgressSummary();
+        });
+    }
+
+    // Reset All Activities
+    function resetAllActivities() {
+        // Reset state
+        Object.keys(state.activities).forEach(key => {
+            state.activities[key] = {
+                completed: false,
+                correct: 0,
+                total: parseInt(key) === 1 ? 8 : parseInt(key) === 2 ? 8 : parseInt(key) === 3 ? 1 : 5,
+                score: 0,
+                checked: false
+            };
+        });
+        
+        state.activity1Matches = {};
+        state.activity2Placements = {};
+        state.activity3Selection = null;
+        state.activity4Matches = {};
+
+        // Reset UI
+        activityCards.forEach(card => {
+            card.classList.remove('completed');
+            const status = card.querySelector('.activity-status');
+            status.textContent = 'Not Started';
+            status.style.color = '';
+            const feedback = card.querySelector('.feedback-container');
+            feedback.classList.remove('show');
+            
+            // Reset feedback titles/content
+            const feedbackTitle = feedback.querySelector('.feedback-title');
+            const feedbackContent = feedback.querySelector('.feedback-content');
+            if (feedbackTitle && feedbackContent) {
+                // Restore original feedback content
+                const originalTitle = card.querySelector('.activity-title').textContent;
+                feedbackTitle.innerHTML = `<span class="feedback-icon correct">✓</span> ${originalTitle}`;
+                // Note: We can't easily restore original content, but it will be regenerated on next check
+            }
+        });
+
+        // Reset Activity 1
+        document.querySelectorAll('#activity-1 .structure-item').forEach(item => {
+            item.classList.remove('matched', 'dragging');
+            item.style.opacity = '1';
+            item.style.cursor = 'grab';
+        });
+        document.querySelectorAll('#activity-1 .function-item').forEach(item => {
+            item.classList.remove('matched', 'correct-match', 'incorrect-match', 'hover');
+            item.style.opacity = '1';
+            item.style.cursor = 'default';
+        });
+        
+        // Re-shuffle function items for Activity 1
+        const functionsContainer = document.querySelector('#activity-1 .functions-list');
+        const functionItems = Array.from(document.querySelectorAll('#activity-1 .function-item'));
+        for (let i = functionItems.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            functionsContainer.appendChild(functionItems[j]);
+        }
+
+        // Reset Activity 2
+        document.querySelectorAll('#activity-2 .category-content').forEach(content => {
+            content.innerHTML = '';
+        });
+        document.querySelectorAll('#activity-2 .lesion-card').forEach(card => {
+            card.style.display = '';
+            card.style.visibility = 'visible';
+            card.style.position = 'relative';
+            card.style.pointerEvents = 'auto';
+            card.classList.remove('dragging');
+        });
+
+        // Reset Activity 3
+        document.querySelectorAll('#activity-3 .assessment-option').forEach(option => {
+            option.classList.remove('selected', 'wrong', 'correct');
+        });
+
+        // Reset Activity 4
+        document.querySelectorAll('#activity-4 .disorder-zone').forEach(zone => {
+            zone.classList.remove('filled', 'wrong', 'hover');
+            zone.querySelector('.disorder-match').textContent = 'Match symptoms here';
+        });
+        document.querySelectorAll('#activity-4 .disorder-card').forEach(card => {
+            card.style.display = '';
+            card.classList.remove('dragging', 'matched');
+        });
+
+        // Reset results
+        resultsPanel.classList.remove('show');
+
+        // Update progress
+        updateProgressSummary();
+    }
+
+    // Check All Answers (now just checks each activity individually)
+    function checkAllAnswers() {
+        // Trigger check for each activity that has a check button
+        const checkButtons = document.querySelectorAll('.activity-check-btn');
+        checkButtons.forEach(btn => {
+            if (!btn.disabled) {
+                btn.click();
+            }
+        });
+    }
+
+    // View Final Results
+    function viewFinalResults() {
+        let totalScore = 0;
+        let activityCount = 0;
+
+        Object.values(state.activities).forEach(activity => {
+            if (activity.checked) {
+                totalScore += activity.score;
+                activityCount++;
+            }
+        });
+
+        const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+        finalScore.textContent = `${averageScore}%`;
+
+        resultsPanel.classList.add('show');
+        resultsPanel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Initialize all activities
+    initActivity1();
+    initActivity2();
+    initActivity3();
+    initActivity4();
+
+    // Event listeners
+    resetBtn.addEventListener('click', resetAllActivities);
+    checkBtn.addEventListener('click', checkAllAnswers);
+    resultsBtn.addEventListener('click', viewFinalResults);
+
+    // Initial progress update
+    updateProgressSummary();
+});
+</script>
 </body>
 </html>
