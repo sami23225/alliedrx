@@ -814,6 +814,11 @@
             animation: shake 0.5s ease;
         }
 
+        .assessment-option.correct {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
         .option-title {
             font-size: 0.9rem;
             font-weight: 600;
@@ -1207,6 +1212,42 @@
             font-size: 0.85rem;
             color: var(--color-text);
         }
+
+        /* Correction Section */
+        .correction-section {
+            background: rgba(253, 203, 110, 0.1);
+            border-left: 4px solid var(--color-warning);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .correction-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-warning);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .correction-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .correction-list li {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            padding-left: 5px;
+        }
+
+        .correction-list li strong {
+            color: var(--color-error);
+        }
     </style>
 </head>
 <body>
@@ -1274,7 +1315,7 @@
 
         <!-- Activity Grid -->
         <div class="activity-grid">
-            <!-- Activity 1: Skin Structure & Function Matching (NEW) -->
+            <!-- Activity 1: Skin Structure & Function Matching -->
             <section class="activity-card" id="activity-1" data-activity="1">
                 <div class="activity-header">
                     <span class="activity-number">Activity 1</span>
@@ -1292,30 +1333,16 @@
                     <!-- Structures Column -->
                     <div class="structures-column">
                         <div class="column-title">Skin Structures</div>
-                        <div class="structures-list">
-                            <div class="structure-item" data-structure="epidermis" draggable="true">Epidermis</div>
-                            <div class="structure-item" data-structure="dermis" draggable="true">Dermis</div>
-                            <div class="structure-item" data-structure="hypodermis" draggable="true">Hypodermis (Subcutaneous)</div>
-                            <div class="structure-item" data-structure="hair-follicle" draggable="true">Hair Follicle</div>
-                            <div class="structure-item" data-structure="sebaceous-gland" draggable="true">Sebaceous Gland</div>
-                            <div class="structure-item" data-structure="sweat-gland" draggable="true">Sweat Gland</div>
-                            <div class="structure-item" data-structure="nerve-ending" draggable="true">Nerve Ending</div>
-                            <div class="structure-item" data-structure="blood-vessels" draggable="true">Blood Vessels</div>
+                        <div class="structures-list" id="structures-list-1">
+                            <!-- Will be populated by JavaScript -->
                         </div>
                     </div>
 
                     <!-- Functions Column -->
                     <div class="functions-column">
                         <div class="column-title">Functions & Descriptions</div>
-                        <div class="functions-list">
-                            <div class="function-item" data-match="epidermis">Outermost layer; barrier protection, contains melanocytes</div>
-                            <div class="function-item" data-match="dermis">Contains collagen, elastin, blood vessels, nerves, and glands</div>
-                            <div class="function-item" data-match="hypodermis">Fat layer for insulation, cushioning, and energy storage</div>
-                            <div class="function-item" data-match="hair-follicle">Anchors hair; associated with sebaceous glands</div>
-                            <div class="function-item" data-match="sebaceous-gland">Produces sebum (oil) to lubricate skin and hair</div>
-                            <div class="function-item" data-match="sweat-gland">Regulates body temperature through perspiration</div>
-                            <div class="function-item" data-match="nerve-ending">Sensory receptors for touch, pain, temperature</div>
-                            <div class="function-item" data-match="blood-vessels">Supply nutrients, remove waste, regulate temperature</div>
+                        <div class="functions-list" id="functions-list-1">
+                            <!-- Will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -1338,24 +1365,24 @@
                 <div class="feedback-container" id="feedback-1">
                     <div class="feedback-title">
                         <span class="feedback-icon correct">✓</span>
-                        Skin Structure Mastery Achieved!
+                        <span id="feedback-title-1">Skin Structure Mastery Achieved!</span>
                     </div>
-                    <div class="feedback-content">
-                        <strong>Clinical Correlations:</strong><br>
-                        • <strong>Epidermis:</strong> Thickened in psoriasis (acanthosis), damaged in burns (partial‑thickness).<br>
-                        • <strong>Dermis:</strong> Houses immune cells; inflammation here causes conditions like lupus.<br>
-                        • <strong>Hypodermis:</strong> Site for subcutaneous injections; depth affects absorption rate.<br>
-                        • <strong>Hair Follicle:</strong> Portal for bacterial entry in folliculitis; target for laser hair removal.<br>
-                        • <strong>Sebaceous Gland:</strong> Overactive in acne; sebum production hormonally regulated.<br>
-                        • <strong>Sweat Gland:</strong> Dysfunction leads to hyperhidrosis or anhidrosis.<br>
-                        • <strong>Nerve Ending:</strong> Neuropathic pain arises from nerve damage in dermis/hypodermis.<br>
-                        • <strong>Blood Vessels:</strong> Vasodilation in inflammation causes erythema; vasoconstriction in shock causes pallor.<br><br>
-                        <strong>Memory Tip:</strong> "Epi‑dermis" = upon the dermis (outermost). "Hypo‑dermis" = below the dermis (deepest).
+                    <div class="feedback-content" id="feedback-content-1">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="correction-section" id="correction-section-1" style="display: none;">
+                        <div class="correction-title">
+                            <span>📝</span>
+                            Corrections Needed:
+                        </div>
+                        <ul class="correction-list" id="correction-list-1">
+                            <!-- Will be populated by JavaScript -->
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Activity 2: Lesion Classification Game (Unchanged) -->
+            <!-- Activity 2: Lesion Classification Game -->
             <section class="activity-card" id="activity-2" data-activity="2">
                 <div class="activity-header">
                     <span class="activity-number">Activity 2</span>
@@ -1371,58 +1398,19 @@
                 </p>
 
                 <!-- Lesion Cards -->
-                <div class="lesion-grid">
-                    <div class="lesion-card" data-type="primary" data-lesion="macule" draggable="true">
-                        <div class="lesion-image">●</div>
-                        <div class="lesion-name">Macule</div>
-                        <div class="lesion-description">Flat, color change &lt;1cm</div>
-                    </div>
-                    <div class="lesion-card" data-type="primary" data-lesion="papule" draggable="true">
-                        <div class="lesion-image">▲</div>
-                        <div class="lesion-name">Papule</div>
-                        <div class="lesion-description">Elevated, solid &lt;1cm</div>
-                    </div>
-                    <div class="lesion-card" data-type="primary" data-lesion="vesicle" draggable="true">
-                        <div class="lesion-image">○</div>
-                        <div class="lesion-name">Vesicle</div>
-                        <div class="lesion-description">Fluid-filled &lt;1cm</div>
-                    </div>
-                    <div class="lesion-card" data-type="primary" data-lesion="pustule" draggable="true">
-                        <div class="lesion-image">◎</div>
-                        <div class="lesion-name">Pustule</div>
-                        <div class="lesion-description">Pus-filled elevation</div>
-                    </div>
-                    <div class="lesion-card" data-type="secondary" data-lesion="scale" draggable="true">
-                        <div class="lesion-image">〰</div>
-                        <div class="lesion-name">Scale</div>
-                        <div class="lesion-description">Flaking stratum corneum</div>
-                    </div>
-                    <div class="lesion-card" data-type="secondary" data-lesion="crust" draggable="true">
-                        <div class="lesion-image">🟡</div>
-                        <div class="lesion-name">Crust</div>
-                        <div class="lesion-description">Dried exudate on surface</div>
-                    </div>
-                    <div class="lesion-card" data-type="secondary" data-lesion="erosion" draggable="true">
-                        <div class="lesion-image">⊖</div>
-                        <div class="lesion-name">Erosion</div>
-                        <div class="lesion-description">Loss of epidermis</div>
-                    </div>
-                    <div class="lesion-card" data-type="secondary" data-lesion="ulcer" draggable="true">
-                        <div class="lesion-image">⨀</div>
-                        <div class="lesion-name">Ulcer</div>
-                        <div class="lesion-description">Loss of epidermis & dermis</div>
-                    </div>
+                <div class="lesion-grid" id="lesion-grid-2">
+                    <!-- Will be populated by JavaScript -->
                 </div>
 
                 <!-- Category Dropzones -->
                 <div class="category-dropzones">
                     <div class="category-zone primary-category" data-category="primary" id="primary-category">
                         <div class="category-title">Primary Lesions</div>
-                        <div class="category-content"></div>
+                        <div class="category-content" id="primary-content"></div>
                     </div>
                     <div class="category-zone secondary-category" data-category="secondary" id="secondary-category">
                         <div class="category-title">Secondary Lesions</div>
-                        <div class="category-content"></div>
+                        <div class="category-content" id="secondary-content"></div>
                     </div>
                 </div>
 
@@ -1443,26 +1431,24 @@
                 <div class="feedback-container" id="feedback-2">
                     <div class="feedback-title">
                         <span class="feedback-icon correct">✓</span>
-                        Lesion Classification Correct!
+                        <span id="feedback-title-2">Lesion Classification Correct!</span>
                     </div>
-                    <div class="feedback-content">
-                        <strong>Primary Lesions:</strong> Develop initially from disease process<br>
-                        • <strong>Macule:</strong> Flat, color change only (freckle, petechiae)<br>
-                        • <strong>Papule:</strong> Elevated, solid &lt;1cm (mole, wart)<br>
-                        • <strong>Vesicle:</strong> Fluid-filled &lt;1cm (herpes simplex, chickenpox)<br>
-                        • <strong>Pustule:</strong> Pus-filled (acne, folliculitis)<br><br>
-                        <strong>Secondary Lesions:</strong> Evolve from primary lesions<br>
-                        • <strong>Scale:</strong> Flaking skin (psoriasis, dandruff)<br>
-                        • <strong>Crust:</strong> Dried serum/blood/pus (impetigo)<br>
-                        • <strong>Erosion:</strong> Moist, depressed area (ruptured blister)<br>
-                        • <strong>Ulcer:</strong> Full-thickness loss (venous stasis ulcer)<br><br>
-                        <strong>Memory Aid:</strong> Primary = Initial presentation, Secondary = After changes
-                        (scratching, infection, healing).
+                    <div class="feedback-content" id="feedback-content-2">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="correction-section" id="correction-section-2" style="display: none;">
+                        <div class="correction-title">
+                            <span>📝</span>
+                            Corrections Needed:
+                        </div>
+                        <ul class="correction-list" id="correction-list-2">
+                            <!-- Will be populated by JavaScript -->
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Activity 3: ABCDE Rule Application (Unchanged) -->
+            <!-- Activity 3: ABCDE Rule Application -->
             <section class="activity-card" id="activity-3" data-activity="3">
                 <div class="activity-header">
                     <span class="activity-number">Activity 3</span>
@@ -1524,19 +1510,8 @@
                     </div>
 
                     <!-- Assessment Options -->
-                    <div class="assessment-options">
-                        <div class="assessment-option" data-risk="high" data-action="biopsy">
-                            <div class="option-title">High Risk</div>
-                            <div class="option-description">Urgent biopsy recommended (meets 4+ criteria)</div>
-                        </div>
-                        <div class="assessment-option" data-risk="moderate" data-action="monitor">
-                            <div class="option-title">Moderate Risk</div>
-                            <div class="option-description">Close monitoring, consider referral (2-3 criteria)</div>
-                        </div>
-                        <div class="assessment-option" data-risk="low" data-action="reassure">
-                            <div class="option-title">Low Risk</div>
-                            <div class="option-description">Reassure, routine follow-up (0-1 criteria)</div>
-                        </div>
+                    <div class="assessment-options" id="assessment-options-3">
+                        <!-- Will be populated by JavaScript -->
                     </div>
                 </div>
 
@@ -1564,28 +1539,24 @@
                 <div class="feedback-container" id="feedback-3">
                     <div class="feedback-title">
                         <span class="feedback-icon correct">✓</span>
-                        ABCDE Rule Applied Correctly!
+                        <span id="feedback-title-3">ABCDE Rule Applied Correctly!</span>
                     </div>
-                    <div class="feedback-content">
-                        <strong>Case Analysis:</strong><br>
-                        • <strong>Asymmetry:</strong> Present - irregular shape<br>
-                        • <strong>Border:</strong> Present - irregular, notched edges<br>
-                        • <strong>Color:</strong> Present - multiple shades (brown, dark brown, black)<br>
-                        • <strong>Diameter:</strong> Present - 8mm (&gt;6mm threshold)<br>
-                        • <strong>Evolving:</strong> Present - changed over 6 months<br><br>
-                        <strong>Assessment:</strong> HIGH RISK (5/5 criteria)<br>
-                        <strong>Action:</strong> Urgent biopsy required. Refer to dermatology for excisional biopsy
-                        with 2mm margins. Document all ABCDE findings and patient's risk factors (sun exposure).<br><br>
-                        <strong>Additional Warning Signs:</strong><br>
-                        • "Ugly Duckling" sign (lesion looks different from others)<br>
-                        • Bleeding, itching, or pain in a mole<br>
-                        • New lesion after age 40<br>
-                        • Family history of melanoma
+                    <div class="feedback-content" id="feedback-content-3">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="correction-section" id="correction-section-3" style="display: none;">
+                        <div class="correction-title">
+                            <span>📝</span>
+                            Correction:
+                        </div>
+                        <ul class="correction-list" id="correction-list-3">
+                            <!-- Will be populated by JavaScript -->
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- Activity 4: Inflammatory Disorder Matching (Unchanged) -->
+            <!-- Activity 4: Inflammatory Disorder Matching -->
             <section class="activity-card" id="activity-4" data-activity="4">
                 <div class="activity-header">
                     <span class="activity-number">Activity 4</span>
@@ -1601,61 +1572,13 @@
                 </p>
 
                 <!-- Disorder Cards -->
-                <div class="disorder-container">
-                    <div class="disorder-card" data-disorder="psoriasis" draggable="true">
-                        <div class="disorder-image">🔴</div>
-                        <div class="disorder-symptoms">
-                            Well-demarcated erythematous plaques with silvery scales. Often on elbows, knees, scalp.
-                        </div>
-                    </div>
-                    <div class="disorder-card" data-disorder="eczema" draggable="true">
-                        <div class="disorder-image">🌵</div>
-                        <div class="disorder-symptoms">
-                            Pruritic, erythematous patches with excoriation. Flexural areas, family history of atopy.
-                        </div>
-                    </div>
-                    <div class="disorder-card" data-disorder="acne" draggable="true">
-                        <div class="disorder-image">🔘</div>
-                        <div class="disorder-symptoms">
-                            Comedones, papules, pustules on face, chest, back. Hormonally influenced in adolescents.
-                        </div>
-                    </div>
-                    <div class="disorder-card" data-disorder="rosacea" draggable="true">
-                        <div class="disorder-image">🍷</div>
-                        <div class="disorder-symptoms">
-                            Facial erythema, telangiectasia, papules/pustules. Flushing triggered by heat, alcohol, stress.
-                        </div>
-                    </div>
-                    <div class="disorder-card" data-disorder="contact-dermatitis" draggable="true">
-                        <div class="disorder-image">⚠️</div>
-                        <div class="disorder-symptoms">
-                            Well-demarcated rash at contact site. Pruritic vesicles/erythema. History of allergen exposure.
-                        </div>
-                    </div>
+                <div class="disorder-container" id="disorder-container-4">
+                    <!-- Will be populated by JavaScript -->
                 </div>
 
                 <!-- Disorder Dropzones -->
-                <div class="disorder-dropzones">
-                    <div class="disorder-zone" data-disorder="psoriasis">
-                        <div class="disorder-name">Psoriasis</div>
-                        <div class="disorder-match">Match symptoms here</div>
-                    </div>
-                    <div class="disorder-zone" data-disorder="eczema">
-                        <div class="disorder-name">Eczema (Atopic Dermatitis)</div>
-                        <div class="disorder-match">Match symptoms here</div>
-                    </div>
-                    <div class="disorder-zone" data-disorder="acne">
-                        <div class="disorder-name">Acne Vulgaris</div>
-                        <div class="disorder-match">Match symptoms here</div>
-                    </div>
-                    <div class="disorder-zone" data-disorder="rosacea">
-                        <div class="disorder-name">Rosacea</div>
-                        <div class="disorder-match">Match symptoms here</div>
-                    </div>
-                    <div class="disorder-zone" data-disorder="contact-dermatitis">
-                        <div class="disorder-name">Contact Dermatitis</div>
-                        <div class="disorder-match">Match symptoms here</div>
-                    </div>
+                <div class="disorder-dropzones" id="disorder-dropzones-4">
+                    <!-- Will be populated by JavaScript -->
                 </div>
 
                 <!-- Clinical Tip -->
@@ -1677,35 +1600,19 @@
                 <div class="feedback-container" id="feedback-4">
                     <div class="feedback-title">
                         <span class="feedback-icon correct">✓</span>
-                        Disorders Matched Correctly!
+                        <span id="feedback-title-4">Disorders Matched Correctly!</span>
                     </div>
-                    <div class="feedback-content">
-                        <strong>Inflammatory Skin Disorders Review:</strong><br><br>
-                        <strong>Psoriasis:</strong><br>
-                        • <em>Pathophysiology:</em> T-cell mediated, rapid keratinocyte turnover (3-4 days vs. normal 28)<br>
-                        • <em>Classic Presentation:</em> Well-demarcated erythematous plaques with silvery micaceous scale<br>
-                        • <em>Common Sites:</em> Extensor surfaces (elbows, knees), scalp, sacrum<br>
-                        • <em>Associated:</em> Nail pitting, arthritis, higher CV risk<br><br>
-                        <strong>Eczema (Atopic Dermatitis):</strong><br>
-                        • <em>Pathophysiology:</em> Skin barrier dysfunction, immune dysregulation<br>
-                        • <em>Classic Presentation:</em> Pruritic, erythematous patches with excoriation, lichenification<br>
-                        • <em>Common Sites:</em> Flexural areas (antecubital, popliteal), face in children<br>
-                        • <em>Associated:</em> Personal/family history of atopy (asthma, allergic rhinitis)<br><br>
-                        <strong>Acne Vulgaris:</strong><br>
-                        • <em>Pathophysiology:</em> Follicular hyperkeratinization, excess sebum, C. acnes, inflammation<br>
-                        • <em>Lesions:</em> Comedones (open/closed), inflammatory papules/pustules, nodules/cysts<br>
-                        • <em>Distribution:</em> Face, chest, back - areas with high sebaceous gland density<br>
-                        • <em>Treatment Ladder:</em> Topicals → oral antibiotics → isotretinoin (severe)<br><br>
-                        <strong>Rosacea:</strong><br>
-                        • <em>Subtypes:</em> Erythematotelangiectatic, papulopustular, phymatous, ocular<br>
-                        • <em>Triggers:</em> Sun, heat, alcohol, spicy foods, stress, certain skincare products<br>
-                        • <em>Key Feature:</strong> Flushing with persistent central facial erythema<br>
-                        • <em>Important:</em> NOT acne - different pathophysiology and treatment<br><br>
-                        <strong>Contact Dermatitis:</strong><br>
-                        • <em>Types:</em> Irritant (chemical damage) vs. Allergic (type IV hypersensitivity)<br>
-                        • <em>Distribution:</em> Corresponds to allergen contact (jewelry=nickel, plants=linear)<br>
-                        • <em>Diagnosis:</em> Patch testing for allergic type<br>
-                        • <em>Management:</em> Avoid allergen, topical steroids, cool compresses
+                    <div class="feedback-content" id="feedback-content-4">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                    <div class="correction-section" id="correction-section-4" style="display: none;">
+                        <div class="correction-title">
+                            <span>📝</span>
+                            Corrections Needed:
+                        </div>
+                        <ul class="correction-list" id="correction-list-4">
+                            <!-- Will be populated by JavaScript -->
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -1820,16 +1727,57 @@ document.addEventListener('DOMContentLoaded', function() {
         activities: {
             1: { completed: false, correct: 0, total: 8, score: 0, checked: false },
             2: { completed: false, correct: 0, total: 8, score: 0, checked: false },
-            3: { completed: false, correct: 0, total: 1, score: 0, checked: false }, // Just 1 case decision
+            3: { completed: false, correct: 0, total: 1, score: 0, checked: false },
             4: { completed: false, correct: 0, total: 5, score: 0, checked: false }
         },
         startedAt: new Date(),
-        timeSpent: 0,
-        activity1Matches: {}, // Track matches for Activity 1
-        activity2Placements: {}, // Track placements for Activity 2
-        activity3Selection: null, // Track selection for Activity 3
-        activity4Matches: {} // Track matches for Activity 4
+        timeSpent: 0
     };
+
+    // Activity 1 Data with correct answers
+    const activity1Data = {
+        structures: [
+            { id: 'epidermis', name: 'Epidermis', correctFunction: 'Outermost layer; barrier protection, contains melanocytes' },
+            { id: 'dermis', name: 'Dermis', correctFunction: 'Contains collagen, elastin, blood vessels, nerves, and glands' },
+            { id: 'hypodermis', name: 'Hypodermis (Subcutaneous)', correctFunction: 'Fat layer for insulation, cushioning, and energy storage' },
+            { id: 'hair-follicle', name: 'Hair Follicle', correctFunction: 'Anchors hair; associated with sebaceous glands' },
+            { id: 'sebaceous-gland', name: 'Sebaceous Gland', correctFunction: 'Produces sebum (oil) to lubricate skin and hair' },
+            { id: 'sweat-gland', name: 'Sweat Gland', correctFunction: 'Regulates body temperature through perspiration' },
+            { id: 'nerve-ending', name: 'Nerve Ending', correctFunction: 'Sensory receptors for touch, pain, temperature' },
+            { id: 'blood-vessels', name: 'Blood Vessels', correctFunction: 'Supply nutrients, remove waste, regulate temperature' }
+        ],
+        functions: [
+            { id: 'epidermis', text: 'Outermost layer; barrier protection, contains melanocytes' },
+            { id: 'dermis', text: 'Contains collagen, elastin, blood vessels, nerves, and glands' },
+            { id: 'hypodermis', text: 'Fat layer for insulation, cushioning, and energy storage' },
+            { id: 'hair-follicle', text: 'Anchors hair; associated with sebaceous glands' },
+            { id: 'sebaceous-gland', text: 'Produces sebum (oil) to lubricate skin and hair' },
+            { id: 'sweat-gland', text: 'Regulates body temperature through perspiration' },
+            { id: 'nerve-ending', text: 'Sensory receptors for touch, pain, temperature' },
+            { id: 'blood-vessels', text: 'Supply nutrients, remove waste, regulate temperature' }
+        ]
+    };
+
+    // Activity 2 Data with correct answers
+    const activity2Data = [
+        { id: 'macule', type: 'primary', name: 'Macule', description: 'Flat, color change <1cm', icon: '●', correctCategory: 'primary' },
+        { id: 'papule', type: 'primary', name: 'Papule', description: 'Elevated, solid <1cm', icon: '▲', correctCategory: 'primary' },
+        { id: 'vesicle', type: 'primary', name: 'Vesicle', description: 'Fluid-filled <1cm', icon: '○', correctCategory: 'primary' },
+        { id: 'pustule', type: 'primary', name: 'Pustule', description: 'Pus-filled elevation', icon: '◎', correctCategory: 'primary' },
+        { id: 'scale', type: 'secondary', name: 'Scale', description: 'Flaking stratum corneum', icon: '〰', correctCategory: 'secondary' },
+        { id: 'crust', type: 'secondary', name: 'Crust', description: 'Dried exudate on surface', icon: '🟡', correctCategory: 'secondary' },
+        { id: 'erosion', type: 'secondary', name: 'Erosion', description: 'Loss of epidermis', icon: '⊖', correctCategory: 'secondary' },
+        { id: 'ulcer', type: 'secondary', name: 'Ulcer', description: 'Loss of epidermis & dermis', icon: '⨀', correctCategory: 'secondary' }
+    ];
+
+    // Activity 4 Data with correct answers
+    const activity4Data = [
+        { id: 'psoriasis', name: 'Psoriasis', symptoms: 'Well-demarcated erythematous plaques with silvery scales. Often on elbows, knees, scalp.', icon: '🔴' },
+        { id: 'eczema', name: 'Eczema (Atopic Dermatitis)', symptoms: 'Pruritic, erythematous patches with excoriation. Flexural areas, family history of atopy.', icon: '🌵' },
+        { id: 'acne', name: 'Acne Vulgaris', symptoms: 'Comedones, papules, pustules on face, chest, back. Hormonally influenced in adolescents.', icon: '🔘' },
+        { id: 'rosacea', name: 'Rosacea', symptoms: 'Facial erythema, telangiectasia, papules/pustules. Flushing triggered by heat, alcohol, stress.', icon: '🍷' },
+        { id: 'contact-dermatitis', name: 'Contact Dermatitis', symptoms: 'Well-demarcated rash at contact site. Pruritic vesicles/erythema. History of allergen exposure.', icon: '⚠️' }
+    ];
 
     // DOM Elements
     const progressSteps = document.querySelectorAll('.progress-step');
@@ -1884,49 +1832,67 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // === ACTIVITY 1: Skin Structure & Function Matching (FIXED) ===
-    function initActivity1() {
-        const structureItems = document.querySelectorAll('#activity-1 .structure-item');
-        const functionItems = document.querySelectorAll('#activity-1 .function-item');
-        const feedback = document.getElementById('feedback-1');
-        const status = document.querySelector('#activity-1 .activity-status');
-        const feedbackTitle = feedback.querySelector('.feedback-title');
-        const feedbackContent = feedback.querySelector('.feedback-content');
-
-        // Correct matching pairs
-        const correctMatchesMap = {
-            'epidermis': 'Outermost layer; barrier protection, contains melanocytes',
-            'dermis': 'Contains collagen, elastin, blood vessels, nerves, and glands',
-            'hypodermis': 'Fat layer for insulation, cushioning, and energy storage',
-            'hair-follicle': 'Anchors hair; associated with sebaceous glands',
-            'sebaceous-gland': 'Produces sebum (oil) to lubricate skin and hair',
-            'sweat-gland': 'Regulates body temperature through perspiration',
-            'nerve-ending': 'Sensory receptors for touch, pain, temperature',
-            'blood-vessels': 'Supply nutrients, remove waste, regulate temperature'
-        };
-
-        // Shuffle the function items to randomize order
-        const functionsContainer = document.querySelector('#activity-1 .functions-list');
-        const functionItemsArray = Array.from(functionItems);
-        
-        // Fisher-Yates shuffle
-        for (let i = functionItemsArray.length - 1; i > 0; i--) {
+    // Utility function to shuffle array
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            functionsContainer.insertBefore(functionItemsArray[j], functionItemsArray[i]);
-            // Update the array to match new order
-            [functionItemsArray[i], functionItemsArray[j]] = [functionItemsArray[j], functionItemsArray[i]];
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
         }
+        return newArray;
+    }
 
-        // Reset matches
-        state.activity1Matches = {};
+    // === ACTIVITY 1: Skin Structure & Function Matching ===
+    function initActivity1() {
+        const structuresList = document.getElementById('structures-list-1');
+        const functionsList = document.getElementById('functions-list-1');
+        const feedback = document.getElementById('feedback-1');
+        const feedbackTitle = document.getElementById('feedback-title-1');
+        const feedbackContent = document.getElementById('feedback-content-1');
+        const correctionSection = document.getElementById('correction-section-1');
+        const correctionList = document.getElementById('correction-list-1');
+        const status = document.querySelector('#activity-1 .activity-status');
 
-        // Setup drag for structure items
-        structureItems.forEach(item => {
+        // Clear existing content
+        structuresList.innerHTML = '';
+        functionsList.innerHTML = '';
+        correctionList.innerHTML = '';
+        correctionSection.style.display = 'none';
+
+        // Shuffle data
+        const shuffledStructures = shuffleArray(activity1Data.structures);
+        const shuffledFunctions = shuffleArray(activity1Data.functions);
+
+        // Create structure items
+        shuffledStructures.forEach(structure => {
+            const div = document.createElement('div');
+            div.className = 'structure-item';
+            div.dataset.id = structure.id;
+            div.dataset.name = structure.name;
+            div.draggable = true;
+            div.textContent = structure.name;
+            structuresList.appendChild(div);
+        });
+
+        // Create function items
+        shuffledFunctions.forEach(func => {
+            const div = document.createElement('div');
+            div.className = 'function-item';
+            div.dataset.match = func.id;
+            div.dataset.text = func.text;
+            div.textContent = func.text;
+            functionsList.appendChild(div);
+        });
+
+        // Track matches
+        let matches = {};
+
+        // Setup drag events for structure items
+        document.querySelectorAll('#activity-1 .structure-item').forEach(item => {
             item.addEventListener('dragstart', function(e) {
                 e.dataTransfer.setData('text/plain', JSON.stringify({
-                    type: 'structure',
-                    structure: this.dataset.structure,
-                    text: this.textContent
+                    id: this.dataset.id,
+                    name: this.dataset.name
                 }));
                 this.classList.add('dragging');
             });
@@ -1936,52 +1902,46 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Setup drop for function items
-        functionItems.forEach(item => {
+        // Setup drop events for function items
+        document.querySelectorAll('#activity-1 .function-item').forEach(item => {
             item.addEventListener('dragover', function(e) {
                 e.preventDefault();
-                this.classList.add('hover');
-            });
-
-            item.addEventListener('dragleave', function() {
-                this.classList.remove('hover');
             });
 
             item.addEventListener('drop', function(e) {
                 e.preventDefault();
-                this.classList.remove('hover');
-
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                
                 // Check if already matched
-                if (this.classList.contains('matched')) {
-                    // Remove previous match if exists
-                    const prevStructure = Object.keys(state.activity1Matches).find(
-                        key => state.activity1Matches[key]?.functionElement === this
-                    );
-                    if (prevStructure) {
-                        delete state.activity1Matches[prevStructure];
-                        const prevStructureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${prevStructure}"]`);
-                        if (prevStructureEl) prevStructureEl.classList.remove('matched');
-                    }
+                if (matches[data.id]) {
+                    const prevFunc = matches[data.id].functionElement;
+                    prevFunc.classList.remove('matched', 'correct-match', 'incorrect-match');
                 }
 
-                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                if (data.type !== 'structure') return;
+                // Remove previous matches for this function
+                Object.keys(matches).forEach(key => {
+                    if (matches[key].functionElement === this) {
+                        const structureEl = document.querySelector(`#activity-1 .structure-item[data-id="${key}"]`);
+                        if (structureEl) structureEl.classList.remove('matched');
+                        delete matches[key];
+                    }
+                });
 
-                const structure = data.structure;
-                const functionText = this.textContent;
-
-                // Store match
-                state.activity1Matches[structure] = {
-                    functionText: functionText,
+                // Check if correct
+                const isCorrect = data.id === this.dataset.match;
+                matches[data.id] = {
                     functionElement: this,
-                    correct: correctMatchesMap[structure] === functionText
+                    functionText: this.dataset.text,
+                    isCorrect: isCorrect
                 };
 
-                // Visual feedback
+                // Update UI
                 this.classList.add('matched');
-                
-                // Mark structure as matched
-                const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
+                if (state.activities[1].checked) {
+                    this.classList.add(isCorrect ? 'correct-match' : 'incorrect-match');
+                }
+
+                const structureEl = document.querySelector(`#activity-1 .structure-item[data-id="${data.id}"]`);
                 if (structureEl) {
                     structureEl.classList.add('matched');
                 }
@@ -1994,24 +1954,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Allow clicking to remove match
-            item.addEventListener('click', function(e) {
+            item.addEventListener('click', function() {
                 if (!this.classList.contains('matched')) return;
                 
                 // Find which structure is matched to this function
-                const structure = Object.keys(state.activity1Matches).find(
-                    key => state.activity1Matches[key]?.functionElement === this
-                );
-                
+                const structure = Object.keys(matches).find(key => matches[key].functionElement === this);
                 if (structure) {
-                    // Remove match
-                    delete state.activity1Matches[structure];
+                    delete matches[structure];
                     this.classList.remove('matched', 'correct-match', 'incorrect-match');
                     
-                    // Remove structure matched class
-                    const structureEl = document.querySelector(`#activity-1 .structure-item[data-structure="${structure}"]`);
+                    const structureEl = document.querySelector(`#activity-1 .structure-item[data-id="${structure}"]`);
                     if (structureEl) structureEl.classList.remove('matched');
                     
-                    // Update status
                     if (!state.activities[1].checked) {
                         status.textContent = 'In Progress';
                         status.style.color = 'var(--color-warning)';
@@ -2020,36 +1974,40 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Add check button for Activity 1
-        const checkActivity1Btn = document.createElement('button');
-        checkActivity1Btn.className = 'activity-check-btn';
-        checkActivity1Btn.innerHTML = '<span>✓</span> Check Activity 1 Answers';
-        checkActivity1Btn.style.marginTop = '20px';
-        checkActivity1Btn.style.padding = '10px 20px';
-        checkActivity1Btn.style.background = 'var(--color-primary)';
-        checkActivity1Btn.style.color = 'white';
-        checkActivity1Btn.style.border = 'none';
-        checkActivity1Btn.style.borderRadius = 'var(--radius-sm)';
-        checkActivity1Btn.style.cursor = 'pointer';
-        checkActivity1Btn.style.fontSize = '0.9rem';
-        checkActivity1Btn.style.fontWeight = '600';
-        
-        checkActivity1Btn.addEventListener('click', function() {
+        // Add check button
+        const checkBtn = document.createElement('button');
+        checkBtn.className = 'btn btn-primary';
+        checkBtn.style.marginTop = '20px';
+        checkBtn.innerHTML = '<span>✓</span> Check Activity 1';
+        checkBtn.addEventListener('click', function() {
             if (state.activities[1].checked) return;
             
             let correctCount = 0;
-            const totalMatches = Object.keys(state.activity1Matches).length;
+            const totalMatches = Object.keys(matches).length;
+            let incorrectMatches = [];
             
-            // Check each match
-            Object.keys(state.activity1Matches).forEach(structure => {
-                const match = state.activity1Matches[structure];
-                if (match.correct) {
+            // Check each match and collect incorrect ones
+            Object.keys(matches).forEach(structureId => {
+                const match = matches[structureId];
+                const isCorrect = structureId === match.functionElement.dataset.match;
+                
+                if (isCorrect) {
                     match.functionElement.classList.add('correct-match');
                     match.functionElement.classList.remove('incorrect-match');
                     correctCount++;
                 } else {
                     match.functionElement.classList.add('incorrect-match');
                     match.functionElement.classList.remove('correct-match');
+                    
+                    // Find correct function for this structure
+                    const structure = activity1Data.structures.find(s => s.id === structureId);
+                    if (structure) {
+                        incorrectMatches.push({
+                            structureName: structure.name,
+                            yourAnswer: match.functionText,
+                            correctAnswer: structure.correctFunction
+                        });
+                    }
                 }
             });
             
@@ -2058,7 +2016,7 @@ document.addEventListener('DOMContentLoaded', function() {
             state.activities[1].score = Math.round((correctCount / 8) * 100);
             state.activities[1].checked = true;
             
-            // Check if all matches are made
+            // Update status
             if (totalMatches === 8) {
                 state.activities[1].completed = true;
                 status.textContent = correctCount === 8 ? 'Completed ✓' : 'Completed ✗';
@@ -2071,27 +2029,55 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show feedback
             feedback.classList.add('show');
+            const feedbackIcon = feedback.querySelector('.feedback-icon');
+            
             if (correctCount === 8) {
-                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Perfect! All Matches Correct';
+                feedbackTitle.textContent = 'Perfect! All 8 Matches Correct!';
+                feedbackIcon.className = 'feedback-icon correct';
+                feedbackIcon.textContent = '✓';
+                correctionSection.style.display = 'none';
                 feedbackContent.innerHTML = `
-                    <strong>Excellent work!</strong> You've correctly matched all skin structures to their functions:<br><br>
+                    <strong>Excellent work!</strong> You've correctly matched all skin structures to their functions.<br><br>
+                    <strong>Score:</strong> ${correctCount}/8 correct (100%)<br><br>
                     <strong>Clinical Correlations:</strong><br>
                     • <strong>Epidermis:</strong> Thickened in psoriasis (acanthosis), damaged in burns (partial‑thickness).<br>
                     • <strong>Dermis:</strong> Houses immune cells; inflammation here causes conditions like lupus.<br>
-                    • <strong>Hypodermis:</strong> Site for subcutaneous injections; depth affects absorption rate.<br>
-                    • <strong>Hair Follicle:</strong> Portal for bacterial entry in folliculitis; target for laser hair removal.<br>
-                    • <strong>Sebaceous Gland:</strong> Overactive in acne; sebum production hormonally regulated.<br>
-                    • <strong>Sweat Gland:</strong> Dysfunction leads to hyperhidrosis or anhidrosis.<br>
-                    • <strong>Nerve Ending:</strong> Neuropathic pain arises from nerve damage in dermis/hypodermis.<br>
-                    • <strong>Blood Vessels:</strong> Vasodilation in inflammation causes erythema; vasoconstriction in shock causes pallor.<br><br>
-                    <strong>Memory Tip:</strong> "Epi‑dermis" = upon the dermis (outermost). "Hypo‑dermis" = below the dermis (deepest).
+                    • <strong>Hypodermis:</strong> Site for subcutaneous injections; depth affects absorption rate.
                 `;
             } else {
-                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/8 Correct`;
+                feedbackTitle.textContent = `${correctCount}/8 Correct - Review Needed`;
+                feedbackIcon.className = 'feedback-icon incorrect';
+                feedbackIcon.textContent = '✗';
+                
+                // Show corrections
+                correctionSection.style.display = 'block';
+                correctionList.innerHTML = '';
+                
+                incorrectMatches.forEach(correction => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${correction.structureName}:</strong> You matched it to "${correction.yourAnswer}" - The correct match is: "${correction.correctAnswer}"`;
+                    correctionList.appendChild(li);
+                });
+                
+                // Also list any unmatched items
+                const allStructureIds = activity1Data.structures.map(s => s.id);
+                const matchedStructureIds = Object.keys(matches);
+                const unmatchedStructureIds = allStructureIds.filter(id => !matchedStructureIds.includes(id));
+                
+                if (unmatchedStructureIds.length > 0) {
+                    unmatchedStructureIds.forEach(structureId => {
+                        const structure = activity1Data.structures.find(s => s.id === structureId);
+                        if (structure) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<strong>${structure.name}:</strong> Not matched - Should match: "${structure.correctFunction}"`;
+                            correctionList.appendChild(li);
+                        }
+                    });
+                }
+                
                 feedbackContent.innerHTML = `
                     <strong>Review needed:</strong> You got ${correctCount} out of 8 matches correct.<br><br>
-                    <strong>Incorrect matches:</strong><br>
-                    ${getIncorrectMatchesFeedback()}<br>
+                    <strong>Score:</strong> ${correctCount}/8 correct (${Math.round((correctCount / 8) * 100)}%)<br><br>
                     <strong>Study tip:</strong> Remember that the epidermis is the outermost protective layer, 
                     the dermis contains connective tissue and glands, and the hypodermis is the fatty layer underneath.
                 `;
@@ -2100,55 +2086,60 @@ document.addEventListener('DOMContentLoaded', function() {
             updateProgressSummary();
         });
         
-        // Insert check button after the matching container
-        const matchingContainer = document.querySelector('#activity-1 .matching-container');
-        matchingContainer.parentNode.insertBefore(checkActivity1Btn, matchingContainer.nextSibling);
-        
-        function getIncorrectMatchesFeedback() {
-            let feedback = '';
-            Object.keys(state.activity1Matches).forEach(structure => {
-                const match = state.activity1Matches[structure];
-                if (!match.correct) {
-                    const correctFunction = correctMatchesMap[structure];
-                    feedback += `• "${structure.replace('-', ' ')}" should match: "${correctFunction}"<br>`;
-                }
-            });
-            return feedback || 'All matches are correct!';
-        }
+        const clinicalTip = document.querySelector('#activity-1 .clinical-tip');
+        clinicalTip.parentNode.insertBefore(checkBtn, clinicalTip.nextSibling);
     }
 
-    // === ACTIVITY 2: Lesion Classification Game (FIXED) ===
+    // === ACTIVITY 2: Lesion Classification Game ===
     function initActivity2() {
-        const lesionCards = document.querySelectorAll('#activity-2 .lesion-card');
-        const primaryCategory = document.getElementById('primary-category');
-        const secondaryCategory = document.getElementById('secondary-category');
+        const lesionGrid = document.getElementById('lesion-grid-2');
+        const primaryContent = document.getElementById('primary-content');
+        const secondaryContent = document.getElementById('secondary-content');
         const feedback = document.getElementById('feedback-2');
+        const feedbackTitle = document.getElementById('feedback-title-2');
+        const feedbackContent = document.getElementById('feedback-content-2');
+        const correctionSection = document.getElementById('correction-section-2');
+        const correctionList = document.getElementById('correction-list-2');
         const status = document.querySelector('#activity-2 .activity-status');
-        const feedbackTitle = feedback.querySelector('.feedback-title');
-        const feedbackContent = feedback.querySelector('.feedback-content');
 
-        // Correct categories
-        const correctCategories = {
-            'macule': 'primary',
-            'papule': 'primary',
-            'vesicle': 'primary',
-            'pustule': 'primary',
-            'scale': 'secondary',
-            'crust': 'secondary',
-            'erosion': 'secondary',
-            'ulcer': 'secondary'
-        };
+        // Clear existing content
+        lesionGrid.innerHTML = '';
+        primaryContent.innerHTML = '';
+        secondaryContent.innerHTML = '';
+        correctionList.innerHTML = '';
+        correctionSection.style.display = 'none';
 
-        // Reset placements
-        state.activity2Placements = {};
+        // Shuffle data
+        const shuffledLesions = shuffleArray(activity2Data);
 
-        // Setup drag and drop for lesion cards
-        lesionCards.forEach(card => {
+        // Create lesion cards
+        shuffledLesions.forEach(lesion => {
+            const card = document.createElement('div');
+            card.className = 'lesion-card';
+            card.dataset.id = lesion.id;
+            card.dataset.type = lesion.type;
+            card.dataset.name = lesion.name;
+            card.draggable = true;
+            
+            card.innerHTML = `
+                <div class="lesion-image">${lesion.icon}</div>
+                <div class="lesion-name">${lesion.name}</div>
+                <div class="lesion-description">${lesion.description}</div>
+            `;
+            
+            lesionGrid.appendChild(card);
+        });
+
+        // Track placements
+        let placements = {};
+
+        // Setup drag events for lesion cards
+        document.querySelectorAll('#activity-2 .lesion-card').forEach(card => {
             card.addEventListener('dragstart', function(e) {
                 e.dataTransfer.setData('text/plain', JSON.stringify({
-                    lesion: this.dataset.lesion,
+                    id: this.dataset.id,
                     type: this.dataset.type,
-                    element: this
+                    name: this.dataset.name
                 }));
                 this.classList.add('dragging');
             });
@@ -2158,299 +2149,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Setup category drop zones
-        [primaryCategory, secondaryCategory].forEach(category => {
-            category.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.classList.add('hover');
-            });
+        // Setup drop zones
+        const primaryZone = document.getElementById('primary-category');
+        const secondaryZone = document.getElementById('secondary-category');
 
-            category.addEventListener('dragleave', function() {
-                this.classList.remove('hover');
-            });
-
-            category.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.classList.remove('hover');
-
-                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                const targetCategory = this.dataset.category;
-
-                // Check if this lesion is already placed elsewhere
-                if (state.activity2Placements[data.lesion]) {
-                    // Remove from previous category
-                    const prevCategory = state.activity2Placements[data.lesion].category;
-                    const prevCategoryEl = document.querySelector(`#${prevCategory}-category`);
-                    if (prevCategoryEl) {
-                        const cardInCategory = prevCategoryEl.querySelector(`[data-lesion="${data.lesion}"]`);
-                        if (cardInCategory) cardInCategory.remove();
-                    }
-                }
-
-                // Check if placement is correct
-                const isCorrect = data.type === targetCategory;
-
-                // Add card to category
-                const cardClone = data.element.cloneNode(true);
-                cardClone.classList.remove('dragging');
-                cardClone.style.cursor = 'default';
-                cardClone.style.opacity = '0.7';
-                cardClone.draggable = false;
-                this.querySelector('.category-content').appendChild(cardClone);
-
-                // Store placement
-                state.activity2Placements[data.lesion] = {
-                    category: targetCategory,
-                    correct: isCorrect,
-                    element: data.element
-                };
-
-                // Hide original card (but keep in DOM for resetting)
-                data.element.style.visibility = 'hidden';
-                data.element.style.position = 'absolute';
-                data.element.style.pointerEvents = 'none';
-
-                // Update status
-                if (!state.activities[2].checked) {
-                    status.textContent = 'In Progress';
-                    status.style.color = 'var(--color-warning)';
-                }
-            });
-        });
-
-        // Add check button for Activity 2
-        const checkActivity2Btn = document.createElement('button');
-        checkActivity2Btn.className = 'activity-check-btn';
-        checkActivity2Btn.innerHTML = '<span>✓</span> Check Activity 2 Answers';
-        checkActivity2Btn.style.marginTop = '20px';
-        checkActivity2Btn.style.padding = '10px 20px';
-        checkActivity2Btn.style.background = 'var(--color-primary)';
-        checkActivity2Btn.style.color = 'white';
-        checkActivity2Btn.style.border = 'none';
-        checkActivity2Btn.style.borderRadius = 'var(--radius-sm)';
-        checkActivity2Btn.style.cursor = 'pointer';
-        checkActivity2Btn.style.fontSize = '0.9rem';
-        checkActivity2Btn.style.fontWeight = '600';
-        
-        const warningDiv = document.querySelector('#activity-2 .derm-warning');
-        warningDiv.parentNode.insertBefore(checkActivity2Btn, warningDiv);
-        
-        checkActivity2Btn.addEventListener('click', function() {
-            if (state.activities[2].checked) return;
-            
-            let correctCount = 0;
-            const totalPlacements = Object.keys(state.activity2Placements).length;
-            
-            // Check each placement
-            Object.keys(state.activity2Placements).forEach(lesion => {
-                const placement = state.activity2Placements[lesion];
-                if (placement.correct) {
-                    correctCount++;
-                }
-            });
-            
-            // Update state
-            state.activities[2].correct = correctCount;
-            state.activities[2].score = Math.round((correctCount / 8) * 100);
-            state.activities[2].checked = true;
-            
-            // Check if all placements are made
-            if (totalPlacements === 8) {
-                state.activities[2].completed = true;
-                status.textContent = correctCount === 8 ? 'Completed ✓' : 'Completed ✗';
-                status.style.color = correctCount === 8 ? 'var(--color-success)' : 'var(--color-error)';
-                document.querySelector('#activity-2').classList.add('completed');
-            } else {
-                status.textContent = 'Checked - Incomplete';
-                status.style.color = 'var(--color-warning)';
-            }
-            
-            // Show feedback
-            feedback.classList.add('show');
-            if (correctCount === 8) {
-                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Lesion Classification Correct!';
-                feedbackContent.innerHTML = `
-                    <strong>Primary Lesions:</strong> Develop initially from disease process<br>
-                    • <strong>Macule:</strong> Flat, color change only (freckle, petechiae)<br>
-                    • <strong>Papule:</strong> Elevated, solid &lt;1cm (mole, wart)<br>
-                    • <strong>Vesicle:</strong> Fluid-filled &lt;1cm (herpes simplex, chickenpox)<br>
-                    • <strong>Pustule:</strong> Pus-filled (acne, folliculitis)<br><br>
-                    <strong>Secondary Lesions:</strong> Evolve from primary lesions<br>
-                    • <strong>Scale:</strong> Flaking skin (psoriasis, dandruff)<br>
-                    • <strong>Crust:</strong> Dried serum/blood/pus (impetigo)<br>
-                    • <strong>Erosion:</strong> Moist, depressed area (ruptured blister)<br>
-                    • <strong>Ulcer:</strong> Full-thickness loss (venous stasis ulcer)<br><br>
-                    <strong>Memory Aid:</strong> Primary = Initial presentation, Secondary = After changes
-                    (scratching, infection, healing).
-                `;
-            } else {
-                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/8 Correct`;
-                feedbackContent.innerHTML = `
-                    <strong>Review needed:</strong> You got ${correctCount} out of 8 lesions correctly classified.<br><br>
-                    <strong>Study tip:</strong><br>
-                    • Primary lesions develop initially (macule, papule, vesicle, pustule)<br>
-                    • Secondary lesions evolve from primary lesions (scale, crust, erosion, ulcer)<br>
-                    • Remember: If you can feel it when you close your eyes, it's likely a papule (elevated)<br>
-                    • If it's flat but colored, it's a macule
-                `;
-            }
-            
-            updateProgressSummary();
-        });
-    }
-
-    // === ACTIVITY 3: ABCDE Rule Application (FIXED) ===
-    function initActivity3() {
-        const assessmentOptions = document.querySelectorAll('#activity-3 .assessment-option');
-        const feedback = document.getElementById('feedback-3');
-        const status = document.querySelector('#activity-3 .activity-status');
-        const feedbackTitle = feedback.querySelector('.feedback-title');
-        const feedbackContent = feedback.querySelector('.feedback-content');
-
-        // Correct assessment for Case 1: High Risk (5/5 ABCDE criteria)
-        const correctAssessment = 'high';
-
-        // Reset selection
-        state.activity3Selection = null;
-
-        assessmentOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                if (state.activities[3].checked) return;
-
-                const riskLevel = this.dataset.risk;
-
-                // Remove selection from other options
-                assessmentOptions.forEach(opt => {
-                    opt.classList.remove('selected', 'wrong', 'correct');
-                });
-
-                // Mark selected option
-                this.classList.add('selected');
-                state.activity3Selection = riskLevel;
-                
-                // Update status
-                status.textContent = 'Answered';
-                status.style.color = 'var(--color-warning)';
-            });
-        });
-
-        // Add check button for Activity 3
-        const checkActivity3Btn = document.createElement('button');
-        checkActivity3Btn.className = 'activity-check-btn';
-        checkActivity3Btn.innerHTML = '<span>✓</span> Check Activity 3 Answer';
-        checkActivity3Btn.style.marginTop = '20px';
-        checkActivity3Btn.style.padding = '10px 20px';
-        checkActivity3Btn.style.background = 'var(--color-primary)';
-        checkActivity3Btn.style.color = 'white';
-        checkActivity3Btn.style.border = 'none';
-        checkActivity3Btn.style.borderRadius = 'var(--radius-sm)';
-        checkActivity3Btn.style.cursor = 'pointer';
-        checkActivity3Btn.style.fontSize = '0.9rem';
-        checkActivity3Btn.style.fontWeight = '600';
-        
-        const takeawaysDiv = document.querySelector('#activity-3 .takeaways');
-        takeawaysDiv.parentNode.insertBefore(checkActivity3Btn, takeawaysDiv);
-        
-        checkActivity3Btn.addEventListener('click', function() {
-            if (state.activities[3].checked) return;
-            
-            if (!state.activity3Selection) {
-                alert('Please select an assessment option first.');
-                return;
-            }
-            
-            const isCorrect = state.activity3Selection === correctAssessment;
-            
-            // Update state
-            state.activities[3].correct = isCorrect ? 1 : 0;
-            state.activities[3].score = isCorrect ? 100 : 0;
-            state.activities[3].checked = true;
-            state.activities[3].completed = true;
-            
-            // Visual feedback
-            assessmentOptions.forEach(option => {
-                option.classList.remove('selected', 'wrong', 'correct');
-                if (option.dataset.risk === state.activity3Selection) {
-                    option.classList.add(isCorrect ? 'correct' : 'wrong');
-                }
-                if (option.dataset.risk === correctAssessment) {
-                    option.classList.add('correct');
-                }
-            });
-            
-            status.textContent = isCorrect ? 'Completed ✓' : 'Completed ✗';
-            status.style.color = isCorrect ? 'var(--color-success)' : 'var(--color-error)';
-            document.querySelector('#activity-3').classList.add('completed');
-            
-            // Show feedback
-            feedback.classList.add('show');
-            if (isCorrect) {
-                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> ABCDE Rule Applied Correctly!';
-                feedbackContent.innerHTML = `
-                    <strong>Case Analysis:</strong><br>
-                    • <strong>Asymmetry:</strong> Present - irregular shape<br>
-                    • <strong>Border:</strong> Present - irregular, notched edges<br>
-                    • <strong>Color:</strong> Present - multiple shades (brown, dark brown, black)<br>
-                    • <strong>Diameter:</strong> Present - 8mm (&gt;6mm threshold)<br>
-                    • <strong>Evolving:</strong> Present - changed over 6 months<br><br>
-                    <strong>Assessment:</strong> HIGH RISK (5/5 criteria)<br>
-                    <strong>Action:</strong> Urgent biopsy required. Refer to dermatology for excisional biopsy
-                    with 2mm margins. Document all ABCDE findings and patient's risk factors (sun exposure).<br><br>
-                    <strong>Additional Warning Signs:</strong><br>
-                    • "Ugly Duckling" sign (lesion looks different from others)<br>
-                    • Bleeding, itching, or pain in a mole<br>
-                    • New lesion after age 40<br>
-                    • Family history of melanoma
-                `;
-            } else {
-                feedbackTitle.innerHTML = '<span class="feedback-icon incorrect">✗</span> Incorrect Assessment';
-                feedbackContent.innerHTML = `
-                    <strong>Correct Answer:</strong> High Risk (Urgent biopsy recommended)<br><br>
-                    <strong>Why this is correct:</strong><br>
-                    The lesion meets all 5 ABCDE criteria:<br>
-                    1. <strong>A</strong>symmetry: Irregular shape<br>
-                    2. <strong>B</strong>order: Irregular, notched edges<br>
-                    3. <strong>C</strong>olor: Multiple colors (brown, dark brown, black)<br>
-                    4. <strong>D</strong>iameter: 8mm (&gt;6mm threshold)<br>
-                    5. <strong>E</strong>volving: Changed over 6 months<br><br>
-                    <strong>Clinical Note:</strong> Any lesion with 4 or more ABCDE criteria requires urgent biopsy.
-                    The "E" (evolving) criterion is particularly important - any changing lesion warrants evaluation.
-                `;
-            }
-            
-            updateProgressSummary();
-        });
-    }
-
-    // === ACTIVITY 4: Inflammatory Disorder Matching (FIXED) ===
-    function initActivity4() {
-        const disorderCards = document.querySelectorAll('#activity-4 .disorder-card');
-        const disorderZones = document.querySelectorAll('#activity-4 .disorder-zone');
-        const feedback = document.getElementById('feedback-4');
-        const status = document.querySelector('#activity-4 .activity-status');
-        const feedbackTitle = feedback.querySelector('.feedback-title');
-        const feedbackContent = feedback.querySelector('.feedback-content');
-
-        // Reset matches
-        state.activity4Matches = {};
-
-        // Setup drag and drop for disorder cards
-        disorderCards.forEach(card => {
-            card.addEventListener('dragstart', function(e) {
-                e.dataTransfer.setData('text/plain', JSON.stringify({
-                    disorder: this.dataset.disorder,
-                    element: this
-                }));
-                this.classList.add('dragging');
-            });
-
-            card.addEventListener('dragend', function() {
-                this.classList.remove('dragging');
-            });
-        });
-
-        // Setup disorder drop zones
-        disorderZones.forEach(zone => {
+        [primaryZone, secondaryZone].forEach(zone => {
             zone.addEventListener('dragover', function(e) {
                 e.preventDefault();
                 this.classList.add('hover');
@@ -2463,44 +2166,446 @@ document.addEventListener('DOMContentLoaded', function() {
             zone.addEventListener('drop', function(e) {
                 e.preventDefault();
                 this.classList.remove('hover');
-
-                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                const targetDisorder = this.dataset.disorder;
-
-                // Check if zone already has a different card
-                if (state.activity4Matches[targetDisorder]) {
-                    // Remove previous card from this zone
-                    const prevCard = state.activity4Matches[targetDisorder].element;
-                    prevCard.style.display = '';
-                    prevCard.classList.remove('matched');
-                }
-
-                // Check if this card is already placed elsewhere
-                if (state.activity4Matches[data.disorder]) {
-                    // Remove from previous zone
-                    const prevZone = state.activity4Matches[data.disorder].zoneElement;
-                    prevZone.querySelector('.disorder-match').textContent = 'Match symptoms here';
-                    prevZone.classList.remove('filled', 'wrong');
-                }
-
-                // Check if placement is correct
-                const isCorrect = data.disorder === targetDisorder;
-
-                // Update zone content
-                this.querySelector('.disorder-match').textContent = 'Matched!';
                 
-                // Store match
-                state.activity4Matches[targetDisorder] = {
-                    disorder: data.disorder,
-                    correct: isCorrect,
-                    element: data.element,
-                    zoneElement: this
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const targetCategory = this.dataset.category;
+                
+                // Remove from previous placement
+                if (placements[data.id]) {
+                    const prevContent = document.getElementById(`${placements[data.id]}-content`);
+                    const placedCard = prevContent.querySelector(`[data-id="${data.id}"]`);
+                    if (placedCard) placedCard.remove();
+                }
+                
+                // Check if correct
+                const isCorrect = data.type === targetCategory;
+                placements[data.id] = targetCategory;
+                
+                // Create clone for drop zone
+                const originalCard = document.querySelector(`#activity-2 .lesion-card[data-id="${data.id}"]`);
+                const clone = originalCard.cloneNode(true);
+                clone.classList.remove('dragging');
+                clone.draggable = false;
+                clone.style.opacity = '0.7';
+                clone.style.cursor = 'default';
+                
+                // Add to correct content area
+                const contentArea = document.getElementById(`${targetCategory}-content`);
+                contentArea.appendChild(clone);
+                
+                // Hide original
+                originalCard.style.visibility = 'hidden';
+                
+                // Update status
+                if (!state.activities[2].checked) {
+                    status.textContent = 'In Progress';
+                    status.style.color = 'var(--color-warning)';
+                }
+            });
+        });
+
+        // Add check button
+        const checkBtn = document.createElement('button');
+        checkBtn.className = 'btn btn-primary';
+        checkBtn.style.marginTop = '20px';
+        checkBtn.innerHTML = '<span>✓</span> Check Activity 2';
+        checkBtn.addEventListener('click', function() {
+            if (state.activities[2].checked) return;
+            
+            let correctCount = 0;
+            const totalPlacements = Object.keys(placements).length;
+            let incorrectPlacements = [];
+            
+            // Check each placement
+            Object.keys(placements).forEach(id => {
+                const lesion = activity2Data.find(l => l.id === id);
+                if (lesion) {
+                    const isCorrect = lesion.type === placements[id];
+                    if (isCorrect) {
+                        correctCount++;
+                    } else {
+                        incorrectPlacements.push({
+                            lesionName: lesion.name,
+                            yourCategory: placements[id] === 'primary' ? 'Primary' : 'Secondary',
+                            correctCategory: lesion.correctCategory === 'primary' ? 'Primary' : 'Secondary'
+                        });
+                    }
+                }
+            });
+            
+            // Update state
+            state.activities[2].correct = correctCount;
+            state.activities[2].score = Math.round((correctCount / 8) * 100);
+            state.activities[2].checked = true;
+            
+            // Update status
+            if (totalPlacements === 8) {
+                state.activities[2].completed = true;
+                status.textContent = correctCount === 8 ? 'Completed ✓' : 'Completed ✗';
+                status.style.color = correctCount === 8 ? 'var(--color-success)' : 'var(--color-error)';
+                document.querySelector('#activity-2').classList.add('completed');
+            } else {
+                status.textContent = 'Checked - Incomplete';
+                status.style.color = 'var(--color-warning)';
+            }
+            
+            // Show feedback
+            feedback.classList.add('show');
+            const feedbackIcon = feedback.querySelector('.feedback-icon');
+            
+            if (correctCount === 8) {
+                feedbackTitle.textContent = 'Perfect! All 8 Lesions Correctly Classified!';
+                feedbackIcon.className = 'feedback-icon correct';
+                feedbackIcon.textContent = '✓';
+                correctionSection.style.display = 'none';
+                feedbackContent.innerHTML = `
+                    <strong>Excellent work!</strong> You've correctly classified all skin lesions.<br><br>
+                    <strong>Score:</strong> ${correctCount}/8 correct (100%)<br><br>
+                    <strong>Primary Lesions:</strong> Develop initially from disease process<br>
+                    • <strong>Macule:</strong> Flat, color change only (freckle, petechiae)<br>
+                    • <strong>Papule:</strong> Elevated, solid &lt;1cm (mole, wart)<br>
+                    • <strong>Vesicle:</strong> Fluid-filled &lt;1cm (herpes simplex, chickenpox)<br>
+                    • <strong>Pustule:</strong> Pus-filled (acne, folliculitis)<br><br>
+                    <strong>Secondary Lesions:</strong> Evolve from primary lesions<br>
+                    • <strong>Scale:</strong> Flaking skin (psoriasis, dandruff)<br>
+                    • <strong>Crust:</strong> Dried serum/blood/pus (impetigo)<br>
+                    • <strong>Erosion:</strong> Moist, depressed area (ruptured blister)<br>
+                    • <strong>Ulcer:</strong> Full-thickness loss (venous stasis ulcer)
+                `;
+            } else {
+                feedbackTitle.textContent = `${correctCount}/8 Correct - Review Needed`;
+                feedbackIcon.className = 'feedback-icon incorrect';
+                feedbackIcon.textContent = '✗';
+                
+                // Show corrections
+                correctionSection.style.display = 'block';
+                correctionList.innerHTML = '';
+                
+                incorrectPlacements.forEach(correction => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${correction.lesionName}:</strong> You classified it as ${correction.yourCategory} - It should be ${correction.correctCategory}`;
+                    correctionList.appendChild(li);
+                });
+                
+                // Also list any unplaced lesions
+                const allLesionIds = activity2Data.map(l => l.id);
+                const placedLesionIds = Object.keys(placements);
+                const unplacedLesionIds = allLesionIds.filter(id => !placedLesionIds.includes(id));
+                
+                if (unplacedLesionIds.length > 0) {
+                    unplacedLesionIds.forEach(lesionId => {
+                        const lesion = activity2Data.find(l => l.id === lesionId);
+                        if (lesion) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<strong>${lesion.name}:</strong> Not placed - Should be ${lesion.correctCategory === 'primary' ? 'Primary' : 'Secondary'}`;
+                            correctionList.appendChild(li);
+                        }
+                    });
+                }
+                
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You got ${correctCount} out of 8 lesions correctly classified.<br><br>
+                    <strong>Score:</strong> ${correctCount}/8 correct (${Math.round((correctCount / 8) * 100)}%)<br><br>
+                    <strong>Study tip:</strong><br>
+                    • Primary lesions develop initially (macule, papule, vesicle, pustule)<br>
+                    • Secondary lesions evolve from primary lesions (scale, crust, erosion, ulcer)<br>
+                    • Remember: If you can feel it when you close your eyes, it's likely a papule (elevated)<br>
+                    • If it's flat but colored, it's a macule
+                `;
+            }
+            
+            updateProgressSummary();
+        });
+        
+        const warningDiv = document.querySelector('#activity-2 .derm-warning');
+        warningDiv.parentNode.insertBefore(checkBtn, warningDiv.nextSibling);
+    }
+
+    // === ACTIVITY 3: ABCDE Rule Application ===
+    function initActivity3() {
+        const assessmentOptions = document.getElementById('assessment-options-3');
+        const feedback = document.getElementById('feedback-3');
+        const feedbackTitle = document.getElementById('feedback-title-3');
+        const feedbackContent = document.getElementById('feedback-content-3');
+        const correctionSection = document.getElementById('correction-section-3');
+        const correctionList = document.getElementById('correction-list-3');
+        const status = document.querySelector('#activity-3 .activity-status');
+
+        // Clear existing content
+        assessmentOptions.innerHTML = '';
+        correctionList.innerHTML = '';
+        correctionSection.style.display = 'none';
+
+        // Create assessment options (shuffled)
+        const options = [
+            { risk: 'high', action: 'biopsy', title: 'High Risk', description: 'Urgent biopsy recommended (meets 4+ criteria)' },
+            { risk: 'moderate', action: 'monitor', title: 'Moderate Risk', description: 'Close monitoring, consider referral (2-3 criteria)' },
+            { risk: 'low', action: 'reassure', title: 'Low Risk', description: 'Reassure, routine follow-up (0-1 criteria)' }
+        ];
+        
+        const shuffledOptions = shuffleArray(options);
+
+        shuffledOptions.forEach(option => {
+            const div = document.createElement('div');
+            div.className = 'assessment-option';
+            div.dataset.risk = option.risk;
+            div.dataset.action = option.action;
+            
+            div.innerHTML = `
+                <div class="option-title">${option.title}</div>
+                <div class="option-description">${option.description}</div>
+            `;
+            
+            assessmentOptions.appendChild(div);
+        });
+
+        let selectedOption = null;
+
+        // Setup click events
+        document.querySelectorAll('#activity-3 .assessment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                if (state.activities[3].checked) return;
+
+                const riskLevel = this.dataset.risk;
+
+                // Remove selection from other options
+                document.querySelectorAll('#activity-3 .assessment-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+
+                // Mark selected option
+                this.classList.add('selected');
+                selectedOption = riskLevel;
+                
+                // Update status
+                status.textContent = 'Answered';
+                status.style.color = 'var(--color-warning)';
+            });
+        });
+
+        // Add check button
+        const checkBtn = document.createElement('button');
+        checkBtn.className = 'btn btn-primary';
+        checkBtn.style.marginTop = '20px';
+        checkBtn.innerHTML = '<span>✓</span> Check Activity 3';
+        checkBtn.addEventListener('click', function() {
+            if (state.activities[3].checked) return;
+            
+            if (!selectedOption) {
+                alert('Please select an assessment option first.');
+                return;
+            }
+            
+            const isCorrect = selectedOption === 'high'; // Correct answer is "high"
+            
+            // Update state
+            state.activities[3].correct = isCorrect ? 1 : 0;
+            state.activities[3].score = isCorrect ? 100 : 0;
+            state.activities[3].checked = true;
+            state.activities[3].completed = true;
+            
+            // Visual feedback
+            document.querySelectorAll('#activity-3 .assessment-option').forEach(option => {
+                option.classList.remove('selected', 'wrong', 'correct');
+                if (option.dataset.risk === selectedOption) {
+                    option.classList.add(isCorrect ? 'correct' : 'wrong');
+                }
+                if (option.dataset.risk === 'high') {
+                    option.classList.add('correct');
+                }
+            });
+            
+            status.textContent = isCorrect ? 'Completed ✓' : 'Completed ✗';
+            status.style.color = isCorrect ? 'var(--color-success)' : 'var(--color-error)';
+            document.querySelector('#activity-3').classList.add('completed');
+            
+            // Show feedback
+            feedback.classList.add('show');
+            const feedbackIcon = feedback.querySelector('.feedback-icon');
+            
+            if (isCorrect) {
+                feedbackTitle.textContent = 'Correct! High Risk Assessment';
+                feedbackIcon.className = 'feedback-icon correct';
+                feedbackIcon.textContent = '✓';
+                correctionSection.style.display = 'none';
+                feedbackContent.innerHTML = `
+                    <strong>Excellent! You correctly identified this as a high-risk lesion.</strong><br><br>
+                    <strong>Score:</strong> 1/1 correct (100%)<br><br>
+                    <strong>Case Analysis:</strong><br>
+                    • <strong>Asymmetry:</strong> Present - irregular shape<br>
+                    • <strong>Border:</strong> Present - irregular, notched edges<br>
+                    • <strong>Color:</strong> Present - multiple shades (brown, dark brown, black)<br>
+                    • <strong>Diameter:</strong> Present - 8mm (&gt;6mm threshold)<br>
+                    • <strong>Evolving:</strong> Present - changed over 6 months<br><br>
+                    <strong>Assessment:</strong> HIGH RISK (5/5 criteria)<br>
+                    <strong>Action:</strong> Urgent biopsy required. Refer to dermatology for excisional biopsy
+                    with 2mm margins. Document all ABCDE findings and patient's risk factors (sun exposure).
+                `;
+            } else {
+                feedbackTitle.textContent = 'Incorrect Assessment';
+                feedbackIcon.className = 'feedback-icon incorrect';
+                feedbackIcon.textContent = '✗';
+                
+                // Show corrections
+                correctionSection.style.display = 'block';
+                correctionList.innerHTML = '';
+                
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>Your answer:</strong> ${selectedOption === 'moderate' ? 'Moderate Risk' : 'Low Risk'} - <strong>Correct answer:</strong> High Risk`;
+                correctionList.appendChild(li);
+                
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You selected the wrong risk assessment.<br><br>
+                    <strong>Score:</strong> 0/1 correct (0%)<br><br>
+                    <strong>Why this is high risk:</strong><br>
+                    The lesion meets all 5 ABCDE criteria:<br>
+                    1. <strong>A</strong>symmetry: Irregular shape<br>
+                    2. <strong>B</strong>order: Irregular, notched edges<br>
+                    3. <strong>C</strong>olor: Multiple colors (brown, dark brown, black)<br>
+                    4. <strong>D</strong>iameter: 8mm (&gt;6mm threshold)<br>
+                    5. <strong>E</strong>volving: Changed over 6 months<br><br>
+                    <strong>Clinical Note:</strong> Any lesion with 4 or more ABCDE criteria requires urgent biopsy.
+                    The "E" (evolving) criterion is particularly important - any changing lesion warrants evaluation.
+                    This patient has all 5 criteria, making this a high-risk lesion requiring immediate attention.
+                `;
+            }
+            
+            updateProgressSummary();
+        });
+        
+        const takeawaysDiv = document.querySelector('#activity-3 .takeaways');
+        takeawaysDiv.parentNode.insertBefore(checkBtn, takeawaysDiv);
+    }
+
+    // === ACTIVITY 4: Inflammatory Disorder Matching ===
+    function initActivity4() {
+        const disorderContainer = document.getElementById('disorder-container-4');
+        const disorderDropzones = document.getElementById('disorder-dropzones-4');
+        const feedback = document.getElementById('feedback-4');
+        const feedbackTitle = document.getElementById('feedback-title-4');
+        const feedbackContent = document.getElementById('feedback-content-4');
+        const correctionSection = document.getElementById('correction-section-4');
+        const correctionList = document.getElementById('correction-list-4');
+        const status = document.querySelector('#activity-4 .activity-status');
+
+        // Clear existing content
+        disorderContainer.innerHTML = '';
+        disorderDropzones.innerHTML = '';
+        correctionList.innerHTML = '';
+        correctionSection.style.display = 'none';
+
+        // Shuffle data
+        const shuffledDisorders = shuffleArray(activity4Data);
+
+        // Create disorder cards
+        shuffledDisorders.forEach(disorder => {
+            const card = document.createElement('div');
+            card.className = 'disorder-card';
+            card.dataset.id = disorder.id;
+            card.dataset.name = disorder.name;
+            card.dataset.symptoms = disorder.symptoms;
+            card.draggable = true;
+            
+            card.innerHTML = `
+                <div class="disorder-image">${disorder.icon}</div>
+                <div class="disorder-symptoms">${disorder.symptoms}</div>
+            `;
+            
+            disorderContainer.appendChild(card);
+        });
+
+        // Create drop zones (shuffled as well)
+        const shuffledZones = shuffleArray(activity4Data);
+        shuffledZones.forEach(disorder => {
+            const zone = document.createElement('div');
+            zone.className = 'disorder-zone';
+            zone.dataset.id = disorder.id;
+            zone.dataset.name = disorder.name;
+            
+            zone.innerHTML = `
+                <div class="disorder-name">${disorder.name}</div>
+                <div class="disorder-match">Match symptoms here</div>
+            `;
+            
+            disorderDropzones.appendChild(zone);
+        });
+
+        // Track matches
+        let matches = {};
+
+        // Setup drag events for disorder cards
+        document.querySelectorAll('#activity-4 .disorder-card').forEach(card => {
+            card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    id: this.dataset.id,
+                    name: this.dataset.name,
+                    symptoms: this.dataset.symptoms
+                }));
+                this.classList.add('dragging');
+            });
+
+            card.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+
+        // Setup drop events for zones
+        document.querySelectorAll('#activity-4 .disorder-zone').forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+
+            zone.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
+                
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const zoneId = this.dataset.id;
+                const zoneName = this.dataset.name;
+                
+                // Remove previous match for this zone
+                if (matches[zoneId]) {
+                    const prevCard = matches[zoneId].cardElement;
+                    prevCard.style.display = '';
+                    delete matches[zoneId];
+                }
+                
+                // Remove this card from previous zone
+                Object.keys(matches).forEach(key => {
+                    if (matches[key].cardElement.dataset.id === data.id) {
+                        const prevZone = document.querySelector(`#activity-4 .disorder-zone[data-id="${key}"]`);
+                        if (prevZone) {
+                            prevZone.querySelector('.disorder-match').textContent = 'Match symptoms here';
+                            prevZone.classList.remove('filled', 'wrong');
+                        }
+                        delete matches[key];
+                    }
+                });
+                
+                // Check if correct
+                const isCorrect = data.id === zoneId;
+                matches[zoneId] = {
+                    cardElement: document.querySelector(`#activity-4 .disorder-card[data-id="${data.id}"]`),
+                    cardName: data.name,
+                    cardSymptoms: data.symptoms,
+                    isCorrect: isCorrect,
+                    zoneName: zoneName
                 };
-
-                // Hide original card
-                data.element.style.display = 'none';
-                data.element.classList.add('matched');
-
+                
+                // Update zone
+                this.querySelector('.disorder-match').textContent = 'Matched!';
+                if (state.activities[4].checked) {
+                    this.classList.add(isCorrect ? 'filled' : 'wrong');
+                }
+                
+                // Hide card
+                matches[zoneId].cardElement.style.display = 'none';
+                
                 // Update status
                 if (!state.activities[4].checked) {
                     status.textContent = 'In Progress';
@@ -2509,39 +2614,43 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Add check button for Activity 4
-        const checkActivity4Btn = document.createElement('button');
-        checkActivity4Btn.className = 'activity-check-btn';
-        checkActivity4Btn.innerHTML = '<span>✓</span> Check Activity 4 Answers';
-        checkActivity4Btn.style.marginTop = '20px';
-        checkActivity4Btn.style.padding = '10px 20px';
-        checkActivity4Btn.style.background = 'var(--color-primary)';
-        checkActivity4Btn.style.color = 'white';
-        checkActivity4Btn.style.border = 'none';
-        checkActivity4Btn.style.borderRadius = 'var(--radius-sm)';
-        checkActivity4Btn.style.cursor = 'pointer';
-        checkActivity4Btn.style.fontSize = '0.9rem';
-        checkActivity4Btn.style.fontWeight = '600';
-        
-        const clinicalTip = document.querySelector('#activity-4 .clinical-tip');
-        clinicalTip.parentNode.insertBefore(checkActivity4Btn, clinicalTip);
-        
-        checkActivity4Btn.addEventListener('click', function() {
+        // Add check button
+        const checkBtn = document.createElement('button');
+        checkBtn.className = 'btn btn-primary';
+        checkBtn.style.marginTop = '20px';
+        checkBtn.innerHTML = '<span>✓</span> Check Activity 4';
+        checkBtn.addEventListener('click', function() {
             if (state.activities[4].checked) return;
             
             let correctCount = 0;
-            const totalMatches = Object.keys(state.activity4Matches).length;
+            const totalMatches = Object.keys(matches).length;
+            let incorrectMatches = [];
             
             // Check each match
-            Object.keys(state.activity4Matches).forEach(zoneDisorder => {
-                const match = state.activity4Matches[zoneDisorder];
-                if (match.correct) {
-                    match.zoneElement.classList.add('filled');
-                    match.zoneElement.classList.remove('wrong');
-                    correctCount++;
-                } else {
-                    match.zoneElement.classList.add('wrong');
-                    match.zoneElement.classList.remove('filled');
+            Object.keys(matches).forEach(zoneId => {
+                const match = matches[zoneId];
+                const isCorrect = match.cardElement.dataset.id === zoneId;
+                const zone = document.querySelector(`#activity-4 .disorder-zone[data-id="${zoneId}"]`);
+                
+                if (zone) {
+                    if (isCorrect) {
+                        zone.classList.add('filled');
+                        zone.classList.remove('wrong');
+                        correctCount++;
+                    } else {
+                        zone.classList.add('wrong');
+                        zone.classList.remove('filled');
+                        
+                        // Find correct disorder for this zone
+                        const correctDisorder = activity4Data.find(d => d.id === zoneId);
+                        if (correctDisorder) {
+                            incorrectMatches.push({
+                                zoneName: match.zoneName,
+                                yourMatch: match.cardName,
+                                correctMatch: correctDisorder.name
+                            });
+                        }
+                    }
                 }
             });
             
@@ -2550,7 +2659,7 @@ document.addEventListener('DOMContentLoaded', function() {
             state.activities[4].score = Math.round((correctCount / 5) * 100);
             state.activities[4].checked = true;
             
-            // Check if all matches are made
+            // Update status
             if (totalMatches === 5) {
                 state.activities[4].completed = true;
                 status.textContent = correctCount === 5 ? 'Completed ✓' : 'Completed ✗';
@@ -2563,52 +2672,67 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show feedback
             feedback.classList.add('show');
+            const feedbackIcon = feedback.querySelector('.feedback-icon');
+            
             if (correctCount === 5) {
-                feedbackTitle.innerHTML = '<span class="feedback-icon correct">✓</span> Disorders Matched Correctly!';
+                feedbackTitle.textContent = 'Perfect! All 5 Disorders Correctly Matched!';
+                feedbackIcon.className = 'feedback-icon correct';
+                feedbackIcon.textContent = '✓';
+                correctionSection.style.display = 'none';
                 feedbackContent.innerHTML = `
-                    <strong>Inflammatory Skin Disorders Review:</strong><br><br>
-                    <strong>Psoriasis:</strong><br>
-                    • <em>Pathophysiology:</em> T-cell mediated, rapid keratinocyte turnover (3-4 days vs. normal 28)<br>
-                    • <em>Classic Presentation:</em> Well-demarcated erythematous plaques with silvery micaceous scale<br>
-                    • <em>Common Sites:</em> Extensor surfaces (elbows, knees), scalp, sacrum<br>
-                    • <em>Associated:</em> Nail pitting, arthritis, higher CV risk<br><br>
-                    <strong>Eczema (Atopic Dermatitis):</strong><br>
-                    • <em>Pathophysiology:</em> Skin barrier dysfunction, immune dysregulation<br>
-                    • <em>Classic Presentation:</em> Pruritic, erythematous patches with excoriation, lichenification<br>
-                    • <em>Common Sites:</em> Flexural areas (antecubital, popliteal), face in children<br>
-                    • <em>Associated:</em> Personal/family history of atopy (asthma, allergic rhinitis)<br><br>
-                    <strong>Acne Vulgaris:</strong><br>
-                    • <em>Pathophysiology:</em> Follicular hyperkeratinization, excess sebum, C. acnes, inflammation<br>
-                    • <em>Lesions:</em> Comedones (open/closed), inflammatory papules/pustules, nodules/cysts<br>
-                    • <em>Distribution:</em> Face, chest, back - areas with high sebaceous gland density<br>
-                    • <em>Treatment Ladder:</em> Topicals → oral antibiotics → isotretinoin (severe)<br><br>
-                    <strong>Rosacea:</strong><br>
-                    • <em>Subtypes:</em> Erythematotelangiectatic, papulopustular, phymatous, ocular<br>
-                    • <em>Triggers:</em> Sun, heat, alcohol, spicy foods, stress, certain skincare products<br>
-                    • <em>Key Feature:</strong> Flushing with persistent central facial erythema<br>
-                    • <em>Important:</em> NOT acne - different pathophysiology and treatment<br><br>
-                    <strong>Contact Dermatitis:</strong><br>
-                    • <em>Types:</em> Irritant (chemical damage) vs. Allergic (type IV hypersensitivity)<br>
-                    • <em>Distribution:</em> Corresponds to allergen contact (jewelry=nickel, plants=linear)<br>
-                    • <em>Diagnosis:</em> Patch testing for allergic type<br>
-                    • <em>Management:</em> Avoid allergen, topical steroids, cool compresses
-                `;
-            } else {
-                feedbackTitle.innerHTML = `<span class="feedback-icon incorrect">✗</span> ${correctCount}/5 Correct`;
-                feedbackContent.innerHTML = `
-                    <strong>Review needed:</strong> You got ${correctCount} out of 5 disorders correctly matched.<br><br>
-                    <strong>Key distinguishing features:</strong><br>
+                    <strong>Excellent work!</strong> You've correctly matched all inflammatory skin disorders.<br><br>
+                    <strong>Score:</strong> ${correctCount}/5 correct (100%)<br><br>
+                    <strong>Inflammatory Skin Disorders Review:</strong><br>
                     • <strong>Psoriasis:</strong> Silvery scales on elbows/knees/scalp<br>
                     • <strong>Eczema:</strong> Itchy, in flexural areas, family history of allergies<br>
-                    • <strong>Acne:</strong> Comedones (blackheads/whiteheads) on face/chest/back<br>
+                    • <strong>Acne:</strong> Comedones on face/chest/back<br>
                     • <strong>Rosacea:</strong> Facial redness/flushing, triggered by heat/alcohol<br>
-                    • <strong>Contact Dermatitis:</strong> Rash at contact site, history of allergen exposure<br><br>
+                    • <strong>Contact Dermatitis:</strong> Rash at contact site, history of allergen exposure
+                `;
+            } else {
+                feedbackTitle.textContent = `${correctCount}/5 Correct - Review Needed`;
+                feedbackIcon.className = 'feedback-icon incorrect';
+                feedbackIcon.textContent = '✗';
+                
+                // Show corrections
+                correctionSection.style.display = 'block';
+                correctionList.innerHTML = '';
+                
+                incorrectMatches.forEach(correction => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${correction.zoneName}:</strong> You matched it to "${correction.yourMatch}" - The correct match is: "${correction.correctMatch}"`;
+                    correctionList.appendChild(li);
+                });
+                
+                // Also list any unmatched zones
+                const allZoneIds = activity4Data.map(d => d.id);
+                const matchedZoneIds = Object.keys(matches);
+                const unmatchedZoneIds = allZoneIds.filter(id => !matchedZoneIds.includes(id));
+                
+                if (unmatchedZoneIds.length > 0) {
+                    unmatchedZoneIds.forEach(zoneId => {
+                        const disorder = activity4Data.find(d => d.id === zoneId);
+                        if (disorder) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<strong>${disorder.name}:</strong> Not matched - Should match: "${disorder.symptoms.substring(0, 60)}..."`;
+                            correctionList.appendChild(li);
+                        }
+                    });
+                }
+                
+                feedbackContent.innerHTML = `
+                    <strong>Review needed:</strong> You got ${correctCount} out of 5 disorders correctly matched.<br><br>
+                    <strong>Score:</strong> ${correctCount}/5 correct (${Math.round((correctCount / 5) * 100)}%)<br><br>
                     <strong>Study tip:</strong> Location and pattern are key to differentiating inflammatory skin disorders.
+                    Pay attention to where the rash appears and what triggers it.
                 `;
             }
             
             updateProgressSummary();
         });
+        
+        const clinicalTip = document.querySelector('#activity-4 .clinical-tip');
+        clinicalTip.parentNode.insertBefore(checkBtn, clinicalTip.nextSibling);
     }
 
     // Reset All Activities
@@ -2623,11 +2747,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 checked: false
             };
         });
-        
-        state.activity1Matches = {};
-        state.activity2Placements = {};
-        state.activity3Selection = null;
-        state.activity4Matches = {};
 
         // Reset UI
         activityCards.forEach(card => {
@@ -2638,63 +2757,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const feedback = card.querySelector('.feedback-container');
             feedback.classList.remove('show');
             
-            // Reset feedback titles/content
-            const feedbackTitle = feedback.querySelector('.feedback-title');
-            const feedbackContent = feedback.querySelector('.feedback-content');
-            if (feedbackTitle && feedbackContent) {
-                // Restore original feedback content
-                const originalTitle = card.querySelector('.activity-title').textContent;
-                feedbackTitle.innerHTML = `<span class="feedback-icon correct">✓</span> ${originalTitle}`;
-                // Note: We can't easily restore original content, but it will be regenerated on next check
+            // Hide correction sections
+            const correctionSection = feedback.querySelector('.correction-section');
+            if (correctionSection) {
+                correctionSection.style.display = 'none';
             }
         });
 
-        // Reset Activity 1
-        document.querySelectorAll('#activity-1 .structure-item').forEach(item => {
-            item.classList.remove('matched', 'dragging');
-            item.style.opacity = '1';
-            item.style.cursor = 'grab';
-        });
-        document.querySelectorAll('#activity-1 .function-item').forEach(item => {
-            item.classList.remove('matched', 'correct-match', 'incorrect-match', 'hover');
-            item.style.opacity = '1';
-            item.style.cursor = 'default';
-        });
-        
-        // Re-shuffle function items for Activity 1
-        const functionsContainer = document.querySelector('#activity-1 .functions-list');
-        const functionItems = Array.from(document.querySelectorAll('#activity-1 .function-item'));
-        for (let i = functionItems.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            functionsContainer.appendChild(functionItems[j]);
-        }
-
-        // Reset Activity 2
-        document.querySelectorAll('#activity-2 .category-content').forEach(content => {
-            content.innerHTML = '';
-        });
-        document.querySelectorAll('#activity-2 .lesion-card').forEach(card => {
-            card.style.display = '';
-            card.style.visibility = 'visible';
-            card.style.position = 'relative';
-            card.style.pointerEvents = 'auto';
-            card.classList.remove('dragging');
-        });
-
-        // Reset Activity 3
-        document.querySelectorAll('#activity-3 .assessment-option').forEach(option => {
-            option.classList.remove('selected', 'wrong', 'correct');
-        });
-
-        // Reset Activity 4
-        document.querySelectorAll('#activity-4 .disorder-zone').forEach(zone => {
-            zone.classList.remove('filled', 'wrong', 'hover');
-            zone.querySelector('.disorder-match').textContent = 'Match symptoms here';
-        });
-        document.querySelectorAll('#activity-4 .disorder-card').forEach(card => {
-            card.style.display = '';
-            card.classList.remove('dragging', 'matched');
-        });
+        // Reinitialize all activities
+        initActivity1();
+        initActivity2();
+        initActivity3();
+        initActivity4();
 
         // Reset results
         resultsPanel.classList.remove('show');
@@ -2703,12 +2777,12 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProgressSummary();
     }
 
-    // Check All Answers (now just checks each activity individually)
+    // Check All Answers
     function checkAllAnswers() {
-        // Trigger check for each activity that has a check button
-        const checkButtons = document.querySelectorAll('.activity-check-btn');
+        // Trigger check for each activity
+        const checkButtons = document.querySelectorAll('.btn-primary');
         checkButtons.forEach(btn => {
-            if (!btn.disabled) {
+            if (btn.textContent.includes('Check Activity')) {
                 btn.click();
             }
         });
