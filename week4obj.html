@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AlliedRx – Week 4 Objectives: Communication & Gastroenterology</title>
+  <title>AlliedRx – Week 4 Objectives: Patient Assessment & Gastroenterology</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
@@ -59,19 +59,15 @@
 
     .page {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       background: #ffffff;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
       padding: 28px 30px 32px 30px;
-      display: grid;
-      grid-template-columns: 1.8fr 1fr;
-      gap: 30px;
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.8s ease-out;
-      min-height: 90vh;
     }
 
     @keyframes fadeInUp {
@@ -127,9 +123,8 @@
       }
     }
 
-    @media (max-width: 1000px) {
+    @media (max-width: 900px) {
       .page {
-        grid-template-columns: 1fr;
         padding: 22px;
       }
     }
@@ -142,7 +137,6 @@
         border-radius: 0;
         box-shadow: none;
         padding: 18px 14px 22px;
-        gap: 22px;
       }
     }
 
@@ -154,19 +148,6 @@
       max-width: 100%;
     }
 
-    .column {
-      position: relative;
-      z-index: 1;
-    }
-
-    .left-column {
-      animation: slideInLeft 0.6s ease-out;
-    }
-
-    .right-column {
-      animation: slideInRight 0.6s ease-out;
-    }
-
     /* Header */
     .brand-row {
       display: flex;
@@ -176,7 +157,6 @@
       margin-bottom: 20px;
       flex-wrap: wrap;
       width: 100%;
-      grid-column: 1 / -1;
       animation: fadeIn 0.6s ease-out 0.2s both;
     }
 
@@ -271,7 +251,6 @@
       color: var(--color-primary);
       margin-bottom: 8px;
       animation: fadeInUp 0.6s ease-out 0.3s both;
-      grid-column: 1 / -1;
     }
 
     .subtitle {
@@ -280,11 +259,35 @@
       max-width: 800px;
       margin-bottom: 24px;
       animation: fadeInUp 0.6s ease-out 0.4s both;
-      grid-column: 1 / -1;
     }
 
     .subtitle strong {
       color: var(--color-primary);
+    }
+
+    /* Main content layout */
+    .main-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 1100px) {
+      .main-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    /* Left column - Objectives */
+    .objectives-column {
+      animation: slideInLeft 0.6s ease-out 0.5s both;
+    }
+
+    /* Right column - Overview */
+    .overview-column {
+      animation: slideInRight 0.6s ease-out 0.5s both;
     }
 
     /* Chapter navigation */
@@ -294,7 +297,6 @@
       margin-bottom: 24px;
       flex-wrap: wrap;
       animation: slideInRight 0.6s ease-out 0.5s both;
-      grid-column: 1 / -1;
     }
 
     .chapter-btn {
@@ -398,27 +400,6 @@
     }
 
     /* Objectives list */
-    .objectives-container {
-      max-height: 500px;
-      overflow-y: auto;
-      padding-right: 8px;
-      margin-bottom: 20px;
-    }
-
-    .objectives-container::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .objectives-container::-webkit-scrollbar-track {
-      background: rgba(12, 10, 24, 0.05);
-      border-radius: 3px;
-    }
-
-    .objectives-container::-webkit-scrollbar-thumb {
-      background: var(--color-primary-soft);
-      border-radius: 3px;
-    }
-
     .objectives-list {
       display: flex;
       flex-direction: column;
@@ -583,7 +564,6 @@
       font-weight: 800;
       color: var(--color-text);
       margin-bottom: 8px;
-      animation: slideInRight 0.6s ease-out 0.7s both;
     }
 
     .section-tag {
@@ -593,7 +573,6 @@
       color: var(--color-primary);
       font-weight: 600;
       margin-bottom: 12px;
-      animation: slideInRight 0.6s ease-out 0.8s both;
     }
 
     .week-overview {
@@ -605,7 +584,6 @@
       line-height: 1.7;
       box-shadow: 0 20px 45px rgba(15, 23, 42, 0.7);
       margin-bottom: 20px;
-      animation: slideInRight 0.6s ease-out 0.9s both;
       transition: transform 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -693,9 +671,8 @@
       color: #e5e7eb;
       font-size: 0.9rem;
       line-height: 1.7;
-      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.7);
+      box-shadow: 0 20px 45px rgba(15, 23,42, 0.7);
       margin-bottom: 20px;
-      animation: slideInRight 0.6s ease-out 1s both;
       transition: transform 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -869,7 +846,7 @@
 
 <body>
   <main class="page" aria-labelledby="week4-heading">
-    <!-- Header spanning both columns -->
+    <!-- Header -->
     <header class="brand-row">
       <div class="brand">
         <img
@@ -881,7 +858,7 @@
           <span class="course-name">Clinical Medical Assistant • Week 4</span>
           <div class="week-label">
             <span class="week-label-dot"></span>
-            <span>Chapter 4: Therapeutic Communication • Chapter 15: Gastroenterology</span>
+            <span>Chapter 4: Patient Assessment • Chapter 15: Gastroenterology</span>
           </div>
         </div>
       </div>
@@ -889,9 +866,9 @@
       <span class="badge-mode">Campus &amp; Online</span>
     </header>
 
-    <h1 id="week4-heading">Week 4 Objectives: Communication & Gastroenterology</h1>
+    <h1 id="week4-heading">Week 4 Objectives: Patient Assessment & Gastroenterology</h1>
     <p class="subtitle">
-      Master <strong>therapeutic communication</strong> for effective patient interviews and 
+      Master <strong>patient assessment and communication</strong> skills for comprehensive histories and 
       explore <strong>gastroenterology procedures</strong> including GI system anatomy, 
       common disorders, and patient preparation. <strong>28 objectives</strong> across two chapters.
     </p>
@@ -903,8 +880,8 @@
         All Chapters (4 & 15)
       </button>
       <button class="chapter-btn" data-chapter="4">
-        <span class="chapter-icon">🗣️</span>
-        Chapter 4: Therapeutic Communication (15 objectives)
+        <span class="chapter-icon">📋</span>
+        Chapter 4: Patient Assessment (15 objectives)
       </button>
       <button class="chapter-btn" data-chapter="15">
         <span class="chapter-icon">🩺</span>
@@ -912,43 +889,42 @@
       </button>
     </div>
 
-    <!-- LEFT COLUMN: All objectives -->
-    <section class="column left-column" aria-label="Week 4 objectives list">
-      <!-- Progress counter -->
-      <div class="progress-counter">
-        <div class="counter-item">
-          <span class="counter-number" id="total-objectives">28</span>
-          <span class="counter-label">Total Objectives</span>
-        </div>
-        <div class="counter-item">
-          <span class="counter-number">2</span>
-          <span class="counter-label">Chapters</span>
-        </div>
-        <div class="counter-item">
-          <span class="counter-number">40+</span>
-          <span class="counter-label">Key Terms</span>
-        </div>
+    <!-- Progress counter -->
+    <div class="progress-counter">
+      <div class="counter-item">
+        <span class="counter-number" id="total-objectives">28</span>
+        <span class="counter-label">Total Objectives</span>
       </div>
-
-      <!-- Chapter 4 Header -->
-      <div class="chapter-header">
-        <h2 class="chapter-title chapter-4">
-          <span>🗣️ Chapter 4: Therapeutic Communication</span>
-          <span class="chapter-count">(15 objectives)</span>
-        </h2>
+      <div class="counter-item">
+        <span class="counter-number">2</span>
+        <span class="counter-label">Chapters</span>
       </div>
+      <div class="counter-item">
+        <span class="counter-number">40+</span>
+        <span class="counter-label">Key Terms</span>
+      </div>
+    </div>
 
-      <!-- Objectives Container with Scroll -->
-      <div class="objectives-container">
+    <!-- Main content - Balanced layout -->
+    <div class="main-content">
+      <!-- LEFT COLUMN: All objectives -->
+      <section class="objectives-column" aria-label="Week 4 objectives list">
+        <!-- Chapter 4 Header -->
+        <div class="chapter-header">
+          <h2 class="chapter-title chapter-4">
+            <span>📋 Chapter 4: Patient Assessment</span>
+            <span class="chapter-count">(15 objectives)</span>
+          </h2>
+        </div>
+
+        <!-- Chapter 4 Objectives (1-15) - CORRECTED from your input -->
         <div class="objectives-list" id="objectives-container">
-          <!-- Chapter 4 Objectives (1-15) -->
           <article class="objective-card chapter-4" data-chapter="4" id="obj1">
             <div class="objective-number">01</div>
             <div class="objective-main">
               <div class="objective-verb">Define</div>
               <p class="objective-text">
-                Define, spell, and pronounce terms related to therapeutic communication, 
-                patient assessment, and documentation.
+                Define, spell, and pronounce the terms listed in the vocabulary.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📖</div>
@@ -970,8 +946,7 @@
             <div class="objective-main">
               <div class="objective-verb">Describe</div>
               <p class="objective-text">
-                Describe the components of the patient's medical history and how to collect 
-                history information.
+                Describe the components of the patients medical history and how to collect the history information.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📋</div>
@@ -982,8 +957,7 @@
             <div class="objective-main">
               <div class="objective-verb">Discuss</div>
               <p class="objective-text">
-                Discuss how to successfully understand and communicate with patients and 
-                display sensitivity to diverse populations.
+                Discuss how to successfully understand and communicate with patients and display sensitivity to diverse populations.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🌍</div>
@@ -994,8 +968,7 @@
             <div class="objective-main">
               <div class="objective-verb">Demonstrate</div>
               <p class="objective-text">
-                Demonstrate therapeutic communication feedback techniques to obtain information 
-                when gathering a patient history.
+                Demonstrate therapeutic communication feedback techniques to obtain information when gathering a patient history.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">💬</div>
@@ -1017,8 +990,7 @@
             <div class="objective-main">
               <div class="objective-verb">Identify</div>
               <p class="objective-text">
-                Identify barriers to communication and their impact on patient assessment; 
-                compare open-ended and closed-ended questions.
+                Identify barriers to communication and their impact on patient assessment; also, compare open-ended and closed-ended questions.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🚧</div>
@@ -1027,10 +999,9 @@
           <article class="objective-card chapter-4" data-chapter="4" id="obj8">
             <div class="objective-number">08</div>
             <div class="objective-main">
-              <div class="objective-verb">Discuss & Demonstrate</div>
+              <div class="objective-verb">Discuss & Identify</div>
               <p class="objective-text">
-                Discuss the patient interview, identify barriers to communication, detect 
-                defense mechanisms, and demonstrate professional interviewing techniques.
+                Discuss the patient interview. Identify barriers to communication and their impact on the patient assessment. Detect a patient's use of defense mechanisms and demonstrate professional patient interviewing techniques.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🎤</div>
@@ -1041,8 +1012,7 @@
             <div class="objective-main">
               <div class="objective-verb">Discuss</div>
               <p class="objective-text">
-                Discuss the use of therapeutic communication techniques with patients across 
-                the lifespan.
+                Discuss the use of therapeutic communication techniques with patients across the lifespan.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">👶👵</div>
@@ -1075,8 +1045,7 @@
             <div class="objective-main">
               <div class="objective-verb">Identify & Use</div>
               <p class="objective-text">
-                Identify and define medical terms and abbreviations related to body systems; 
-                use medical terminology correctly.
+                Identify and define medical terms and abbreviations related to body systems; also, use medical terminology correctly and accurately to communicate information to providers and patients.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🏥</div>
@@ -1109,8 +1078,7 @@
             <div class="objective-main">
               <div class="objective-verb">Describe</div>
               <p class="objective-text">
-                Describe the role of patient education, in addition to legal and ethical issues, 
-                in the patient assessment process.
+                Describe the role of patient education, in addition to legal and ethical issues, in the patient assessment process.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">⚖️📚</div>
@@ -1130,7 +1098,7 @@
             <div class="objective-main">
               <div class="objective-verb">Define</div>
               <p class="objective-text">
-                Define, spell, and pronounce terms listed in the gastroenterology vocabulary.
+                Define, spell, and pronounce the terms listed in the vocabulary.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📖</div>
@@ -1152,8 +1120,7 @@
             <div class="objective-main">
               <div class="objective-verb">Identify & Describe</div>
               <p class="objective-text">
-                Identify the anatomic structures that make up the GI system and describe 
-                the physiology of each.
+                Identify the anatomic structures that make up the GI system and describe the physiology of each.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🗺️</div>
@@ -1173,10 +1140,9 @@
           <article class="objective-card chapter-15" data-chapter="15" id="obj20">
             <div class="objective-number">20</div>
             <div class="objective-main">
-              <div class="objective-verb">Summarize & Perform</div>
+              <div class="objective-verb">Summarize</div>
               <p class="objective-text">
-                Summarize the typical symptoms and characteristics of GI complaints and 
-                perform telephone screening for patients with GI complaints.
+                Summarize the typical symptoms and characteristics of GI complaints and perform telephone screening for patients with GI complaints.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📞</div>
@@ -1198,8 +1164,7 @@
             <div class="objective-main">
               <div class="objective-verb">List & Describe</div>
               <p class="objective-text">
-                List common esophageal and gastric disorders; describe signs/symptoms, 
-                diagnostic tests, and treatments.
+                List common esophageal and gastric disorders; also, describe the signs and symptoms, diagnostic tests, and treatments of each.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📋</div>
@@ -1210,7 +1175,7 @@
             <div class="objective-main">
               <div class="objective-verb">List & Describe</div>
               <p class="objective-text">
-                List intestinal disorders; describe signs/symptoms, diagnostic tests, and treatments.
+                List intestinal disorders; also, describe the signs and symptoms, diagnostic tests, and treatments of each.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">📋</div>
@@ -1221,8 +1186,7 @@
             <div class="objective-main">
               <div class="objective-verb">Classify & List</div>
               <p class="objective-text">
-                Classify disorders of the liver and gallbladder, and list signs/symptoms, 
-                diagnostic tests, and treatments.
+                Classify disorders of the liver and gallbladder, and list the signs and symptoms, diagnostic tests, and treatments for each.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🏷️</div>
@@ -1244,8 +1208,7 @@
             <div class="objective-main">
               <div class="objective-verb">Explain & Demonstrate</div>
               <p class="objective-text">
-                Explain common diagnostic procedures for the GI system and demonstrate 
-                assisting with endoscopic colon examination.
+                Explain the common diagnostic procedures for the GI system. Demonstrate the procedure for assisting with an endoscopic colon examination. Perform the procedural steps for assisting with the collection of a fecal specimen.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">🔍</div>
@@ -1267,118 +1230,118 @@
             <div class="objective-main">
               <div class="objective-verb">Describe</div>
               <p class="objective-text">
-                Describe patient education, legal and ethical issues related to assisting 
-                in gastroenterology.
+                Describe patient education, in addition to legal and ethical issues, related to assisting in gastroenterology.
               </p>
             </div>
             <div class="objective-icon" aria-hidden="true">⚖️📚</div>
           </article>
         </div>
-      </div>
 
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <button class="action-btn primary" id="mark-all-btn">
-          <span>✓</span>
-          Mark All as Complete
-        </button>
-        <button class="action-btn secondary" id="reset-all-btn">
-          <span>↻</span>
-          Reset All Objectives
-        </button>
-      </div>
-    </section>
-
-    <!-- RIGHT COLUMN: narrative + patient scenarios -->
-    <aside class="column right-column" aria-label="Overview of this week's content">
-      <h2 class="objectives-header">Week 4 Focus Areas</h2>
-      <p class="section-tag">Clinical Communication & GI Procedures</p>
-
-      <div class="week-overview">
-        <p>
-          This week combines <strong>therapeutic communication skills</strong> with 
-          <strong>gastroenterology procedures</strong>. You'll learn to conduct effective 
-          patient interviews while mastering GI system anatomy, common disorders, and 
-          diagnostic preparation.
-        </p>
-
-        <p class="mini-heading">Key Competencies This Week:</p>
-        <ul class="outcomes-list">
-          <li>
-            <span class="dot"></span>
-            <span>Apply active listening and nonverbal communication techniques to gather comprehensive patient histories</span>
-          </li>
-          <li>
-            <span class="dot"></span>
-            <span>Navigate cultural sensitivity and communication barriers in diverse patient populations</span>
-          </li>
-          <li>
-            <span class="dot"></span>
-            <span>Master GI system anatomy including abdominal quadrants and regions</span>
-          </li>
-          <li>
-            <span class="dot"></span>
-            <span>Prepare patients for gastroenterology procedures with clear instructions and education</span>
-          </li>
-          <li>
-            <span class="dot"></span>
-            <span>Document patient encounters accurately using appropriate medical terminology</span>
-          </li>
-          <li>
-            <span class="dot"></span>
-            <span>Recognize common GI disorders and understand their diagnostic pathways</span>
-          </li>
-        </ul>
-
-        <div class="note-card">
-          <strong>Clinical Connection:</strong> These skills work together in practice. 
-          Effective communication helps gather accurate GI symptom histories, while 
-          understanding gastroenterology enables you to ask informed follow-up questions 
-          during patient interviews. Master both to provide comprehensive patient care.
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="action-btn primary" id="mark-all-btn">
+            <span>✓</span>
+            Mark All as Complete
+          </button>
+          <button class="action-btn secondary" id="reset-all-btn">
+            <span>↻</span>
+            Reset All Objectives
+          </button>
         </div>
-      </div>
+      </section>
 
-      <h2 class="objectives-header" style="margin-top: 24px;">Patient Scenarios</h2>
-      <p class="section-tag">Real-World Application</p>
+      <!-- RIGHT COLUMN: narrative + patient scenarios -->
+      <aside class="overview-column" aria-label="Overview of this week's content">
+        <h2 class="objectives-header">Week 4 Focus Areas</h2>
+        <p class="section-tag">Patient Assessment & GI Procedures</p>
 
-      <div class="patient-scenarios">
-        <div class="patient-card">
-          <div class="patient-name">Chris Isaacson, MA (MMA)</div>
-          <div class="patient-role">Medical Assistant, Ambulatory Care Clinic</div>
-          <p class="patient-challenge">
-            "I'm having difficulty gathering comprehensive information from patients. 
-            They don't always respond openly, and the attending physician isn't satisfied 
-            with my documentation."
+        <div class="week-overview">
+          <p>
+            This week combines <strong>patient assessment and communication skills</strong> with 
+            <strong>gastroenterology procedures</strong>. You'll learn to conduct effective 
+            patient interviews, gather comprehensive medical histories, while mastering GI system 
+            anatomy, common disorders, and diagnostic preparation.
           </p>
-          <ul class="patient-questions">
-            <li>How can I develop helping relationships for more comprehensive histories?</li>
-            <li>Would greater sensitivity to diverse populations help?</li>
-            <li>How can active listening and attention to nonverbal behaviors improve my communication?</li>
+
+          <p class="mini-heading">Key Competencies This Week:</p>
+          <ul class="outcomes-list">
+            <li>
+              <span class="dot"></span>
+              <span>Apply holistic care concepts in patient assessment processes</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Utilize therapeutic communication techniques with diverse patient populations</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Differentiate documentation systems and explain EHR "meaningful use"</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Master GI system anatomy including abdominal quadrants and regions</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Prepare patients for gastroenterology procedures with clear instructions</span>
+            </li>
+            <li>
+              <span class="dot"></span>
+              <span>Recognize common GI disorders and understand their diagnostic pathways</span>
+            </li>
           </ul>
+
+          <div class="note-card">
+            <strong>Clinical Connection:</strong> These skills work together in practice. 
+            Effective patient assessment helps gather accurate GI symptom histories, while 
+            understanding gastroenterology enables you to ask informed follow-up questions 
+            during patient interviews. Master both to provide comprehensive patient care.
+          </div>
         </div>
 
-        <div class="patient-card">
-          <div class="patient-name">Joan Rothman, MA (AAMA)</div>
-          <div class="patient-role">Medical Assistant, Gastroenterology Practice</div>
-          <p class="patient-challenge">
-            "I need to create educational packets for GI diagnostic studies and ensure 
-            patients are properly prepared for procedures."
-          </p>
-          <ul class="patient-questions">
-            <li>What should I include in educational packets for GI examinations?</li>
-            <li>What GI disorders should I expect in this specialty practice?</li>
-            <li>How can I help new staff members understand GI procedures?</li>
-          </ul>
-        </div>
+        <h2 class="objectives-header" style="margin-top: 24px;">Patient Scenarios</h2>
+        <p class="section-tag">Real-World Application</p>
 
-        <div class="note-card" style="margin-top: 16px;">
-          <strong>Learning Strategy:</strong> As you study, consider how Chris and Joan's 
-          challenges connect to this week's objectives. What communication techniques would 
-          help Chris? What GI knowledge does Joan need for her educational packets? Try to 
-          answer their questions as you complete each objective.
+        <div class="patient-scenarios">
+          <div class="patient-card">
+            <div class="patient-name">Chris Isaacson, MA (MMA)</div>
+            <div class="patient-role">Medical Assistant, Ambulatory Care Clinic</div>
+            <p class="patient-challenge">
+              "I'm having difficulty gathering the information needed from some of the patients. 
+              They do not always respond openly and honestly to me, and the attending physician 
+              is not satisfied with my work."
+            </p>
+            <ul class="patient-questions">
+              <li>How can Chris learn to develop helping relationships for comprehensive medical histories?</li>
+              <li>Would displaying greater sensitivity to diverse populations help?</li>
+              <li>How can active listening and attention to nonverbal behaviors improve communication?</li>
+            </ul>
+          </div>
+
+          <div class="patient-card">
+            <div class="patient-name">Joan Rothman, MA (AAMA)</div>
+            <div class="patient-role">Medical Assistant, Gastroenterology Practice</div>
+            <p class="patient-challenge">
+              "Although I did very well in school, I need to learn more advanced information 
+              about disorders of the gastrointestinal tract to answer patients' questions and 
+              understand diagnostic procedures."
+            </p>
+            <ul class="patient-questions">
+              <li>What should be included in educational packets for GI diagnostic studies?</li>
+              <li>What GI disorders can be expected in this specialty practice?</li>
+              <li>How can I ensure patients are properly prepared for diagnostic procedures?</li>
+            </ul>
+          </div>
+
+          <div class="note-card" style="margin-top: 16px;">
+            <strong>Learning Strategy:</strong> As you study, consider how Chris and Joan's 
+            challenges connect to this week's objectives. What assessment techniques would 
+            help Chris? What GI knowledge does Joan need? Try to answer their questions as 
+            you complete each objective.
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   </main>
 
   <!-- Completion Celebration Modal -->
@@ -1388,10 +1351,10 @@
       <h2 class="celebration-title">All 28 Objectives Mastered!</h2>
       <p class="celebration-text">
         Outstanding achievement! You've completed all 28 Week 4 objectives, building essential 
-        skills in both therapeutic communication and gastroenterology procedures.
+        skills in both patient assessment and gastroenterology procedures.
       </p>
       <p class="celebration-text">
-        You're now prepared to conduct effective patient interviews, assist with 
+        You're now prepared to conduct effective patient assessments, assist with 
         GI diagnostic procedures, and provide comprehensive patient education in clinical settings.
       </p>
       <button class="celebration-btn" id="close-celebration">Continue to Reading Assignments</button>
@@ -1653,9 +1616,9 @@
       setTimeout(() => {
         // Mark first objective of each chapter as completed
         toggleObjective('obj1', false);  // Chapter 4 objective 1
-        toggleObjective('obj5', false);  // Chapter 4 objective 5
+        toggleObjective('obj8', false);  // Chapter 4 objective 8 (interview skills)
         toggleObjective('obj16', false); // Chapter 15 objective 1
-        toggleObjective('obj20', false); // Chapter 15 objective 5
+        toggleObjective('obj22', false); // Chapter 15 objective 7 (esophageal disorders)
       }, 2000);
     });
   </script>
