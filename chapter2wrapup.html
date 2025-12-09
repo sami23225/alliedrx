@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Week 2 – Chapter 2 Wrap-Up: The Health Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d9b8ff;
+      --color-accent: #8380f0;
+      --color-bg: #f7f5fb;
+      --color-text: #1e2030;
+      --color-muted: #727089;
+      --color-success: #00b894;
+      --color-warning: #fdcb6e;
+      --color-error: #e17055;
+      --color-info: #0984e3;
+      --radius-lg: 24px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+      background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    img,
+    main,
+    .page,
+    .column,
+    .card,
+    .side-card,
+    .completion-card {
+      max-width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 30px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+      gap: 28px;
+      position: relative;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      .page {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 16px 14px 24px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .section-title {
+        font-size: 1rem;
+      }
+      .subtitle,
+      .card p,
+      .small,
+      .side-card,
+      .checklist,
+      .side-list {
+        font-size: 0.9rem;
+      }
+    }
+
+    .column {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HEADER SECTION */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      max-width: 100%;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .week-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(175, 75, 239, 0.08);
+      font-size: 0.76rem;
+      color: var(--color-primary);
+      white-space: normal;
+    }
+
+    .week-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-success);
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .badge-mode:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 480px) {
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .badge-mode {
+        margin-top: 6px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      line-height: 1.05;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--color-muted);
+      max-width: 36rem;
+      margin-bottom: 18px;
+    }
+
+    .subtitle strong {
+      color: var(--color-primary);
+    }
+
+    /* Sections */
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      padding: 14px 16px 16px;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), rgba(255, 255, 255, 0.98));
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    .small {
+      font-size: 0.82rem;
+      color: var(--color-muted);
+    }
+
+    .quiz-item {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    .quiz-question {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .quiz-options {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.88rem;
+    }
+
+    .quiz-options li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .quiz-options input {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .quiz-feedback {
+      font-size: 0.82rem;
+      margin-top: 5px;
+      min-height: 1.1em;
+    }
+
+    .quiz-feedback.correct {
+      color: var(--color-success);
+    }
+
+    .quiz-feedback.incorrect {
+      color: var(--color-error);
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      margin-top: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(88, 28, 135, 0.45);
+    }
+
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .vocab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .vocab-card {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(12, 10, 24, 0.94);
+      color: #e5e7eb;
+      font-size: 0.86rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .vocab-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .vocab-term {
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #fef9c3;
+    }
+
+    .vocab-definition {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .vocab-card.active .vocab-definition {
+      display: block;
+    }
+
+    .vocab-card::after {
+      content: "Tap to flip";
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: #a5b4fc;
+    }
+
+    .vocab-card.active::after {
+      content: "Hide";
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 10px 11px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(175, 75, 239, 0.1);
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .checklist input[type="checkbox"] {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .side-card {
+      background: rgba(12, 10, 24, 0.96);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 16px 18px 18px;
+      margin-bottom: 16px;
+      font-size: 0.88rem;
+      transition: transform 0.3s ease;
+    }
+
+    .side-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .side-subtitle {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #c4b5fd;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .side-list {
+      list-style: none;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .side-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      margin-top: 7px;
+      border-radius: 999px;
+      background: #a5b4fc;
+      flex-shrink: 0;
+    }
+
+    .completion-card {
+      border-radius: 18px;
+      border: 2px dashed rgba(175, 75, 239, 0.3);
+      padding: 12px 14px;
+      font-size: 0.84rem;
+      background: rgba(248, 250, 252, 0.9);
+      color: var(--color-muted);
+      transition: all 0.3s ease;
+    }
+
+    .completion-card:hover {
+      border-color: var(--color-primary);
+      background: rgba(175, 75, 239, 0.05);
+    }
+
+    /* Health Record Specific Styles */
+    .record-types-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    @media (max-width: 768px) {
+      .record-types-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .record-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .record-type-card {
+      background: rgba(175, 75, 239, 0.1);
+      border: 2px solid var(--color-primary-soft);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .soap-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin: 10px 0;
+    }
+
+    .soap-element {
+      background: rgba(12, 10, 24, 0.05);
+      border-radius: 8px;
+      padding: 8px 5px;
+      font-size: 0.8rem;
+      text-align: center;
+      border: 1px solid rgba(12, 10, 24, 0.1);
+      font-weight: bold;
+    }
+
+    .soap-element.subjective {
+      background: rgba(9, 132, 227, 0.1);
+      border-color: var(--color-info);
+    }
+
+    .soap-element.objective {
+      background: rgba(0, 184, 148, 0.1);
+      border-color: var(--color-success);
+    }
+
+    .soap-element.assessment {
+      background: rgba(253, 203, 110, 0.1);
+      border-color: var(--color-warning);
+    }
+
+    .soap-element.plan {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary);
+    }
+
+    /* Progress Indicator */
+    .progress-indicator {
+      height: 6px;
+      background: rgba(12, 10, 24, 0.08);
+      border-radius: 3px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    /* Clinical Boxes */
+    .clinical-box {
+      background: rgba(175, 75, 239, 0.08);
+      border-left: 4px solid var(--color-primary);
+      padding: 10px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    .warning-box {
+      background: rgba(253, 203, 110, 0.1);
+      border-left: 4px solid var(--color-warning);
+      padding: 10px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    .danger-box {
+      background: rgba(225, 112, 85, 0.1);
+      border-left: 4px solid var(--color-error);
+      padding: 10px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    .hipaa-box {
+      background: rgba(9, 132, 227, 0.1);
+      border-left: 4px solid var(--color-info);
+      padding: 10px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    .record-label {
+      display: inline-block;
+      background: rgba(12, 10, 24, 0.1);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin: 2px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(12, 10, 24, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page" aria-labelledby="wrapup-heading">
+    <section class="column">
+      <header class="brand-row">
+        <div class="brand">
+          <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" class="brand-logo" alt="AlliedRx logo" />
+          <div class="course-meta">
+            <span class="course-name">Clinical Medical Assistant • Campus & Online</span>
+            <div class="week-label">
+              <span class="week-label-dot"></span>
+              <span>Week 2 — Chapter 2 Wrap-Up</span>
+            </div>
+          </div>
+        </div>
+
+        <span class="badge-mode">Health Record Review</span>
+      </header>
+
+      <h1 id="wrapup-heading">The Health Record</h1>
+      <p class="subtitle">
+        Before you move on, pause and check your understanding of
+        <strong>Chapter 2 – The Health Record</strong>.
+        Use this page to review EHR vs paper records, SOAP documentation, HIPAA compliance, and apply concepts to clinical scenarios.
+      </p>
+
+      <section>
+        <p class="section-label">Step 1</p>
+        <h2 class="section-title">Health Record Fundamentals Self-Check</h2>
+
+        <div class="card" id="quiz-card">
+          <p class="small">
+            Choose the best answer for each question, then select <strong>Check answers</strong>.
+          </p>
+
+          <div class="quiz-item" data-answer="c">
+            <p class="quiz-question">1. Which is NOT a component of the SOAP note format?</p>
+            <ul class="quiz-options">
+              <li><input type="radio" name="q1" value="a" /> Subjective</li>
+              <li><input type="radio" name="q1" value="b" /> Objective</li>
+              <li><input type="radio" name="q1" value="c" /> Summary</li>
+            </ul>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-answer="a">
+            <p class="quiz-question">2. Under HIPAA, Protected Health Information (PHI) includes:</p>
+            <ul class="quiz-options">
+              <li><input type="radio" name="q2" value="a" /> Any information that identifies a patient</li>
+              <li><input type="radio" name="q2" value="b" /> Only medical diagnosis information</li>
+              <li><input type="radio" name="q2" value="c" /> Only information shared with insurance</li>
+            </ul>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-answer="b">
+            <p class="quiz-question">3. A key advantage of Electronic Health Records (EHR) over paper records is:</p>
+            <ul class="quiz-options">
+              <li><input type="radio" name="q3" value="a" /> Lower initial cost</li>
+              <li><input type="radio" name="q3" value="b" /> Improved accessibility across providers</li>
+              <li><input type="radio" name="q3" value="c" /> Less training required</li>
+            </ul>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-answer="c">
+            <p class="quiz-question">4. Which documentation practice helps prevent legal issues?</p>
+            <ul class="quiz-options">
+              <li><input type="radio" name="q4" value="a" /> Using correction fluid on errors</li>
+              <li><input type="radio" name="q4" value="b" /> Documenting at end of shift</li>
+              <li><input type="radio" name="q4" value="c" /> Timely and accurate documentation</li>
+            </ul>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="btn" onclick="checkQuiz()">Check answers</button>
+          
+          <!-- Progress Indicator -->
+          <div class="progress-indicator">
+            <div class="progress-bar" id="quiz-progress"></div>
+          </div>
+
+          <!-- SOAP Note Grid -->
+          <div style="margin-top: 20px;">
+            <p class="small" style="margin-bottom: 8px;"><strong>SOAP Note Format:</strong></p>
+            <div class="soap-grid">
+              <div class="soap-element subjective">S<br>Subjective</div>
+              <div class="soap-element objective">O<br>Objective</div>
+              <div class="soap-element assessment">A<br>Assessment</div>
+              <div class="soap-element plan">P<br>Plan</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Step 2</p>
+        <h2 class="section-title">Health Record Vocabulary</h2>
+
+        <div class="card">
+          <p class="small">Tap each card to reveal the definition.</p>
+
+          <div class="vocab-grid">
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">EHR vs Paper Records</div>
+              <div class="vocab-definition">EHR: Digital, accessible, structured data. Paper: Physical, single-location, manual filing.</div>
+            </div>
+
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">HIPAA</div>
+              <div class="vocab-definition">Health Insurance Portability and Accountability Act - protects patient privacy and health information</div>
+            </div>
+
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">Protected Health Information (PHI)</div>
+              <div class="vocab-definition">Any information about health status, treatment, or payment that can identify a patient</div>
+            </div>
+
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">Minimum Necessary Rule</div>
+              <div class="vocab-definition">Only access/disclose minimum PHI needed to accomplish intended purpose</div>
+            </div>
+
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">Charting by Exception</div>
+              <div class="vocab-definition">Documenting only abnormal findings; assumes normal findings if not documented</div>
+            </div>
+
+            <div class="vocab-card" onclick="toggleVocab(this)">
+              <div class="vocab-term">Audit Trail</div>
+              <div class="vocab-definition">Electronic record of who accessed/changed a record, when, and what was changed</div>
+            </div>
+          </div>
+          
+          <!-- Record Types -->
+          <div style="margin-top: 15px;">
+            <p class="small" style="margin-bottom: 8px;"><strong>Types of Health Records:</strong></p>
+            <div class="record-types-grid">
+              <div class="record-type-card">Problem-Oriented<br><small>SOAP format</small></div>
+              <div class="record-type-card">Source-Oriented<br><small>By department</small></div>
+              <div class="record-type-card">Integrated<br><small>Combined format</small></div>
+            </div>
+          </div>
+
+          <!-- Documentation Components -->
+          <div class="clinical-box" style="margin-top: 15px;">
+            <strong>Required Documentation Elements:</strong><br>
+            <span class="record-label">Patient Identification</span>
+            <span class="record-label">Date/Time</span>
+            <span class="record-label">Chief Complaint</span>
+            <span class="record-label">Vital Signs</span>
+            <span class="record-label">Assessment</span>
+            <span class="record-label">Plan</span>
+            <span class="record-label">Signature</span>
+            <span class="record-label">Credentials</span>
+          </div>
+
+          <!-- HIPAA Warning -->
+          <div class="hipaa-box">
+            <strong>HIPAA Violation Examples:</strong><br>
+            • Discussing patients in public areas<br>
+            • Leaving computer screens unlocked<br>
+            • Sharing login credentials<br>
+            • Improper disposal of PHI
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <aside class="column">
+      <section>
+        <p class="section-label">Apply it</p>
+        <h2 class="section-title">Clinical Scenario: New Patient Documentation</h2>
+
+        <div class="side-card">
+          <p class="side-subtitle">Scenario</p>
+          <p>A 45-year-old female presents for her first visit. She reports headache for 3 days, rates pain 7/10, worse with bright lights. BP: 142/88, HR: 92, Temp: 98.6°F.</p>
+
+          <p class="side-subtitle" style="margin-top:12px;">Documentation Tasks</p>
+          <ul class="side-list">
+            <li><span class="dot"></span> Identify which information goes in S vs O sections</li>
+            <li><span class="dot"></span> How would you format the SOAP note?</li>
+            <li><span class="dot"></span> What HIPAA considerations apply?</li>
+            <li><span class="dot"></span> How would you correct an error in documentation?</li>
+          </ul>
+
+          <div style="margin-top: 12px;">
+            <p class="small"><strong>SOAP Classification:</strong></p>
+            <div class="soap-grid">
+              <div class="soap-element subjective" style="font-size: 0.7rem; padding: 6px 3px;">
+                S: "Headache 3 days, 7/10 pain, photophobia"
+              </div>
+              <div class="soap-element objective" style="font-size: 0.7rem; padding: 6px 3px;">
+                O: BP 142/88, HR 92, T 98.6
+              </div>
+              <div class="soap-element assessment" style="font-size: 0.7rem; padding: 6px 3px;">
+                A: Likely migraine
+              </div>
+              <div class="soap-element plan" style="font-size: 0.7rem; padding: 6px 3px;">
+                P: Further evaluation
+              </div>
+            </div>
+          </div>
+
+          <!-- Documentation Example -->
+          <div class="clinical-box" style="margin-top: 12px;">
+            <strong>Correct Error Correction:</strong><br>
+            1. Single line through error<br>
+            2. Write "error" or "mistaken entry"<br>
+            3. Initial and date<br>
+            4. Write correct information<br>
+            <em>Never use correction fluid or erase!</em>
+          </div>
+
+          <!-- EHR vs Paper Comparison -->
+          <div class="warning-box" style="margin-top: 12px;">
+            <strong>EHR Advantages:</strong><br>
+            • Legible documentation<br>
+            • Clinical decision support<br>
+            • Automated alerts<br>
+            • Easy information sharing<br>
+            • Data analytics capability
+          </div>
+
+          <label class="small" style="display:block;margin-top:10px;">Documentation Practice:</label>
+          <textarea placeholder="Write a brief SOAP note for this scenario..."></textarea>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Step 3</p>
+        <h2 class="section-title">Health Record Competency Checklist</h2>
+
+        <div class="side-card">
+          <p>Check off each health record competency you have mastered.</p>
+
+          <ul class="checklist" style="margin-top:10px;">
+            <li><input type="checkbox" onchange="updateProgress()" /> I can create a SOAP note with proper formatting</li>
+            <li><input type="checkbox" onchange="updateProgress()" /> I understand HIPAA requirements for PHI protection</li>
+            <li><input type="checkbox" onchange="updateProgress()" /> I can correct documentation errors properly</li>
+            <li><input type="checkbox" onchange="updateProgress()" /> I can identify EHR advantages over paper records</li>
+            <li><input type="checkbox" onchange="updateProgress()" /> I can maintain patient confidentiality</li>
+            <li><input type="checkbox" onchange="updateProgress()" /> I understand legal implications of documentation</li>
+          </ul>
+          
+          <!-- Progress Indicator -->
+          <div style="margin-top: 15px;">
+            <p class="small">Competency Progress: <span id="progress-percent">0%</span></p>
+            <div class="progress-indicator">
+              <div class="progress-bar" id="competency-progress"></div>
+            </div>
+          </div>
+
+          <!-- Legal Considerations -->
+          <div class="danger-box" style="margin-top: 15px;">
+            <strong>Legal Documentation Principles:</strong><br>
+            • If it wasn't documented, it wasn't done<br>
+            • Document objectively, avoid opinions<br>
+            • Use standardized abbreviations only<br>
+            • Timeliness matters (document ASAP)
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-label">Step 4</p>
+        <h2 class="section-title">Ready for Health Record Practice?</h2>
+
+        <div class="completion-card">
+          <p>Before moving to clinical documentation skills, ensure you have:</p>
+          <ul class="side-list" style="margin-top:8px;">
+            <li><span class="dot"></span> Answered all health record questions correctly</li>
+            <li><span class="dot"></span> Reviewed EHR vs paper record differences</li>
+            <li><span class="dot"></span> Practiced SOAP note documentation</li>
+            <li><span class="dot"></span> Checked off health record competencies</li>
+            <li><span class="dot"></span> Understand HIPAA requirements</li>
+            <li><span class="dot"></span> Can properly correct documentation errors</li>
+          </ul>
+          
+          <button class="btn" style="margin-top: 12px; width: 100%;" onclick="completeChapter()">
+            Complete Chapter 2 Review
+          </button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    // Quiz functionality
+    function checkQuiz() {
+      const items = document.querySelectorAll('.quiz-item');
+      let correctCount = 0;
+      
+      items.forEach((item, index) => {
+        const correct = item.getAttribute('data-answer');
+        const selected = item.querySelector('input:checked');
+        const feedback = item.querySelector('.quiz-feedback');
+
+        if (!selected) {
+          feedback.textContent = 'Please select an answer.';
+          feedback.className = 'quiz-feedback';
+          return;
+        }
+
+        if (selected.value === correct) {
+          feedback.textContent = 'Correct!';
+          feedback.className = 'quiz-feedback correct';
+          correctCount++;
+        } else {
+          feedback.textContent = 'Not quite—try again.';
+          feedback.className = 'quiz-feedback incorrect';
+        }
+      });
+      
+      // Update quiz progress
+      const progress = (correctCount / items.length) * 100;
+      document.getElementById('quiz-progress').style.width = `${progress}%`;
+      
+      // Show completion message if all correct
+      if (correctCount === items.length) {
+        setTimeout(() => {
+          alert('Excellent! All health record questions answered correctly.\n\nRemember: "If it wasn\'t documented, it wasn\'t done."');
+        }, 300);
+      }
+    }
+
+    // Vocabulary card flip
+    function toggleVocab(card) {
+      card.classList.toggle('active');
+    }
+
+    // Update competency progress
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+      const checked = document.querySelectorAll('.checklist input[type="checkbox"]:checked');
+      const progress = (checked.length / checkboxes.length) * 100;
+      
+      document.getElementById('competency-progress').style.width = `${progress}%`;
+      document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
+    }
+
+    // Complete chapter function
+    function completeChapter() {
+      // Check if quiz is completed
+      const quizItems = document.querySelectorAll('.quiz-item');
+      const quizAnswered = Array.from(quizItems).every(item => {
+        return item.querySelector('input:checked') !== null;
+      });
+      
+      // Check if at least some competencies are checked
+      const competencies = document.querySelectorAll('.checklist input[type="checkbox"]:checked');
+      
+      if (!quizAnswered) {
+        alert('Please complete all quiz questions before finishing the chapter.');
+        return;
+      }
+      
+      if (competencies.length < 4) {
+        if (!confirm('You have only checked ' + competencies.length + ' competencies. Are you sure you\'re ready to move on?')) {
+          return;
+        }
+      }
+      
+      // Completion animation
+      const completionCard = document.querySelector('.completion-card');
+      completionCard.style.borderColor = 'var(--color-success)';
+      completionCard.style.backgroundColor = 'rgba(0, 184, 148, 0.1)';
+      
+      // Show success message
+      alert('Chapter 2 review completed successfully! You are ready for health record documentation practice.\n\nKey Principle: Documentation is both a clinical tool and a legal document.');
+      
+      // Update button
+      const button = completionCard.querySelector('.btn');
+      button.textContent = '✓ Health Record Review Complete';
+      button.style.background = 'linear-gradient(135deg, var(--color-success), #00a884)';
+      button.disabled = true;
+    }
+
+    // Initialize progress bars
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProgress();
+      
+      // Add interactive functionality to record type cards
+      const recordTypeCards = document.querySelectorAll('.record-type-card');
+      recordTypeCards.forEach((card, index) => {
+        card.addEventListener('click', function() {
+          const recordTypeInfo = [
+            'Problem-Oriented Medical Record (POMR): Organizes by patient problems. Uses SOAP format for each problem. Promotes problem-solving approach.',
+            'Source-Oriented Medical Record (SOMR): Organizes by department/service (lab, radiology, nursing). Traditional format, easy to file but harder to follow patient story.',
+            'Integrated Medical Record: Combines chronological and problem-oriented approaches. All information in one section by date. Comprehensive but can be lengthy.'
+          ];
+          alert(recordTypeInfo[index]);
+        });
+      });
+
+      // Add interactive functionality to SOAP elements
+      const soapElements = document.querySelectorAll('.soap-element');
+      soapElements.forEach((element, index) => {
+        element.addEventListener('click', function() {
+          const soapInfo = [
+            'Subjective (S): Patient\'s statements, symptoms, concerns. "I have had a headache for 3 days." Use quotes for direct patient statements.',
+            'Objective (O): Measurable, observable data. Vital signs, exam findings, lab results. BP: 142/88, HR: 92, Temp: 98.6°F.',
+            'Assessment (A): Provider\'s diagnosis/impression based on S and O. "Likely migraine" or "Hypertension, uncontrolled."',
+            'Plan (P): Treatment plan, medications, referrals, patient education, follow-up. "Prescribe medication, schedule follow-up in 2 weeks."'
+          ];
+          alert(soapInfo[index]);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
