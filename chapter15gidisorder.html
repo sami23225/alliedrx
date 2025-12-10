@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ALLIEDRx -- Chapter 15: GI Disorders Diagnostic Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* === ALLIEDRx BRANDING EXACT MATCH === */
+        :root {
+            --color-primary: #af4bef; /* Purple - main brand color */
+            --color-primary-soft: #d492ff; /* Light purple */
+            --color-accent: #8380f0; /* Blue-purple accent */
+            --color-success: #00b894; /* Green for correct/success */
+            --color-warning: #fdcb6e;
+            --color-error: #e17055; /* Red/Orange for errors */
+            --color-bg: #f7f5fb; /* Light background */
+            --color-text: #2b2b2b; /* Dark text */
+            --color-muted: #6c6880; /* Muted text */
+            --color-dark: #0c0a18; /* Dark panel background */
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-medium: 0 12px 30px rgba(23, 10, 61, 0.12);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes scoreCountUp {
+            from { width: 0%; }
+            to { width: var(--target-width); }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* === MAIN PAGE CONTAINER === */
+        .page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+            }
+        }
+
+        /* === ALLIEDRx HEADER/BRANDING === */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+            animation: pulse 2s infinite;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        /* === MODULE HEADER === */
+        .module-header {
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+
+        /* === CLINICAL TIP === */
+        .clinical-tip {
+            background: rgba(253, 203, 110, 0.1);
+            border-left: 4px solid var(--color-warning);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .clinical-tip-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-warning);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .clinical-tip-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* === PROGRESS TRACKER === */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* === PROGRESS SUMMARY === */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .summary-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid rgba(12, 10, 24, 0.06);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--color-primary-soft);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* === ACTIVITY GRID === */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* === ACTIVITY CARDS === */
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+
+        .activity-card.completed {
+            border-color: var(--color-success);
+        }
+
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-icon {
+            font-size: 1.5rem;
+        }
+
+        .activity-description {
+            font-size: 0.95rem;
+            color: var(--color-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* === ACTIVITY 1: GI DISORDER CLASSIFICATION === */
+        .disorder-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .disorder-scenario {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .patient-info {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .patient-demographics {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            margin-bottom: 10px;
+        }
+
+        .disorder-instruction {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 20px;
+            padding: 12px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .disorder-category {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            transition: all 0.3s ease;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .disorder-category:hover {
+            border-color: var(--color-primary-soft);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .disorder-category.correct-drop {
+            border: 2px solid var(--color-success);
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .disorder-category.incorrect-drop {
+            border: 2px solid var(--color-error);
+            background: rgba(225, 112, 85, 0.1);
+            animation: shake 0.5s ease;
+        }
+
+        .category-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .category-description {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .disorder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .disorder-tag {
+            background: white;
+            border: 2px solid var(--color-accent);
+            border-radius: 24px;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .disorder-tag:hover {
+            background: var(--color-accent);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(131, 128, 240, 0.3);
+        }
+
+        .disorder-tag.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .disorder-tag.placed {
+            background: var(--color-success);
+            color: white;
+            border-color: var(--color-success);
+            cursor: default;
+        }
+
+        .disorder-icon {
+            font-size: 1.2rem;
+        }
+
+        /* === ACTIVITY 2: HEPATITIS COMPARISON === */
+        .hepatitis-types {
+            margin-bottom: 25px;
+        }
+
+        .type-tags {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .type-tag {
+            background: white;
+            border: 3px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 140px;
+            justify-content: center;
+        }
+
+        .type-tag:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(175, 75, 239, 0.3);
+        }
+
+        .type-tag.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .type-tag.placed {
+            opacity: 0.5;
+            cursor: default;
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .type-icon {
+            font-size: 1.3rem;
+        }
+
+        .transmission-routes {
+            margin-top: 20px;
+        }
+
+        .route-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .route-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .route-zone {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 3px dashed var(--color-primary-soft);
+            transition: all 0.3s ease;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .route-zone:hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .route-zone.active {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.08);
+        }
+
+        .route-zone.correct {
+            border: 3px solid var(--color-success);
+            background: rgba(0, 184, 148, 0.1);
+        }
+
+        .route-zone.incorrect {
+            border: 3px solid var(--color-error);
+            background: rgba(225, 112, 85, 0.1);
+            animation: shake 0.5s ease;
+        }
+
+        .route-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .route-description {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            text-align: center;
+            margin-bottom: 15px;
+            flex: 1;
+        }
+
+        .drop-area {
+            min-height: 50px;
+            border-radius: var(--radius-sm);
+            background: rgba(12, 10, 24, 0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .drop-area.filled {
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .hepatitis-tag-in-zone {
+            background: white;
+            border: 2px solid var(--color-accent);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .key-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .key-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .key-item {
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border-left: 4px solid var(--color-success);
+        }
+
+        /* === ACTIVITY 3: PATIENT EDUCATION SCENARIOS === */
+        .patient-scenarios {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .scenario-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .nav-btn {
+            background: rgba(175, 75, 239, 0.1);
+            border: 2px solid var(--color-primary-soft);
+            border-radius: var(--radius-sm);
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: var(--color-muted);
+            color: var(--color-muted);
+        }
+
+        .scenario-counter {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            font-weight: 600;
+        }
+
+        .education-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .education-option {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .education-option:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .education-option.selected {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .education-option.wrong {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+            animation: shake 0.5s ease;
+        }
+
+        .option-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .option-content {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        /* === ACTIVITY 4: DIAGNOSTIC PROCEDURE SEQUENCE === */
+        .procedure-sequence {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .procedure-step {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border-left: 4px solid var(--color-primary);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .procedure-step:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .procedure-step.active {
+            background: rgba(175, 75, 239, 0.05);
+            border-left-color: var(--color-success);
+        }
+
+        .procedure-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: background 0.3s ease;
+        }
+
+        .procedure-step.active .procedure-number {
+            background: var(--color-success);
+        }
+
+        .procedure-content {
+            flex: 1;
+        }
+
+        .procedure-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .procedure-description {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            line-height: 1.5;
+        }
+
+        /* === FEEDBACK SECTION === */
+        .feedback-details {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(175, 75, 239, 0.03);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--color-accent);
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feedback-item {
+            margin-bottom: 8px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .feedback-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .feedback-item.correct:before {
+            content: "✓";
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        .feedback-item.incorrect:before {
+            content: "✗";
+            color: var(--color-error);
+            font-weight: bold;
+        }
+
+        .feedback-item.tip:before {
+            content: "💡";
+        }
+
+        /* === ACTION BUTTONS === */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* === RESULTS PANEL === */
+        .results-panel {
+            background: var(--color-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .results-panel.show {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .score-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-success));
+            border-radius: 6px;
+            width: 0%;
+            animation: scoreCountUp 1.5s ease-in-out forwards;
+        }
+
+        .clinical-insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .insights-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary-soft);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 999px;
+            background: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        /* === RESPONSIVE ADJUSTMENTS === */
+        @media (max-width: 768px) {
+            .activity-grid {
+                gap: 20px;
+            }
+            .activity-card {
+                padding: 20px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-tracker {
+                flex-wrap: wrap;
+            }
+            .step-divider {
+                display: none;
+            }
+            .category-grid {
+                gap: 10px;
+            }
+            .disorder-tags {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Kinn's Chapter 15</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Interactive Module 2: GI Disorders Diagnostic Clinic</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus & Online</span>
+        </header>
+
+        <!-- Module Header -->
+        <section class="module-header">
+            <h1 id="module-heading">GI Disorders Diagnostic Clinic</h1>
+            <p class="module-subtitle">Master GI pathologies, hepatitis comparison, patient education scenarios, and diagnostic procedures</p>
+        </section>
+
+        <!-- Clinical Tip -->
+        <div class="clinical-tip">
+            <div class="clinical-tip-title">💡 Clinical Insight</div>
+            <div class="clinical-tip-content">
+                <strong>"Differentiating IBD vs IBS: Inflammation present vs functional disorder."</strong>—IBD (Crohn's, Ulcerative Colitis) shows inflammation on colonoscopy/biopsy. IBS has normal anatomy but abnormal function. This distinction guides treatment: anti-inflammatories for IBD, dietary/behavioral for IBS.
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Disorder Classification</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Hepatitis Comparison</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Patient Education</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Procedure Sequence</div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <span class="summary-number" id="completed-count">0</span>
+                <span class="summary-label">Activities Completed</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="accuracy-rate">0%</span>
+                <span class="summary-label">Current Accuracy</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="time-spent">0:00</span>
+                <span class="summary-label">Time Spent</span>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Activity 1: GI Disorder Classification -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🩺</span>
+                    GI Disorder Classification
+                </h3>
+                <p class="activity-description">
+                    Classify GI disorders based on patient scenarios. Drag each disorder to the correct category.
+                </p>
+                
+                <div class="disorder-container">
+                    <div class="disorder-scenario">
+                        <div class="scenario-header">
+                            <div class="patient-info">Patient Scenario 1</div>
+                            <div class="patient-demographics">48-year-old male with bloody diarrhea, abdominal pain, weight loss</div>
+                        </div>
+                        <div class="disorder-instruction">
+                            <strong>Task:</strong> Drag the disorder tags below to the correct diagnostic category
+                        </div>
+                        
+                        <!-- Category Drop Zones -->
+                        <div class="category-grid">
+                            <div class="disorder-category" data-category="inflammatory" id="inflammatory-cat">
+                                <div class="category-title">Inflammatory</div>
+                                <div class="category-description">Crohn's Disease • Ulcerative Colitis</div>
+                            </div>
+                            
+                            <div class="disorder-category" data-category="functional" id="functional-cat">
+                                <div class="category-title">Functional</div>
+                                <div class="category-description">IBS • Functional Dyspepsia</div>
+                            </div>
+                            
+                            <div class="disorder-category" data-category="infectious" id="infectious-cat">
+                                <div class="category-title">Infectious</div>
+                                <div class="category-description">C. diff • Viral Gastroenteritis</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Disorder Tags -->
+                        <div class="disorder-tags">
+                            <div class="disorder-tag" data-disorder="crohns" data-category="inflammatory" draggable="true">
+                                <span class="disorder-icon">🔥</span> Crohn's Disease
+                            </div>
+                            <div class="disorder-tag" data-disorder="ibs" data-category="functional" draggable="true">
+                                <span class="disorder-icon">🌀</span> Irritable Bowel Syndrome
+                            </div>
+                            <div class="disorder-tag" data-disorder="c-diff" data-category="infectious" draggable="true">
+                                <span class="disorder-icon">🦠</span> C. difficile Infection
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback Section -->
+                <div class="feedback-details" id="feedback-1">
+                    <div class="feedback-title">Diagnostic Reasoning</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip">Inflammatory bowel disease shows <strong>objective inflammation</strong> on colonoscopy/biopsy</li>
+                        <li class="feedback-item tip">IBS is a <strong>functional disorder</strong> with normal anatomy but abnormal motility</li>
+                        <li class="feedback-item tip">Infectious causes often have <strong>acute onset</strong> with fever and positive cultures</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Activity 2: Hepatitis Comparison -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">🦠</span>
+                    Hepatitis Comparison Matrix
+                </h3>
+                <p class="activity-description">
+                    Match each hepatitis type (A, B, C) with its correct transmission routes. Drag hepatitis types to their transmission routes.
+                </p>
+                
+                <div class="hepatitis-container">
+                    <div class="hepatitis-scenario">
+                        <div class="section-title">Hepatitis Transmission Matching</div>
+                        <p class="hepatitis-instruction">
+                            <strong>Task:</strong> Drag each hepatitis type to its correct transmission routes. Some hepatitis types may have multiple correct routes.
+                        </p>
+                        
+                        <!-- Hepatitis Types (Draggable) -->
+                        <div class="hepatitis-types">
+                            <div class="section-title" style="margin-top: 20px;">Hepatitis Types</div>
+                            <div class="type-tags">
+                                <div class="type-tag" data-type="A" draggable="true">
+                                    <span class="type-icon">🅰️</span> Hepatitis A
+                                </div>
+                                <div class="type-tag" data-type="B" draggable="true">
+                                    <span class="type-icon">🅱️</span> Hepatitis B
+                                </div>
+                                <div class="type-tag" data-type="C" draggable="true">
+                                    <span class="type-icon">©️</span> Hepatitis C
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Transmission Routes (Drop Zones) -->
+                        <div class="transmission-routes">
+                            <div class="section-title" style="margin-top: 20px;">Transmission Routes</div>
+                            <div class="route-grid">
+                                <div class="route-zone" data-route="fecal-oral" id="fecal-oral-zone">
+                                    <div class="route-title">Fecal-Oral Route</div>
+                                    <div class="route-description">Contaminated food/water, poor sanitation</div>
+                                    <div class="drop-area"></div>
+                                </div>
+                                
+                                <div class="route-zone" data-route="blood-sexual" id="blood-sexual-zone">
+                                    <div class="route-title">Blood/Sexual Contact</div>
+                                    <div class="route-description">Blood exposure, sexual transmission</div>
+                                    <div class="drop-area"></div>
+                                </div>
+                                
+                                <div class="route-zone" data-route="blood" id="blood-zone">
+                                    <div class="route-title">Blood Transmission</div>
+                                    <div class="route-description">Primarily through blood exposure</div>
+                                    <div class="drop-area"></div>
+                                </div>
+                                
+                                <div class="route-zone" data-route="vertical" id="vertical-zone">
+                                    <div class="route-title">Vertical Transmission</div>
+                                    <div class="route-description">Mother to child during birth</div>
+                                    <div class="drop-area"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Answer Key (Hidden initially) -->
+                        <div class="answer-key" style="display: none;">
+                            <div class="section-title" style="margin-top: 20px;">Correct Matches</div>
+                            <div class="key-grid">
+                                <div class="key-item">
+                                    <strong>Hepatitis A:</strong> Fecal-Oral only
+                                </div>
+                                <div class="key-item">
+                                    <strong>Hepatitis B:</strong> Blood/Sexual + Vertical
+                                </div>
+                                <div class="key-item">
+                                    <strong>Hepatitis C:</strong> Blood primarily
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback Section -->
+                <div class="feedback-details" id="feedback-2">
+                    <div class="feedback-title">Hepatitis Transmission Guide</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip"><strong>Hep A:</strong> Contaminated food/water, poor sanitation. Vaccine available.</li>
+                        <li class="feedback-item tip"><strong>Hep B:</strong> Blood, sexual contact, vertical transmission. Vaccine available.</li>
+                        <li class="feedback-item tip"><strong>Hep C:</strong> Primarily blood transmission, rarely sexual. No vaccine but curative treatments available.</li>
+                        <li class="feedback-item tip"><strong>Key Distinction:</strong> Hep A is self-limited, Hep B & C can become chronic.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Activity 3: Patient Education Scenarios -->
+            <section class="activity-card" id="activity-3" data-activity="3">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 3</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">👨‍👩‍👧‍👦</span>
+                    Patient Education Scenarios
+                </h3>
+                <p class="activity-description">
+                    Select appropriate patient education for different scenarios: teenager with IBD, elderly with diverticulosis, and post-colonoscopy patient.
+                </p>
+                
+                <div class="patient-scenarios">
+                    <!-- Scenario 1 (Visible) -->
+                    <div class="disorder-scenario" id="scenario-1" style="display: block;">
+                        <div class="scenario-header">
+                            <div class="patient-info">Scenario 1: Teenager with IBD</div>
+                            <div class="patient-demographics">16-year-old female, newly diagnosed with Crohn's disease</div>
+                        </div>
+                        <p class="disorder-instruction">
+                            <strong>Task:</strong> Select the most appropriate patient education for this scenario
+                        </p>
+                        
+                        <div class="education-options">
+                            <div class="education-option" data-scenario="1" data-option="1">
+                                <div class="option-title">Comprehensive IBD Management</div>
+                                <div class="option-content">Explain disease process, medication adherence, nutrition counseling, stress management, and when to seek emergency care.</div>
+                            </div>
+                            <div class="education-option" data-scenario="1" data-option="2">
+                                <div class="option-title">Minimal Information</div>
+                                <div class="option-content">"Just take these pills and come back if it gets worse."</div>
+                            </div>
+                            <div class="education-option" data-scenario="1" data-option="3">
+                                <div class="option-title">Alternative Medicine Focus</div>
+                                <div class="option-content">"Try these herbal supplements instead of prescribed medications."</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scenario 2 (Hidden) -->
+                    <div class="disorder-scenario" id="scenario-2" style="display: none;">
+                        <div class="scenario-header">
+                            <div class="patient-info">Scenario 2: Elderly with Diverticulosis</div>
+                            <div class="patient-demographics">72-year-old male, history of diverticulosis, presents with constipation</div>
+                        </div>
+                        <p class="disorder-instruction">
+                            <strong>Task:</strong> Select the most appropriate patient education for this scenario
+                        </p>
+                        
+                        <div class="education-options">
+                            <div class="education-option" data-scenario="2" data-option="1">
+                                <div class="option-title">Dietary Management Plan</div>
+                                <div class="option-content">High-fiber diet education, fluid intake recommendations, warning signs of diverticulitis, and exercise guidance.</div>
+                            </div>
+                            <div class="education-option" data-scenario="2" data-option="2">
+                                <div class="option-title">Avoid All Fiber</div>
+                                <div class="option-content">"Stop eating fruits and vegetables to prevent flare-ups."</div>
+                            </div>
+                            <div class="education-option" data-scenario="2" data-option="3">
+                                <div class="option-title">No Changes Needed</div>
+                                <div class="option-content">"It's just normal aging, nothing to worry about."</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scenario 3 (Hidden) -->
+                    <div class="disorder-scenario" id="scenario-3" style="display: none;">
+                        <div class="scenario-header">
+                            <div class="patient-info">Scenario 3: Post-Colonoscopy Patient</div>
+                            <div class="patient-demographics">55-year-old female, just had colonoscopy with polypectomy</div>
+                        </div>
+                        <p class="disorder-instruction">
+                            <strong>Task:</strong> Select the most appropriate patient education for this scenario
+                        </p>
+                        
+                        <div class="education-options">
+                            <div class="education-option" data-scenario="3" data-option="1">
+                                <div class="option-title">Post-Procedure Care</div>
+                                <div class="option-content">Activity restrictions, diet instructions, warning signs of complications, follow-up schedule, and pathology results explanation.</div>
+                            </div>
+                            <div class="education-option" data-scenario="3" data-option="2">
+                                <div class="option-title">Resume Normal Activities</div>
+                                <div class="option-content">"You can go back to work and exercise immediately."</div>
+                            </div>
+                            <div class="education-option" data-scenario="3" data-option="3">
+                                <div class="option-title">No Follow-up Needed</div>
+                                <div class="option-content">"The procedure is over, you don't need to worry about anything else."</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="scenario-nav">
+                        <button class="nav-btn" id="prev-scenario" disabled>
+                            <span>←</span> Previous
+                        </button>
+                        <div class="scenario-counter">Scenario <span id="scenario-number">1</span> of 3</div>
+                        <button class="nav-btn" id="next-scenario">
+                            Next <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Feedback Section -->
+                <div class="feedback-details" id="feedback-3">
+                    <div class="feedback-title">Patient Education: Teenager with IBD</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip"><strong>Scenario:</strong> Teenager with IBD</li>
+                        <li class="feedback-item tip"><strong>Clinical Focus:</strong> Teenagers need comprehensive education about their chronic condition, addressing self-esteem and involving parents appropriately.</li>
+                        <li class="feedback-item tip"><strong>Task:</strong> Select the most appropriate patient education approach</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Activity 4: Diagnostic Procedure Sequence -->
+            <section class="activity-card" id="activity-4" data-activity="4">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 4</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">
+                    <span class="activity-icon">📋</span>
+                    Diagnostic Procedure Sequence
+                </h3>
+                <p class="activity-description">
+                    Sequence the diagnostic steps for a patient presenting with upper GI bleeding.
+                </p>
+                
+                <div class="procedure-sequence" id="procedure-sequence">
+                    <div class="procedure-step" data-step="1">
+                        <div class="procedure-number">1</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">Stabilize Patient</div>
+                            <div class="procedure-description">Assess ABCs, obtain IV access, start fluid resuscitation</div>
+                        </div>
+                    </div>
+                    <div class="procedure-step" data-step="2">
+                        <div class="procedure-number">2</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">History & Physical</div>
+                            <div class="procedure-description">Determine bleeding severity, risk factors, medication history</div>
+                        </div>
+                    </div>
+                    <div class="procedure-step" data-step="3">
+                        <div class="procedure-number">3</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">Lab Studies</div>
+                            <div class="procedure-description">CBC, coagulation studies, LFTs, type and crossmatch</div>
+                        </div>
+                    </div>
+                    <div class="procedure-step" data-step="4">
+                        <div class="procedure-number">4</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">Nasogastric Lavage</div>
+                            <div class="procedure-description">Confirm upper GI source, assess bleeding activity</div>
+                        </div>
+                    </div>
+                    <div class="procedure-step" data-step="5">
+                        <div class="procedure-number">5</div>
+                        <div class="procedure-content">
+                            <div class="procedure-title">Upper Endoscopy</div>
+                            <div class="procedure-description">EGD within 24 hours for diagnosis and potential treatment</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feedback Section -->
+                <div class="feedback-details" id="feedback-4">
+                    <div class="feedback-title">Procedure Sequence Protocol</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip">Always stabilize before diagnostic procedures</li>
+                        <li class="feedback-item tip">Endoscopy is both diagnostic and therapeutic</li>
+                        <li class="feedback-item tip"><strong>NG lavage:</strong> Coffee-ground appearance suggests slowed bleeding</li>
+                        <li class="feedback-item tip"><strong>Red flags:</strong> Hypotension, tachycardia, Hb drop >2g/dL</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-secondary" id="check-answers-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+            <button class="btn btn-primary" id="view-results-btn">
+                <span class="btn-icon">📊</span>
+                View Final Results
+            </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+            <div class="results-header">
+                <h2 class="results-title">GI Disorders Diagnostic Clinic Results</h2>
+                <div class="score-display" id="final-score">0%</div>
+            </div>
+            
+            <div class="score-bar">
+                <div class="score-fill" id="score-fill"></div>
+            </div>
+            
+            <div class="clinical-insights">
+                <h3 class="insights-title">
+                    <span>🩺</span> Clinical Proficiency Insights
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Disorder Classification:</strong> IBD requires objective inflammation (biopsy), IBS is diagnosis of exclusion. Always document specific findings rather than generic terms.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Hepatitis Differentiation:</strong> Transmission routes guide prevention strategies. Hep A&B vaccines are essential for at-risk populations, while Hep C requires blood precautions.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Patient Education:</strong> Tailor education to patient age, literacy level, and cultural background. Always verify understanding through teach-back method.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Procedure Sequence:</strong> Stabilization always precedes diagnostics. Endoscopy within 24 hours for upper GI bleeding can be both diagnostic and therapeutic.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Documentation Standards:</strong> Document "melena" vs "hematochezia" precisely. Quantify blood loss when possible and always include timing, frequency, and associated symptoms.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>📋</span> Key Learning Points
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Inflammatory vs Functional:</strong> CRP/ESR elevated in IBD, normal in IBS. Colonoscopy with biopsy is definitive for IBD.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Hepatitis Prevention:</strong> Hep A vaccine for travelers, Hep B vaccine for healthcare workers. Universal precautions for all bloodborne pathogens.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Patient Education:</strong> Use simple language, provide written materials, schedule follow-up to reinforce learning.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Emergency Management:</strong> ABCs first, then diagnostics. IV PPI for suspected PUD bleeding. Prepare for potential transfusion.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Follow-up Planning:</strong> Clear discharge instructions, contact information for questions, scheduled follow-up appointments.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 3, score: 0 }, // 3 disorder classifications
+                    2: { completed: false, correct: 0, total: 4, score: 0 }, // 4 hepatitis matches
+                    3: { completed: false, correct: 0, total: 3, score: 0 }, // 3 patient scenarios
+                    4: { completed: false, correct: 0, total: 5, score: 0 }  // 5 procedure steps
+                },
+                startedAt: new Date(),
+                timeSpent: 0,
+                currentScenario: 1,
+                scenarioAnswers: {}
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const completedCount = document.getElementById('completed-count');
+            const accuracyRate = document.getElementById('accuracy-rate');
+            const timeSpent = document.getElementById('time-spent');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkBtn = document.getElementById('check-answers-btn');
+            const resultsBtn = document.getElementById('view-results-btn');
+            const resultsPanel = document.getElementById('results-panel');
+            const finalScore = document.getElementById('final-score');
+            const scoreFill = document.getElementById('score-fill');
+
+            // Timer for time spent
+            function updateTimer() {
+                const now = new Date();
+                const diff = Math.floor((now - state.startedAt) / 1000);
+                state.timeSpent = diff;
+                const minutes = Math.floor(diff / 60);
+                const seconds = diff % 60;
+                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+
+            // Update Progress Summary
+            function updateProgressSummary() {
+                let completed = 0;
+                let totalCorrect = 0;
+                let totalItems = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                    totalCorrect += activity.correct;
+                    totalItems += activity.total;
+                });
+
+                completedCount.textContent = completed;
+                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+                accuracyRate.textContent = `${accuracy}%`;
+
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+
+                // Update activity cards
+                activityCards.forEach((card, index) => {
+                    const activityNum = index + 1;
+                    const activity = state.activities[activityNum];
+                    const status = card.querySelector('.activity-status');
+                    
+                    if (activity.completed) {
+                        card.classList.add('completed');
+                        status.textContent = 'Completed';
+                        status.style.color = '#00b894';
+                    } else {
+                        card.classList.remove('completed');
+                        status.textContent = 'Not Started';
+                        status.style.color = '';
+                    }
+                });
+            }
+
+            // Activity 1: GI Disorder Classification
+            function initActivity1() {
+                const disorderTags = document.querySelectorAll('#activity-1 .disorder-tag');
+                const categoryZones = document.querySelectorAll('#activity-1 .disorder-category');
+                const feedback = document.getElementById('feedback-1');
+                const status = document.querySelector('#activity-1 .activity-status');
+                
+                let placedTags = 0;
+                let correctPlacements = 0;
+
+                disorderTags.forEach(tag => {
+                    tag.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            disorder: this.dataset.disorder,
+                            category: this.dataset.category,
+                            text: this.textContent
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    tag.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                categoryZones.forEach(zone => {
+                    zone.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        // Add visual feedback
+                        this.style.borderColor = 'var(--color-primary)';
+                        this.style.backgroundColor = 'rgba(175, 75, 239, 0.1)';
+                    });
+
+                    zone.addEventListener('dragleave', function() {
+                        // Remove visual feedback
+                        this.style.borderColor = '';
+                        this.style.backgroundColor = '';
+                    });
+
+                    zone.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        
+                        // Remove visual feedback
+                        this.style.borderColor = '';
+                        this.style.backgroundColor = '';
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const targetCategory = this.dataset.category;
+
+                        // Check if placement is correct
+                        const isCorrect = data.category === targetCategory;
+
+                        // Mark category zone
+                        if (isCorrect) {
+                            this.classList.add('correct-drop');
+                            setTimeout(() => {
+                                this.classList.remove('correct-drop');
+                            }, 1000);
+                        } else {
+                            this.classList.add('incorrect-drop');
+                            setTimeout(() => {
+                                this.classList.remove('incorrect-drop');
+                            }, 1000);
+                        }
+
+                        // Mark tag as placed
+                        const originalTag = document.querySelector(`#activity-1 .disorder-tag[data-disorder="${data.disorder}"]`);
+                        if (originalTag && !originalTag.classList.contains('placed')) {
+                            originalTag.classList.add('placed');
+                            originalTag.style.cursor = 'default';
+                            originalTag.draggable = false;
+                            
+                            placedTags++;
+                            if (isCorrect) correctPlacements++;
+                            
+                            // Update feedback
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: ${isCorrect ? 'var(--color-success)' : 'var(--color-error)'};">${isCorrect ? '✓' : '✗'}</span>
+                                    ${isCorrect ? 'Correct!' : 'Incorrect'} - ${data.disorder === 'crohns' ? 'Crohn\'s Disease' : data.disorder === 'ibs' ? 'IBS' : 'C. diff'}
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item ${isCorrect ? 'correct' : 'incorrect'}">
+                                        ${data.disorder === 'crohns' ? 'Crohn\'s: Inflammatory (transmural inflammation)' : 
+                                          data.disorder === 'ibs' ? 'IBS: Functional (normal anatomy, abnormal motility)' : 
+                                          'C. diff: Infectious (toxin-mediated colitis)'}
+                                    </li>
+                                    ${placedTags < 3 ? `<li class="feedback-item tip"><strong>Next:</strong> ${placedTags === 1 ? '2 more to place' : '1 more to place'}</li>` : ''}
+                                </ul>
+                            `;
+                        }
+
+                        // Check completion
+                        if (placedTags === 3) {
+                            state.activities[1].completed = true;
+                            state.activities[1].correct = correctPlacements;
+                            state.activities[1].score = Math.round((correctPlacements / 3) * 100);
+                            
+                            // Update feedback
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: var(--color-success);">✓</span>
+                                    Classification Complete! ${correctPlacements}/3 Correct
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item ${correctPlacements >= 1 ? 'correct' : 'incorrect'}">Crohn's: Inflammatory (transmural inflammation)</li>
+                                    <li class="feedback-item ${correctPlacements >= 2 ? 'correct' : 'incorrect'}">IBS: Functional (normal anatomy, abnormal motility)</li>
+                                    <li class="feedback-item ${correctPlacements >= 3 ? 'correct' : 'incorrect'}">C. diff: Infectious (toxin-mediated colitis)</li>
+                                    <li class="feedback-item tip"><strong>Clinical Pearl:</strong> Always test for C. diff in hospitalized patients with new diarrhea</li>
+                                </ul>
+                            `;
+                            
+                            status.textContent = 'Completed';
+                            status.style.color = '#00b894';
+                            document.querySelector('#activity-1').classList.add('completed');
+                            
+                            updateProgressSummary();
+                        }
+                    });
+                });
+            }
+
+            // Activity 2: Hepatitis Comparison Matrix
+            function initActivity2() {
+                const typeTags = document.querySelectorAll('#activity-2 .type-tag');
+                const routeZones = document.querySelectorAll('#activity-2 .route-zone');
+                const feedback = document.getElementById('feedback-2');
+                const status = document.querySelector('#activity-2 .activity-status');
+                
+                // Correct matches: Each hepatitis type can go to specific routes
+                const correctMatches = {
+                    'A': ['fecal-oral'],           // Hep A only goes to fecal-oral
+                    'B': ['blood-sexual', 'vertical'], // Hep B goes to blood-sexual AND vertical
+                    'C': ['blood']                 // Hep C only goes to blood
+                };
+                
+                const tagPlacements = {}; // Track where each tag is placed
+                let placedTags = 0;
+                let correctPlacements = 0;
+
+                typeTags.forEach(tag => {
+                    tag.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            type: this.dataset.type,
+                            html: this.outerHTML
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    tag.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                routeZones.forEach(zone => {
+                    zone.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('active');
+                    });
+
+                    zone.addEventListener('dragleave', function() {
+                        this.classList.remove('active');
+                    });
+
+                    zone.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('active');
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const hepatitisType = data.type;
+                        const route = this.dataset.route;
+                        const dropArea = this.querySelector('.drop-area');
+                        
+                        // Check if this hepatitis type is already placed somewhere
+                        if (tagPlacements[hepatitisType]) {
+                            // Remove from previous placement
+                            const prevZone = document.querySelector(`#activity-2 .route-zone[data-route="${tagPlacements[hepatitisType]}"]`);
+                            if (prevZone) {
+                                prevZone.querySelector('.drop-area').innerHTML = '';
+                                prevZone.classList.remove('correct', 'incorrect');
+                            }
+                        }
+                        
+                        // Clear drop area if needed
+                        dropArea.innerHTML = '';
+                        
+                        // Add hepatitis tag to drop area
+                        const tagDiv = document.createElement('div');
+                        tagDiv.innerHTML = data.html;
+                        const newTag = tagDiv.firstChild;
+                        newTag.classList.remove('dragging');
+                        newTag.classList.add('hepatitis-tag-in-zone');
+                        newTag.style.cursor = 'default';
+                        newTag.draggable = false;
+                        dropArea.appendChild(newTag);
+                        dropArea.classList.add('filled');
+                        
+                        // Check if placement is correct
+                        const isCorrect = correctMatches[hepatitisType] && correctMatches[hepatitisType].includes(route);
+                        
+                        // Mark zone
+                        if (isCorrect) {
+                            this.classList.add('correct');
+                            this.classList.remove('incorrect');
+                            correctPlacements++;
+                        } else {
+                            this.classList.add('incorrect');
+                            this.classList.remove('correct');
+                        }
+                        
+                        // Track placement
+                        tagPlacements[hepatitisType] = route;
+                        
+                        // Mark original tag as placed
+                        const originalTag = document.querySelector(`#activity-2 .type-tag[data-type="${hepatitisType}"]`);
+                        if (originalTag && !originalTag.classList.contains('placed')) {
+                            originalTag.classList.add('placed');
+                            placedTags++;
+                        }
+                        
+                        // Update feedback
+                        const totalPossibleMatches = 4; // A to fecal-oral, B to blood-sexual, B to vertical, C to blood
+                        
+                        feedback.innerHTML = `
+                            <div class="feedback-title">
+                                <span style="color: ${isCorrect ? 'var(--color-success)' : 'var(--color-error)'};">${isCorrect ? '✓' : '✗'}</span>
+                                ${isCorrect ? 'Correct!' : 'Incorrect'} - Hep ${hepatitisType} to ${route.replace('-', ' ')}
+                            </div>
+                            <ul class="feedback-list">
+                                <li class="feedback-item ${isCorrect ? 'correct' : 'incorrect'}">
+                                    Hep ${hepatitisType}: ${route === 'fecal-oral' ? 'Contaminated food/water' :
+                                                         route === 'blood-sexual' ? 'Blood/sexual contact' :
+                                                         route === 'blood' ? 'Blood transmission' :
+                                                         'Vertical (mother-child)'}
+                                </li>
+                                <li class="feedback-item tip">Progress: ${correctPlacements}/${totalPossibleMatches} correct matches</li>
+                                ${placedTags < 3 ? '<li class="feedback-item tip">Continue dragging hepatitis types to transmission routes</li>' : ''}
+                            </ul>
+                        `;
+                        
+                        // Check if all types are placed
+                        if (placedTags === 3) {
+                            // Wait a moment then check all matches
+                            setTimeout(() => {
+                                let matchCount = 0;
+                                
+                                // Check each hepatitis type placement
+                                Object.keys(tagPlacements).forEach(type => {
+                                    const placedRoute = tagPlacements[type];
+                                    if (correctMatches[type] && correctMatches[type].includes(placedRoute)) {
+                                        matchCount++;
+                                    }
+                                });
+                                
+                                // Calculate final score (out of 4 possible matches)
+                                const finalCorrect = matchCount;
+                                
+                                state.activities[2].completed = true;
+                                state.activities[2].correct = finalCorrect;
+                                state.activities[2].score = Math.round((finalCorrect / totalPossibleMatches) * 100);
+                                
+                                // Show answer key
+                                document.querySelector('#activity-2 .answer-key').style.display = 'block';
+                                
+                                // Update feedback
+                                feedback.innerHTML = `
+                                    <div class="feedback-title">
+                                        <span style="color: var(--color-success);">✓</span>
+                                        Hepatitis Matching Complete! ${finalCorrect}/${totalPossibleMatches} Correct
+                                    </div>
+                                    <ul class="feedback-list">
+                                        <li class="feedback-item ${correctMatches['A'].includes(tagPlacements['A']) ? 'correct' : 'incorrect'}">Hep A: Fecal-oral only (contaminated food/water)</li>
+                                        <li class="feedback-item ${tagPlacements['B'] && correctMatches['B'].includes(tagPlacements['B']) ? 'correct' : 'incorrect'}">Hep B: ${tagPlacements['B'] === 'blood-sexual' ? 'Blood/Sexual' : 'Vertical'} transmission</li>
+                                        <li class="feedback-item ${correctMatches['C'].includes(tagPlacements['C']) ? 'correct' : 'incorrect'}">Hep C: Blood transmission primarily</li>
+                                        <li class="feedback-item tip"><strong>Note:</strong> Hep B can be placed in BOTH Blood/Sexual AND Vertical routes</li>
+                                        <li class="feedback-item tip"><strong>Clinical Points:</strong> Hep A & B have vaccines, Hep C has curative treatments</li>
+                                    </ul>
+                                `;
+                                
+                                status.textContent = 'Completed';
+                                status.style.color = '#00b894';
+                                document.querySelector('#activity-2').classList.add('completed');
+                                
+                                updateProgressSummary();
+                            }, 500);
+                        }
+                    });
+                });
+            }
+
+            // Activity 3: Patient Education Scenarios - IMPROVED VERSION
+            function initActivity3() {
+                const educationOptions = document.querySelectorAll('#activity-3 .education-option');
+                const prevBtn = document.getElementById('prev-scenario');
+                const nextBtn = document.getElementById('next-scenario');
+                const scenarioNumber = document.getElementById('scenario-number');
+                const feedback = document.getElementById('feedback-3');
+                const status = document.querySelector('#activity-3 .activity-status');
+                
+                // Correct answers for each scenario
+                const correctAnswers = {
+                    1: '1', // Comprehensive IBD Management
+                    2: '1', // Dietary Management Plan
+                    3: '1'  // Post-Procedure Care
+                };
+                
+                // Scenario titles and clinical tips
+                const scenarioInfo = {
+                    1: {
+                        title: "Teenager with IBD",
+                        clinicalTip: "Teenagers need comprehensive education about their chronic condition, addressing self-esteem and involving parents appropriately."
+                    },
+                    2: {
+                        title: "Elderly with Diverticulosis", 
+                        clinicalTip: "Elderly patients need clear dietary instructions (high-fiber), fluid recommendations, and warning signs of diverticulitis."
+                    },
+                    3: {
+                        title: "Post-Colonoscopy Patient",
+                        clinicalTip: "Post-procedure patients need specific recovery instructions, activity restrictions, and clear follow-up plans."
+                    }
+                };
+                
+                // Update scenario display
+                function updateScenario() {
+                    // Hide all scenarios
+                    document.querySelectorAll('#activity-3 .disorder-scenario').forEach(container => {
+                        container.style.display = 'none';
+                    });
+                    
+                    // Show current scenario
+                    const currentContainer = document.getElementById(`scenario-${state.currentScenario}`);
+                    if (currentContainer) {
+                        currentContainer.style.display = 'block';
+                    }
+                    
+                    // Update scenario number
+                    scenarioNumber.textContent = state.currentScenario;
+                    
+                    // Update navigation buttons
+                    prevBtn.disabled = state.currentScenario === 1;
+                    nextBtn.disabled = state.currentScenario === 3 || !state.scenarioAnswers[state.currentScenario];
+                    
+                    // Clear previous selections for this scenario
+                    educationOptions.forEach(option => {
+                        if (option.dataset.scenario === state.currentScenario.toString()) {
+                            option.classList.remove('selected', 'wrong');
+                        }
+                    });
+                    
+                    // Update feedback based on current scenario
+                    const info = scenarioInfo[state.currentScenario];
+                    feedback.innerHTML = `
+                        <div class="feedback-title">
+                            <span>👨‍👩‍👧‍👦</span> Patient Education: ${info.title}
+                        </div>
+                        <ul class="feedback-list">
+                            <li class="feedback-item tip"><strong>Scenario:</strong> ${info.title}</li>
+                            <li class="feedback-item tip"><strong>Clinical Focus:</strong> ${info.clinicalTip}</li>
+                            ${state.scenarioAnswers[state.currentScenario] ? 
+                                `<li class="feedback-item correct">✓ You've answered this scenario. ${state.currentScenario < 3 ? 'Proceed to next scenario.' : 'All scenarios completed!'}</li>` : 
+                                `<li class="feedback-item tip"><strong>Task:</strong> Select the most appropriate patient education approach</li>`}
+                        </ul>
+                    `;
+                }
+
+                // Initialize first scenario
+                updateScenario();
+
+                // Education option clicks
+                educationOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        if (state.activities[3].completed) return;
+                        
+                        const scenarioId = parseInt(this.dataset.scenario);
+                        const optionId = this.dataset.option;
+                        
+                        // Only process if this is the current scenario
+                        if (scenarioId !== state.currentScenario) return;
+                        
+                        // Clear other selections for this scenario
+                        educationOptions.forEach(opt => {
+                            if (opt.dataset.scenario === scenarioId.toString()) {
+                                opt.classList.remove('selected', 'wrong');
+                            }
+                        });
+                        
+                        // Mark selected option
+                        this.classList.add('selected');
+                        
+                        // Check if correct
+                        const isCorrect = optionId === correctAnswers[scenarioId];
+                        const info = scenarioInfo[scenarioId];
+                        
+                        if (isCorrect) {
+                            // Store answer
+                            state.scenarioAnswers[scenarioId] = true;
+                            
+                            // Update feedback
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: var(--color-success);">✓</span>
+                                    Correct! ${info.title}
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item correct">${scenarioId === 1 ? 'Comprehensive education is essential for teenage IBD patients - address medication adherence, nutrition, and psychosocial aspects.' : 
+                                                                      scenarioId === 2 ? 'Dietary management is key for diverticulosis prevention - high-fiber diet, adequate fluids, and regular exercise.' :
+                                                                      'Clear post-procedure instructions prevent complications - activity restrictions, diet progression, and warning signs.'}</li>
+                                    <li class="feedback-item tip">${state.currentScenario < 3 ? 'Proceed to next scenario using the navigation buttons.' : 'All scenarios completed!'}</li>
+                                </ul>
+                            `;
+                            
+                            // Enable next button
+                            nextBtn.disabled = false;
+                            
+                            // If this is the last scenario, check completion
+                            if (scenarioId === 3) {
+                                const allAnswered = [1, 2, 3].every(id => state.scenarioAnswers[id]);
+                                if (allAnswered) {
+                                    state.activities[3].completed = true;
+                                    state.activities[3].correct = 3;
+                                    state.activities[3].score = 100;
+                                    status.textContent = 'Completed';
+                                    status.style.color = '#00b894';
+                                    document.querySelector('#activity-3').classList.add('completed');
+                                    updateProgressSummary();
+                                }
+                            }
+                        } else {
+                            this.classList.add('wrong');
+                            
+                            // Update feedback
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: var(--color-error);">✗</span>
+                                    Incorrect - Try Again
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item incorrect">${scenarioId === 1 ? 'Teenagers need comprehensive education, not minimal information or alternative medicine focus.' : 
+                                                                        scenarioId === 2 ? 'High-fiber diet helps prevent diverticulitis flare-ups - avoiding fiber can worsen constipation.' :
+                                                                        'Post-procedure patients need specific recovery instructions - resuming normal activities too soon can cause complications.'}</li>
+                                    <li class="feedback-item tip"><strong>Try selecting:</strong> ${scenarioId === 1 ? '"Comprehensive IBD Management"' : 
+                                                                                                  scenarioId === 2 ? '"Dietary Management Plan"' : 
+                                                                                                  '"Post-Procedure Care"'}</li>
+                                </ul>
+                            `;
+                        }
+                    });
+                });
+
+                // Navigation buttons
+                prevBtn.addEventListener('click', function() {
+                    if (state.currentScenario > 1) {
+                        state.currentScenario--;
+                        updateScenario();
+                    }
+                });
+
+                nextBtn.addEventListener('click', function() {
+                    if (state.currentScenario < 3 && state.scenarioAnswers[state.currentScenario]) {
+                        state.currentScenario++;
+                        updateScenario();
+                    }
+                });
+            }
+
+            // Activity 4: Diagnostic Procedure Sequence
+            function initActivity4() {
+                const procedureSteps = document.querySelectorAll('#activity-4 .procedure-step');
+                const feedback = document.getElementById('feedback-4');
+                const status = document.querySelector('#activity-4 .activity-status');
+                
+                let currentStep = 0;
+                const correctOrder = [1, 2, 3, 4, 5];
+
+                procedureSteps.forEach(step => {
+                    step.addEventListener('click', function() {
+                        if (state.activities[4].completed) return;
+
+                        const stepNum = parseInt(this.dataset.step);
+                        
+                        // Check if clicked in correct order
+                        if (stepNum === correctOrder[currentStep]) {
+                            this.classList.add('active');
+                            currentStep++;
+                            
+                            // Update feedback
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: var(--color-success);">✓</span>
+                                    Step ${stepNum} Complete!
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item correct">${stepNum === 1 ? 'Stabilization first - ABCs always priority' :
+                                                                      stepNum === 2 ? 'History helps determine bleeding severity' :
+                                                                      stepNum === 3 ? 'Labs provide baseline and prep for transfusion' :
+                                                                      stepNum === 4 ? 'NG lavage confirms upper GI source' :
+                                                                      'EGD is diagnostic & therapeutic within 24h'}</li>
+                                    <li class="feedback-item tip">${currentStep < 5 ? `Next: Click step ${currentStep + 1}` : 'Sequence complete!'}</li>
+                                </ul>
+                            `;
+                            
+                            // Check if sequence complete
+                            if (currentStep === 5) {
+                                state.activities[4].completed = true;
+                                state.activities[4].correct = 5;
+                                state.activities[4].score = 100;
+                                
+                                // Update feedback
+                                feedback.innerHTML = `
+                                    <div class="feedback-title">
+                                        <span style="color: var(--color-success);">✓</span>
+                                        Procedure Sequence Complete! 5/5 Correct
+                                    </div>
+                                    <ul class="feedback-list">
+                                        <li class="feedback-item correct"><strong>Step 1:</strong> Stabilization - ABCs always first</li>
+                                        <li class="feedback-item correct"><strong>Step 2:</strong> History - Determine bleeding severity</li>
+                                        <li class="feedback-item correct"><strong>Step 3:</strong> Labs - Baseline and transfusion prep</li>
+                                        <li class="feedback-item correct"><strong>Step 4:</strong> NG lavage - Confirm upper GI source</li>
+                                        <li class="feedback-item correct"><strong>Step 5:</strong> EGD - Diagnostic & therapeutic within 24h</li>
+                                        <li class="feedback-item tip"><strong>Emergency:</strong> Call rapid response for HR >120, SBP <90, altered mental status</li>
+                                    </ul>
+                                `;
+                                
+                                status.textContent = 'Completed';
+                                status.style.color = '#00b894';
+                                document.querySelector('#activity-4').classList.add('completed');
+                                
+                                updateProgressSummary();
+                            }
+                        } else {
+                            // Wrong step clicked - show error
+                            feedback.innerHTML = `
+                                <div class="feedback-title">
+                                    <span style="color: var(--color-error);">✗</span>
+                                    Wrong Sequence
+                                </div>
+                                <ul class="feedback-list">
+                                    <li class="feedback-item incorrect">Step ${stepNum} is not next in sequence</li>
+                                    <li class="feedback-item tip">Correct order is: Stabilize → History → Labs → NG Lavage → EGD</li>
+                                    <li class="feedback-item tip">Click step ${currentStep + 1} next</li>
+                                </ul>
+                            `;
+                            
+                            // Shake the wrong step
+                            this.style.animation = 'shake 0.5s ease';
+                            setTimeout(() => {
+                                this.style.animation = '';
+                            }, 500);
+                        }
+                    });
+                });
+            }
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                Object.keys(state.activities).forEach(key => {
+                    state.activities[key] = {
+                        completed: false,
+                        correct: 0,
+                        total: parseInt(key) === 1 ? 3 : parseInt(key) === 2 ? 4 : parseInt(key) === 3 ? 3 : 5,
+                        score: 0
+                    };
+                });
+                
+                state.currentScenario = 1;
+                state.scenarioAnswers = {};
+                state.startedAt = new Date();
+
+                // Reset UI
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                });
+
+                // Reset Activity 1
+                document.querySelectorAll('#activity-1 .disorder-tag').forEach(tag => {
+                    tag.classList.remove('placed', 'dragging');
+                    tag.style.cursor = 'grab';
+                    tag.draggable = true;
+                    tag.style.opacity = '1';
+                });
+
+                document.querySelectorAll('#activity-1 .disorder-category').forEach(zone => {
+                    zone.classList.remove('correct-drop', 'incorrect-drop');
+                    zone.style.borderColor = '';
+                    zone.style.backgroundColor = '';
+                });
+
+                document.getElementById('feedback-1').innerHTML = `
+                    <div class="feedback-title">Diagnostic Reasoning</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip">Inflammatory bowel disease shows <strong>objective inflammation</strong> on colonoscopy/biopsy</li>
+                        <li class="feedback-item tip">IBS is a <strong>functional disorder</strong> with normal anatomy but abnormal motility</li>
+                        <li class="feedback-item tip">Infectious causes often have <strong>acute onset</strong> with fever and positive cultures</li>
+                    </ul>
+                `;
+
+                // Reset Activity 2
+                document.querySelectorAll('#activity-2 .type-tag').forEach(tag => {
+                    tag.classList.remove('placed', 'dragging');
+                    tag.style.cursor = 'grab';
+                    tag.draggable = true;
+                    tag.style.opacity = '1';
+                    tag.style.display = 'flex';
+                });
+
+                document.querySelectorAll('#activity-2 .route-zone').forEach(zone => {
+                    zone.classList.remove('correct', 'incorrect', 'active');
+                    zone.querySelector('.drop-area').innerHTML = '';
+                    zone.querySelector('.drop-area').classList.remove('filled');
+                });
+                
+                document.querySelector('#activity-2 .answer-key').style.display = 'none';
+                
+                document.getElementById('feedback-2').innerHTML = `
+                    <div class="feedback-title">Hepatitis Transmission Guide</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip"><strong>Hep A:</strong> Contaminated food/water, poor sanitation. Vaccine available.</li>
+                        <li class="feedback-item tip"><strong>Hep B:</strong> Blood, sexual contact, vertical transmission. Vaccine available.</li>
+                        <li class="feedback-item tip"><strong>Hep C:</strong> Primarily blood transmission, rarely sexual. No vaccine but curative treatments available.</li>
+                        <li class="feedback-item tip"><strong>Key Distinction:</strong> Hep A is self-limited, Hep B & C can become chronic.</li>
+                    </ul>
+                `;
+
+                // Reset Activity 3
+                document.querySelectorAll('#activity-3 .education-option').forEach(option => {
+                    option.classList.remove('selected', 'wrong');
+                });
+                
+                document.querySelectorAll('#activity-3 .disorder-scenario').forEach((container, index) => {
+                    container.style.display = index === 0 ? 'block' : 'none';
+                });
+                
+                state.currentScenario = 1;
+                document.getElementById('scenario-number').textContent = '1';
+                document.getElementById('prev-scenario').disabled = true;
+                document.getElementById('next-scenario').disabled = false;
+                
+                document.getElementById('feedback-3').innerHTML = `
+                    <div class="feedback-title">Patient Education: Teenager with IBD</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip"><strong>Scenario:</strong> Teenager with IBD</li>
+                        <li class="feedback-item tip"><strong>Clinical Focus:</strong> Teenagers need comprehensive education about their chronic condition, addressing self-esteem and involving parents appropriately.</li>
+                        <li class="feedback-item tip"><strong>Task:</strong> Select the most appropriate patient education approach</li>
+                    </ul>
+                `;
+
+                // Reset Activity 4
+                document.querySelectorAll('#activity-4 .procedure-step').forEach(step => {
+                    step.classList.remove('active');
+                    step.style.animation = '';
+                });
+                
+                currentStep = 0;
+                
+                document.getElementById('feedback-4').innerHTML = `
+                    <div class="feedback-title">Procedure Sequence Protocol</div>
+                    <ul class="feedback-list">
+                        <li class="feedback-item tip">Always stabilize before diagnostic procedures</li>
+                        <li class="feedback-item tip">Endoscopy is both diagnostic and therapeutic</li>
+                        <li class="feedback-item tip"><strong>NG lavage:</strong> Coffee-ground appearance suggests slowed bleeding</li>
+                        <li class="feedback-item tip"><strong>Red flags:</strong> Hypotension, tachycardia, Hb drop >2g/dL</li>
+                    </ul>
+                `;
+
+                // Reset results panel
+                resultsPanel.classList.remove('show');
+
+                // Update progress
+                updateProgressSummary();
+                updateTimer();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 with perfect score
+                if (!state.activities[1].completed) {
+                    const feedback = document.getElementById('feedback-1');
+                    const status = document.querySelector('#activity-1 .activity-status');
+                    
+                    document.querySelectorAll('#activity-1 .disorder-tag').forEach(tag => {
+                        const category = tag.dataset.category;
+                        const zone = document.querySelector(`#activity-1 .disorder-category[data-category="${category}"]`);
+                        if (zone && !tag.classList.contains('placed')) {
+                            tag.classList.add('placed');
+                            tag.style.cursor = 'default';
+                            tag.draggable = false;
+                            zone.classList.add('correct-drop');
+                        }
+                    });
+                    
+                    state.activities[1].completed = true;
+                    state.activities[1].correct = 3;
+                    state.activities[1].score = 100;
+                    
+                    feedback.innerHTML = `
+                        <div class="feedback-title">
+                            <span style="color: var(--color-success);">✓</span>
+                            Classification Complete! 3/3 Correct
+                        </div>
+                        <ul class="feedback-list">
+                            <li class="feedback-item correct">Crohn's: Inflammatory (transmural inflammation)</li>
+                            <li class="feedback-item correct">IBS: Functional (normal anatomy, abnormal motility)</li>
+                            <li class="feedback-item correct">C. diff: Infectious (toxin-mediated colitis)</li>
+                            <li class="feedback-item tip"><strong>Clinical Pearl:</strong> Always test for C. diff in hospitalized patients with new diarrhea</li>
+                        </ul>
+                    `;
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                }
+
+                // Complete Activity 2 with perfect score
+                if (!state.activities[2].completed) {
+                    const feedback = document.getElementById('feedback-2');
+                    const status = document.querySelector('#activity-2 .activity-status');
+                    
+                    // Correct matches for perfect score
+                    const perfectMatches = {
+                        'A': 'fecal-oral',
+                        'B': 'blood-sexual', // Can also be 'vertical' for full credit
+                        'C': 'blood'
+                    };
+                    
+                    // Place Hep A
+                    const hepATag = document.querySelector('#activity-2 .type-tag[data-type="A"]');
+                    const fecalOralZone = document.getElementById('fecal-oral-zone');
+                    if (hepATag && fecalOralZone) {
+                        hepATag.classList.add('placed');
+                        fecalOralZone.classList.add('correct');
+                        fecalOralZone.querySelector('.drop-area').innerHTML = '<div class="hepatitis-tag-in-zone">🅰️ Hepatitis A</div>';
+                        fecalOralZone.querySelector('.drop-area').classList.add('filled');
+                    }
+                    
+                    // Place Hep B
+                    const hepBTag = document.querySelector('#activity-2 .type-tag[data-type="B"]');
+                    const bloodSexualZone = document.getElementById('blood-sexual-zone');
+                    if (hepBTag && bloodSexualZone) {
+                        hepBTag.classList.add('placed');
+                        bloodSexualZone.classList.add('correct');
+                        bloodSexualZone.querySelector('.drop-area').innerHTML = '<div class="hepatitis-tag-in-zone">🅱️ Hepatitis B</div>';
+                        bloodSexualZone.querySelector('.drop-area').classList.add('filled');
+                    }
+                    
+                    // Place Hep C
+                    const hepCTag = document.querySelector('#activity-2 .type-tag[data-type="C"]');
+                    const bloodZone = document.getElementById('blood-zone');
+                    if (hepCTag && bloodZone) {
+                        hepCTag.classList.add('placed');
+                        bloodZone.classList.add('correct');
+                        bloodZone.querySelector('.drop-area').innerHTML = '<div class="hepatitis-tag-in-zone">©️ Hepatitis C</div>';
+                        bloodZone.querySelector('.drop-area').classList.add('filled');
+                    }
+                    
+                    state.activities[2].completed = true;
+                    state.activities[2].correct = 3; // 3 out of 4 possible matches (Hep B can go to 2 routes)
+                    state.activities[2].score = 100;
+                    
+                    // Show answer key
+                    document.querySelector('#activity-2 .answer-key').style.display = 'block';
+                    
+                    feedback.innerHTML = `
+                        <div class="feedback-title">
+                            <span style="color: var(--color-success);">✓</span>
+                            Hepatitis Matching Complete! 3/4 Correct
+                        </div>
+                        <ul class="feedback-list">
+                            <li class="feedback-item correct">Hep A: Fecal-oral only (contaminated food/water)</li>
+                            <li class="feedback-item correct">Hep B: Blood/Sexual transmission (can also be Vertical)</li>
+                            <li class="feedback-item correct">Hep C: Blood transmission primarily</li>
+                            <li class="feedback-item tip"><strong>Note:</strong> Hep B can be placed in BOTH Blood/Sexual AND Vertical routes</li>
+                            <li class="feedback-item tip"><strong>Clinical Points:</strong> Hep A & B have vaccines, Hep C has curative treatments</li>
+                        </ul>
+                    `;
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                }
+
+                // Complete Activity 3 with perfect score
+                if (!state.activities[3].completed) {
+                    const feedback = document.getElementById('feedback-3');
+                    const status = document.querySelector('#activity-3 .activity-status');
+                    
+                    // Select correct options for all scenarios
+                    for (let i = 1; i <= 3; i++) {
+                        const correctOption = document.querySelector(`#activity-3 .education-option[data-scenario="${i}"][data-option="1"]`);
+                        if (correctOption) {
+                            correctOption.classList.add('selected');
+                            state.scenarioAnswers[i] = true;
+                        }
+                    }
+                    
+                    state.activities[3].completed = true;
+                    state.activities[3].correct = 3;
+                    state.activities[3].score = 100;
+                    
+                    feedback.innerHTML = `
+                        <div class="feedback-title">
+                            <span style="color: var(--color-success);">✓</span>
+                            All Patient Education Scenarios Complete! 3/3 Correct
+                        </div>
+                        <ul class="feedback-list">
+                            <li class="feedback-item correct"><strong>Scenario 1:</strong> Comprehensive IBD management for teenagers</li>
+                            <li class="feedback-item correct"><strong>Scenario 2:</strong> Dietary management for elderly diverticulosis</li>
+                            <li class="feedback-item correct"><strong>Scenario 3:</strong> Post-procedure care instructions</li>
+                            <li class="feedback-item tip"><strong>Key Principle:</strong> Tailor education to patient age, literacy, and specific needs</li>
+                        </ul>
+                    `;
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-3').classList.add('completed');
+                }
+
+                // Complete Activity 4 with perfect score
+                if (!state.activities[4].completed) {
+                    const feedback = document.getElementById('feedback-4');
+                    const status = document.querySelector('#activity-4 .activity-status');
+                    
+                    document.querySelectorAll('#activity-4 .procedure-step').forEach(step => {
+                        step.classList.add('active');
+                    });
+                    
+                    state.activities[4].completed = true;
+                    state.activities[4].correct = 5;
+                    state.activities[4].score = 100;
+                    
+                    feedback.innerHTML = `
+                        <div class="feedback-title">
+                            <span style="color: var(--color-success);">✓</span>
+                            Procedure Sequence Complete! 5/5 Correct
+                        </div>
+                        <ul class="feedback-list">
+                            <li class="feedback-item correct"><strong>Step 1:</strong> Stabilization - ABCs always first</li>
+                            <li class="feedback-item correct"><strong>Step 2:</strong> History - Determine bleeding severity</li>
+                            <li class="feedback-item correct"><strong>Step 3:</strong> Labs - Baseline and transfusion prep</li>
+                            <li class="feedback-item correct"><strong>Step 4:</strong> NG lavage - Confirm upper GI source</li>
+                            <li class="feedback-item correct"><strong>Step 5:</strong> EGD - Diagnostic & therapeutic within 24h</li>
+                            <li class="feedback-item tip"><strong>Emergency:</strong> Call rapid response for HR >120, SBP <90, altered mental status</li>
+                        </ul>
+                    `;
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-4').classList.add('completed');
+                }
+
+                updateProgressSummary();
+            }
+
+            // View Final Results
+            function viewFinalResults() {
+                let totalScore = 0;
+                let activityCount = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) {
+                        totalScore += activity.score;
+                        activityCount++;
+                    }
+                });
+
+                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+                finalScore.textContent = `${averageScore}%`;
+                scoreFill.style.setProperty('--target-width', `${averageScore}%`);
+                scoreFill.style.width = `${averageScore}%`;
+
+                resultsPanel.classList.add('show');
+                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Initialize all activities
+            initActivity1();
+            initActivity2();
+            initActivity3();
+            initActivity4();
+
+            // Event listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkBtn.addEventListener('click', checkAllAnswers);
+            resultsBtn.addEventListener('click', viewFinalResults);
+
+            // Initial progress update
+            updateProgressSummary();
+            updateTimer();
+        });
+    </script>
+</body>
+</html>
