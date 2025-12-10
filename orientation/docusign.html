@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx Institute of Healthcare - Enrollment Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-info: #0984e3;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #ffffff 0%, #f1ecff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .institute-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .institute-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.1);
+            border: 1px solid var(--color-primary-soft);
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .page-title {
+            font-size: clamp(2.5rem, 4vw, 3rem);
+            color: var(--color-dark);
+            margin-bottom: 12px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+            line-height: 1.1;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        /* Enrollment Card */
+        .enrollment-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+            transition: all 0.3s ease;
+        }
+
+        .enrollment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        .card-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-muted);
+            margin-top: 8px;
+        }
+
+        /* Timeline */
+        .timeline {
+            background: rgba(175, 75, 239, 0.03);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin: 32px 0;
+            border: 1px solid rgba(175, 75, 239, 0.1);
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--color-success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .timeline-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .timeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step:hover {
+            transform: translateX(4px);
+            border-color: var(--color-primary-soft);
+            box-shadow: var(--shadow-card);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .step-content h4 {
+            font-size: 1.2rem;
+            color: var(--color-dark);
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            font-size: 1rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+        }
+
+        /* Key Information */
+        .key-info {
+            background: linear-gradient(135deg, rgba(131, 128, 240, 0.1), rgba(175, 75, 239, 0.1));
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin: 32px 0;
+            border: 1px solid rgba(131, 128, 240, 0.2);
+        }
+
+        .key-info-title {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: white;
+            transform: translateX(4px);
+        }
+
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(131, 128, 240, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-content h4 {
+            font-size: 1.1rem;
+            color: var(--color-dark);
+            margin-bottom: 4px;
+        }
+
+        .info-content p {
+            font-size: 0.95rem;
+            color: var(--color-muted);
+            line-height: 1.5;
+        }
+
+        /* Important Note */
+        .important-note {
+            background: rgba(253, 203, 110, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin: 32px 0;
+            border: 1px solid rgba(253, 203, 110, 0.2);
+            text-align: center;
+        }
+
+        .important-note-title {
+            font-size: 1.3rem;
+            color: var(--color-warning);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .important-note p {
+            font-size: 1rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(12, 10, 24, 0.08);
+            text-align: center;
+            color: var(--color-muted);
+            font-size: 0.85rem;
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: var(--color-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            
+            .enrollment-card {
+                padding: 24px;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .timeline-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                align-self: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .institute-name {
+                font-size: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+            
+            .timeline, .key-info, .important-note {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" alt="AlliedRx Logo" class="logo">
+                <div>
+                    <div class="institute-name">AlliedRx Institute of Healthcare</div>
+                    <div class="institute-subtitle">Clinical Medical Assistant Program</div>
+                </div>
+            </div>
+            <div class="status-badge">Enrollment Portal</div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <h1 class="page-title">Enrollment Agreement Document</h1>
+            <p class="page-subtitle">
+                You can expect to receive the enrollment agreement via email for signature. 
+                Please allow a timeframe of 24-48 business hours for the documents to arrive.
+            </p>
+
+            <!-- Enrollment Card -->
+            <section class="enrollment-card">
+                <div class="card-header">
+                    <div class="card-icon">📋</div>
+                    <div>
+                        <h2 class="card-title">Complete Your Enrollment Forms</h2>
+                        <p class="card-subtitle">Follow these steps to finalize your enrollment</p>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="timeline">
+                    <div class="timeline-header">
+                        <div class="timeline-icon">⌛</div>
+                        <h3 class="timeline-title">Document Delivery Timeline</h3>
+                    </div>
+                    
+                    <div class="timeline-steps">
+                        <div class="timeline-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Email Delivery</h4>
+                                <p>Your enrollment agreement will be sent to your email within <strong>24-48 business hours</strong>. Check both your inbox and spam folder.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Review Documents</h4>
+                                <p>Carefully review all terms and conditions in the enrollment agreement. Ensure all personal information is accurate.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Complete Registration Requirements</h4>
+                                <p>After signing your enrollment agreement, complete any remaining registration requirements to finalize your enrollment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Information -->
+                <div class="key-info">
+                    <h3 class="key-info-title">ℹ️ Important Information</h3>
+                    
+                    <div class="info-items">
+                        <div class="info-item">
+                            <div class="info-icon">📧</div>
+                            <div class="info-content">
+                                <h4>Check Your Email</h4>
+                                <p>Monitor your email for the enrollment agreement. Documents are typically sent from our enrollment system.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon">⏱️</div>
+                            <div class="info-content">
+                                <h4>Timeframe</h4>
+                                <p>Allow <strong>24-48 business hours</strong> for document delivery. Business hours are Monday-Friday, 9AM-5PM EST.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon">✅</div>
+                            <div class="info-content">
+                                <h4>Next Steps</h4>
+                                <p>Once you receive and sign your enrollment agreement, you'll receive further instructions on completing your registration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Important Note -->
+                <div class="important-note">
+                    <h3 class="important-note-title">
+                        <span>⚠️</span>
+                        <span>Important Note</span>
+                    </h3>
+                    <p>
+                        <strong>Kindly ensure that you complete the forms as soon as possible</strong> to secure your spot in the program and proceed with your registration.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 AlliedRx Institute of Healthcare. All rights reserved.</p>
+            <p>Accredited by the National Healthcareer Association (NHA)</p>
+            
+            <div class="contact-info">
+                <a href="mailto:enrollment@alliedrxinstitute.com" class="contact-item">
+                    <span>📧</span>
+                    <span>enrollment@alliedrxinstitute.com</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animations to timeline steps
+            const timelineSteps = document.querySelectorAll('.timeline-step');
+            timelineSteps.forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    step.style.transition = 'all 0.5s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateY(0)';
+                }, 300 + (index * 200));
+            });
+
+            // Add animations to info items
+            const infoItems = document.querySelectorAll('.info-item');
+            infoItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 500 + (index * 100));
+            });
+
+            // Add floating animation to logo
+            const logo = document.querySelector('.logo');
+            setInterval(() => {
+                logo.style.animation = 'none';
+                setTimeout(() => {
+                    logo.style.animation = 'float 3s ease-in-out infinite';
+                }, 10);
+            }, 9000);
+        });
+    </script>
+</body>
+</html>
