@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- Add Your Course</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 60px rgba(175, 75, 239, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 32px 40px 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 20px 16px 30px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(231, 112, 85, 0.1);
+            font-size: 0.76rem;
+            color: var(--color-error);
+            white-space: normal;
+            animation: pulse 2s infinite;
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0%, 100% { background-color: rgba(231, 112, 85, 0.1); }
+            50% { background-color: rgba(231, 112, 85, 0.2); }
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--color-muted);
+            max-width: 100%;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Main content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        .info-card {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: 18px;
+            padding: 22px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--color-primary-soft);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            font-size: 0.92rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .card-content strong {
+            color: var(--color-primary);
+        }
+
+        .card-content ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .card-content li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .card-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        /* Call to action section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.05), rgba(131, 128, 240, 0.05));
+            border-radius: 18px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid rgba(175, 75, 239, 0.15);
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+
+        .cta-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .cta-subtitle {
+            font-size: 0.95rem;
+            color: var(--color-muted);
+            margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 999px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(175, 75, 239, 0.3);
+            margin-top: 10px;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(175, 75, 239, 0.4);
+        }
+
+        .action-button:active {
+            transform: translateY(-1px);
+        }
+
+        .button-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Benefits section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .benefit-card {
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(175, 75, 239, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary-soft);
+            background: rgba(175, 75, 239, 0.08);
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .benefit-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .benefit-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Warning card */
+        .warning-card {
+            background: rgba(231, 112, 85, 0.05);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid rgba(231, 112, 85, 0.2);
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            animation: fadeInUp 0.6s ease-out 0.7s both;
+        }
+
+        .warning-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: rgba(231, 112, 85, 0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--color-error);
+            flex-shrink: 0;
+        }
+
+        .warning-content {
+            flex: 1;
+        }
+
+        .warning-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 6px;
+        }
+
+        .warning-text {
+            font-size: 0.86rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(12, 10, 24, 0.08);
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--color-muted);
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+
+        .footer-note a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="course-add-heading">
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Student Portal • Course Management</span>
+                    <div class="priority-badge">
+                        <span>⚠️ Priority Action Required</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Student Portal</span>
+        </header>
+
+        <h1 id="course-add-heading">Timely Course Addition</h1>
+        
+        <p class="subtitle">
+            As a student, adding your chosen courses to your student portal in a timely manner is crucial. 
+            This step streamlines your enrollment process and ensures immediate access to your learning materials.
+        </p>
+
+        <div class="content-grid">
+            <div class="info-card">
+                <div class="card-title">
+                    <div class="card-icon">🚀</div>
+                    <span>Immediate Benefits</span>
+                </div>
+                <div class="card-content">
+                    <p>Adding your course promptly ensures you:</p>
+                    <ul>
+                        <li>Secure your seat in the desired program</li>
+                        <li>Access course materials immediately</li>
+                        <li>Begin assignments on schedule</li>
+                        <li>Join your class cohort from day one</li>
+                        <li>Connect with instructors and peers</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="card-title">
+                    <div class="card-icon">✅</div>
+                    <span>Enrollment Process</span>
+                </div>
+                <div class="card-content">
+                    <p>Completing your course addition:</p>
+                    <ul>
+                        <li>Confirms your program selection</li>
+                        <li>Activates your student account</li>
+                        <li>Grants access to the learning platform</li>
+                        <li>Starts your course timeline</li>
+                        <li>Ensures technical support availability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🎯</div>
+                <div class="benefit-title">Start on Schedule</div>
+                <div class="benefit-text">Begin your coursework aligned with your cohort's timeline</div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">📚</div>
+                <div class="benefit-title">Access Materials</div>
+                <div class="benefit-text">Immediate access to all textbooks, videos, and resources</div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">👥</div>
+                <div class="benefit-title">Join Community</div>
+                <div class="benefit-text">Connect with classmates and instructors from day one</div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <div class="benefit-title">Avoid Delays</div>
+                <div class="benefit-text">Prevent scheduling conflicts and start without interruption</div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Add Your Course Now</h2>
+            <p class="cta-subtitle">
+                Click the button below to access the AlliedRx Academy portal and add your selected course to your student account. 
+                This simple step takes less than 5 minutes but ensures a smooth start to your educational journey.
+            </p>
+            
+            <a href="https://academy.alliedrxtraining.com/courses" class="action-button" target="_blank">
+                <span class="button-icon">🚀</span>
+                <span>Go to Course Portal</span>
+            </a>
+            
+            <p style="font-size: 0.85rem; color: var(--color-muted); margin-top: 16px;">
+                You will be redirected to the secure AlliedRx Academy platform
+            </p>
+        </div>
+
+        <div class="warning-card">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-content">
+                <div class="warning-title">Important Reminder</div>
+                <div class="warning-text">
+                    <strong>Course availability is limited.</strong> Delaying course addition may result in:
+                    <br>• Missing preferred start dates
+                    <br>• Limited seating in popular programs  
+                    <br>• Delayed access to learning materials
+                    <br>• Falling behind your cohort schedule
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>
+                Need assistance? Contact Student Services at 
+                <a href="mailto:enrollmentt@alliedrxtraining.com">support@alliedrxtraining.com</a> 
+            
+            </p>
+            <p style="margin-top: 8px;">
+                © 2023 AlliedRx Institute of Healthcare. All rights reserved.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to info cards
+            const infoCards = document.querySelectorAll('.info-card');
+            infoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.card-icon');
+                    icon.style.transform = 'scale(1.1)';
+                    icon.style.background = 'rgba(175, 75, 239, 0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.card-icon');
+                    icon.style.transform = 'scale(1)';
+                    icon.style.background = 'rgba(175, 75, 239, 0.1)';
+                });
+            });
+
+            // Add hover effects to benefit cards
+            const benefitCards = document.querySelectorAll('.benefit-card');
+            benefitCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.benefit-icon');
+                    icon.style.transform = 'scale(1.2)';
+                    icon.style.color = 'var(--color-primary)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.benefit-icon');
+                    icon.style.transform = 'scale(1)';
+                    icon.style.color = '';
+                });
+            });
+
+            // Add click animation to action button
+            const actionButton = document.querySelector('.action-button');
+            actionButton.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+
+            // Add page load animation
+            const page = document.querySelector('.page');
+            page.style.opacity = '0';
+            page.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                page.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                page.style.opacity = '1';
+                page.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Animate benefit cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all benefit cards
+            benefitCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
