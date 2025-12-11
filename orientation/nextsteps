@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal Orientation - AlliedRx Healthcare Training</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d9b8ff;
+            --color-accent: #8380f0;
+            --color-bg: #f7f5fb;
+            --color-text: #1e2030;
+            --color-muted: #727089;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 32px 36px 36px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 22px 20px 26px 20px;
+                border-radius: 20px;
+            }
+        }
+
+        /* Header / branding */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .course-name {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.1);
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .week-label-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: #00b894;
+            flex-shrink: 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        h1 {
+            font-size: clamp(2.1rem, 4vw, 2.8rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--color-muted);
+            max-width: 48rem;
+            margin-bottom: 28px;
+        }
+
+        .subtitle strong {
+            color: var(--color-primary);
+        }
+
+        /* Main content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .portal-card {
+            border-radius: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.08), rgba(255, 255, 255, 0.98));
+            border: 1px solid rgba(175, 75, 239, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(175, 75, 239, 0.15);
+        }
+
+        .portal-card.community {
+            background: linear-gradient(135deg, rgba(131, 128, 240, 0.1), rgba(255, 255, 255, 0.98));
+            border-color: rgba(131, 128, 240, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            margin-bottom: 18px;
+        }
+
+        .card-features {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .card-features li {
+            padding: 6px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--color-muted);
+        }
+
+        .card-features li:before {
+            content: "✓";
+            color: #00b894;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(175, 75, 239, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(175, 75, 239, 0.1);
+        }
+
+        /* Action Items */
+        .action-section {
+            background: rgba(12, 10, 24, 0.96);
+            color: #e5e7eb;
+            border-radius: 20px;
+            padding: 26px 28px;
+            margin: 32px 0;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+        }
+
+        .action-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-title .emoji {
+            font-size: 1.4rem;
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid var(--color-primary);
+            background: transparent;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .checklist label {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.1), rgba(131, 128, 240, 0.1));
+            border-radius: 20px;
+            margin-top: 32px;
+            border: 1px solid rgba(175, 75, 239, 0.2);
+        }
+
+        .contact-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-email {
+            font-size: 1.2rem;
+            color: var(--color-text);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 2px solid var(--color-primary-soft);
+            margin: 12px 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: var(--color-primary-soft);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(175, 75, 239, 0.3);
+        }
+
+        /* Completion */
+        .completion-section {
+            background: rgba(248, 250, 252, 0.9);
+            border: 2px dashed rgba(148, 163, 184, 0.7);
+            border-radius: 20px;
+            padding: 24px;
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .completion-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .completion-text {
+            font-size: 0.95rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(0, 184, 148, 0.1);
+            border-radius: 999px;
+            color: #00b894;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 16px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(175, 75, 239, 0.1);
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            width: 0%;
+            border-radius: 999px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Student Portal Orientation</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Your Journey Begins Here</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <h1>Welcome to Your Student Portal</h1>
+        <p class="subtitle">
+            You're about to embark on an exciting journey that will shape the future of healthcare. Get acquainted with our student portal, where you'll find all your course work and interactions take place!
+        </p>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="status-badge">
+            <span>🎯</span>
+            <span>Orientation in Progress</span>
+        </div>
+
+        <!-- Portal Cards -->
+        <div class="content-grid">
+            <div class="portal-card">
+                <div class="card-title">
+                    <span class="card-icon">🎓</span>
+                    <span>Student Portal</span>
+                </div>
+                <p class="card-description">
+                    Your central hub for all course materials, assignments, schedules, and instructor communications. Everything you need for your healthcare education journey starts here.
+                </p>
+                <ul class="card-features">
+                    <li>Access course materials and assignments</li>
+                    <li>View program schedules and deadlines</li>
+                    <li>Receive announcements and updates</li>
+                    <li>Contact instructors and support</li>
+                    <li>Track your progress and grades</li>
+                </ul>
+                <a href="https://academy.alliedrxtraining.com/start" class="btn" target="_blank">
+                    <span>Access Student Portal</span>
+                    <span>→</span>
+                </a>
+            </div>
+
+            <div class="portal-card community">
+                <div class="card-title">
+                    <span class="card-icon">👥</span>
+                    <span>AlliedRx Community</span>
+                </div>
+                <p class="card-description">
+                    Connect with other learners who are waiting patiently until they start their new adventure too. Share experiences, get support, and build your professional network.
+                </p>
+                <ul class="card-features">
+                    <li>Introduce yourself to peers</li>
+                    <li>Join discussions with fellow learners</li>
+                    <li>Share encouragement and experiences</li>
+                    <li>Get updates on community events</li>
+                    <li>Build your healthcare network</li>
+                </ul>
+                <a href="https://academy.alliedrxtraining.com/social" class="btn btn-outline" target="_blank">
+                    <span>Join the Community</span>
+                    <span>💬</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Action Items -->
+        <section class="action-section">
+            <div class="action-title">
+                <span class="emoji">📋</span>
+                <span>Your Pre-Program Checklist</span>
+            </div>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; color: #c4b5fd;">
+                Complete these steps to prepare for your program start:
+            </p>
+            <ul class="checklist">
+                <li>
+                    <input type="checkbox" id="task1" onchange="updateProgress()">
+                    <label for="task1">Log into the Student Portal using your credentials</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task2" onchange="updateProgress()">
+                    <label for="task2">Upload your profile picture to personalize your account</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task3" onchange="updateProgress()">
+                    <label for="task3">Explore the Community Page and introduce yourself</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task4" onchange="updateProgress()">
+                    <label for="task4">Bookmark both portal links for easy access</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="task5" onchange="updateProgress()">
+                    <label for="task5">Check for any pre-program materials or announcements</label>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <p class="contact-title">Need Assistance?</p>
+            <p style="margin-bottom: 12px; font-size: 0.95rem; color: var(--color-muted);">
+                If you encounter any issues accessing the portal or community, our enrollment team is here to help:
+            </p>
+            <a href="mailto:enrollment@alliedrxtraining.com" class="contact-email">
+                enrollment@alliedrxtraining.com
+            </a>
+            <p style="margin-top: 12px; font-size: 0.9rem; color: var(--color-muted);">
+                We're committed to supporting your journey into healthcare.
+            </p>
+        </section>
+
+        <!-- Completion Section -->
+        <section class="completion-section">
+            <div class="completion-title">📅 Your Program Starts Soon!</div>
+            <p class="completion-text">
+                Even though it may feel like time has stopped while awaiting your program's start date, it's just around the corner. Use this preparation time to familiarize yourself with our platforms and connect with your future colleagues.
+            </p>
+            <p class="completion-text" style="font-weight: 600; color: var(--color-primary);">
+                Next Step: Explored the portal and community.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        // Update progress bar based on checklist
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+            const checked = document.querySelectorAll('.checklist input[type="checkbox"]:checked');
+            const percentage = (checked.length / checkboxes.length) * 100;
+            
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = percentage + '%';
+            
+            // Update status badge
+            const statusBadge = document.querySelector('.status-badge span:last-child');
+            if (percentage === 100) {
+                statusBadge.textContent = '🎉 Orientation Complete!';
+                document.querySelector('.status-badge span:first-child').textContent = '🎉';
+            } else if (percentage >= 50) {
+                statusBadge.textContent = '🚀 Making Great Progress';
+            }
+        }
+
+        // Initialize progress bar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            
+            // Add click effects to portal cards
+            const cards = document.querySelectorAll('.portal-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('a')) {
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
