@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- Payment Plan Information</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-warning: #fdcb6e;
+            --color-error: #e17055;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 60px rgba(175, 75, 239, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 32px 40px 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 20px 16px 30px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .institute-name {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .institute-main {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .institute-subtitle {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+        }
+
+        .badge-mode {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--color-muted);
+            max-width: 100%;
+            margin-bottom: 32px;
+            line-height: 1.5;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Main sections - FIXED: Circle numbers now fully visible */
+        .sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px; /* Increased gap to accommodate circle numbers */
+        }
+
+        .section {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 36px 28px 28px; /* Increased top padding for circle numbers */
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible; /* Changed from hidden to visible */
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            margin-top: 30px; /* Add space above for circle numbers */
+        }
+
+        .section:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--color-primary-soft);
+        }
+
+        .section:nth-child(1) { animation-delay: 0.3s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.5s; }
+        .section:nth-child(4) { animation-delay: 0.6s; }
+
+        .section-number {
+            position: absolute;
+            top: -25px; /* Moved further up so it sits above the box */
+            left: 24px;
+            width: 50px; /* Slightly larger */
+            height: 50px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            font-size: 1.4rem; /* Larger font */
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 6px 20px rgba(175, 75, 239, 0.4); /* Enhanced shadow */
+            border: 3px solid white; /* White border to stand out */
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid var(--color-primary-soft);
+            margin-top: 10px; /* Added space below circle number */
+        }
+
+        .section-content {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: rgba(175, 75, 239, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(175, 75, 239, 0.15);
+        }
+
+        .highlight-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .highlight-content strong {
+            color: var(--color-primary);
+        }
+
+        .example-box {
+            background: rgba(0, 184, 148, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(0, 184, 148, 0.15);
+            font-family: 'Courier New', monospace;
+        }
+
+        .example-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-success);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Warning/Important sections */
+        .warning-box {
+            background: rgba(253, 203, 110, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(253, 203, 110, 0.3);
+        }
+
+        .warning-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .important-box {
+            background: rgba(231, 112, 85, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(231, 112, 85, 0.2);
+        }
+
+        .important-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .important-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Payment Breakdown */
+        .payment-breakdown {
+            background: rgba(131, 128, 240, 0.05);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px dashed rgba(131, 128, 240, 0.3);
+        }
+
+        .breakdown-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .breakdown-item {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .breakdown-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .breakdown-label {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+        }
+
+        .breakdown-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .breakdown-note {
+            font-size: 0.85rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Steps */
+        .steps-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(175, 75, 239, 0.1);
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(12, 10, 24, 0.08);
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--color-muted);
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+
+        .footer-note a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 36px 20px 20px; /* Adjusted padding for mobile */
+                margin-top: 25px;
+            }
+            
+            .section-number {
+                left: 16px;
+                top: -22px; /* Adjusted for mobile */
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+            
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+                top: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="payment-plan-heading">
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="institute-name">
+                    <div class="institute-main">AlliedRx</div>
+                    <div class="institute-subtitle">INSTITUTE OF HEALTHCARE</div>
+                </div>
+            </div>
+            <span class="badge-mode">Payment Plan Information</span>
+        </header>
+
+        <h1 id="payment-plan-heading">Weekly Payment Plans</h1>
+        
+        <p class="subtitle">
+            Flexible payment options designed to make your education accessible while maintaining financial responsibility.
+        </p>
+
+        <div class="sections-container">
+            <!-- Section 1: How It Works -->
+            <section class="section">
+                <div class="section-number">1</div>
+                <h2 class="section-title">How It Works</h2>
+                
+                <div class="section-content">
+                    <p>Our payment plan is designed to make your education affordable and manageable:</p>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>💰</span>
+                            <span>Initial Payment</span>
+                        </div>
+                        <div class="highlight-content">
+                            <strong>$100 down payment</strong> to open your payment plan, which is deducted from your total tuition balance.
+                            <br><em>Note: This is separate from your enrollment fee that was due at the time of registration.</em>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>📅</span>
+                            <span>Weekly Payments</span>
+                        </div>
+                        <div class="highlight-content">
+                            Remaining balance is broken down into <strong>equal weekly payments</strong> over the duration of your program.
+                        </div>
+                    </div>
+                    
+                    <div class="payment-breakdown">
+                        <div class="breakdown-title">Example Payment Breakdown</div>
+                        <div class="breakdown-grid">
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">Total Tuition</div>
+                                <div class="breakdown-value">$975</div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">Down Payment</div>
+                                <div class="breakdown-value">-$100</div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">Remaining Balance</div>
+                                <div class="breakdown-value">$875</div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">Weekly Payment</div>
+                                <div class="breakdown-value">$58.33</div>
+                            </div>
+                        </div>
+                        <div class="example-content" style="margin-top: 16px; text-align: center;">
+                            <strong>Calculation:</strong> $875 ÷ 15 weeks = $58.33 per week
+                        </div>
+                        <div class="breakdown-note">
+                            Payments are automatically processed each week on your designated payment day.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: How To Set Up & Add Your Course -->
+            <section class="section">
+                <div class="section-number">2</div>
+                <h2 class="section-title">How To Set Up & Add Your Course</h2>
+                
+                <div class="section-content">
+                    <p>Setting up your payment plan is integrated into your student orientation process:</p>
+                    
+                    <ul class="steps-list">
+                        <li class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <strong>Access the "Add Your Course" Page</strong><br>
+                                Inside your orientation course, navigate to the page labeled "Add Your Course."
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <strong>Establish Your Payment Plan</strong><br>
+                                This page enables you to set up your weekly payment plan according to your program's duration.
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <strong>Submit Initial Payment</strong><br>
+                                Complete the $100 down payment to activate your payment plan and confirm your course enrollment.
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span>⏰</span>
+                            <span>Timely Action Required</span>
+                        </div>
+                        <div class="warning-content">
+                            Complete this setup promptly to ensure uninterrupted access to your course materials and avoid any enrollment delays.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Managing Your Plan - Failed Payments -->
+            <section class="section">
+                <div class="section-number">3</div>
+                <h2 class="section-title">Managing Your Plan - Failed Payments</h2>
+                
+                <div class="section-content">
+                    <p>Responsible payment management is essential for maintaining continuous access to your education:</p>
+                    
+                    <div class="important-box">
+                        <div class="important-title">
+                            <span>⚠️</span>
+                            <span>Crucial Reminder</span>
+                        </div>
+                        <div class="important-content">
+                            It is <strong>crucial to manage your payment plan effectively</strong> and ensure that you have sufficient funds available on a weekly basis.
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span>🔒</span>
+                            <span>Access Implications</span>
+                        </div>
+                        <div class="warning-content">
+                            <strong>If payments repeatedly fail, it may lead to the inability to access the course.</strong> Multiple failed payments can result in temporary suspension of course access until the outstanding balance is resolved.
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>💡</span>
+                            <span>Proactive Management Tips</span>
+                        </div>
+                        <div class="highlight-content">
+                            • Ensure your payment method has sufficient funds each week<br>
+                            • Update expired or replaced cards immediately<br>
+                            • Contact the office if you anticipate payment difficulties<br>
+                            • Set calendar reminders for your weekly payment dates
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Graduation -->
+            <section class="section">
+                <div class="section-number">4</div>
+                <h2 class="section-title">Graduation Requirements</h2>
+                
+                <div class="section-content">
+                    <p>Complete your financial responsibilities to ensure a smooth graduation process:</p>
+                    
+                    <div class="important-box">
+                        <div class="important-title">
+                            <span>🎓</span>
+                            <span>Financial Clearance</span>
+                        </div>
+                        <div class="important-content">
+                            Payment plans are a <strong>significant component of your student financial account</strong> and should be <strong>fully settled before graduation.</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <div class="highlight-title">
+                            <span>📞</span>
+                            <span>Remaining Balance Resolution</span>
+                        </div>
+                        <div class="highlight-content">
+                            <strong>In case of any remaining balance, please get in touch with the office to resolve it.</strong> Our team will work with you to find a solution that allows you to graduate without financial obstacles.
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <div class="warning-title">
+                            <span>⏳</span>
+                            <span>Plan Ahead</span>
+                        </div>
+                        <div class="warning-content">
+                            We recommend reviewing your payment plan status at least 4 weeks before your expected graduation date to ensure all payments are on track and any potential issues can be addressed proactively.
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer-note">
+            <p>
+                Need assistance with your payment plan? Contact Student Accounts at 
+                <a href="mailto:enrollment@alliedrxhealthcare.com">enrollment@alliedrxhealthcare.com</a> 
+               
+            </p>
+            <p style="margin-top: 8px;">
+                © 2023 AlliedRx Institute of Healthcare. All rights reserved.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate sections on scroll
+            const sections = document.querySelectorAll('.section');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+
+            // Add hover effects to breakdown items
+            const breakdownItems = document.querySelectorAll('.breakdown-item');
+            breakdownItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    const value = this.querySelector('.breakdown-value');
+                    value.style.transform = 'scale(1.1)';
+                    value.style.color = 'var(--color-accent)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    const value = this.querySelector('.breakdown-value');
+                    value.style.transform = 'scale(1)';
+                    value.style.color = 'var(--color-primary)';
+                });
+            });
+
+            // Add hover effects to step numbers
+            const stepNumbers = document.querySelectorAll('.step-number');
+            stepNumbers.forEach(number => {
+                number.addEventListener('mouseenter', function() {
+                    this.style.background = 'rgba(175, 75, 239, 0.2)';
+                    this.style.transform = 'scale(1.1)';
+                });
+                
+                number.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(175, 75, 239, 0.1)';
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Add page load animation
+            const page = document.querySelector('.page');
+            page.style.opacity = '0';
+            page.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                page.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                page.style.opacity = '1';
+                page.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Add interactive hover to highlight boxes
+            const highlightBoxes = document.querySelectorAll('.highlight-box, .warning-box, .important-box');
+            highlightBoxes.forEach(box => {
+                box.addEventListener('mouseenter', function() {
+                    const title = this.querySelector('.highlight-title, .warning-title, .important-title');
+                    if (title) {
+                        title.style.transform = 'translateX(5px)';
+                        title.style.transition = 'transform 0.3s ease';
+                    }
+                });
+                
+                box.addEventListener('mouseleave', function() {
+                    const title = this.querySelector('.highlight-title, .warning-title, .important-title');
+                    if (title) {
+                        title.style.transform = 'translateX(0)';
+                    }
+                });
+            });
+
+            // Add hover effect to section numbers
+            const sectionNumbers = document.querySelectorAll('.section-number');
+            sectionNumbers.forEach(number => {
+                number.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1) rotate(5deg)';
+                    this.style.boxShadow = '0 10px 25px rgba(175, 75, 239, 0.6)';
+                });
+                
+                number.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0)';
+                    this.style.boxShadow = '0 6px 20px rgba(175, 75, 239, 0.4)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
