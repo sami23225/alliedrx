@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- EHR Go Account Creation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-warning: #fdcb6e;
+            --color-error: #e17055;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 60px rgba(175, 75, 239, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 32px 40px 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 20px 16px 30px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .institute-name {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .institute-main {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .institute-subtitle {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+        }
+
+        .badge-mode {
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--color-muted);
+            max-width: 100%;
+            margin-bottom: 32px;
+            line-height: 1.5;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Main content */
+        .main-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .info-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--color-primary-soft);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(175, 75, 239, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .card-content strong {
+            color: var(--color-primary);
+        }
+
+        .card-content ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .card-content li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .card-content li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: var(--color-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Program Key Display */
+        .key-display {
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.1), rgba(131, 128, 240, 0.1));
+            border-radius: var(--radius-md);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(175, 75, 239, 0.15);
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+
+        .key-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .key-code {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            letter-spacing: 4px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: 16px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 2px dashed rgba(175, 75, 239, 0.3);
+            transition: all 0.3s ease;
+            user-select: all; /* Makes it easier to select */
+        }
+
+        .key-code:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 30px rgba(175, 75, 239, 0.2);
+            border-color: var(--color-primary);
+        }
+
+        .key-instruction {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .copy-btn {
+            background: rgba(175, 75, 239, 0.1);
+            border: 1px solid var(--color-primary-soft);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(175, 75, 239, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(175, 75, 239, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            color: var(--color-success);
+        }
+
+        /* Steps */
+        .steps-container {
+            margin-top: 30px;
+            animation: fadeInUp 0.6s ease-out 0.7s both;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: flex-start;
+            padding: 20px;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--color-primary-soft);
+            transition: all 0.3s ease;
+        }
+
+        .step-item:hover {
+            background: rgba(175, 75, 239, 0.05);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(175, 75, 239, 0.3);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .step-description {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(253, 203, 110, 0.1);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 30px 0;
+            border: 1px solid rgba(253, 203, 110, 0.3);
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .warning-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #d35400;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-content {
+            font-size: 0.92rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .warning-content strong {
+            color: #d35400;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeInUp 0.6s ease-out 0.9s both;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 999px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(175, 75, 239, 0.4);
+        }
+
+        .action-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 40px rgba(175, 75, 239, 0.5);
+        }
+
+        .action-button:active {
+            transform: translateY(-2px);
+        }
+
+        .button-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(12, 10, 24, 0.08);
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--color-muted);
+            animation: fadeInUp 0.6s ease-out 1s both;
+        }
+
+        .footer-note a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Copy feedback */
+        .copy-feedback {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="copy-feedback" id="copyFeedback">✅ Key copied to clipboard!</div>
+
+    <main class="page" aria-labelledby="ehr-heading">
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="institute-name">
+                    <div class="institute-main">AlliedRx</div>
+                    <div class="institute-subtitle">INSTITUTE OF HEALTHCARE</div>
+                </div>
+            </div>
+            <span class="badge-mode">EHR Go Account Setup</span>
+        </header>
+
+        <h1 id="ehr-heading">EHR Go Account Creation</h1>
+        
+        <p class="subtitle">
+            Required skills platform for Clinical Medical Assisting, Pharmacy Technician, and Medical Billing & Coding programs.
+        </p>
+
+        <div class="main-section">
+            <div class="info-card">
+                <div class="card-title">
+                    <div class="card-icon">📋</div>
+                    <span>Required Access</span>
+                </div>
+                <div class="card-content">
+                    <p>Students enrolled in the following programs are required to purchase access for skills assignments throughout their program:</p>
+                    
+                    <ul>
+                        <li><strong>Clinical Medical Assisting</strong></li>
+                        <li><strong>Pharmacy Technician</strong></li>
+                        <li><strong>Medical Billing and Coding</strong></li>
+                    </ul>
+                    
+                    <p>EHR Go provides essential simulated Electronic Health Record experience that you'll use for hands-on skills assignments.</p>
+                    
+                    <div style="margin-top: 20px; padding: 16px; background: rgba(0, 184, 148, 0.08); border-radius: var(--radius-sm);">
+                        <strong>Note:</strong> Click the "Continue" button below to fulfill this requirement and set up your account.
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-display">
+                <div class="key-title">
+                    <span>🔑</span>
+                    <span>Student Program Key</span>
+                </div>
+                
+                <div class="key-code" id="programKey" onclick="selectKey()">S63P97</div>
+                
+                <div class="key-instruction">
+                    You will need this key during the subscription process on the EHR Go website.
+                </div>
+                
+                <button class="copy-btn" id="copyButton" onclick="copyKeyToClipboard()">
+                    📋 Copy Key to Clipboard
+                </button>
+                
+                <p style="font-size: 0.8rem; color: var(--color-muted); margin-top: 10px;">
+                    Click the button above or click directly on the code to copy
+                </p>
+            </div>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Go to EHR Go Website</div>
+                    <div class="step-description">
+                        Click the "Continue" button below to visit <strong>https://ehrgo.com/</strong> and begin the account creation process.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Subscribe & Enter Key</div>
+                    <div class="step-description">
+                        Click <strong>"Subscribe"</strong> in the upper right corner and enter the Student Program Key: <strong>S63P97</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Create Account</div>
+                    <div class="step-description">
+                        Follow the on-screen instructions to create your EHR Go account and apply your subscription.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <div class="warning-title">
+                <span class="warning-icon">⚠️</span>
+                <span>Important Timing Note</span>
+            </div>
+            <div class="warning-content">
+                <strong>Please wait until your first week to purchase</strong> your EHR Go access. 
+                This ensures your subscription will not expire before you complete your course. 
+                Early purchases may result in access expiring before your program ends.
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <a href="https://ehrgo.com/" class="action-button" target="_blank" onclick="trackEHRClick()">
+                <span class="button-icon">🚀</span>
+                <span>CONTINUE to EHR Go</span>
+            </a>
+            
+            <p style="font-size: 0.85rem; color: var(--color-muted); margin-top: 16px;">
+                You will be redirected to the official EHR Go website
+            </p>
+        </div>
+
+        <div class="footer-note">
+            <p>
+                Need assistance? Contact Student Services at 
+                <a href="mailto:support@alliedrxtraining.com">support@alliedrxtraining.com</a> 
+                or call (555) 123-4567.
+            </p>
+            <p style="margin-top: 8px;">
+                © 2023 AlliedRx Institute of Healthcare. All rights reserved.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add page load animation
+            const page = document.querySelector('.page');
+            page.style.opacity = '0';
+            page.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                page.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                page.style.opacity = '1';
+                page.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Add hover effects to cards
+            const infoCards = document.querySelectorAll('.info-card');
+            infoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.card-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1)';
+                        icon.style.background = 'rgba(175, 75, 239, 0.2)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.card-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1)';
+                        icon.style.background = 'rgba(175, 75, 239, 0.1)';
+                    }
+                });
+            });
+
+            // Add animation to step items on scroll
+            const stepItems = document.querySelectorAll('.step-item');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all step items
+            stepItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(item);
+            });
+
+            // Animate key code on hover
+            const keyCode = document.getElementById('programKey');
+            keyCode.addEventListener('mouseenter', function() {
+                this.style.letterSpacing = '6px';
+                this.style.transform = 'scale(1.03)';
+            });
+            
+            keyCode.addEventListener('mouseleave', function() {
+                this.style.letterSpacing = '4px';
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Select key text when clicked
+        function selectKey() {
+            const keyElement = document.getElementById('programKey');
+            const range = document.createRange();
+            range.selectNodeContents(keyElement);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            // Also copy to clipboard when clicked
+            copyKeyToClipboard();
+        }
+
+        // Copy key to clipboard function - FIXED VERSION
+        function copyKeyToClipboard() {
+            const key = "S63P97"; // Direct string instead of getting from element
+            
+            // Method 1: Modern Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(key).then(() => {
+                    showCopyFeedback();
+                }).catch(err => {
+                    // Fallback to old method if modern API fails
+                    useFallbackCopyMethod(key);
+                });
+            } else {
+                // Fallback for older browsers or insecure contexts
+                useFallbackCopyMethod(key);
+            }
+        }
+
+        // Fallback copy method using textarea
+        function useFallbackCopyMethod(text) {
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            
+            // Select and copy
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopyFeedback();
+                } else {
+                    showErrorFeedback();
+                }
+            } catch (err) {
+                showErrorFeedback();
+            }
+            
+            // Clean up
+            document.body.removeChild(textarea);
+        }
+
+        // Show success feedback
+        function showCopyFeedback() {
+            const button = document.getElementById('copyButton');
+            const feedback = document.getElementById('copyFeedback');
+            
+            // Update button
+            button.classList.add('copied');
+            button.innerHTML = '✅ Key Copied!';
+            
+            // Show floating notification
+            feedback.classList.add('show');
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = '📋 Copy Key to Clipboard';
+            }, 3000);
+            
+            // Hide floating notification after 3 seconds
+            setTimeout(() => {
+                feedback.classList.remove('show');
+            }, 3000);
+        }
+
+        // Show error feedback
+        function showErrorFeedback() {
+            const feedback = document.getElementById('copyFeedback');
+            feedback.textContent = '⚠️ Please copy manually: S63P97';
+            feedback.style.background = 'var(--color-warning)';
+            feedback.classList.add('show');
+            
+            // Select the key text for manual copying
+            const keyElement = document.getElementById('programKey');
+            const range = document.createRange();
+            range.selectNodeContents(keyElement);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            setTimeout(() => {
+                feedback.classList.remove('show');
+                feedback.style.background = 'var(--color-success)';
+                feedback.textContent = '✅ Key copied to clipboard!';
+            }, 3000);
+        }
+
+        // Track EHR Go click (optional analytics placeholder)
+        function trackEHRClick() {
+            // This function could be used for analytics tracking
+            console.log('Student clicked EHR Go link');
+            // Implement analytics tracking here if needed
+        }
+    </script>
+</body>
+</html>
