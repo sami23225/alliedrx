@@ -606,7 +606,7 @@
             padding: 10px;
         }
 
-        /* Activity 2: Testicular Self-Exam Education - RANDOMIZED */
+        /* Activity 2: Testicular Self-Exam Education - NO LABELS */
         .tse-steps-container {
             display: flex;
             flex-direction: column;
@@ -621,10 +621,8 @@
             border: 2px solid rgba(12, 10, 24, 0.1);
             cursor: grab;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
             user-select: none;
+            position: relative;
         }
 
         .tse-step-item:hover {
@@ -642,31 +640,37 @@
             background: rgba(0, 184, 148, 0.1);
             border-color: var(--color-success);
             cursor: default;
+            padding-left: 40px;
         }
 
-        .tse-step-letter {
-            width: 30px;
-            height: 30px;
+        .tse-step-item.placed::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: rgba(12, 10, 24, 0.1);
+            background: var(--color-success);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: var(--color-text);
-            flex-shrink: 0;
         }
 
-        .tse-step-item.placed .tse-step-letter {
-            background: var(--color-success);
-            color: white;
-        }
+        .tse-step-item.placed:nth-child(1)::before { content: '1'; }
+        .tse-step-item.placed:nth-child(2)::before { content: '2'; }
+        .tse-step-item.placed:nth-child(3)::before { content: '3'; }
+        .tse-step-item.placed:nth-child(4)::before { content: '4'; }
+        .tse-step-item.placed:nth-child(5)::before { content: '5'; }
+        .tse-step-item.placed:nth-child(6)::before { content: '6'; }
 
         .tse-step-text {
             font-size: 0.9rem;
             color: var(--color-text);
-            flex: 1;
         }
 
         .tse-dropzone {
@@ -688,7 +692,7 @@
         }
 
         .tse-dropzone.empty::after {
-            content: 'Drag TSE steps here in correct order (A-F)';
+            content: 'Drag TSE steps here in correct order';
             color: var(--color-muted);
             text-align: center;
             font-size: 0.9rem;
@@ -746,7 +750,7 @@
             animation: fadeIn 0.5s ease;
         }
 
-        /* Patient Education Script - RANDOMIZED */
+        /* Patient Education Script - NO LABELS */
         .script-container {
             background: rgba(12, 10, 24, 0.02);
             border-radius: var(--radius-sm);
@@ -789,9 +793,7 @@
             cursor: grab;
             transition: all 0.3s ease;
             user-select: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            position: relative;
         }
 
         .script-part:hover {
@@ -806,25 +808,40 @@
 
         .script-part.placed {
             cursor: default;
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            padding-left: 40px;
         }
 
-        .script-letter {
-            width: 25px;
-            height: 25px;
+        .script-part.placed::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: rgba(12, 10, 24, 0.1);
+            background: var(--color-success);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.8rem;
             font-weight: 600;
-            color: var(--color-text);
-            flex-shrink: 0;
         }
 
-        .script-part.placed .script-letter {
-            background: var(--color-success);
-            color: white;
+        .script-part.placed:nth-child(1)::before { content: '1'; }
+        .script-part.placed:nth-child(2)::before { content: '2'; }
+        .script-part.placed:nth-child(3)::before { content: '3'; }
+        .script-part.placed:nth-child(4)::before { content: '4'; }
+        .script-part.placed:nth-child(5)::before { content: '5'; }
+        .script-part.placed:nth-child(6)::before { content: '6'; }
+
+        .script-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.4;
         }
 
         .script-dropzone {
@@ -843,7 +860,7 @@
         }
 
         .script-dropzone.empty::after {
-            content: 'Drag script parts here to build effective patient communication (1-6)';
+            content: 'Drag script parts here to build effective patient communication';
             color: var(--color-muted);
             text-align: center;
             font-size: 0.9rem;
@@ -1160,7 +1177,7 @@
 
                 <!-- Triage Categories with CLEAR Instructions -->
                 <div class="case-instruction">
-                    <strong>STEP 2:</strong> Now triage the urgency level. Drag STI cards to the appropriate category:
+                    <strong>STEP 2:</strong> Now triage the urgency level. Drag the REMAINING STI cards to the appropriate category:
                 </div>
 
                 <div class="triage-categories">
@@ -1214,7 +1231,7 @@
                 </div>
             </section>
 
-            <!-- Activity 2: Testicular Self-Exam Education Simulation - RANDOMIZED -->
+            <!-- Activity 2: Testicular Self-Exam Education Simulation - NO LABELS -->
             <section class="activity-card" id="activity-2" data-activity="2">
                 <div class="activity-header">
                     <span class="activity-number">Activity 2</span>
@@ -1226,20 +1243,20 @@
                     and build effective patient education scripts for male health counseling.
                 </p>
 
-                <div class="case-instruction">
-                    <strong>STEP 1:</strong> Arrange the TSE steps in correct order (A-F). Drag steps to the drop area:
+                <div class="script-instruction">
+                    <strong>STEP 1:</strong> Arrange the TSE steps in correct order. Drag steps to the drop area:
                 </div>
 
                 <!-- TSE Steps Dropzone -->
                 <div class="tse-dropzone empty" id="tse-dropzone"></div>
 
-                <!-- TSE Step Items - RANDOM ORDER -->
+                <!-- TSE Step Items - NO LABELS, RANDOM ORDER -->
                 <div class="tse-steps-container" id="tse-steps">
                     <!-- Steps will be randomized by JavaScript -->
                 </div>
 
                 <!-- Findings Reveal -->
-                <div class="case-instruction" style="margin-top: 20px;">
+                <div class="script-instruction" style="margin-top: 20px;">
                     <strong>STEP 2:</strong> Click to reveal normal vs abnormal findings:
                 </div>
 
@@ -1268,7 +1285,7 @@
                     </div>
                 </div>
 
-                <!-- Patient Education Script Builder - RANDOMIZED -->
+                <!-- Patient Education Script Builder - NO LABELS -->
                 <div class="script-container">
                     <div class="script-title">
                         <span>🗣️</span> Patient Education Script Builder
@@ -1276,7 +1293,7 @@
                     
                     <div class="script-instruction">
                         <strong>STEP 3:</strong> Build an effective counseling script for a 19-year-old male patient. 
-                        Drag script parts into logical order (1-6):
+                        Drag script parts into logical order:
                     </div>
                     
                     <div class="script-builder" id="script-builder">
@@ -1294,12 +1311,12 @@
                     </div>
                     <div class="feedback-content">
                         <strong>Correct TSE Sequence:</strong><br>
-                        1. Perform exam during or after warm shower when scrotal skin is relaxed (A)<br>
-                        2. Examine one testicle at a time using both hands (B)<br>
-                        3. Roll testicle gently between thumb and fingers feeling for lumps (C)<br>
-                        4. Feel for epididymis (cord-like structure at back) - this is normal (D)<br>
-                        5. Compare size, weight, and texture between testicles (E)<br>
-                        6. Report any changes, lumps, swelling, or pain to healthcare provider (F)<br><br>
+                        1. Perform exam during or after warm shower when scrotal skin is relaxed<br>
+                        2. Examine one testicle at a time using both hands<br>
+                        3. Roll testicle gently between thumb and fingers feeling for lumps<br>
+                        4. Feel for epididymis (cord-like structure at back) - this is normal<br>
+                        5. Compare size, weight, and texture between testicles<br>
+                        6. Report any changes, lumps, swelling, or pain to healthcare provider<br><br>
                         
                         <strong>Patient Education Best Practices:</strong><br>
                         • <strong>Age-appropriate:</strong> Start education at age 15, reinforce at 18+<br>
@@ -1641,7 +1658,7 @@
                 }
             }
 
-            // Activity 2: Testicular Self-Exam Education - RANDOMIZED
+            // Activity 2: Testicular Self-Exam Education - NO LABELS
             function initActivity2() {
                 const tseStepsContainer = document.getElementById('tse-steps');
                 const tseDropzone = document.getElementById('tse-dropzone');
@@ -1651,14 +1668,14 @@
                 const feedback = document.getElementById('feedback-2');
                 const status = document.querySelector('#activity-2 .activity-status');
 
-                // Correct orders
+                // Correct orders (NO labels in HTML)
                 const correctTSEOrder = [
-                    { step: '1', letter: '?', text: 'Perform exam during or after warm shower when scrotal skin is relaxed' },
-                    { step: '2', letter: '?', text: 'Examine one testicle at a time using both hands' },
-                    { step: '3', letter: '?', text: 'Roll testicle gently between thumb and fingers feeling for lumps' },
-                    { step: '4', letter: '?', text: 'Feel for epididymis (cord-like structure at back) - this is normal' },
-                    { step: '5', letter: '?', text: 'Compare size, weight, and texture between testicles' },
-                    { step: '6', letter: '>', text: 'Report any changes, lumps, swelling, or pain to healthcare provider' }
+                    { step: '1', text: 'Perform exam during or after warm shower when scrotal skin is relaxed' },
+                    { step: '2', text: 'Examine one testicle at a time using both hands' },
+                    { step: '3', text: 'Roll testicle gently between thumb and fingers feeling for lumps' },
+                    { step: '4', text: 'Feel for epididymis (cord-like structure at back) - this is normal' },
+                    { step: '5', text: 'Compare size, weight, and texture between testicles' },
+                    { step: '6', text: 'Report any changes, lumps, swelling, or pain to healthcare provider' }
                 ];
 
                 const correctScriptOrder = [
@@ -1670,35 +1687,32 @@
                     { part: '6', text: '"Most lumps aren\'t cancer, but all need evaluation. Early detection saves lives."' }
                 ];
 
-                // Randomize TSE steps
+                // Randomize TSE steps (NO labels)
                 const shuffledTSESteps = [...correctTSEOrder].sort(() => Math.random() - 0.5);
                 
-                // Create TSE step elements with randomized order
+                // Create TSE step elements with randomized order (NO labels)
                 shuffledTSESteps.forEach(step => {
                     const stepDiv = document.createElement('div');
                     stepDiv.className = 'tse-step-item draggable';
                     stepDiv.dataset.step = step.step;
-                    stepDiv.dataset.letter = step.letter;
                     stepDiv.draggable = true;
                     stepDiv.innerHTML = `
-                        <div class="tse-step-letter">${step.letter}</div>
                         <div class="tse-step-text">${step.text}</div>
                     `;
                     tseStepsContainer.appendChild(stepDiv);
                 });
 
-                // Randomize script parts
+                // Randomize script parts (NO labels)
                 const shuffledScriptParts = [...correctScriptOrder].sort(() => Math.random() - 0.5);
                 
-                // Create script part elements with randomized order
+                // Create script part elements with randomized order (NO labels)
                 shuffledScriptParts.forEach(part => {
                     const partDiv = document.createElement('div');
                     partDiv.className = 'script-part draggable';
                     partDiv.dataset.part = part.part;
                     partDiv.draggable = true;
                     partDiv.innerHTML = `
-                        <div class="script-letter">${part.part}</div>
-                        <div>${part.text}</div>
+                        <div class="script-text">${part.text}</div>
                     `;
                     scriptBuilder.appendChild(partDiv);
                 });
@@ -1712,8 +1726,8 @@
                     step.addEventListener('dragstart', function(e) {
                         e.dataTransfer.setData('text/plain', JSON.stringify({
                             step: this.dataset.step,
-                            letter: this.dataset.letter,
-                            html: this.innerHTML
+                            html: this.innerHTML,
+                            text: this.textContent
                         }));
                         this.classList.add('dragging');
                     });
@@ -1782,7 +1796,8 @@
                     part.addEventListener('dragstart', function(e) {
                         e.dataTransfer.setData('text/plain', JSON.stringify({
                             part: this.dataset.part,
-                            html: this.innerHTML
+                            html: this.innerHTML,
+                            text: this.textContent
                         }));
                         this.classList.add('dragging');
                     });
@@ -1889,17 +1904,17 @@
                 tseDropzone.innerHTML = '';
                 tseDropzone.classList.add('empty');
                 
-                // Recreate TSE steps with new random order
+                // Recreate TSE steps with new random order (NO labels)
                 const tseStepsContainer = document.getElementById('tse-steps');
                 tseStepsContainer.innerHTML = '';
                 
                 const correctTSEOrder = [
-                    { step: '1', letter: 'A', text: 'Perform exam during or after warm shower when scrotal skin is relaxed' },
-                    { step: '2', letter: 'B', text: 'Examine one testicle at a time using both hands' },
-                    { step: '3', letter: 'C', text: 'Roll testicle gently between thumb and fingers feeling for lumps' },
-                    { step: '4', letter: 'D', text: 'Feel for epididymis (cord-like structure at back) - this is normal' },
-                    { step: '5', letter: 'E', text: 'Compare size, weight, and texture between testicles' },
-                    { step: '6', letter: 'F', text: 'Report any changes, lumps, swelling, or pain to healthcare provider' }
+                    { step: '1', text: 'Perform exam during or after warm shower when scrotal skin is relaxed' },
+                    { step: '2', text: 'Examine one testicle at a time using both hands' },
+                    { step: '3', text: 'Roll testicle gently between thumb and fingers feeling for lumps' },
+                    { step: '4', text: 'Feel for epididymis (cord-like structure at back) - this is normal' },
+                    { step: '5', text: 'Compare size, weight, and texture between testicles' },
+                    { step: '6', text: 'Report any changes, lumps, swelling, or pain to healthcare provider' }
                 ];
                 
                 const shuffledTSESteps = [...correctTSEOrder].sort(() => Math.random() - 0.5);
@@ -1907,10 +1922,8 @@
                     const stepDiv = document.createElement('div');
                     stepDiv.className = 'tse-step-item draggable';
                     stepDiv.dataset.step = step.step;
-                    stepDiv.dataset.letter = step.letter;
                     stepDiv.draggable = true;
                     stepDiv.innerHTML = `
-                        <div class="tse-step-letter">${step.letter}</div>
                         <div class="tse-step-text">${step.text}</div>
                     `;
                     tseStepsContainer.appendChild(stepDiv);
@@ -1924,7 +1937,7 @@
                 scriptDropzone.innerHTML = '';
                 scriptDropzone.classList.add('empty');
                 
-                // Recreate script parts with new random order
+                // Recreate script parts with new random order (NO labels)
                 const scriptBuilder = document.getElementById('script-builder');
                 scriptBuilder.innerHTML = '';
                 
@@ -1944,8 +1957,7 @@
                     partDiv.dataset.part = part.part;
                     partDiv.draggable = true;
                     partDiv.innerHTML = `
-                        <div class="script-letter">${part.part}</div>
-                        <div>${part.text}</div>
+                        <div class="script-text">${part.text}</div>
                     `;
                     scriptBuilder.appendChild(partDiv);
                 });
@@ -1978,8 +1990,8 @@
                     step.addEventListener('dragstart', function(e) {
                         e.dataTransfer.setData('text/plain', JSON.stringify({
                             step: this.dataset.step,
-                            letter: this.dataset.letter,
-                            html: this.innerHTML
+                            html: this.innerHTML,
+                            text: this.textContent
                         }));
                         this.classList.add('dragging');
                     });
@@ -2045,7 +2057,8 @@
                     part.addEventListener('dragstart', function(e) {
                         e.dataTransfer.setData('text/plain', JSON.stringify({
                             part: this.dataset.part,
-                            html: this.innerHTML
+                            html: this.innerHTML,
+                            text: this.textContent
                         }));
                         this.classList.add('dragging');
                     });
