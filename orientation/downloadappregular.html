@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AlliedRx – Download Our Mobile Learning App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <style>
+    :root {
+      --color-primary: #af4bef;
+      --color-primary-soft: #d492ff;
+      --color-accent: #8380f0;
+      --color-success: #00b894;
+      --color-bg: #f7f5fb;
+      --color-text: #2b2b2b;
+      --color-muted: #6c6880;
+      --color-dark: #0c0a18;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+      --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+      --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #ffffff 0, #f1ecff 40%, var(--color-bg) 100%);
+      color: var(--color-text);
+      padding: 24px;
+      -webkit-text-size-adjust: 100%;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* Header */
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 28px 30px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .course-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-width: 100%;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--color-muted);
+      white-space: normal;
+    }
+
+    .badge-mode {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(12, 10, 24, 0.06);
+      border: 1px solid rgba(12, 10, 24, 0.08);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-muted);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+
+    .badge-mode:hover {
+      background: rgba(175, 75, 239, 0.1);
+      border-color: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 20px 30px 40px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tag {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--color-muted);
+      margin-bottom: 30px;
+      max-width: 90%;
+    }
+
+    /* Program Cards */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .program-chip {
+      background: rgba(175, 75, 239, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      border: 1px solid rgba(175, 75, 239, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .program-chip:hover {
+      background: rgba(175, 75, 239, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(175, 75, 239, 0.1);
+    }
+
+    /* Benefits Grid */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .benefit-card {
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid rgba(12, 10, 24, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--color-primary-soft);
+      box-shadow: var(--shadow-card);
+    }
+
+    .benefit-icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: var(--color-primary);
+    }
+
+    .benefit-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .benefit-desc {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      line-height: 1.5;
+    }
+
+    /* App Store Buttons */
+    .store-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      border-radius: var(--radius-md);
+      background: var(--color-dark);
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .store-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .store-icon {
+      font-size: 1.8rem;
+    }
+
+    .store-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .store-text small {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .store-text strong {
+      font-size: 1rem;
+    }
+
+    /* Phone Mockup */
+    .phone-mockup {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .phone-wrapper {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 9 / 18;
+      background: linear-gradient(145deg, #151022, #332354);
+      padding: 12px;
+      border-radius: 38px;
+      box-shadow: 0 25px 60px rgba(20, 7, 54, 0.6);
+    }
+
+    .phone-inner {
+      background: radial-gradient(circle at top, #ffffff 0, #f4e9ff 40%, #ece7ff 100%);
+      border-radius: 28px;
+      height: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .phone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .phone-logo {
+      height: 24px;
+      width: auto;
+    }
+
+    .phone-time {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .phone-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .phone-card {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(71, 35, 113, 0.1);
+    }
+
+    .phone-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .phone-card-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .phone-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(131, 128, 240, 0.12);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+
+    .phone-progress {
+      margin: 12px 0;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(12, 10, 24, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      border-radius: 3px;
+      width: 75%;
+    }
+
+    .phone-modules {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .module-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background: rgba(12, 10, 24, 0.02);
+      border-radius: 8px;
+    }
+
+    .module-name {
+      font-size: 0.8rem;
+      color: var(--color-text);
+    }
+
+    .module-status {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0, 184, 148, 0.1);
+      color: var(--color-success);
+    }
+
+    .phone-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid rgba(12, 10, 24, 0.08);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--color-muted);
+      font-size: 0.7rem;
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+    }
+
+    .nav-item.active {
+      color: var(--color-primary);
+    }
+
+    /* Features Section */
+    .features-section {
+      background: var(--color-dark);
+      color: white;
+      padding: 50px 30px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--color-primary-soft);
+    }
+
+    .feature-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+    }
+
+    /* Testimonial */
+    .testimonial-section {
+      padding: 50px 30px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(175, 75, 239, 0.05), rgba(131, 128, 240, 0.05));
+    }
+
+    .testimonial {
+      max-width: 800px;
+      margin: 0 auto;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--color-text);
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 30px;
+      text-align: center;
+      background: rgba(12, 10, 24, 0.02);
+      border-top: 1px solid rgba(12, 10, 24, 0.08);
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: var(--color-muted);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <!-- Header -->
+    <header class="brand-row">
+      <div class="brand">
+        <img
+          src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+          alt="AlliedRx logo"
+          class="brand-logo"
+        />
+        <div class="course-meta">
+          <span class="course-name">All AlliedRx Healthcare Programs</span>
+        </div>
+      </div>
+      <span class="badge-mode">Mobile Learning Platform</span>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <p class="tag">Your Healthcare Education, On the Go</p>
+        <h1>Take Your Healthcare Training Anywhere</h1>
+        <p class="subtitle">
+          Access all your AlliedRx coursework on the go. Review interactive modules, 
+          watch skills videos, track progress, and never miss a deadline—all from your phone.
+        </p>
+
+        <!-- Program Chips -->
+        <div class="programs-grid">
+          <div class="program-chip">CCMA</div>
+          <div class="program-chip">EKG Technician</div>
+          <div class="program-chip">CMA</div>
+          <div class="program-chip">Dental Assistant</div>
+          <div class="program-chip">Medical Billing & Coding</div>
+          <div class="program-chip">Phlebotomy</div>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">📱</div>
+            <h3 class="benefit-title">Mobile-Optimized</h3>
+            <p class="benefit-desc">All interactive modules work perfectly on your phone or tablet.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🔔</div>
+            <h3 class="benefit-title">Smart Notifications</h3>
+            <p class="benefit-desc">Get reminders for assignments, exams, and important announcements.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">📊</div>
+            <h3 class="benefit-title">Progress Tracking</h3>
+            <p class="benefit-desc">Monitor your completion and accuracy rates in real-time.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🎯</div>
+            <h3 class="benefit-title">Offline Access</h3>
+            <p class="benefit-desc">Download content to study even without an internet connection.</p>
+          </div>
+        </div>
+
+        <div class="store-buttons">
+          <a href="https://apps.apple.com/us/app/alliedrx/id1610718169" class="store-btn" target="_blank">
+            <span class="store-icon"></span>
+            <div class="store-text">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </div>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.alliedrxinstitute.school&pli=1" class="store-btn" target="_blank">
+            <span class="store-icon">▷</span>
+            <div class="store-text">
+              <small>Get it on</small>
+              <strong>Google Play</strong>
+            </div>
+          </a>
+        </div>
+
+        <p class="footer-text" style="text-align: left; margin-top: 10px;">
+          Already have the app? Sign in with your AlliedRx Academy email and password.
+        </p>
+      </div>
+
+      <!-- Phone Mockup -->
+      <div class="phone-mockup">
+        <div class="phone-wrapper">
+          <div class="phone-inner">
+            <header class="phone-header">
+              <div class="phone-time">3:01 PM</div>
+              <img
+                src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                class="phone-logo"
+                alt="AlliedRx"
+              />
+            </header>
+
+            <div class="phone-main">
+              <div class="phone-card">
+                <div class="phone-card-header">
+                  <div class="phone-card-title">This Week's Progress</div>
+                  <div class="phone-badge">Week 2</div>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--color-muted); margin-bottom: 12px;">
+                  Continue with your current modules
+                </p>
+                
+                <div class="phone-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <div style="font-size: 0.7rem; color: var(--color-muted); text-align: right; margin-top: 4px;">
+                    75% Complete
+                  </div>
+                </div>
+
+                <div class="phone-modules">
+                  <div class="module-item">
+                    <span class="module-name">Current Module</span>
+                    <span class="module-status">Completed</span>
+                  </div>
+                  <div class="module-item">
+                    <span class="module-name">Skills Lab</span>
+                    <span class="module-status">In Progress</span>
+                  </div>
+                  <div class="module-item">
+                    <span class="module-name">Next Module</span>
+                    <span class="module-status">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="flex: 1;"></div>
+
+              <div class="phone-nav">
+                <div class="nav-item active">
+                  <span class="nav-icon">🏠</span>
+                  <span>Home</span>
+                </div>
+                <div class="nav-item">
+                  <span class="nav-icon">📚</span>
+                  <span>Modules</span>
+                </div>
+                <div class="nav-item">
+                  <span class="nav-icon">👥</span>
+                  <span>Community</span>
+                </div>
+                <div class="nav-item">
+                  <span class="nav-icon">👤</span>
+                  <span>Profile</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section">
+      <h2 class="section-title">Everything You Need in One App</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Interactive Learning</h3>
+          <p class="feature-desc">Complete drag-and-drop activities, quizzes, and simulations just like on desktop.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3 class="feature-title">Real-Time Analytics</h3>
+          <p class="feature-desc">Track your progress, accuracy, and time spent on each module.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">Secure Login</h3>
+          <p class="feature-desc">Use your AlliedRx Academy credentials for seamless, secure access.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3 class="feature-title">Community Access</h3>
+          <p class="feature-desc">Connect with peers, share notes, and collaborate on your learning journey.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="testimonial-section">
+      <blockquote class="testimonial">
+        "The AlliedRx app lets me study during my commute and between classes. 
+        I can review procedures right before clinical rotations—it's like having 
+        my entire healthcare course in my pocket."
+      </blockquote>
+      <p class="testimonial-author">– Healthcare Student</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">
+        Sign in with your AlliedRx Academy email and password to access all features.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    // Simple animation for the phone mockup
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add click interaction to app store buttons
+      document.querySelectorAll('.store-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          // Add visual feedback
+          this.style.transform = 'scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+        });
+      });
+
+      // Animate program chips on hover
+      const programChips = document.querySelectorAll('.program-chip');
+      programChips.forEach(chip => {
+        chip.addEventListener('mouseenter', function() {
+          const allChips = document.querySelectorAll('.program-chip');
+          allChips.forEach(c => {
+            if (c !== this) {
+              c.style.opacity = '0.6';
+              c.style.transform = 'scale(0.95)';
+            }
+          });
+        });
+
+        chip.addEventListener('mouseleave', function() {
+          const allChips = document.querySelectorAll('.program-chip');
+          allChips.forEach(c => {
+            c.style.opacity = '1';
+            c.style.transform = 'scale(1)';
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
