@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chapter 15 Wrap-Up – Assisting in Gastroenterology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d9b8ff;
+            --color-accent: #8380f0;
+            --color-bg: #f7f5fb;
+            --color-text: #1e2030;
+            --color-muted: #727089;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 24px;
+            background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+                gap: 22px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+        }
+
+        img, .page, .column, .card, .side-card, .completion-card {
+            max-width: 100%;
+        }
+
+        .column {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / branding */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #00b894;
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 3vw, 2.3rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 36rem;
+            margin-bottom: 18px;
+        }
+
+        .subtitle strong {
+            color: var(--color-primary);
+        }
+
+        /* Sections */
+        .section-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .card {
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            padding: 14px 16px 16px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), rgba(255, 255, 255, 0.98));
+        }
+
+        .card + .card {
+            margin-top: 6px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+
+        .small {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Quiz styles */
+        .quiz-item {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.7);
+        }
+
+        .quiz-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.88rem;
+        }
+
+        .quiz-options li {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .quiz-options input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            font-size: 0.82rem;
+            margin-top: 5px;
+            min-height: 1.1em;
+        }
+
+        .quiz-feedback.correct {
+            color: #15803d;
+        }
+
+        .quiz-feedback.incorrect {
+            color: #b91c1c;
+        }
+
+        .btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            margin-top: 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+        }
+
+        /* Vocabulary */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vocab-card {
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: rgba(12, 10, 24, 0.94);
+            color: #e5e7eb;
+            font-size: 0.86rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-term {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fef9c3;
+        }
+
+        .vocab-definition {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .vocab-card.active .vocab-definition {
+            display: block;
+        }
+
+        .vocab-card::after {
+            content: "Tap to flip";
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a5b4fc;
+        }
+
+        .vocab-card.active::after {
+            content: "Hide";
+        }
+
+        /* Reflection */
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            padding: 10px 11px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
+            margin-top: 6px;
+        }
+
+        textarea:focus {
+            outline: 2px solid var(--color-primary-soft);
+            border-color: var(--color-primary);
+        }
+
+        .checklist {
+            list-style: none;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .checklist input {
+            margin-top: 2px;
+        }
+
+        /* Right column cards */
+        .side-card {
+            background: rgba(12, 10, 24, 0.96);
+            color: #e5e7eb;
+            border-radius: 18px;
+            padding: 16px 18px 18px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .side-card strong {
+            color: #ffffff;
+        }
+
+        .side-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #c4b5fd;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .side-list {
+            list-style: none;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .side-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 7px;
+            border-radius: 999px;
+            background: #a5b4fc;
+            flex-shrink: 0;
+        }
+
+        .completion-card {
+            border-radius: 18px;
+            border: 1px dashed rgba(148, 163, 184, 0.7);
+            padding: 12px 14px;
+            font-size: 0.84rem;
+            color: var(--color-muted);
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        /* Abdominal Quadrants */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .quadrant-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quadrant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quadrant-card.RUQ {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .quadrant-card.LUQ {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .quadrant-card.RLQ {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .quadrant-card.LLQ {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .quadrant-card.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .quadrant-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .quadrant-title::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .quadrant-card.RUQ .quadrant-title::before { background: #ef4444; }
+        .quadrant-card.LUQ .quadrant-title::before { background: #3b82f6; }
+        .quadrant-card.RLQ .quadrant-title::before { background: #10b981; }
+        .quadrant-card.LLQ .quadrant-title::before { background: #f59e0b; }
+
+        .quadrant-organs {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Diagnostic Procedures */
+        .procedure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .procedure-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .procedure-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .procedure-card.matched {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+        }
+
+        .procedure-card.selected {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .procedure-name {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .procedure-desc {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* GI Disorder Matching */
+        .disorder-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .disorder-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .disorder-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(175, 75, 239, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .disorder-info {
+            flex: 1;
+        }
+
+        .disorder-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        .disorder-symptoms {
+            font-size: 0.78rem;
+            color: var(--color-muted);
+        }
+
+        .disorder-select {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #cbd5e1;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .disorder-item.correct .disorder-select {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .disorder-item.incorrect .disorder-select {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="wrapup-heading">
+        <!-- LEFT COLUMN -->
+        <section class="column">
+            <header class="brand-row">
+                <div class="brand">
+                    <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" alt="AlliedRx logo" class="brand-logo" />
+                    <div class="course-meta">
+                        <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+                        <div class="week-label">
+                            <span class="week-label-dot"></span>
+                            <span>Chapter 15 Wrap-Up – Assisting in Gastroenterology</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="badge-mode">Interactive Review</span>
+            </header>
+
+            <h1 id="wrapup-heading">Gastroenterology & GI Care</h1>
+            <p class="subtitle">
+                Use this page to reinforce your understanding of <strong>Chapter 15 – Assisting in Gastroenterology</strong>. 
+                Review GI anatomy, diagnostic procedures, common disorders, and your role as an MA in gastroenterology practice.
+            </p>
+
+            <!-- QUICK SELF-CHECK QUIZ -->
+            <section aria-label="quick self check">
+                <p class="section-label">Step 1</p>
+                <h2 class="section-title">Clinical Knowledge Check</h2>
+                <div class="card" id="quiz-card">
+                    <p class="small">
+                        Test your understanding of GI conditions and MA responsibilities.
+                    </p>
+
+                    <div class="quiz-item" data-answer="b">
+                        <p class="quiz-question">
+                            1. A patient with <strong>hematemesis</strong> presents with:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q1" value="a" id="q1a" />
+                                <label for="q1a">Blood in the stool</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="b" id="q1b" />
+                                <label for="q1b">Vomiting of blood</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="c" id="q1c" />
+                                <label for="q1c">Yellowing of the skin</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            2. <strong>Peristalsis</strong> refers to:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q2" value="a" id="q2a" />
+                                <label for="q2a">Inflammation of the peritoneum</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="b" id="q2b" />
+                                <label for="q2b">Abnormal growth in the colon</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="c" id="q2c" />
+                                <label for="q2c">Rhythmic contractions moving food through GI tract</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="a">
+                        <p class="quiz-question">
+                            3. Which symptom would be most concerning for <strong>esophageal varices</strong>?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q3" value="a" id="q3a" />
+                                <label for="q3a">Bright red vomiting (hematemesis)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="b" id="q3b" />
+                                <label for="q3b">Mild heartburn after meals</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="c" id="q3c" />
+                                <label for="q3c">Occasional difficulty swallowing</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="b">
+                        <p class="quiz-question">
+                            4. The <strong>pyloric sphincter</strong> separates:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q4" value="a" id="q4a" />
+                                <label for="q4a">Esophagus from stomach</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="b" id="q4b" />
+                                <label for="q4b">Stomach from duodenum</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="c" id="q4c" />
+                                <label for="q4c">Ileum from colon</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q4-feedback"></div>
+                    </div>
+
+                    <button class="btn" type="button" onclick="checkQuiz()">Check answers</button>
+                </div>
+            </section>
+
+            <!-- ABDOMINAL QUADRANTS REVIEW -->
+            <section aria-label="abdominal quadrants practice">
+                <p class="section-label">Step 2</p>
+                <h2 class="section-title">Abdominal Quadrants & Organs</h2>
+                <div class="card">
+                    <p class="small">
+                        Click each quadrant to review the organs located there. Pay attention to common disorders associated with each area.
+                    </p>
+                    
+                    <div class="quadrant-grid">
+                        <div class="quadrant-card RUQ" onclick="selectQuadrant(this, 'RUQ')">
+                            <div class="quadrant-title">Right Upper Quadrant (RUQ)</div>
+                            <div class="quadrant-organs">Liver, gallbladder, duodenum, head of pancreas, right kidney</div>
+                        </div>
+                        
+                        <div class="quadrant-card LUQ" onclick="selectQuadrant(this, 'LUQ')">
+                            <div class="quadrant-title">Left Upper Quadrant (LUQ)</div>
+                            <div class="quadrant-organs">Stomach, spleen, left lobe of liver, body of pancreas, left kidney</div>
+                        </div>
+                        
+                        <div class="quadrant-card RLQ" onclick="selectQuadrant(this, 'RLQ')">
+                            <div class="quadrant-title">Right Lower Quadrant (RLQ)</div>
+                            <div class="quadrant-organs">Appendix, cecum, ascending colon, right ovary & fallopian tube</div>
+                        </div>
+                        
+                        <div class="quadrant-card LLQ" onclick="selectQuadrant(this, 'LLQ')">
+                            <div class="quadrant-title">Left Lower Quadrant (LLQ)</div>
+                            <div class="quadrant-organs">Sigmoid colon, descending colon, left ovary & fallopian tube</div>
+                        </div>
+                    </div>
+                    
+                    <div id="quadrant-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                </div>
+            </section>
+
+            <!-- DIAGNOSTIC PROCEDURES MATCHING -->
+            <section aria-label="diagnostic procedures matching">
+                <p class="section-label">Step 3</p>
+                <h2 class="section-title">GI Diagnostic Procedures</h2>
+                <div class="card">
+                    <p class="small">
+                        Match each diagnostic procedure with its primary purpose. Select a procedure, then select its description.
+                    </p>
+                    
+                    <div class="procedure-grid">
+                        <!-- Procedures -->
+                        <div class="procedure-card" data-procedure="egd" onclick="selectProcedure(this)">
+                            <div class="procedure-name">EGD (Esophagogastroduodenoscopy)</div>
+                        </div>
+                        <div class="procedure-card" data-procedure="colonoscopy" onclick="selectProcedure(this)">
+                            <div class="procedure-name">Colonoscopy</div>
+                        </div>
+                        <div class="procedure-card" data-procedure="bariumswallow" onclick="selectProcedure(this)">
+                            <div class="procedure-name">Barium Swallow/Upper GI Series</div>
+                        </div>
+                        <div class="procedure-card" data-procedure="fobt" onclick="selectProcedure(this)">
+                            <div class="procedure-name">Fecal Occult Blood Test (FOBT)</div>
+                        </div>
+                        
+                        <!-- Descriptions -->
+                        <div class="procedure-card" data-description="Visual exam of esophagus, stomach, duodenum with scope" onclick="selectDescription(this)">
+                            <div class="procedure-desc">Visual exam of esophagus, stomach, duodenum with scope</div>
+                        </div>
+                        <div class="procedure-card" data-description="Screening for hidden blood in stool; colon cancer screening" onclick="selectDescription(this)">
+                            <div class="procedure-desc">Screening for hidden blood in stool; colon cancer screening</div>
+                        </div>
+                        <div class="procedure-card" data-description="Visual exam of colon and rectum; can remove polyps" onclick="selectDescription(this)">
+                            <div class="procedure-desc">Visual exam of colon and rectum; can remove polyps</div>
+                        </div>
+                        <div class="procedure-card" data-description="X-ray with contrast to visualize upper GI tract" onclick="selectDescription(this)">
+                            <div class="procedure-desc">X-ray with contrast to visualize upper GI tract</div>
+                        </div>
+                    </div>
+                    
+                    <div id="procedure-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                    <button class="btn" type="button" onclick="checkProcedureMatching()" style="margin-top: 8px;">Check matches</button>
+                </div>
+            </section>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="column" aria-label="apply it to clinical practice">
+            <!-- JOAN ROTHMAN CASE STUDY -->
+            <section>
+                <p class="section-label">Apply it</p>
+                <h2 class="section-title">Joan Rothman's Gastroenterology Practice</h2>
+                <div class="side-card">
+                    <p class="side-subtitle">Case Scenario</p>
+                    <p>
+                        Joan Rothman, CMA (AAMA), works for Dr. Raj Sahani, a gastroenterologist. 
+                        Dr. Sahani has asked Joan to develop educational packets for common GI 
+                        diagnostic studies and help orient new staff members.
+                    </p>
+                    
+                    <p class="side-subtitle" style="margin-top:12px;">Patient Education Packets Needed:</p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>1. Colonoscopy Preparation:</strong> Patient needs clear instructions for bowel prep, diet restrictions, and medication management.
+                    </p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>2. Fecal Specimen Collection:</strong> Instructions for collecting stool samples for occult blood, O&P, or C. diff testing.
+                    </p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>3. Upper Endoscopy (EGD):</strong> Pre-procedure fasting instructions and post-procedure care.
+                    </p>
+                    
+                    <label class="small" for="joan-notes" style="display:block;margin-top:10px;">
+                        What key information should Joan include in each educational packet?
+                    </label>
+                    <textarea id="joan-notes" placeholder="Document: 1) Colonoscopy prep essentials, 2) Fecal collection do's & don'ts, 3) EGD patient instructions"></textarea>
+                </div>
+            </section>
+
+            <!-- GI DISORDERS TRIAGE -->
+            <section>
+                <p class="section-label">Step 4</p>
+                <h2 class="section-title">Telephone Screening for GI Complaints</h2>
+                <div class="side-card">
+                    <p>
+                        As an MA, you receive these phone calls. Identify which requires <strong>immediate attention</strong> vs <strong>routine scheduling</strong>.
+                    </p>
+                    
+                    <div class="disorder-grid">
+                        <div class="disorder-item" data-disorder="urgent" onclick="triageDisorder(this, 'correct')">
+                            <div class="disorder-icon">!</div>
+                            <div class="disorder-info">
+                                <div class="disorder-name">Severe abdominal pain + vomiting blood</div>
+                                <div class="disorder-symptoms">Patient reports bright red vomiting with intense abdominal pain</div>
+                            </div>
+                            <div class="disorder-select"></div>
+                        </div>
+                        
+                        <div class="disorder-item" data-disorder="routine" onclick="triageDisorder(this, 'correct')">
+                            <div class="disorder-icon">2</div>
+                            <div class="disorder-info">
+                                <div class="disorder-name">Chronic heartburn ×3 months</div>
+                                <div class="disorder-symptoms">Worse after meals, relieved with OTC antacids</div>
+                            </div>
+                            <div class="disorder-select"></div>
+                        </div>
+                        
+                        <div class="disorder-item" data-disorder="urgent" onclick="triageDisorder(this, 'correct')">
+                            <div class="disorder-icon">3</div>
+                            <div class="disorder-info">
+                                <div class="disorder-name">Jaundice + abdominal swelling</div>
+                                <div class="disorder-symptoms">Yellow skin/eyes with distended abdomen and shortness of breath</div>
+                            </div>
+                            <div class="disorder-select"></div>
+                        </div>
+                        
+                        <div class="disorder-item" data-disorder="routine" onclick="triageDisorder(this, 'correct')">
+                            <div class="disorder-icon">4</div>
+                            <div class="disorder-info">
+                                <div class="disorder-name">Alternating diarrhea/constipation</div>
+                                <div class="disorder-symptoms">No blood in stool, symptoms for 6 weeks, no weight loss</div>
+                            </div>
+                            <div class="disorder-select"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="triage-feedback" class="quiz-feedback" style="margin-top: 12px; color: #c4b5fd;"></div>
+                </div>
+            </section>
+
+            <!-- KEY VOCABULARY REVIEW -->
+            <section>
+                <p class="section-label">Step 5</p>
+                <h2 class="section-title">Chapter 15 Vocabulary</h2>
+                <div class="side-card">
+                    <div class="vocab-grid" style="background: transparent; gap: 8px;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Dysphagia</div>
+                            <div class="vocab-definition">Difficulty swallowing; common in esophageal disorders</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Ascites</div>
+                            <div class="vocab-definition">Abnormal fluid accumulation in peritoneal cavity; sign of liver disease</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Jaundice</div>
+                            <div class="vocab-definition">Yellowing of skin/mucous membranes from bile pigment deposition</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Hepatomegaly</div>
+                            <div class="vocab-definition">Abnormal liver enlargement; palpated in RUQ</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Fistula</div>
+                            <div class="vocab-definition">Abnormal connection between organs or to body surface</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Anastomosis</div>
+                            <div class="vocab-definition">Surgical connection between two structures (e.g., bowel segments)</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Polyps</div>
+                            <div class="vocab-definition">Mucosal outgrowths in colon; considered precancerous</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Valsalva Maneuver</div>
+                            <div class="vocab-definition">Straining against closed airway; increases abdominal pressure</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MA ROLE CHECKLIST -->
+            <section>
+                <p class="section-label">Step 6</p>
+                <h2 class="section-title">MA Responsibilities in Gastroenterology</h2>
+                <div class="completion-card">
+                    <p>
+                        Check off skills you feel confident performing in a gastroenterology practice:
+                    </p>
+                    
+                    <ul class="checklist" style="margin-top:10px;">
+                        <li>
+                            <input type="checkbox" id="role-1" />
+                            <label for="role-1">
+                                Provide clear <strong>colonoscopy prep instructions</strong> including diet and medication management
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-2" />
+                            <label for="role-2">
+                                Perform <strong>telephone triage</strong> for GI emergencies vs routine complaints
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-3" />
+                            <label for="role-3">
+                                Assist with <strong>endoscopic procedures</strong> (EGD, colonoscopy) including scope care
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-4" />
+                            <label for="role-4">
+                                Instruct patients on proper <strong>fecal specimen collection</strong> for various tests
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-5" />
+                            <label for="role-5">
+                                Explain <strong>liver function tests</strong> and hepatitis screening to patients
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-6" />
+                            <label for="role-6">
+                                Provide post-procedure care instructions for <strong>GI surgeries</strong> (ileostomy, etc.)
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-7" />
+                            <label for="role-7">
+                                Maintain <strong>infection control</strong> with contaminated GI specimens
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-8" />
+                            <label for="role-8">
+                                Document <strong>GI symptoms</strong> using appropriate medical terminology
+                            </label>
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(175, 75, 239, 0.05); border-radius: 8px;">
+                        <p class="small" style="margin-bottom: 6px;"><strong>Pro Tip from Joan Rothman:</strong></p>
+                        <p class="small" style="margin: 0;">
+                            "When explaining bowel prep, use visual aids and simple language. Many patients are anxious about colonoscopy. 
+                            Emphasize that clear liquid means you can read newspaper through it!"
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPLETION CHECKLIST -->
+            <section>
+                <p class="section-label">Ready to Move On?</p>
+                <h2 class="section-title">Chapter 15 Mastery Checklist</h2>
+                <div class="completion-card">
+                    <p>
+                        Confirm you can demonstrate these competencies before proceeding:
+                    </p>
+                    <ul class="side-list" style="margin-top:8px;">
+                        <li>
+                            <span class="dot"></span>
+                            <span>Name all <strong>abdominal quadrants</strong> and their associated organs</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Differentiate <strong>upper vs lower GI disorders</strong> and their symptoms</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Explain <strong>colonoscopy preparation</strong> and post-procedure care</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Identify <strong>urgent GI symptoms</strong> requiring immediate attention</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Describe <strong>liver function tests</strong> and hepatitis types (A, B, C)</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Perform <strong>fecal specimen collection</strong> instructions for various tests</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Assist with <strong>proctologic examinations</strong> maintaining patient dignity</span>
+                        </li>
+                    </ul>
+                    
+                    <p style="margin-top:12px;">
+                        Return to your course when ready for the next chapter.
+                    </p>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        // Quiz logic
+        function checkQuiz() {
+            const items = document.querySelectorAll('.quiz-item');
+            items.forEach((item, index) => {
+                const correct = item.getAttribute('data-answer');
+                const name = 'q' + (index + 1);
+                const selected = document.querySelector('input[name="' + name + '"]:checked');
+                const feedback = document.getElementById(name + '-feedback');
+                if (!selected) {
+                    feedback.textContent = 'Please select an answer.';
+                    feedback.className = 'quiz-feedback';
+                    return;
+                }
+                if (selected.value === correct) {
+                    feedback.textContent = 'Correct! ' + getQuizFeedback(index + 1, true);
+                    feedback.className = 'quiz-feedback correct';
+                } else {
+                    feedback.textContent = 'Review needed. ' + getQuizFeedback(index + 1, false);
+                    feedback.className = 'quiz-feedback incorrect';
+                }
+            });
+        }
+        
+        function getQuizFeedback(questionNum, isCorrect) {
+            const feedback = {
+                1: "Hematemesis = vomiting blood (bright red or coffee grounds). Melena = black tarry stool.",
+                2: "Peristalsis moves food through GI tract. Peritonitis = inflammation of peritoneum.",
+                3: "Esophageal varices can rupture causing life-threatening bleeding. Associated with liver cirrhosis.",
+                4: "Pyloric sphincter controls gastric emptying. LES = lower esophageal sphincter prevents reflux."
+            };
+            return feedback[questionNum] || (isCorrect ? "Good work!" : "Review this topic.");
+        }
+
+        // Vocabulary flip
+        function toggleVocab(card) {
+            card.classList.toggle('active');
+        }
+
+        // Abdominal Quadrants
+        function selectQuadrant(card, quadrant) {
+            document.querySelectorAll('.quadrant-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            const feedback = document.getElementById('quadrant-feedback');
+            const facts = {
+                RUQ: "Common disorders: cholecystitis (gallbladder), hepatitis (liver), duodenal ulcers.",
+                LUQ: "Common disorders: gastritis (stomach), pancreatitis, splenic injury/rupture.",
+                RLQ: "Common disorders: appendicitis, Crohn's disease, ovarian cysts/ectopic pregnancy.",
+                LLQ: "Common disorders: diverticulitis, ulcerative colitis, ovarian conditions."
+            };
+            
+            feedback.textContent = facts[quadrant] || "";
+            feedback.className = "quiz-feedback";
+        }
+
+        // Diagnostic Procedures Matching
+        let selectedProcedure = null;
+        let selectedDescription = null;
+        
+        function selectProcedure(card) {
+            document.querySelectorAll('.procedure-card[data-procedure]').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedProcedure = card.getAttribute('data-procedure');
+            checkProcedureMatch();
+        }
+        
+        function selectDescription(card) {
+            document.querySelectorAll('.procedure-card[data-description]').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedDescription = card.getAttribute('data-description');
+            checkProcedureMatch();
+        }
+        
+        function checkProcedureMatch() {
+            const feedback = document.getElementById('procedure-feedback');
+            if (!selectedProcedure || !selectedDescription) return;
+            
+            const correctMatches = {
+                egd: "Visual exam of esophagus, stomach, duodenum with scope",
+                colonoscopy: "Visual exam of colon and rectum; can remove polyps",
+                bariumswallow: "X-ray with contrast to visualize upper GI tract",
+                fobt: "Screening for hidden blood in stool; colon cancer screening"
+            };
+            
+            if (correctMatches[selectedProcedure] === selectedDescription) {
+                feedback.textContent = "✓ Correct match! " + getProcedureFact(selectedProcedure);
+                feedback.className = "quiz-feedback correct";
+                
+                // Mark as matched
+                document.querySelector(`.procedure-card[data-procedure="${selectedProcedure}"]`).classList.add('matched');
+                document.querySelector(`.procedure-card[data-description="${selectedDescription}"]`).classList.add('matched');
+                
+                // Reset selection
+                selectedProcedure = null;
+                selectedDescription = null;
+                document.querySelectorAll('.procedure-card.selected').forEach(c => c.classList.remove('selected'));
+            } else {
+                feedback.textContent = "Not quite. Try again!";
+                feedback.className = "quiz-feedback incorrect";
+            }
+        }
+        
+        function getProcedureFact(procedure) {
+            const facts = {
+                egd: "Used to diagnose GERD, ulcers, Barrett's esophagus. Requires fasting 6-8 hours prior.",
+                colonoscopy: "Gold standard for colon cancer screening. Recommended starting at age 45.",
+                bariumswallow: "Identifies strictures, hiatal hernias, swallowing disorders. May cause constipation.",
+                fobt: "Annual screening for average-risk patients. Positive test requires follow-up colonoscopy."
+            };
+            return facts[procedure] || "";
+        }
+        
+        function checkProcedureMatching() {
+            const feedback = document.getElementById('procedure-feedback');
+            const matched = document.querySelectorAll('.procedure-card.matched').length;
+            if (matched === 8) {
+                feedback.textContent = "🎉 Perfect! All diagnostic procedures correctly matched.";
+                feedback.className = "quiz-feedback correct";
+            } else {
+                feedback.textContent = `${matched/2}/4 matches correct. Keep practicing!`;
+                feedback.className = "quiz-feedback";
+            }
+        }
+
+        // GI Disorder Triage
+        function triageDisorder(element, correct) {
+            const item = element.closest('.disorder-item');
+            const isUrgent = item.getAttribute('data-disorder') === 'urgent';
+            
+            document.querySelectorAll('.disorder-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            
+            const feedback = document.getElementById('triage-feedback');
+            const title = item.querySelector('.disorder-name').textContent;
+            
+            if (correct === 'correct') {
+                feedback.textContent = `✓ Correct: ${title} is ${isUrgent ? 'URGENT' : 'routine'}. ` + getTriageExplanation(title);
+                feedback.style.color = '#22c55e';
+                
+                // Mark selection
+                item.classList.add(isUrgent ? 'urgent-selected' : 'routine-selected');
+            }
+        }
+        
+        function getTriageExplanation(title) {
+            const explanations = {
+                "Severe abdominal pain + vomiting blood": "Possible GI bleed → needs ER evaluation immediately.",
+                "Chronic heartburn ×3 months": "Schedule office visit for GERD evaluation.",
+                "Jaundice + abdominal swelling": "Possible liver failure/ascites → urgent evaluation needed.",
+                "Alternating diarrhea/constipation": "Schedule for IBS evaluation; rule out colorectal cancer."
+            };
+            return explanations[title] || "";
+        }
+    </script>
+</body>
+</html>
