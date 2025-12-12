@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- Module 16.3: Ethical Dilemmas & Patient Support in Urology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(175, 75, 239, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(175, 75, 239, 0.8); }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .page { padding: 22px; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row { flex-direction: column; align-items: flex-start; }
+            .badge-mode { margin-top: 6px; }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Progress Summary */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .summary-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid rgba(12, 10, 24, 0.06);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--color-primary-soft);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Activity Grid */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+
+        .activity-card.completed {
+            border-color: var(--color-success);
+        }
+
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .activity-description {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Activity 1: Ethics Scenarios */
+        .scenario-container {
+            margin-bottom: 25px;
+        }
+
+        .scenario {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .scenario-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scenario-icon {
+            font-size: 1.2rem;
+        }
+
+        .scenario-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .scenario-content strong {
+            color: var(--color-primary);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-label:hover {
+            background: rgba(175, 75, 239, 0.05);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .option-label.selected {
+            background: rgba(0, 184, 148, 0.08);
+            border-color: var(--color-success);
+        }
+
+        .option-label.incorrect {
+            background: rgba(225, 112, 85, 0.08);
+            border-color: var(--color-error);
+            animation: shake 0.5s ease;
+        }
+
+        .option-radio {
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .option-text {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        .submit-btn {
+            padding: 10px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(175, 75, 239, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Activity 1 Feedback */
+        .detailed-feedback {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .detailed-feedback.show {
+            display: block;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 1.3rem;
+        }
+
+        .feedback-icon.correct {
+            color: var(--color-success);
+        }
+
+        .feedback-icon.incorrect {
+            color: var(--color-error);
+        }
+
+        .feedback-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .feedback-section {
+            margin-bottom: 15px;
+        }
+
+        .feedback-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .feedback-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.5;
+            padding-left: 10px;
+            border-left: 3px solid var(--color-primary-soft);
+        }
+
+        .feedback-content strong {
+            color: var(--color-primary);
+        }
+
+        /* Activity 2: Patient Support Planner */
+        .patient-scenario {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .patient-age {
+            font-size: 0.8rem;
+            background: rgba(131, 128, 240, 0.1);
+            color: var(--color-accent);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .dropzones-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .dropzones-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .support-category {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            min-height: 200px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .support-category.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .support-category-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .support-category-subtitle {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .support-category-content {
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .support-category.empty::after {
+            content: 'DRAG RESOURCES HERE';
+            color: var(--color-muted);
+            font-size: 0.8rem;
+            text-align: center;
+            margin: auto;
+            opacity: 0.6;
+        }
+
+        /* Resource Items */
+        .resource-items-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .resource-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            user-select: none;
+        }
+
+        .resource-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .resource-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .resource-item.placed {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            cursor: default;
+        }
+
+        .resource-item.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: var(--color-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .results-panel.show {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .clinical-insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .insights-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary-soft);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 999px;
+            background: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        /* Legal Warning Box */
+        .legal-warning {
+            background: rgba(175, 75, 239, 0.08);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            animation: glow 3s infinite;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .warning-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Week 8</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Chapter 16: Urology & Male Reproduction</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus & Online</span>
+        </header>
+
+        <h1 id="module-heading">Ethical Dilemmas & Patient Support in Urology</h1>
+        <p class="module-subtitle">
+            Navigate complex HIPAA scenarios and develop comprehensive support plans for urology patients. 
+            Master ethical decision-making and patient-centered care coordination.
+        </p>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Ethics Scenarios</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Support Planning</div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <span class="summary-number" id="completed-count">0</span>
+                <span class="summary-label">Activities Completed</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="accuracy-rate">0%</span>
+                <span class="summary-label">Current Accuracy</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="time-spent">0:00</span>
+                <span class="summary-label">Time Spent</span>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Activity 1: Urology Ethics Scenario Response -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Urology Ethics Scenario Response</h3>
+                <p class="activity-description">
+                    Analyze HIPAA and ethical dilemmas in urology practice. Select the most appropriate response 
+                    for each scenario based on legal requirements and ethical principles.
+                </p>
+
+                <div class="legal-warning">
+                    <div class="warning-title">⚠️ LEGAL COMPLIANCE NOTE</div>
+                    <div class="warning-text">
+                        <strong>HIPAA violations can result in fines up to $50,000 per violation and civil penalties.</strong> 
+                        Always verify identity, obtain proper consent, and document all communications regarding 
+                        protected health information (PHI).
+                    </div>
+                </div>
+
+                <!-- Scenario 1 -->
+                <div class="scenario-container" id="scenario-1">
+                    <div class="scenario">
+                        <div class="scenario-title">
+                            <span class="scenario-icon">🔒</span>
+                            Scenario 1: STI Partner Notification Request
+                        </div>
+                        <div class="scenario-content">
+                            A 28-year-old male patient tests positive for chlamydia. His girlfriend calls the clinic 
+                            and demands to know his test results, stating "I have a right to know if he gave me something." 
+                            She is angry and threatening legal action.
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <label class="option-label" data-option="A">
+                            <input type="radio" name="scenario1" class="option-radio" value="A">
+                            <div class="option-text">
+                                Provide the test results to the girlfriend since she may have been exposed and has a legitimate health concern.
+                            </div>
+                        </label>
+                        <label class="option-label" data-option="B">
+                            <input type="radio" name="scenario1" class="option-radio" value="B">
+                            <div class="option-text">
+                                Inform the girlfriend that you cannot confirm or deny any patient information but suggest she get tested herself.
+                            </div>
+                        </label>
+                        <label class="option-label" data-option="C">
+                            <input type="radio" name="scenario1" class="option-radio" value="C">
+                            <div class="option-text">
+                                Contact the patient immediately and encourage him to notify his partner, offering to facilitate the conversation.
+                            </div>
+                        </label>
+                        <label class="option-label" data-option="D">
+                            <input type="radio" name="scenario1" class="option-radio" value="D">
+                            <div class="option-text">
+                                Tell the girlfriend to contact the health department, who can handle partner notification confidentially.
+                            </div>
+                        </label>
+                    </div>
+
+                    <button class="submit-btn" onclick="submitScenario(1)">
+                        <span class="btn-icon">✓</span>
+                        Submit Response
+                    </button>
+
+                    <!-- Detailed Feedback -->
+                    <div class="detailed-feedback" id="feedback-1">
+                        <div class="feedback-header">
+                            <span class="feedback-icon correct">✓</span>
+                            <div class="feedback-title">Scenario Analysis</div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Your Selection</div>
+                            <div class="feedback-content" id="selection-1"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Why This Is Correct/Incorrect</div>
+                            <div class="feedback-content" id="rationale-1"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Legal Rationale</div>
+                            <div class="feedback-content" id="legal-1"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Pro Tip for Clinical Practice</div>
+                            <div class="feedback-content" id="protip-1"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Documentation Note</div>
+                            <div class="feedback-content" id="documentation-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="scenario-container" id="scenario-2">
+                    <div class="scenario">
+                        <div class="scenario-title">
+                            <span class="scenario-icon">👨‍👩‍👧</span>
+                            Scenario 2: Family Request for Information
+                        </div>
+                        <div class="scenario-content">
+                            The adult daughter of a 72-year-old patient calls regarding her father's recent prostate biopsy results. 
+                            She states, "My dad doesn't understand his diagnosis and asked me to call for him." 
+                            The patient has not completed a release of information form.
+                        </div>
+                    </div>
+
+                    <div class="options-container">
+                        <label class="option-label" data-option="A">
+                            <input type="radio" name="scenario2" class="option-radio" value="A">
+                            <div class="option-text">
+                                Discuss the results with the daughter since she's family and the patient allegedly asked her to call.
+                            </div>
+                        </label>
+                        <label class="option-label" data-option="B">
+                            <input type="radio" name="scenario2" class="option-radio" value="B">
+                            <div class="option-text">
+                                Refuse to speak with the daughter and tell her only the patient can receive this information.
+                            </div>
+                        </label>
+                        <label class="option-label" data-option="C">
+                            <input type="radio" name="scenario2" class="option-radio" value="C">
+                            <div class="option-text">
+                                Ask the daughter to have her father call you directly, or schedule a family conference with proper consent.
+                            </div>
+                        </div>
+                        </label>
+                        <label class="option-label" data-option="D">
+                            <input type="radio" name="scenario2" class="option-radio" value="D">
+                            <div class="option-text">
+                                Verify the daughter's identity and relationship, then provide general information without specific results.
+                            </div>
+                        </label>
+                    </div>
+
+                    <button class="submit-btn" onclick="submitScenario(2)">
+                        <span class="btn-icon">✓</span>
+                        Submit Response
+                    </button>
+
+                    <div class="detailed-feedback" id="feedback-2">
+                        <div class="feedback-header">
+                            <span class="feedback-icon correct">✓</span>
+                            <div class="feedback-title">Scenario Analysis</div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Your Selection</div>
+                            <div class="feedback-content" id="selection-2"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Why This Is Correct/Incorrect</div>
+                            <div class="feedback-content" id="rationale-2"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Legal Rationale</div>
+                            <div class="feedback-content" id="legal-2"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Pro Tip for Clinical Practice</div>
+                            <div class="feedback-content" id="protip-2"></div>
+                        </div>
+                        
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Documentation Note</div>
+                            <div class="feedback-content" id="documentation-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 2: Patient Support & Education Planner -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Patient Support & Education Planner</h3>
+                <p class="activity-description">
+                    Develop comprehensive support plans for urology patients by dragging resources to the appropriate 
+                    support categories. Consider physical, emotional, and educational needs.
+                </p>
+
+                <!-- Patient Scenario -->
+                <div class="patient-scenario">
+                    <div class="patient-age">Patient: 65-year-old male</div>
+                    <div class="scenario-content">
+                        <strong>Scenario:</strong> Mr. Johnson was recently diagnosed with Benign Prostatic Hyperplasia (BPH). 
+                        He experiences nocturia 4-5 times nightly, urinary urgency, and weak stream. He's anxious about 
+                        potential surgery and says, "I'm too old for all this medical stuff." He lives alone and has 
+                        limited transportation options.
+                    </div>
+                </div>
+
+                <!-- Drop Zones -->
+                <div class="dropzones-container">
+                    <div class="support-category empty" data-category="physical" id="physical-category">
+                        <div class="support-category-title">Physical Support</div>
+                        <div class="support-category-subtitle">Daily living & practical assistance</div>
+                        <div class="support-category-content"></div>
+                    </div>
+                    
+                    <div class="support-category empty" data-category="emotional" id="emotional-category">
+                        <div class="support-category-title">Emotional Support</div>
+                        <div class="support-category-subtitle">Mental health & coping resources</div>
+                        <div class="support-category-content"></div>
+                    </div>
+                    
+                    <div class="support-category empty" data-category="educational" id="educational-category">
+                        <div class="support-category-title">Educational Materials</div>
+                        <div class="support-category-subtitle">Information & self-management tools</div>
+                        <div class="support-category-content"></div>
+                    </div>
+                </div>
+
+                <!-- Resource Items -->
+                <div class="resource-items-container" id="resource-items">
+                    <div class="resource-item draggable" data-correct="physical" draggable="true">Transportation assistance to urology appointments</div>
+                    <div class="resource-item draggable" data-correct="emotional" draggable="true">BPH support group referral (in-person or virtual)</div>
+                    <div class="resource-item draggable" data-correct="educational" draggable="true">BPH treatment options comparison chart</div>
+                    <div class="resource-item draggable" data-correct="physical" draggable="true">Medication organizer for alpha-blockers</div>
+                    <div class="resource-item draggable" data-correct="emotional" draggable="true">Referral to geriatric mental health counselor</div>
+                    <div class="resource-item draggable" data-correct="educational" draggable="true">Bladder diary template for symptom tracking</div>
+                    <div class="resource-item draggable" data-correct="physical" draggable="true">Bedside commode for nighttime accessibility</div>
+                    <div class="resource-item draggable" data-correct="emotional" draggable="true">Peer support from other BPH patients</div>
+                    <div class="resource-item draggable" data-correct="educational" draggable="true">Dietary modifications guide (caffeine/alcohol limits)</div>
+                </div>
+
+                <button class="submit-btn" onclick="checkSupportPlan()" id="check-support-btn">
+                    <span class="btn-icon">📋</span>
+                    Check Support Plan
+                </button>
+
+                <!-- Support Plan Feedback -->
+                <div class="detailed-feedback" id="feedback-support" style="margin-top: 20px;">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">✓</span>
+                        <div class="feedback-title">Support Plan Analysis</div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Comprehensive Care Approach</div>
+                        <div class="feedback-content">
+                            <strong>Physical Support:</strong> Addresses practical barriers to care (transportation, medication management, accessibility)<br>
+                            <strong>Emotional Support:</strong> Acknowledges anxiety and isolation through peer and professional support<br>
+                            <strong>Educational Support:</strong> Empowers patient through knowledge and self-management tools
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Clinical Rationale</div>
+                        <div class="feedback-content">
+                            Older adults with BPH often experience treatment adherence challenges due to multiple factors. 
+                            A comprehensive support plan addresses: <br>
+                            1. <strong>Practical barriers</strong> (transportation, cost, accessibility)<br>
+                            2. <strong>Psychological factors</strong> (anxiety, depression, stigma)<br>
+                            3. <strong>Knowledge gaps</strong> (treatment options, self-management)<br>
+                            This holistic approach improves outcomes and patient satisfaction.
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Documentation Requirements</div>
+                        <div class="feedback-content">
+                            1. Document all referrals with contact information and dates<br>
+                            2. Record patient education provided and materials distributed<br>
+                            3. Note patient's response to support recommendations<br>
+                            4. Schedule follow-up to assess effectiveness of support plan<br>
+                            5. Update care plan in EHR with support interventions
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-secondary" id="check-answers-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+            <button class="btn btn-primary" id="view-results-btn">
+                <span class="btn-icon">📊</span>
+                View Final Results
+            </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+            <div class="results-header">
+                <h2 class="results-title">Ethics & Support Planning Results</h2>
+                <div class="score-display" id="final-score">0%</div>
+            </div>
+
+            <div class="clinical-insights">
+                <h3 class="insights-title">
+                    <span>⚖️</span> Ethical Decision-Making Insights
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>HIPAA Compliance:</strong> Never disclose PHI without written authorization, even to family members. 
+                        Verify identity and obtain consent through proper channels.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>STI Disclosure:</strong> Healthcare providers cannot notify partners without patient consent. 
+                        Encourage patient disclosure and offer to facilitate conversations or involve health department.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Minors & Confidentiality:</strong> State laws vary for adolescent STI testing. 
+                        Many states allow confidential testing without parental consent for specific age ranges.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Workplace Ethics:</strong> Never access medical records without treatment purpose. 
+                        Report unauthorized access immediately - it's both an ethical violation and legal offense.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>🤝</span> Patient Support & Education Best Practices
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Comprehensive Assessment:</strong> Evaluate physical, emotional, AND educational needs. 
+                        Patients with urological conditions often experience all three dimensions.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Age-Appropriate Resources:</strong> Tailor support to life stage. Older adults may need 
+                        practical assistance (transportation), while younger patients may need emotional support.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Cultural Sensitivity:</strong> Consider cultural/religious beliefs about male reproductive 
+                        health. Some cultures have specific taboos or communication preferences.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Documentation:</strong> Record all support recommendations, referrals, and patient education. 
+                        This demonstrates comprehensive care and supports continuity.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 2, score: 0 },
+                    2: { completed: false, correct: 0, total: 9, score: 0 }
+                },
+                startedAt: new Date(),
+                timeSpent: 0,
+                scenarioAnswers: {
+                    1: null,
+                    2: null
+                },
+                supportPlacements: {
+                    physical: [],
+                    emotional: [],
+                    educational: []
+                }
+            };
+
+            // Correct answers
+            const correctAnswers = {
+                1: "C", // Contact patient and encourage notification
+                2: "C" // Schedule family conference with consent
+            };
+
+            // Resource correct categories
+            const resourceCategories = {
+                "Transportation assistance to urology appointments": "physical",
+                "BPH support group referral (in-person or virtual)": "emotional",
+                "BPH treatment options comparison chart": "educational",
+                "Medication organizer for alpha-blockers": "physical",
+                "Referral to geriatric mental health counselor": "emotional",
+                "Bladder diary template for symptom tracking": "educational",
+                "Bedside commode for nighttime accessibility": "physical",
+                "Peer support from other BPH patients": "emotional",
+                "Dietary modifications guide (caffeine/alcohol limits)": "educational"
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const completedCount = document.getElementById('completed-count');
+            const accuracyRate = document.getElementById('accuracy-rate');
+            const timeSpent = document.getElementById('time-spent');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkBtn = document.getElementById('check-answers-btn');
+            const resultsBtn = document.getElementById('view-results-btn');
+            const resultsPanel = document.getElementById('results-panel');
+            const finalScore = document.getElementById('final-score');
+
+            // Timer for time spent
+            function updateTimer() {
+                const now = new Date();
+                const diff = Math.floor((now - state.startedAt) / 1000);
+                state.timeSpent = diff;
+                const minutes = Math.floor(diff / 60);
+                const seconds = diff % 60;
+                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+
+            // Update Progress Summary
+            function updateProgressSummary() {
+                let completed = 0;
+                let totalCorrect = 0;
+                let totalItems = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                    totalCorrect += activity.correct;
+                    totalItems += activity.total;
+                });
+
+                completedCount.textContent = completed;
+                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+                accuracyRate.textContent = `${accuracy}%`;
+
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+
+            // Scenario Submission
+            window.submitScenario = function(scenarioNum) {
+                const selectedOption = document.querySelector(`input[name="scenario${scenarioNum}"]:checked`);
+                if (!selectedOption) {
+                    alert('Please select an option before submitting.');
+                    return;
+                }
+
+                const selectedValue = selectedOption.value;
+                const selectedLabel = document.querySelector(`label[data-option="${selectedValue}"] .option-text`).textContent;
+                const isCorrect = selectedValue === correctAnswers[scenarioNum];
+                
+                // Update state
+                state.scenarioAnswers[scenarioNum] = selectedValue;
+                state.activities[1].completed = Object.values(state.scenarioAnswers).every(answer => answer !== null);
+                state.activities[1].correct += isCorrect ? 1 : 0;
+                state.activities[1].score = Math.round((state.activities[1].correct / 2) * 100);
+
+                // Update UI
+                const feedback = document.getElementById(`feedback-${scenarioNum}`);
+                const status = document.querySelector('#activity-1 .activity-status');
+                
+                // Update feedback content
+                document.getElementById(`selection-${scenarioNum}`).innerHTML = 
+                    `<strong>${selectedValue}:</strong> ${selectedLabel}`;
+                
+                document.getElementById(`rationale-${scenarioNum}`).innerHTML = isCorrect ? 
+                    "Your selection correctly balances patient confidentiality with public health responsibility." :
+                    "This approach violates HIPAA regulations regarding disclosure of protected health information.";
+                
+                document.getElementById(`legal-${scenarioNum}`).innerHTML = scenarioNum === 1 ?
+                    "HIPAA 45 CFR §164.512: Permits disclosure without authorization for public health activities, but individual partner notification requires specific state laws or patient consent." :
+                    "HIPAA 45 CFR §164.510: Allows limited disclosure to family members involved in care, but specific diagnosis requires written authorization.";
+                
+                document.getElementById(`protip-${scenarioNum}`).innerHTML = scenarioNum === 1 ?
+                    "Use prepared scripts: 'I cannot discuss any patient's care without their permission. I recommend you speak directly with your partner or contact the health department for testing guidance.'" :
+                    "Keep HIPAA authorization forms readily available. Offer to mail/email one to the patient for completion with family member inclusion.";
+                
+                document.getElementById(`documentation-${scenarioNum}`).innerHTML = scenarioNum === 1 ?
+                    "Document: 'Phone call from individual identifying as patient's partner. Advised of inability to disclose PHI. Recommended partner testing. Offered to facilitate patient conversation.'" :
+                    "Document: 'Phone call from patient's daughter. Explained need for ROI. Offered family conference. Patient will call back to schedule.'";
+                
+                // Visual feedback
+                document.querySelectorAll(`#scenario-${scenarioNum} .option-label`).forEach(label => {
+                    label.classList.remove('selected', 'incorrect');
+                });
+                
+                const selectedLabelEl = document.querySelector(`#scenario-${scenarioNum} label[data-option="${selectedValue}"]`);
+                selectedLabelEl.classList.add(isCorrect ? 'selected' : 'incorrect');
+                
+                if (!isCorrect) {
+                    const correctLabel = document.querySelector(`#scenario-${scenarioNum} label[data-option="${correctAnswers[scenarioNum]}"]`);
+                    correctLabel.classList.add('selected');
+                }
+                
+                feedback.classList.add('show');
+                
+                // Disable radio buttons after submission
+                document.querySelectorAll(`#scenario-${scenarioNum} .option-radio`).forEach(radio => {
+                    radio.disabled = true;
+                });
+                
+                // Update submit button
+                const submitBtn = selectedLabelEl.closest('.scenario-container').querySelector('.submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+                
+                // Update activity status if both scenarios are complete
+                if (state.activities[1].completed) {
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                }
+                
+                updateProgressSummary();
+            };
+
+            // Support Planner Drag & Drop
+            function initSupportPlanner() {
+                const resourceItems = document.querySelectorAll('.resource-item.draggable');
+                const categories = document.querySelectorAll('.support-category');
+
+                // Setup drag and drop for resources
+                resourceItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            text: this.textContent,
+                            id: this.textContent
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop zones
+                categories.forEach(category => {
+                    category.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('hover');
+                    });
+
+                    category.addEventListener('dragleave', function() {
+                        this.classList.remove('hover');
+                    });
+
+                    category.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('hover');
+                        this.classList.remove('empty');
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const categoryType = this.dataset.category;
+                        
+                        // Check if item already placed
+                        const alreadyPlaced = Array.from(this.querySelectorAll('.resource-item'))
+                            .some(item => item.textContent === data.text);
+                        
+                        if (!alreadyPlaced) {
+                            // Create placed item
+                            const placedItem = document.createElement('div');
+                            placedItem.className = 'resource-item placed';
+                            placedItem.textContent = data.text;
+                            placedItem.draggable = false;
+                            
+                            // Check if placement is correct
+                            const correctCategory = resourceCategories[data.text];
+                            if (correctCategory !== categoryType) {
+                                placedItem.classList.add('incorrect');
+                            }
+                            
+                            this.querySelector('.support-category-content').appendChild(placedItem);
+                            
+                            // Hide original item
+                            const originalItem = Array.from(resourceItems).find(item => 
+                                item.textContent === data.text && item.style.display !== 'none'
+                            );
+                            if (originalItem) {
+                                originalItem.style.display = 'none';
+                            }
+                            
+                            // Track placement
+                            state.supportPlacements[categoryType].push(data.text);
+                        }
+                    });
+                });
+            }
+
+            // Check Support Plan
+            window.checkSupportPlan = function() {
+                let correctPlacements = 0;
+                let totalPlacements = 0;
+                
+                // Check each category
+                Object.keys(state.supportPlacements).forEach(category => {
+                    state.supportPlacements[category].forEach(item => {
+                        totalPlacements++;
+                        if (resourceCategories[item] === category) {
+                            correctPlacements++;
+                        }
+                    });
+                });
+                
+                // Update state
+                state.activities[2].completed = totalPlacements > 0;
+                state.activities[2].correct = correctPlacements;
+                state.activities[2].score = Math.round((correctPlacements / 9) * 100);
+                
+                // Update UI
+                const status = document.querySelector('#activity-2 .activity-status');
+                const feedback = document.getElementById('feedback-support');
+                const checkBtn = document.getElementById('check-support-btn');
+                
+                if (state.activities[2].completed) {
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    feedback.classList.add('show');
+                    checkBtn.disabled = true;
+                    checkBtn.textContent = `Plan Complete: ${state.activities[2].score}%`;
+                    
+                    // Disable dragging
+                    document.querySelectorAll('.resource-item.draggable').forEach(item => {
+                        item.draggable = false;
+                        item.style.cursor = 'default';
+                    });
+                }
+                
+                updateProgressSummary();
+            };
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                state.activities = {
+                    1: { completed: false, correct: 0, total: 2, score: 0 },
+                    2: { completed: false, correct: 0, total: 9, score: 0 }
+                };
+                state.scenarioAnswers = { 1: null, 2: null };
+                state.supportPlacements = { physical: [], emotional: [], educational: [] };
+
+                // Reset Activity 1
+                document.querySelectorAll('.option-label').forEach(label => {
+                    label.classList.remove('selected', 'incorrect');
+                });
+                
+                document.querySelectorAll('.option-radio').forEach(radio => {
+                    radio.checked = false;
+                    radio.disabled = false;
+                });
+                
+                document.querySelectorAll('.submit-btn').forEach(btn => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span class="btn-icon">✓</span> Submit Response';
+                });
+                
+                document.querySelectorAll('.detailed-feedback').forEach(feedback => {
+                    feedback.classList.remove('show');
+                });
+
+                // Reset Activity 2
+                document.querySelectorAll('.support-category-content').forEach(content => {
+                    content.innerHTML = '';
+                });
+                
+                document.querySelectorAll('.support-category').forEach(category => {
+                    category.classList.add('empty');
+                });
+                
+                document.querySelectorAll('.resource-item').forEach(item => {
+                    item.style.display = '';
+                    item.classList.remove('placed', 'incorrect');
+                    item.draggable = true;
+                });
+                
+                const checkSupportBtn = document.getElementById('check-support-btn');
+                checkSupportBtn.disabled = false;
+                checkSupportBtn.innerHTML = '<span class="btn-icon">📋</span> Check Support Plan';
+                
+                document.getElementById('feedback-support').classList.remove('show');
+
+                // Reset UI
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                });
+
+                // Reset results
+                resultsPanel.classList.remove('show');
+
+                updateProgressSummary();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 if not done
+                if (!state.activities[1].completed) {
+                    // Auto-select correct answers
+                    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                        if (radio.value === correctAnswers[1] && radio.name === 'scenario1') {
+                            radio.checked = true;
+                            radio.closest('.option-label').classList.add('selected');
+                            submitScenario(1);
+                        }
+                        if (radio.value === correctAnswers[2] && radio.name === 'scenario2') {
+                            radio.checked = true;
+                            radio.closest('.option-label').classList.add('selected');
+                            submitScenario(2);
+                        }
+                    });
+                }
+
+                // Complete Activity 2 if not done
+                if (!state.activities[2].completed) {
+                    // Auto-place all items in correct categories
+                    Object.keys(resourceCategories).forEach(item => {
+                        const category = resourceCategories[item];
+                        const categoryEl = document.getElementById(`${category}-category`);
+                        const originalItem = Array.from(document.querySelectorAll('.resource-item.draggable'))
+                            .find(el => el.textContent === item && el.style.display !== 'none');
+                        
+                        if (originalItem && categoryEl) {
+                            const placedItem = document.createElement('div');
+                            placedItem.className = 'resource-item placed';
+                            placedItem.textContent = item;
+                            
+                            categoryEl.querySelector('.support-category-content').appendChild(placedItem);
+                            categoryEl.classList.remove('empty');
+                            originalItem.style.display = 'none';
+                            
+                            state.supportPlacements[category].push(item);
+                        }
+                    });
+                    
+                    checkSupportPlan();
+                }
+            }
+
+            // View Final Results
+            function viewFinalResults() {
+                let totalScore = 0;
+                let activityCount = 0;
+                
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) {
+                        totalScore += activity.score;
+                        activityCount++;
+                    }
+                });
+                
+                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+                finalScore.textContent = `${averageScore}%`;
+                resultsPanel.classList.add('show');
+                
+                // Scroll to results
+                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Initialize
+            initSupportPlanner();
+            updateProgressSummary();
+
+            // Event Listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkBtn.addEventListener('click', checkAllAnswers);
+            resultsBtn.addEventListener('click', viewFinalResults);
+        });
+    </script>
+</body>
+</html>
