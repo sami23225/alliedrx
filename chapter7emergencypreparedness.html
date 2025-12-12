@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- Module 7.2: Emergency Preparedness & Disaster Response</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(175, 75, 239, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(175, 75, 239, 0.8); }
+        }
+
+        @keyframes emergencyFlash {
+            0%, 100% { background-color: rgba(225, 112, 85, 0.1); }
+            50% { background-color: rgba(225, 112, 85, 0.3); }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .page { padding: 22px; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row { flex-direction: column; align-items: flex-start; }
+            .badge-mode { margin-top: 6px; }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Progress Summary */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .summary-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid rgba(12, 10, 24, 0.06);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--color-primary-soft);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Activity Grid */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+
+        .activity-card.completed {
+            border-color: var(--color-success);
+        }
+
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .activity-description {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Activity 1: Emergency Response Priority Sorting */
+        .priority-instructions {
+            background: rgba(225, 112, 85, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--color-error);
+            animation: emergencyFlash 2s infinite;
+        }
+
+        .instructions-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .triage-zones-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .triage-zones-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .triage-zones-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .triage-zone {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            min-height: 200px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .triage-zone.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .triage-zone-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .triage-zone-color {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        .triage-zone.red .triage-zone-color { background: var(--color-error); }
+        .triage-zone.yellow .triage-zone-color { background: var(--color-warning); }
+        .triage-zone.green .triage-zone-color { background: var(--color-success); }
+        .triage-zone.black .triage-zone-color { background: var(--color-dark); }
+
+        .triage-zone-description {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            margin-bottom: 15px;
+            min-height: 40px;
+        }
+
+        .triage-zone-content {
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .triage-zone.empty::after {
+            content: 'DRAG PATIENTS HERE';
+            color: var(--color-muted);
+            font-size: 0.8rem;
+            text-align: center;
+            margin: auto;
+            opacity: 0.6;
+        }
+
+        /* Patient Cards */
+        .patient-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .patient-card {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            width: calc(50% - 6px);
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            user-select: none;
+            position: relative;
+        }
+
+        @media (max-width: 600px) {
+            .patient-card {
+                width: 100%;
+            }
+        }
+
+        .patient-card:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-3px);
+        }
+
+        .patient-card.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .patient-card.placed {
+            cursor: default;
+            padding: 12px;
+            font-size: 0.85rem;
+        }
+
+        .patient-symptom {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .patient-details {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            line-height: 1.4;
+        }
+
+        .patient-category-hint {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: help;
+        }
+
+        .patient-card:hover .patient-category-hint {
+            opacity: 1;
+        }
+
+        .patient-card[data-category="red"] .patient-category-hint {
+            background: var(--color-error);
+            color: white;
+        }
+
+        .patient-card[data-category="yellow"] .patient-category-hint {
+            background: var(--color-warning);
+            color: var(--color-text);
+        }
+
+        .patient-card[data-category="green"] .patient-category-hint {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .patient-card[data-category="black"] .patient-category-hint {
+            background: var(--color-dark);
+            color: white;
+        }
+
+        /* Category Explanation Modal */
+        .explanation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(12, 10, 24, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .explanation-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: fadeInUp 0.4s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-muted);
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-explanation {
+            margin-bottom: 25px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid currentColor;
+        }
+
+        .category-header.red { color: var(--color-error); }
+        .category-header.yellow { color: var(--color-warning); }
+        .category-header.green { color: var(--color-success); }
+        .category-header.black { color: var(--color-dark); }
+
+        .category-name {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .category-criteria {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            margin-bottom: 15px;
+            padding-left: 15px;
+        }
+
+        .category-criteria li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 5px;
+        }
+
+        .patient-examples {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .examples-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .patient-example {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .patient-example:before {
+            content: '🩺';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Activity 2: Disaster Supply Kit Builder */
+        .supply-kit-instructions {
+            background: rgba(0, 184, 148, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--color-success);
+        }
+
+        .supply-kit-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .supply-kit-container {
+                flex-direction: column;
+            }
+        }
+
+        .supply-categories {
+            flex: 1;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 2px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .supply-category {
+            margin-bottom: 20px;
+        }
+
+        .supply-category-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .supply-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .supply-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            user-select: none;
+            position: relative;
+        }
+
+        .supply-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .supply-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .supply-item.placed {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            cursor: default;
+        }
+
+        .supply-item.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+        }
+
+        .supply-importance {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: var(--color-warning);
+            color: var(--color-text);
+        }
+
+        .kit-display {
+            flex: 1;
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            min-height: 400px;
+            position: relative;
+        }
+
+        .kit-display.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .kit-display.empty::after {
+            content: 'BUILD YOUR DISASTER SUPPLY KIT HERE';
+            color: var(--color-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+        }
+
+        .kit-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        /* Feedback */
+        .detailed-feedback {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .detailed-feedback.show {
+            display: block;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-icon {
+            font-size: 1.3rem;
+        }
+
+        .feedback-icon.correct {
+            color: var(--color-success);
+        }
+
+        .feedback-icon.incorrect {
+            color: var(--color-error);
+        }
+
+        .feedback-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .feedback-section {
+            margin-bottom: 15px;
+        }
+
+        .feedback-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .feedback-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.5;
+            padding-left: 10px;
+            border-left: 3px solid var(--color-primary-soft);
+        }
+
+        .feedback-content strong {
+            color: var(--color-primary);
+        }
+
+        /* Patient-Specific Feedback */
+        .patient-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .patient-feedback-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .patient-analysis {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+
+        .patient-analysis.correct {
+            color: var(--color-success);
+            border-left: 3px solid var(--color-success);
+        }
+
+        .patient-analysis.incorrect {
+            color: var(--color-error);
+            border-left: 3px solid var(--color-error);
+        }
+
+        /* Emergency Protocol Box */
+        .emergency-protocol {
+            background: rgba(225, 112, 85, 0.08);
+            border: 2px solid var(--color-error);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            animation: glow 2s infinite;
+        }
+
+        .protocol-icon {
+            font-size: 1.5rem;
+            color: var(--color-error);
+            flex-shrink: 0;
+        }
+
+        .protocol-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 5px;
+        }
+
+        .protocol-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: var(--color-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .results-panel.show {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .clinical-insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .insights-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary-soft);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 999px;
+            background: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        /* Timer Display for Emergency Response */
+        .emergency-timer {
+            background: rgba(225, 112, 85, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid var(--color-error);
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-error);
+            font-family: monospace;
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Help Button */
+        .help-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .help-button:hover {
+            background: #9a3bd6;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Week 4</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Chapter 7: Emergency Preparedness</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus & Online</span>
+        </header>
+
+        <h1 id="module-heading">Emergency Preparedness & Disaster Response</h1>
+        <p class="module-subtitle">
+            Master mass casualty triage systems and build comprehensive disaster supply kits. 
+            Develop critical decision-making skills for emergency situations in clinical settings.
+        </p>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Mass Casualty Triage</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Disaster Supply Kit</div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <span class="summary-number" id="completed-count">0</span>
+                <span class="summary-label">Activities Completed</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="accuracy-rate">0%</span>
+                <span class="summary-label">Current Accuracy</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="time-spent">0:00</span>
+                <span class="summary-label">Time Spent</span>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Activity 1: Mass Casualty Triage Priority Sorting -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <button class="help-button" onclick="showTriageExplanation()">?</button>
+                
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Mass Casualty Triage Priority Sorting</h3>
+                <p class="activity-description">
+                    Sort patients into correct triage categories using the START (Simple Triage and Rapid Treatment) system. 
+                    Make rapid decisions under simulated time pressure.
+                </p>
+
+                <div class="emergency-timer">
+                    <div class="timer-display" id="triage-timer">03:00</div>
+                    <div class="timer-label">TRIAGE DECISION TIME</div>
+                </div>
+
+                <div class="priority-instructions">
+                    <div class="instructions-title">
+                        <span>🚨</span>
+                        START Triage System Protocol
+                    </div>
+                    <div class="instructions-content">
+                        <strong>30-Second Assessment Per Patient:</strong> Assess breathing, perfusion, and mental status. 
+                        <strong>Red (Immediate):</strong> Critical but salvageable with immediate care. 
+                        <strong>Yellow (Delayed):</strong> Serious but stable for 45-60 minutes. 
+                        <strong>Green (Walking Wounded):</strong> Minor injuries, can wait. 
+                        <strong>Black (Deceased/Expectant):</strong> Non-salvageable or deceased.
+                    </div>
+                </div>
+
+                <!-- Triage Zones -->
+                <div class="triage-zones-container">
+                    <div class="triage-zone red empty" data-category="red" id="red-zone">
+                        <div class="triage-zone-color"></div>
+                        <div class="triage-zone-title">RED • IMMEDIATE</div>
+                        <div class="triage-zone-description">
+                            Critical injuries requiring immediate intervention. Salvageable with rapid treatment.
+                        </div>
+                        <div class="triage-zone-content"></div>
+                    </div>
+                    
+                    <div class="triage-zone yellow empty" data-category="yellow" id="yellow-zone">
+                        <div class="triage-zone-color"></div>
+                        <div class="triage-zone-title">YELLOW • DELAYED</div>
+                        <div class="triage-zone-description">
+                            Serious injuries but stable for 45-60 minutes. Requires treatment but not immediately life-threatening.
+                        </div>
+                        <div class="triage-zone-content"></div>
+                    </div>
+                    
+                    <div class="triage-zone green empty" data-category="green" id="green-zone">
+                        <div class="triage-zone-color"></div>
+                        <div class="triage-zone-title">GREEN • MINIMAL</div>
+                        <div class="triage-zone-description">
+                            Walking wounded with minor injuries. Can wait for treatment, may assist with other patients.
+                        </div>
+                        <div class="triage-zone-content"></div>
+                    </div>
+                    
+                    <div class="triage-zone black empty" data-category="black" id="black-zone">
+                        <div class="triage-zone-color"></div>
+                        <div class="triage-zone-title">BLACK • EXPECTANT</div>
+                        <div class="triage-zone-description">
+                            Deceased or injuries too severe for available resources. Non-salvageable under current conditions.
+                        </div>
+                        <div class="triage-zone-content"></div>
+                    </div>
+                </div>
+
+                <!-- Patient Cards -->
+                <div class="patient-cards-container" id="patient-cards">
+                    <div class="patient-card draggable" data-category="yellow" draggable="true" data-patient="1">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Compound Fracture - Femur</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 22, Pulse 110, Can follow commands<br>
+                            <strong>Assessment:</strong> Open fracture with bleeding controlled by pressure dressing
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="red" draggable="true" data-patient="2">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Severe Chest Trauma</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 8, Pulse 140, Pallor, Cyanotic lips<br>
+                            <strong>Assessment:</strong> Flail chest, paradoxical breathing, decreasing consciousness
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="green" draggable="true" data-patient="3">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Minor Laceration - Forearm</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 18, Pulse 88, Alert and oriented<br>
+                            <strong>Assessment:</strong> 3cm laceration, bleeding controlled, walking without assistance
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="black" draggable="true" data-patient="4">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Massive Head Trauma</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> No spontaneous breathing, Pulse 40 and weakening<br>
+                            <strong>Assessment:</strong> Open skull fracture, brain matter visible, unresponsive to pain
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="yellow" draggable="true" data-patient="5">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Abdominal Injury - Suspected Internal Bleeding</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 24, Pulse 120, Abdominal rigidity<br>
+                            <strong>Assessment:</strong> Conscious but pale, seatbelt bruising across abdomen
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="red" draggable="true" data-patient="6">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Airway Obstruction</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 6 with stridor, Pulse 150, Using accessory muscles<br>
+                            <strong>Assessment:</strong> Unable to speak, clutching throat, decreasing air movement
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="green" draggable="true" data-patient="7">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Minor Burn - Hand</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 16, Pulse 76, Alert<br>
+                            <strong>Assessment:</strong> 2nd degree burn on palm, 2% body surface area, walking normally
+                        </div>
+                    </div>
+                    
+                    <div class="patient-card draggable" data-category="yellow" draggable="true" data-patient="8">
+                        <div class="patient-category-hint" title="Click for explanation">?</div>
+                        <div class="patient-symptom">Multiple Rib Fractures</div>
+                        <div class="patient-details">
+                            <strong>Vitals:</strong> RR 28 with shallow breaths, Pulse 108<br>
+                            <strong>Assessment:</strong> Chest wall tenderness, guarding, but oxygenating adequately
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkTriageSorting()" id="check-triage-btn">
+                    <span class="btn-icon">🚑</span>
+                    Complete Triage Assessment
+                </button>
+
+                <!-- Triage Feedback -->
+                <div class="detailed-feedback" id="feedback-triage" style="margin-top: 20px;">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">⚠️</span>
+                        <div class="feedback-title">Triage Assessment Analysis</div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">START System Application</div>
+                        <div class="feedback-content">
+                            <strong>Step 1 - Breathing:</strong> If not breathing, open airway. If still not breathing → BLACK.<br>
+                            <strong>Step 2 - Respiratory Rate:</strong> >30 → RED (immediate). <30 → assess perfusion.<br>
+                            <strong>Step 3 - Perfusion:</strong> Capillary refill >2 seconds → RED. ≤2 seconds → assess mental status.<br>
+                            <strong>Step 4 - Mental Status:</strong> Cannot follow simple commands → RED. Can follow commands → YELLOW.<br>
+                            <strong>Step 5 - Walking Wounded:</strong> Anyone who can walk to treatment area → GREEN.
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Critical Decision Points</div>
+                        <div class="feedback-content">
+                            • <strong>Airway obstruction with stridor:</strong> RED - Requires immediate surgical airway<br>
+                            • <strong>Flail chest with hypoxia:</strong> RED - Requires chest tube and ventilation<br>
+                            • <strong>Open fracture with controlled bleeding:</strong> YELLOW - Pain management, antibiotics<br>
+                            • <strong>Unsalvageable head trauma:</strong> BLACK - Resource allocation decision<br>
+                            • <strong>Minor injuries walking:</strong> GREEN - Can assist with other patients
+                        </div>
+                    </div>
+                    
+                    <!-- Patient-Specific Feedback will be inserted here -->
+                    <div id="patient-specific-feedback"></div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Mass Casualty Mindset</div>
+                        <div class="feedback-content">
+                            "Do the greatest good for the greatest number." In true mass casualty incidents, 
+                            BLACK category patients receive only comfort care. Resources are directed to RED 
+                            (salvageable) patients first. Document triage decisions with colored tags and 
+                            initial assessments.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 2: Disaster Supply Kit Builder -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Disaster Supply Kit Builder</h3>
+                <p class="activity-description">
+                    Build a comprehensive 72-hour disaster supply kit for a clinical office. 
+                    Select essential items across multiple categories for emergency preparedness.
+                </p>
+
+                <div class="supply-kit-instructions">
+                    <div class="instructions-title">
+                        <span>🛡️</span>
+                        OSHA & CDC Guidelines for Clinical Emergency Kits
+                    </div>
+                    <div class="instructions-content">
+                        <strong>72-Hour Minimum:</strong> Kit must sustain clinical operations for 3 days minimum. 
+                        <strong>Dual Use:</strong> Consider both staff needs and patient care requirements. 
+                        <strong>Rotation Schedule:</strong> Medical supplies expire - establish quarterly checks. 
+                        <strong>Accessibility:</strong> Store in designated, accessible location with inventory list.
+                    </div>
+                </div>
+
+                <div class="supply-kit-container">
+                    <!-- Supply Categories -->
+                    <div class="supply-categories">
+                        <div class="supply-category">
+                            <div class="supply-category-title">Medical Supplies</div>
+                            <div class="supply-items">
+                                <div class="supply-item draggable" data-category="medical" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Basic first aid kit with trauma supplies
+                                </div>
+                                <div class="supply-item draggable" data-category="medical" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Prescription medications (72-hour supply)
+                                </div>
+                                <div class="supply-item draggable" data-category="medical" draggable="true" data-importance="essential">
+                                    <span class="supply-importance">ESSENTIAL</span>
+                                    AED with extra batteries
+                                </div>
+                                <div class="supply-item draggable" data-category="medical" draggable="true" data-importance="optional">
+                                    <span class="supply-importance">OPTIONAL</span>
+                                    Portable oxygen tank (if applicable)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="supply-category">
+                            <div class="supply-category-title">Communication & Documentation</div>
+                            <div class="supply-items">
+                                <div class="supply-item draggable" data-category="communication" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Battery-powered radio with NOAA weather band
+                                </div>
+                                <div class="supply-item draggable" data-category="communication" draggable="true" data-importance="essential">
+                                    <span class="supply-importance">ESSENTIAL</span>
+                                    Satellite phone or two-way radios
+                                </div>
+                                <div class="supply-item draggable" data-category="communication" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Waterproof patient roster with contact info
+                                </div>
+                                <div class="supply-item draggable" data-category="communication" draggable="true" data-importance="essential">
+                                    <span class="supply-importance">ESSENTIAL</span>
+                                    Paper forms for manual documentation
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="supply-category">
+                            <div class="supply-category-title">Survival Essentials</div>
+                            <div class="supply-items">
+                                <div class="supply-item draggable" data-category="survival" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Water (1 gallon per person per day)
+                                </div>
+                                <div class="supply-item draggable" data-category="survival" draggable="true" data-importance="critical">
+                                    <span class="supply-importance">CRITICAL</span>
+                                    Non-perishable food (3-day supply)
+                                </div>
+                                <div class="supply-item draggable" data-category="survival" draggable="true" data-importance="essential">
+                                    <span class="supply-importance">ESSENTIAL</span>
+                                    Flashlights with extra batteries
+                                </div>
+                                <div class="supply-item draggable" data-category="survival" draggable="true" data-importance="essential">
+                                    <span class="supply-importance">ESSENTIAL</span>
+                                    Emergency blankets and warmth supplies
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kit Display -->
+                    <div class="kit-display empty" id="kit-display">
+                        <div class="kit-items-grid"></div>
+                    </div>
+                </div>
+
+                <div class="emergency-protocol">
+                    <div class="protocol-title">⚠️ CRITICAL ITEMS OFTEN MISSED</div>
+                    <div class="protocol-text">
+                        <strong>Most commonly forgotten:</strong> Manual blood pressure cuff (electronic fails without power), 
+                        hard copy of emergency protocols, staff contact tree, battery-powered fan (for heat emergencies), 
+                        entertainment items (for extended shelter-in-place), cash (ATMs may not work), portable phone charger.
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkSupplyKit()" id="check-supply-btn">
+                    <span class="btn-icon">📦</span>
+                    Complete Supply Kit
+                </button>
+
+                <!-- Supply Kit Feedback -->
+                <div class="detailed-feedback" id="feedback-supply" style="margin-top: 20px;">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">✅</span>
+                        <div class="feedback-title">Supply Kit Evaluation</div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Essential Categories Checklist</div>
+                        <div class="feedback-content">
+                            <strong>Medical (Patient Care):</strong> Trauma supplies, medications, diagnostic equipment<br>
+                            <strong>Communication (Coordination):</strong> Redundant systems, patient info, emergency contacts<br>
+                            <strong>Survival (Staff Safety):</strong> Water, food, shelter, power alternatives<br>
+                            <strong>Documentation (Continuity):</strong> Paper forms, protocols, staff assignments<br>
+                            <strong>Sanitation (Infection Control):</strong> Hand sanitizer, waste bags, cleaning supplies
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Clinical Office Specifics</div>
+                        <div class="feedback-content">
+                            • <strong>Patient medications:</strong> Keep 72-hour supply of commonly prescribed drugs<br>
+                            • <strong>Vaccine refrigeration:</strong> Temperature monitor and cold storage plan<br>
+                            • <strong>Medical records:</strong> Backup system (cloud or portable drive)<br>
+                            • <strong>Durable medical equipment:</strong> Extra wheelchairs, walkers, oxygen<br>
+                            • <strong>Staff comfort:</strong> Change of clothes, personal medications, comfort items
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="feedback-section-title">Maintenance & Training Schedule</div>
+                        <div class="feedback-content">
+                            1. <strong>Monthly:</strong> Check battery-powered equipment<br>
+                            2. <strong>Quarterly:</strong> Rotate water and food supplies<br>
+                            3. <strong>Semi-annually:</strong> Review and update emergency contacts<br>
+                            4. <strong>Annually:</strong> Full kit inventory and staff training drill<br>
+                            5. <strong>After each use:</strong> Restock and document lessons learned
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-secondary" id="check-answers-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+            <button class="btn btn-primary" id="view-results-btn">
+                <span class="btn-icon">📊</span>
+                View Final Results
+            </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+            <div class="results-header">
+                <h2 class="results-title">Emergency Preparedness Competency Results</h2>
+                <div class="score-display" id="final-score">0%</div>
+            </div>
+
+            <div class="clinical-insights">
+                <h3 class="insights-title">
+                    <span>🚑</span> Mass Casualty Response Insights
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Triage Efficiency:</strong> START system assessment should take ≤30 seconds per patient. 
+                        Practice increases speed without sacrificing accuracy. Use mnemonics: RPM (Respirations, Perfusion, Mental status).</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Resource Allocation:</strong> In true disasters, expect 50-60% walking wounded (GREEN), 
+                        30-35% delayed (YELLOW), 10-15% immediate (RED), and 0-5% expectant (BLACK). Adjust staffing accordingly.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Psychological First Aid:</strong> Include mental health resources in disaster planning. 
+                        Staff may experience moral injury from triage decisions. Debriefing is essential post-event.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Communication Protocols:</strong> Establish redundant systems (radio, satellite, runners). 
+                        Use common terminology: "Mayday" for life-threatening, "Pan-Pan" for urgent but not immediately life-threatening.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>🛡️</span> Disaster Preparedness Best Practices
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Kit Customization:</strong> Tailor supplies to your patient population. Pediatric practices need 
+                        child-sized equipment. Geriatric practices need mobility aids. Allergist offices need epinephrine stores.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Staff Training:</strong> Conduct quarterly drills covering different scenarios (fire, active shooter, 
+                        weather, utility failure). Include "just-in-time" training cards in emergency kits.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Community Integration:</strong> Coordinate with local emergency management. Know evacuation routes, 
+                        shelter locations, and how to request additional resources through proper channels.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Documentation Standards:</strong> Use waterproof paper. Document: Patient name, triage category, 
+                        interventions provided, and destination. This supports continuity and potential legal requirements.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Triage Explanation Modal -->
+        <div class="explanation-modal" id="triage-explanation-modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="hideTriageExplanation()">×</button>
+                <div class="modal-title">
+                    <span>📋</span>
+                    START Triage System - Category Explanations
+                </div>
+
+                <div class="category-explanation">
+                    <div class="category-header red">
+                        <span>🔴</span>
+                        <div class="category-name">RED - IMMEDIATE</div>
+                    </div>
+                    <ul class="category-criteria">
+                        <li><strong>Breathing:</strong> Respiratory rate >30 OR airway obstruction</li>
+                        <li><strong>Perfusion:</strong> Capillary refill >2 seconds OR no radial pulse</li>
+                        <li><strong>Mental Status:</strong> Unable to follow simple commands</li>
+                        <li><strong>Examples:</strong> Uncontrolled hemorrhage, tension pneumothorax, obstructed airway</li>
+                    </ul>
+                    <div class="patient-examples">
+                        <div class="examples-title">PATIENTS IN THIS CATEGORY:</div>
+                        <div class="patient-example"><strong>Severe Chest Trauma:</strong> RR 8 (needs airway), cyanotic, decreasing consciousness → RED</div>
+                        <div class="patient-example"><strong>Airway Obstruction:</strong> RR 6 with stridor, using accessory muscles → RED</div>
+                    </div>
+                </div>
+
+                <div class="category-explanation">
+                    <div class="category-header yellow">
+                        <span>🟡</span>
+                        <div class="category-name">YELLOW - DELAYED</div>
+                    </div>
+                    <ul class="category-criteria">
+                        <li><strong>Breathing:</strong> Respiratory rate 10-30</li>
+                        <li><strong>Perfusion:</strong> Capillary refill ≤2 seconds</li>
+                        <li><strong>Mental Status:</strong> Can follow simple commands</li>
+                        <li><strong>Examples:</strong> Major fractures, large wounds with controlled bleeding, abdominal injuries without shock</li>
+                    </ul>
+                    <div class="patient-examples">
+                        <div class="examples-title">PATIENTS IN THIS CATEGORY:</div>
+                        <div class="patient-example"><strong>Compound Fracture - Femur:</strong> RR 22, follows commands, controlled bleeding → YELLOW</div>
+                        <div class="patient-example"><strong>Abdominal Injury:</strong> RR 24, pulse 120, conscious, abdominal rigidity → YELLOW</div>
+                        <div class="patient-example"><strong>Multiple Rib Fractures:</strong> RR 28, shallow but adequate oxygenation → YELLOW</div>
+                    </div>
+                </div>
+
+                <div class="category-explanation">
+                    <div class="category-header green">
+                        <span>🟢</span>
+                        <div class="category-name">GREEN - MINIMAL/WALKING WOUNDED</div>
+                    </div>
+                    <ul class="category-criteria">
+                        <li><strong>Walking:</strong> Able to walk to treatment area</li>
+                        <li><strong>Injuries:</strong> Minor injuries only</li>
+                        <li><strong>Examples:</strong> Small lacerations, minor burns, sprains, contusions</li>
+                        <li><strong>Note:</strong> Can often assist with other patients</li>
+                    </ul>
+                    <div class="patient-examples">
+                        <div class="examples-title">PATIENTS IN THIS CATEGORY:</div>
+                        <div class="patient-example"><strong>Minor Laceration - Forearm:</strong> RR 18, alert, walking without assistance → GREEN</div>
+                        <div class="patient-example"><strong>Minor Burn - Hand:</strong> RR 16, alert, 2% BSA burn, walking normally → GREEN</div>
+                    </div>
+                </div>
+
+                <div class="category-explanation">
+                    <div class="category-header black">
+                        <span>⚫</span>
+                        <div class="category-name">BLACK - EXPECTANT/DECEASED</div>
+                    </div>
+                    <ul class="category-criteria">
+                        <li><strong>Breathing:</strong> Apneic after airway positioning</li>
+                        <li><strong>Injuries:</strong> Clearly non-survivable under current conditions</li>
+                        <li><strong>Examples:</strong> Massive head trauma with exposed brain, cardiac arrest in trauma, extensive burns >95%</li>
+                        <li><strong>Note:</strong> In mass casualty, resources go to salvageable patients first</li>
+                    </ul>
+                    <div class="patient-examples">
+                        <div class="examples-title">PATIENTS IN THIS CATEGORY:</div>
+                        <div class="patient-example"><strong>Massive Head Trauma:</strong> No spontaneous breathing, open skull fracture with brain visible → BLACK</div>
+                    </div>
+                </div>
+
+                <div class="emergency-protocol" style="margin-top: 20px;">
+                    <div class="protocol-title">🎯 TRIAGE DECISION FLOWCHART</div>
+                    <div class="protocol-text">
+                        1. <strong>Can they walk?</strong> Yes → GREEN<br>
+                        2. <strong>Are they breathing?</strong> No → Position airway. Still no → BLACK<br>
+                        3. <strong>Respiratory rate?</strong> >30 → RED<br>
+                        4. <strong>Perfusion?</strong> Capillary refill >2 seconds → RED<br>
+                        5. <strong>Mental status?</strong> Cannot follow commands → RED<br>
+                        6. <strong>All others:</strong> YELLOW
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 8, score: 0 },
+                    2: { completed: false, correct: 0, total: 12, score: 0 }
+                },
+                startedAt: new Date(),
+                timeSpent: 0,
+                triagePlacements: {
+                    red: [],
+                    yellow: [],
+                    green: [],
+                    black: []
+                },
+                supplyPlacements: [],
+                triageTimer: null,
+                triageTimeLeft: 180, // 3 minutes in seconds
+                timerRunning: false
+            };
+
+            // Correct triage categories for patients with detailed explanations
+            const patientCategories = {
+                "Compound Fracture - Femur": {
+                    category: "yellow",
+                    explanation: "YELLOW - RR 22 (normal range), follows commands, bleeding controlled. Serious but stable for 45-60 minutes."
+                },
+                "Severe Chest Trauma": {
+                    category: "red",
+                    explanation: "RED - RR 8 (needs airway support), cyanotic, decreasing consciousness. Requires immediate intervention."
+                },
+                "Minor Laceration - Forearm": {
+                    category: "green",
+                    explanation: "GREEN - Walking wounded, minor injury, vital signs normal. Can wait for treatment."
+                },
+                "Massive Head Trauma": {
+                    category: "black",
+                    explanation: "BLACK - No spontaneous breathing, non-survivable injury under mass casualty conditions."
+                },
+                "Abdominal Injury - Suspected Internal Bleeding": {
+                    category: "yellow",
+                    explanation: "YELLOW - RR 24 (slightly elevated), conscious but pale. Requires monitoring but not immediately life-threatening."
+                },
+                "Airway Obstruction": {
+                    category: "red",
+                    explanation: "RED - RR 6 with stridor, using accessory muscles. Immediate airway intervention required."
+                },
+                "Minor Burn - Hand": {
+                    category: "green",
+                    explanation: "GREEN - Walking, minor burn (2% BSA), vital signs normal. Minimal priority."
+                },
+                "Multiple Rib Fractures": {
+                    category: "yellow",
+                    explanation: "YELLOW - RR 28 (elevated but <30), shallow breathing but oxygenating. Painful but stable."
+                }
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const completedCount = document.getElementById('completed-count');
+            const accuracyRate = document.getElementById('accuracy-rate');
+            const timeSpent = document.getElementById('time-spent');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkBtn = document.getElementById('check-answers-btn');
+            const resultsBtn = document.getElementById('view-results-btn');
+            const resultsPanel = document.getElementById('results-panel');
+            const finalScore = document.getElementById('final-score');
+            const triageTimerDisplay = document.getElementById('triage-timer');
+
+            // Timer for overall time spent
+            function updateTimer() {
+                const now = new Date();
+                const diff = Math.floor((now - state.startedAt) / 1000);
+                state.timeSpent = diff;
+                const minutes = Math.floor(diff / 60);
+                const seconds = diff % 60;
+                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+
+            // Triage Timer
+            function startTriageTimer() {
+                if (state.timerRunning) return;
+                state.timerRunning = true;
+                
+                state.triageTimer = setInterval(() => {
+                    state.triageTimeLeft--;
+                    
+                    const minutes = Math.floor(state.triageTimeLeft / 60);
+                    const seconds = state.triageTimeLeft % 60;
+                    triageTimerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Color change as time runs low
+                    if (state.triageTimeLeft < 60) {
+                        triageTimerDisplay.style.color = '#e17055';
+                    }
+                    if (state.triageTimeLeft < 30) {
+                        triageTimerDisplay.style.color = '#ff0000';
+                        triageTimerDisplay.style.animation = 'pulse 0.5s infinite';
+                    }
+                    
+                    if (state.triageTimeLeft <= 0) {
+                        clearInterval(state.triageTimer);
+                        triageTimerDisplay.textContent = 'TIME UP!';
+                        alert('Triage time expired! Complete your assessment now.');
+                    }
+                }, 1000);
+            }
+
+            // Update Progress Summary
+            function updateProgressSummary() {
+                let completed = 0;
+                let totalCorrect = 0;
+                let totalItems = 0;
+
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                    totalCorrect += activity.correct;
+                    totalItems += activity.total;
+                });
+
+                completedCount.textContent = completed;
+                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+                accuracyRate.textContent = `${accuracy}%`;
+
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+
+            // Show/Hide Triage Explanation Modal
+            window.showTriageExplanation = function() {
+                document.getElementById('triage-explanation-modal').classList.add('show');
+            };
+
+            window.hideTriageExplanation = function() {
+                document.getElementById('triage-explanation-modal').classList.remove('show');
+            };
+
+            // Activity 1: Mass Casualty Triage
+            function initTriageActivity() {
+                const patientCards = document.querySelectorAll('.patient-card.draggable');
+                const triageZones = document.querySelectorAll('.triage-zone');
+
+                // Start timer on first interaction
+                patientCards.forEach(card => {
+                    card.addEventListener('dragstart', function() {
+                        if (!state.timerRunning) {
+                            startTriageTimer();
+                        }
+                    });
+                    
+                    // Add click handler for category hints
+                    const hint = card.querySelector('.patient-category-hint');
+                    hint.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const patientName = card.querySelector('.patient-symptom').textContent;
+                        const info = patientCategories[patientName];
+                        
+                        alert(`${patientName}\n\nCorrect Category: ${info.category.toUpperCase()}\n\nReason: ${info.explanation}`);
+                    });
+                });
+
+                // Setup drag and drop for patients
+                patientCards.forEach(card => {
+                    card.addEventListener('dragstart', function(e) {
+                        const patientName = this.querySelector('.patient-symptom').textContent;
+                        const details = this.querySelector('.patient-details').textContent;
+                        
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            title: patientName,
+                            details: details
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    card.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop zones
+                triageZones.forEach(zone => {
+                    zone.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('hover');
+                    });
+
+                    zone.addEventListener('dragleave', function() {
+                        this.classList.remove('hover');
+                    });
+
+                    zone.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('hover');
+                        this.classList.remove('empty');
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const category = this.dataset.category;
+                        
+                        // Check if patient already placed
+                        const alreadyPlaced = Array.from(this.querySelectorAll('.patient-card'))
+                            .some(card => card.querySelector('.patient-symptom').textContent === data.title);
+                        
+                        if (!alreadyPlaced) {
+                            // Create placed card
+                            const placedCard = document.createElement('div');
+                            placedCard.className = 'patient-card placed';
+                            placedCard.innerHTML = `
+                                <div class="patient-symptom">${data.title}</div>
+                                <div class="patient-details">${data.details}</div>
+                            `;
+                            
+                            this.querySelector('.triage-zone-content').appendChild(placedCard);
+                            
+                            // Hide original card
+                            const originalCard = Array.from(patientCards).find(card => 
+                                card.querySelector('.patient-symptom').textContent === data.title && 
+                                card.style.display !== 'none'
+                            );
+                            if (originalCard) {
+                                originalCard.style.display = 'none';
+                            }
+                            
+                            // Track placement
+                            state.triagePlacements[category].push(data.title);
+                        }
+                    });
+                });
+            }
+
+            // Check Triage Sorting
+            window.checkTriageSorting = function() {
+                if (state.triageTimeLeft <= 0) {
+                    alert('Triage time has expired! Please reset and try again.');
+                    return;
+                }
+
+                clearInterval(state.triageTimer);
+                state.timerRunning = false;
+                
+                let correctPlacements = 0;
+                let totalPlacements = 0;
+                
+                // Check each category
+                Object.keys(state.triagePlacements).forEach(category => {
+                    state.triagePlacements[category].forEach(patient => {
+                        totalPlacements++;
+                        if (patientCategories[patient].category === category) {
+                            correctPlacements++;
+                        }
+                    });
+                });
+                
+                // Calculate time bonus
+                const timeBonus = state.triageTimeLeft > 0 ? Math.floor(state.triageTimeLeft / 10) : 0;
+                const timeScore = Math.min(timeBonus * 5, 20); // Max 20 points for speed
+                
+                // Update state
+                state.activities[1].completed = totalPlacements > 0;
+                state.activities[1].correct = correctPlacements;
+                state.activities[1].score = Math.round(((correctPlacements / 8) * 80) + timeScore); // 80% for accuracy, 20% for speed
+                
+                // Update UI
+                const status = document.querySelector('#activity-1 .activity-status');
+                const feedback = document.getElementById('feedback-triage');
+                const checkBtn = document.getElementById('check-triage-btn');
+                const patientFeedbackDiv = document.getElementById('patient-specific-feedback');
+                
+                if (state.activities[1].completed) {
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                    feedback.classList.add('show');
+                    checkBtn.disabled = true;
+                    
+                    let speedComment = '';
+                    if (state.triageTimeLeft > 120) {
+                        speedComment = 'Excellent speed!';
+                    } else if (state.triageTimeLeft > 60) {
+                        speedComment = 'Good pace.';
+                    } else {
+                        speedComment = 'Consider practicing for faster assessment.';
+                    }
+                    
+                    // Add time assessment to feedback
+                    const timeSection = document.createElement('div');
+                    timeSection.className = 'feedback-section';
+                    timeSection.innerHTML = `
+                        <div class="feedback-section-title">Time Assessment</div>
+                        <div class="feedback-content">
+                            <strong>Time remaining:</strong> ${Math.floor(state.triageTimeLeft / 60)}:${(state.triageTimeLeft % 60).toString().padStart(2, '0')}<br>
+                            <strong>Speed score:</strong> +${timeScore} points<br>
+                            <strong>Feedback:</strong> ${speedComment} In real mass casualty, aim for ≤30 seconds per patient assessment.
+                        </div>
+                    `;
+                    feedback.insertBefore(timeSection, feedback.querySelector('.feedback-section:last-child'));
+                    
+                    // Add patient-specific feedback
+                    patientFeedbackDiv.innerHTML = `
+                        <div class="feedback-section">
+                            <div class="feedback-section-title">Patient-Specific Analysis</div>
+                            <div class="patient-feedback">
+                                <div class="patient-feedback-title">
+                                    <span>🩺</span>
+                                    Your Triage Decisions:
+                                </div>
+                                ${generatePatientFeedback()}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Disable dragging
+                    document.querySelectorAll('.patient-card.draggable').forEach(card => {
+                        card.draggable = false;
+                        card.style.cursor = 'default';
+                    });
+                }
+                
+                updateProgressSummary();
+            };
+
+            // Generate patient-specific feedback
+            function generatePatientFeedback() {
+                let feedbackHTML = '';
+                
+                // Check each patient's placement
+                Object.keys(patientCategories).forEach(patient => {
+                    const correctCategory = patientCategories[patient].category;
+                    let placedCategory = null;
+                    
+                    // Find which category this patient was placed in
+                    Object.keys(state.triagePlacements).forEach(category => {
+                        if (state.triagePlacements[category].includes(patient)) {
+                            placedCategory = category;
+                        }
+                    });
+                    
+                    const isCorrect = placedCategory === correctCategory;
+                    const explanation = patientCategories[patient].explanation;
+                    
+                    feedbackHTML += `
+                        <div class="patient-analysis ${isCorrect ? 'correct' : 'incorrect'}">
+                            <strong>${patient}</strong><br>
+                            Your placement: ${placedCategory ? placedCategory.toUpperCase() : 'NOT PLACED'}<br>
+                            Correct placement: ${correctCategory.toUpperCase()}<br>
+                            ${isCorrect ? '✅ Correct!' : '❌ Incorrect - ' + explanation}
+                        </div>
+                    `;
+                });
+                
+                return feedbackHTML;
+            }
+
+            // Activity 2: Disaster Supply Kit Builder
+            function initSupplyKitActivity() {
+                const supplyItems = document.querySelectorAll('.supply-item.draggable');
+                const kitDisplay = document.getElementById('kit-display');
+
+                // Setup drag and drop for supplies
+                supplyItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            text: this.textContent.replace('CRITICAL', '').replace('ESSENTIAL', '').replace('OPTIONAL', '').trim(),
+                            category: this.dataset.category,
+                            importance: this.dataset.importance
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                // Setup drop zone
+                kitDisplay.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('hover');
+                });
+
+                kitDisplay.addEventListener('dragleave', function() {
+                    this.classList.remove('hover');
+                });
+
+                kitDisplay.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('hover');
+                    this.classList.remove('empty');
+                    
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    
+                    // Check if item already placed
+                    const alreadyPlaced = Array.from(this.querySelectorAll('.supply-item'))
+                        .some(item => item.textContent.includes(data.text));
+                    
+                    if (!alreadyPlaced) {
+                        // Create placed item
+                        const placedItem = document.createElement('div');
+                        placedItem.className = 'supply-item placed';
+                        placedItem.textContent = data.text;
+                        placedItem.setAttribute('data-category', data.category);
+                        placedItem.setAttribute('data-importance', data.importance);
+                        
+                        // Add importance badge
+                        const importanceBadge = document.createElement('span');
+                        importanceBadge.className = 'supply-importance';
+                        importanceBadge.textContent = data.importance.toUpperCase();
+                        placedItem.appendChild(importanceBadge);
+                        
+                        this.querySelector('.kit-items-grid').appendChild(placedItem);
+                        
+                        // Hide original item
+                        const originalItem = Array.from(supplyItems).find(item => 
+                            item.textContent.includes(data.text) && item.style.display !== 'none'
+                        );
+                        if (originalItem) {
+                            originalItem.style.display = 'none';
+                        }
+                        
+                        // Track placement
+                        state.supplyPlacements.push(data.text);
+                    }
+                });
+            }
+
+            // Essential items that MUST be in kit
+            const essentialItems = [
+                "Basic first aid kit with trauma supplies",
+                "Battery-powered radio with NOAA weather band",
+                "Water (1 gallon per person per day)",
+                "Prescription medications (72-hour supply)",
+                "Waterproof patient roster with contact info",
+                "Non-perishable food (3-day supply)",
+                "Flashlights with extra batteries",
+                "Paper forms for manual documentation"
+            ];
+
+            // Check Supply Kit
+            window.checkSupplyKit = function() {
+                let essentialCount = 0;
+                
+                // Check for essential items
+                essentialItems.forEach(item => {
+                    if (state.supplyPlacements.some(placed => placed.includes(item))) {
+                        essentialCount++;
+                    }
+                });
+                
+                // Calculate score (50% for essentials, 50% for any additional items)
+                const essentialScore = (essentialCount / essentialItems.length) * 50;
+                const additionalItems = Math.min(state.supplyPlacements.length - essentialCount, 4); // Max 4 additional items
+                const additionalScore = (additionalItems / 4) * 50;
+                const totalScore = essentialScore + additionalScore;
+                
+                // Update state
+                state.activities[2].completed = state.supplyPlacements.length > 0;
+                state.activities[2].correct = essentialCount;
+                state.activities[2].score = Math.round(totalScore);
+                
+                // Update UI
+                const status = document.querySelector('#activity-2 .activity-status');
+                const feedback = document.getElementById('feedback-supply');
+                const checkBtn = document.getElementById('check-supply-btn');
+                
+                if (state.activities[2].completed) {
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    feedback.classList.add('show');
+                    checkBtn.disabled = true;
+                    
+                    // Add specific feedback about missing essentials
+                    const missingEssentials = essentialItems.filter(item => 
+                        !state.supplyPlacements.some(placed => placed.includes(item))
+                    );
+                    
+                    if (missingEssentials.length > 0) {
+                        const missingSection = document.createElement('div');
+                        missingSection.className = 'feedback-section';
+                        missingSection.innerHTML = `
+                            <div class="feedback-section-title">Missing Critical Items</div>
+                            <div class="feedback-content">
+                                <strong>These essential items were missed:</strong><br>
+                                ${missingEssentials.map(item => `• ${item}`).join('<br>')}<br><br>
+                                <strong>Rationale:</strong> ${missingEssentials[0].includes('water') ? 
+                                'Water is the #1 priority - dehydration affects decision-making within hours.' :
+                                'Communication failure is the most common problem in disasters.'}
+                            </div>
+                        `;
+                        feedback.appendChild(missingSection);
+                    }
+                    
+                    // Disable dragging
+                    document.querySelectorAll('.supply-item.draggable').forEach(item => {
+                        item.draggable = false;
+                        item.style.cursor = 'default';
+                    });
+                }
+                
+                updateProgressSummary();
+            };
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                state.activities = {
+                    1: { completed: false, correct: 0, total: 8, score: 0 },
+                    2: { completed: false, correct: 0, total: 12, score: 0 }
+                };
+                state.triagePlacements = { red: [], yellow: [], green: [], black: [] };
+                state.supplyPlacements = [];
+                state.triageTimeLeft = 180;
+                state.timerRunning = false;
+                
+                clearInterval(state.triageTimer);
+                hideTriageExplanation();
+                
+                // Reset Activity 1
+                document.querySelectorAll('.triage-zone-content').forEach(content => {
+                    content.innerHTML = '';
+                });
+                
+                document.querySelectorAll('.triage-zone').forEach(zone => {
+                    zone.classList.add('empty');
+                });
+                
+                document.querySelectorAll('.patient-card').forEach(card => {
+                    card.style.display = '';
+                    card.classList.remove('placed');
+                    card.draggable = true;
+                });
+                
+                triageTimerDisplay.textContent = '03:00';
+                triageTimerDisplay.style.color = '#e17055';
+                triageTimerDisplay.style.animation = '';
+                
+                const checkTriageBtn = document.getElementById('check-triage-btn');
+                checkTriageBtn.disabled = false;
+                checkTriageBtn.innerHTML = '<span class="btn-icon">🚑</span> Complete Triage Assessment';
+                
+                document.getElementById('feedback-triage').classList.remove('show');
+                // Remove time assessment if it exists
+                const timeSection = document.querySelector('#feedback-triage .feedback-section:nth-child(4)');
+                if (timeSection) timeSection.remove();
+
+                // Reset Activity 2
+                document.getElementById('kit-display').querySelector('.kit-items-grid').innerHTML = '';
+                document.getElementById('kit-display').classList.add('empty');
+                
+                document.querySelectorAll('.supply-item').forEach(item => {
+                    item.style.display = '';
+                    item.classList.remove('placed', 'incorrect');
+                    item.draggable = true;
+                });
+                
+                const checkSupplyBtn = document.getElementById('check-supply-btn');
+                checkSupplyBtn.disabled = false;
+                checkSupplyBtn.innerHTML = '<span class="btn-icon">📦</span> Complete Supply Kit';
+                
+                document.getElementById('feedback-supply').classList.remove('show');
+                // Remove missing essentials section if it exists
+                const missingSection = document.querySelector('#feedback-supply .feedback-section:nth-child(4)');
+                if (missingSection) missingSection.remove();
+
+                // Reset UI
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                });
+
+                // Reset results
+                resultsPanel.classList.remove('show');
+
+                updateProgressSummary();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 if not done
+                if (!state.activities[1].completed) {
+                    // Auto-place all patients in correct categories
+                    Object.keys(patientCategories).forEach(patient => {
+                        const category = patientCategories[patient].category;
+                        const zone = document.getElementById(`${category}-zone`);
+                        const originalCard = Array.from(document.querySelectorAll('.patient-card.draggable'))
+                            .find(card => card.querySelector('.patient-symptom').textContent === patient && 
+                                  card.style.display !== 'none');
+                        
+                        if (originalCard && zone) {
+                            const placedCard = document.createElement('div');
+                            placedCard.className = 'patient-card placed';
+                            placedCard.innerHTML = originalCard.innerHTML;
+                            
+                            zone.querySelector('.triage-zone-content').appendChild(placedCard);
+                            zone.classList.remove('empty');
+                            originalCard.style.display = 'none';
+                            
+                            state.triagePlacements[category].push(patient);
+                        }
+                    });
+                    
+                    clearInterval(state.triageTimer);
+                    state.triageTimeLeft = 90; // Give some time bonus
+                    checkTriageSorting();
+                }
+
+                // Complete Activity 2 if not done
+                if (!state.activities[2].completed) {
+                    // Auto-place all essential items
+                    essentialItems.forEach(item => {
+                        const originalItem = Array.from(document.querySelectorAll('.supply-item.draggable'))
+                            .find(el => el.textContent.includes(item) && el.style.display !== 'none');
+                        
+                        if (originalItem) {
+                            const placedItem = document.createElement('div');
+                            placedItem.className = 'supply-item placed';
+                            placedItem.textContent = originalItem.textContent.replace('CRITICAL', '').replace('ESSENTIAL', '').replace('OPTIONAL', '').trim();
+                            placedItem.setAttribute('data-category', originalItem.dataset.category);
+                            
+                            // Add importance badge
+                            const importanceBadge = document.createElement('span');
+                            importanceBadge.className = 'supply-importance';
+                            importanceBadge.textContent = originalItem.dataset.importance.toUpperCase();
+                            placedItem.appendChild(importanceBadge);
+                            
+                            document.querySelector('.kit-items-grid').appendChild(placedItem);
+                            document.getElementById('kit-display').classList.remove('empty');
+                            originalItem.style.display = 'none';
+                            
+                            state.supplyPlacements.push(item);
+                        }
+                    });
+                    
+                    // Add 2 additional items
+                    const additionalItems = document.querySelectorAll('.supply-item.draggable');
+                    let added = 0;
+                    
+                    for (let item of additionalItems) {
+                        if (item.style.display !== 'none' && added < 2) {
+                            const placedItem = document.createElement('div');
+                            placedItem.className = 'supply-item placed';
+                            placedItem.textContent = item.textContent.replace('CRITICAL', '').replace('ESSENTIAL', '').replace('OPTIONAL', '').trim();
+                            placedItem.setAttribute('data-category', item.dataset.category);
+                            
+                            // Add importance badge
+                            const importanceBadge = document.createElement('span');
+                            importanceBadge.className = 'supply-importance';
+                            importanceBadge.textContent = item.dataset.importance.toUpperCase();
+                            placedItem.appendChild(importanceBadge);
+                            
+                            document.querySelector('.kit-items-grid').appendChild(placedItem);
+                            item.style.display = 'none';
+                            
+                            state.supplyPlacements.push(item.textContent.replace('CRITICAL', '').replace('ESSENTIAL', '').replace('OPTIONAL', '').trim());
+                            added++;
+                        }
+                    }
+                    
+                    checkSupplyKit();
+                }
+            }
+
+            // View Final Results
+            function viewFinalResults() {
+                let totalScore = 0;
+                let activityCount = 0;
+                
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) {
+                        totalScore += activity.score;
+                        activityCount++;
+                    }
+                });
+                
+                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+                finalScore.textContent = `${averageScore}%`;
+                resultsPanel.classList.add('show');
+                
+                // Scroll to results
+                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Initialize
+            initTriageActivity();
+            initSupplyKitActivity();
+            updateProgressSummary();
+
+            // Event Listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkBtn.addEventListener('click', checkAllAnswers);
+            resultsBtn.addEventListener('click', viewFinalResults);
+        });
+    </script>
+</body>
+</html>
