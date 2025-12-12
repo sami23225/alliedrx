@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AlliedRx -- Module 7.1: Vital Signs Fundamentals & Temperature</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) { body { padding: 12px; } }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(175, 75, 239, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(175, 75, 239, 0.8); }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) { .page { padding: 22px; } }
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .page { border-radius: 0; box-shadow: none; padding: 18px 14px 22px; }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover { transform: scale(1.05); }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row { flex-direction: column; align-items: flex-start; }
+            .badge-mode { margin-top: 6px; }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Progress Summary */
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .summary-card {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid rgba(12, 10, 24, 0.06);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-card);
+            border-color: var(--color-primary-soft);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Activity Grid */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 900px) {
+            .activity-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before { opacity: 1; }
+
+        .activity-card.completed { border-color: var(--color-success); }
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 12px;
+        }
+
+        .activity-description {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Activity 1: Temperature Range Matching */
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .matching-category {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px dashed rgba(12, 10, 24, 0.15);
+            min-height: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .matching-category.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .category-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+        }
+
+        .category-dropzone {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 60px;
+        }
+
+        .category-dropzone.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .category-dropzone.empty::after {
+            content: 'DRAG TEMPERATURE RANGE HERE';
+            opacity: 0.6;
+        }
+
+        /* Temperature Items */
+        .temperature-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .temperature-item {
+            background: rgba(175, 75, 239, 0.1);
+            border: 2px solid rgba(175, 75, 239, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            color: var(--color-text);
+            cursor: grab;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .temperature-item:hover {
+            background: rgba(175, 75, 239, 0.15);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(175, 75, 239, 0.1);
+        }
+
+        .temperature-item.dragging {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+
+        .temperature-item.placed {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            cursor: default;
+        }
+
+        .temperature-item.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+            cursor: default;
+        }
+
+        /* Activity 2: Temperature Conversion - FIXED LAYOUT */
+        .conversion-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .conversion-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .conversion-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (min-width: 600px) {
+            .conversion-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .conversion-card {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .conversion-card:hover {
+            border-color: var(--color-primary-soft);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(175, 75, 239, 0.1);
+        }
+
+        .conversion-instruction {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 15px;
+            font-weight: 600;
+            word-wrap: break-word;
+        }
+
+        .conversion-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .conversion-label {
+            font-size: 0.8rem;
+            color: var(--color-muted);
+            font-weight: 600;
+        }
+
+        .conversion-input {
+            padding: 10px 12px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            transition: all 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .conversion-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(175, 75, 239, 0.1);
+        }
+
+        .conversion-input.correct {
+            border-color: var(--color-success);
+            background: rgba(0, 184, 148, 0.05);
+        }
+
+        .conversion-input.incorrect {
+            border-color: var(--color-error);
+            background: rgba(225, 112, 85, 0.05);
+        }
+
+        .conversion-btn {
+            padding: 8px 16px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            white-space: nowrap;
+        }
+
+        .conversion-btn:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(175, 75, 239, 0.2);
+        }
+
+        .conversion-result {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            display: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .conversion-result.correct {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border-left: 3px solid var(--color-success);
+            display: block;
+        }
+
+        .conversion-result.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--color-error);
+            border-left: 3px solid var(--color-error);
+            display: block;
+        }
+
+        .formula-box {
+            background: rgba(131, 128, 240, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid var(--color-accent);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .formula-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 8px;
+        }
+
+        .formula-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            font-family: monospace;
+        }
+
+        /* Activity 3: Thermometer Selection - IMPROVED FEEDBACK */
+        .scenario-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .scenario-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .scenario-content {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .scenario-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin: 15px 0;
+            padding: 10px 15px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: var(--radius-sm);
+        }
+
+        .thermometer-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .thermometer-option {
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .thermometer-option:hover {
+            border-color: var(--color-primary-soft);
+            background: rgba(175, 75, 239, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .thermometer-option.selected {
+            border-color: var(--color-success);
+            background: rgba(0, 184, 148, 0.08);
+        }
+
+        .thermometer-option.wrong {
+            border-color: var(--color-error);
+            background: rgba(225, 112, 85, 0.08);
+        }
+
+        .thermometer-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .thermometer-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 4px;
+        }
+
+        .thermometer-desc {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+        }
+
+        .scenario-btn {
+            padding: 10px 20px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .scenario-btn:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(175, 75, 239, 0.3);
+        }
+
+        .scenario-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Individual Feedback for Thermometer Selection */
+        .option-feedback {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .option-feedback.correct {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border-left: 3px solid var(--color-success);
+            display: block;
+        }
+
+        .option-feedback.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--color-error);
+            border-left: 3px solid var(--color-error);
+            display: block;
+        }
+
+        /* Feedback */
+        .feedback-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            margin-top: 25px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .feedback-container.show { display: block; }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .feedback-icon {
+            font-size: 1.4rem;
+        }
+
+        .feedback-icon.correct { color: var(--color-success); }
+        .feedback-icon.incorrect { color: var(--color-error); }
+
+        .feedback-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .feedback-detail {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .feedback-detail strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .feedback-section {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .clinical-reference {
+            background: rgba(0, 184, 148, 0.08);
+            border-left: 3px solid var(--color-success);
+        }
+
+        /* Reference Table */
+        .reference-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            table-layout: fixed;
+        }
+
+        .reference-table th {
+            background: rgba(175, 75, 239, 0.1);
+            color: var(--color-primary);
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 2px solid rgba(175, 75, 239, 0.2);
+        }
+
+        .reference-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.1);
+            word-wrap: break-word;
+        }
+
+        .reference-table tr:hover {
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        /* Safety Warning */
+        .safety-warning {
+            background: rgba(225, 112, 85, 0.1);
+            border: 2px solid var(--color-error);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            color: var(--color-error);
+            flex-shrink: 0;
+        }
+
+        .warning-content { flex: 1; }
+
+        .warning-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 5px;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: var(--color-dark);
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeInUp 0.6s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .results-panel.show { display: block; }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-primary-soft);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .clinical-insights {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .insights-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-primary-soft);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .insight-dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 6px;
+            border-radius: 999px;
+            background: var(--color-accent);
+            flex-shrink: 0;
+        }
+
+        /* Activity 1 Individual Feedback */
+        .category-feedback {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .category-feedback.correct {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border-left: 3px solid var(--color-success);
+            display: block;
+        }
+
+        .category-feedback.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--color-error);
+            border-left: 3px solid var(--color-error);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Week 7</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Chapter 7: Vital Signs</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus & Online</span>
+        </header>
+
+        <h1 id="module-heading">Vital Signs Fundamentals & Temperature</h1>
+        <p class="module-subtitle">
+            Master the fundamentals of body temperature assessment. Learn normal ranges for different age groups,
+            temperature conversion between scales, and proper thermometer selection for accurate clinical measurement.
+        </p>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Temperature Ranges</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Scale Conversion</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Thermometer Selection</div>
+            </div>
+        </div>
+
+        <!-- Progress Summary -->
+        <div class="progress-summary">
+            <div class="summary-card">
+                <span class="summary-number" id="completed-count">0</span>
+                <span class="summary-label">Activities Completed</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="accuracy-rate">0%</span>
+                <span class="summary-label">Current Accuracy</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-number" id="time-spent">0:00</span>
+                <span class="summary-label">Time Spent</span>
+            </div>
+        </div>
+
+        <!-- Activity Grid -->
+        <div class="activity-grid">
+            <!-- Activity 1: Normal Temperature Ranges -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Normal Temperature Ranges by Age Group</h3>
+                <p class="activity-description">
+                    Match each age group with its corresponding normal oral temperature range in Fahrenheit.
+                    Understanding normal variations is critical for accurate patient assessment.
+                </p>
+
+                <!-- Matching Categories -->
+                <div class="matching-container">
+                    <div class="matching-category" data-category="newborn" id="newborn-category">
+                        <div class="category-title">Newborn (0-3 months)</div>
+                        <div class="category-dropzone empty" id="newborn-dropzone"></div>
+                        <div class="category-feedback" id="newborn-feedback"></div>
+                    </div>
+                    
+                    <div class="matching-category" data-category="infant" id="infant-category">
+                        <div class="category-title">Infant (3-12 months)</div>
+                        <div class="category-dropzone empty" id="infant-dropzone"></div>
+                        <div class="category-feedback" id="infant-feedback"></div>
+                    </div>
+                    
+                    <div class="matching-category" data-category="child" id="child-category">
+                        <div class="category-title">Child (1-12 years)</div>
+                        <div class="category-dropzone empty" id="child-dropzone"></div>
+                        <div class="category-feedback" id="child-feedback"></div>
+                    </div>
+                    
+                    <div class="matching-category" data-category="adult" id="adult-category">
+                        <div class="category-title">Adult (13+ years)</div>
+                        <div class="category-dropzone empty" id="adult-dropzone"></div>
+                        <div class="category-feedback" id="adult-feedback"></div>
+                    </div>
+                    
+                    <div class="matching-category" data-category="geriatric" id="geriatric-category">
+                        <div class="category-title">Geriatric (65+ years)</div>
+                        <div class="category-dropzone empty" id="geriatric-dropzone"></div>
+                        <div class="category-feedback" id="geriatric-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Temperature Range Items -->
+                <div class="temperature-items" id="temperature-items">
+                    <!-- Items will be loaded randomly by JavaScript -->
+                </div>
+
+                <!-- Check Button -->
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="btn btn-primary" id="check-matching">
+                        <span class="btn-icon">✓</span>
+                        Check Temperature Matches
+                    </button>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-1">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">✓</span>
+                        <div class="feedback-title">Temperature Ranges Analysis</div>
+                    </div>
+                    
+                    <div class="feedback-detail" id="matching-summary">
+                        <!-- Will be filled by JavaScript -->
+                    </div>
+                    
+                    <table class="reference-table">
+                        <thead>
+                            <tr>
+                                <th>Age Group</th>
+                                <th>Normal Oral Temperature (°F)</th>
+                                <th>Normal Oral Temperature (°C)</th>
+                                <th>Clinical Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Newborn (0-3 months)</strong></td>
+                                <td>97.7°F - 99.5°F</td>
+                                <td>36.5°C - 37.5°C</td>
+                                <td>Immature thermoregulation; rectal most accurate</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Infant (3-12 months)</strong></td>
+                                <td>97.9°F - 100.4°F</td>
+                                <td>36.6°C - 38.0°C</td>
+                                <td>Rapid metabolism; slightly higher normal range</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Child (1-12 years)</strong></td>
+                                <td>97.9°F - 99.0°F</td>
+                                <td>36.6°C - 37.2°C</td>
+                                <td>Similar to adults; tympanic often used</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Adult (13-64 years)</strong></td>
+                                <td>97.8°F - 99.1°F</td>
+                                <td>36.5°C - 37.3°C</td>
+                                <td>Standard 98.6°F (37°C) is average</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Geriatric (65+ years)</strong></td>
+                                <td>96.8°F - 98.6°F</td>
+                                <td>36.0°C - 37.0°C</td>
+                                <td>Lower baseline; may not mount fever effectively</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="feedback-section clinical-reference">
+                        <div class="section-title">Common Mistakes & Corrections</div>
+                        <div class="section-content" id="common-mistakes">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="safety-warning">
+                        <div class="warning-icon">⚠️</div>
+                        <div class="warning-content">
+                            <div class="warning-title">Critical Temperature Values</div>
+                            <div class="warning-text">
+                                <strong>Medical Emergency:</strong> Temperature above 104°F (40°C) or below 95°F (35°C) requires immediate medical attention.
+                                Hyperpyrexia (>106°F/41.1°C) can cause brain damage. Always report extreme temperatures to provider immediately.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 2: Temperature Conversion Practice -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Temperature Scale Conversion</h3>
+                <p class="activity-description">
+                    Practice converting temperatures between Fahrenheit and Celsius scales. Medical professionals
+                    must be proficient in both measurement systems for accurate documentation and communication.
+                </p>
+
+                <div class="conversion-container">
+                    <div class="conversion-title">
+                        <span>🌡️</span>
+                        Temperature Conversion Practice
+                    </div>
+                    
+                    <div class="conversion-grid">
+                        <!-- Fahrenheit to Celsius -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                Convert Fahrenheit to Celsius: °C = (°F - 32) × 5/9
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Fahrenheit Temperature:</label>
+                                <input type="number" class="conversion-input" id="fahrenheit-input" placeholder="e.g., 98.6" step="0.1">
+                                <button class="conversion-btn" id="convert-to-celsius">Convert to Celsius</button>
+                            </div>
+                            <div class="conversion-result" id="celsius-result"></div>
+                        </div>
+                        
+                        <!-- Celsius to Fahrenheit -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                Convert Celsius to Fahrenheit: °F = (°C × 9/5) + 32
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Celsius Temperature:</label>
+                                <input type="number" class="conversion-input" id="celsius-input" placeholder="e.g., 37.0" step="0.1">
+                                <button class="conversion-btn" id="convert-to-fahrenheit">Convert to Fahrenheit</button>
+                            </div>
+                            <div class="conversion-result" id="fahrenheit-result"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Conversion Formulas</div>
+                        <div class="formula-content">
+                            • <strong>Fahrenheit to Celsius:</strong> °C = (°F - 32) × 5/9<br>
+                            • <strong>Celsius to Fahrenheit:</strong> °F = (°C × 9/5) + 32<br>
+                            • <strong>Quick Approximation:</strong> °C ≈ (°F - 30) ÷ 2<br>
+                            • <strong>Critical Values:</strong> 100.4°F = 38°C | 104°F = 40°C
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Problems -->
+                <div class="scenario-container">
+                    <div class="scenario-title">Clinical Conversion Practice</div>
+                    <div class="scenario-content">
+                        Solve these clinical temperature conversion problems. Round to one decimal place where necessary.
+                    </div>
+                    
+                    <div class="conversion-grid" style="margin-top: 20px;">
+                        <!-- Problem 1 -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                A patient's temperature is 101.2°F. What is this in Celsius?
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Enter Celsius value:</label>
+                                <input type="number" class="conversion-input" id="problem-1-input" placeholder="°C" step="0.1">
+                                <button class="conversion-btn" id="check-problem-1">Check Answer</button>
+                            </div>
+                            <div class="conversion-result" id="problem-1-result"></div>
+                            <div class="conversion-result" id="problem-1-explanation" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- Problem 2 -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                A European chart shows 39.5°C. Convert to Fahrenheit.
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Enter Fahrenheit value:</label>
+                                <input type="number" class="conversion-input" id="problem-2-input" placeholder="°F" step="0.1">
+                                <button class="conversion-btn" id="check-problem-2">Check Answer</button>
+                            </div>
+                            <div class="conversion-result" id="problem-2-result"></div>
+                            <div class="conversion-result" id="problem-2-explanation" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- Problem 3 -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                Convert 96.8°F (geriatric normal) to Celsius.
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Enter Celsius value:</label>
+                                <input type="number" class="conversion-input" id="problem-3-input" placeholder="°C" step="0.1">
+                                <button class="conversion-btn" id="check-problem-3">Check Answer</button>
+                            </div>
+                            <div class="conversion-result" id="problem-3-result"></div>
+                            <div class="conversion-result" id="problem-3-explanation" style="display: none;"></div>
+                        </div>
+                        
+                        <!-- Problem 4 -->
+                        <div class="conversion-card">
+                            <div class="conversion-instruction">
+                                A hypothermic patient reads 34.0°C. Convert to Fahrenheit.
+                            </div>
+                            <div class="conversion-input-group">
+                                <label class="conversion-label">Enter Fahrenheit value:</label>
+                                <input type="number" class="conversion-input" id="problem-4-input" placeholder="°F" step="0.1">
+                                <button class="conversion-btn" id="check-problem-4">Check Answer</button>
+                            </div>
+                            <div class="conversion-result" id="problem-4-result"></div>
+                            <div class="conversion-result" id="problem-4-explanation" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Check All Conversions -->
+                <div style="text-align: center; margin: 25px 0;">
+                    <button class="btn btn-primary" id="check-all-conversions">
+                        <span class="btn-icon">📊</span>
+                        Check All Conversions
+                    </button>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-2">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">✓</span>
+                        <div class="feedback-title">Temperature Conversion Analysis</div>
+                    </div>
+                    
+                    <div class="feedback-detail" id="conversion-summary">
+                        <!-- Will be filled by JavaScript -->
+                    </div>
+                    
+                    <div class="feedback-section">
+                        <div class="section-title">Common Conversion Mistakes</div>
+                        <div class="section-content" id="conversion-mistakes">
+                            <!-- Will be filled by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-section clinical-reference">
+                        <div class="section-title">Documentation Standards</div>
+                        <div class="section-content">
+                            1. <strong>Always specify scale:</strong> Write "98.6°F" or "37°C" - never just numbers<br>
+                            2. <strong>Site matters:</strong> Document measurement site (oral, rectal, tympanic, temporal)<br>
+                            3. <strong>Time of day:</strong> Note if temperature varies from normal diurnal pattern<br>
+                            4. <strong>Conversion accuracy:</strong> Use exact formulas, not approximations, in medical records<br>
+                            5. <strong>Trend tracking:</strong> Document temperature patterns over time for clinical assessment
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 3: Thermometer Selection -->
+            <section class="activity-card" id="activity-3" data-activity="3">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 3</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Thermometer Selection & Clinical Application</h3>
+                <p class="activity-description">
+                    Select the most appropriate thermometer type for different patient scenarios. Consider accuracy,
+                    patient safety, age appropriateness, and clinical setting requirements.
+                </p>
+
+                <!-- Scenario 1 -->
+                <div class="scenario-container" id="scenario-1">
+                    <div class="scenario-title">
+                        <span>👶</span>
+                        Scenario 1: 6-month-old Infant
+                    </div>
+                    <div class="scenario-content">
+                        A 6-month-old infant presents with irritability and decreased feeding. The parent reports the baby feels warm.
+                        The infant is alert but fussy. You need to obtain an accurate temperature reading.
+                    </div>
+                    <div class="scenario-question">
+                        Which thermometer method is MOST appropriate for this infant?
+                    </div>
+                    
+                    <div class="thermometer-options">
+                        <div class="thermometer-option" data-scenario="1" data-thermometer="tympanic">
+                            <span class="thermometer-icon">👂</span>
+                            <div class="thermometer-name">Tympanic</div>
+                            <div class="thermometer-desc">Ear-based, quick reading</div>
+                            <div class="option-feedback" id="feedback-1-tympanic"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="1" data-thermometer="temporal">
+                            <span class="thermometer-icon">👁️</span>
+                            <div class="thermometer-name">Temporal Artery</div>
+                            <div class="thermometer-desc">Forehead scan, non-invasive</div>
+                            <div class="option-feedback" id="feedback-1-temporal"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="1" data-thermometer="rectal">
+                            <span class="thermometer-icon">📊</span>
+                            <div class="thermometer-name">Rectal</div>
+                            <div class="thermometer-desc">Most accurate, gold standard</div>
+                            <div class="option-feedback" id="feedback-1-rectal"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="1" data-thermometer="oral">
+                            <span class="thermometer-icon">👄</span>
+                            <div class="thermometer-name">Oral Digital</div>
+                            <div class="thermometer-desc">Under tongue, 60+ seconds</div>
+                            <div class="option-feedback" id="feedback-1-oral"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-feedback" id="scenario-1-feedback" style="margin-top: 20px;"></div>
+                    
+                    <button class="scenario-btn" data-scenario="1" id="submit-scenario-1">
+                        Submit Selection
+                    </button>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="scenario-container" id="scenario-2" style="display: none;">
+                    <div class="scenario-title">
+                        <span>🧓</span>
+                        Scenario 2: Elderly Patient with Dementia
+                    </div>
+                    <div class="scenario-content">
+                        An 82-year-old patient with moderate dementia is admitted to long-term care. The patient is confused,
+                        agitated, and cannot follow verbal commands. You need to monitor for potential infection.
+                    </div>
+                    <div class="scenario-question">
+                        Which thermometer method is SAFEST and most appropriate?
+                    </div>
+                    
+                    <div class="thermometer-options">
+                        <div class="thermometer-option" data-scenario="2" data-thermometer="temporal">
+                            <span class="thermometer-icon">👁️</span>
+                            <div class="thermometer-name">Temporal Artery</div>
+                            <div class="thermometer-desc">Non-contact, minimal agitation</div>
+                            <div class="option-feedback" id="feedback-2-temporal"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="2" data-thermometer="axillary">
+                            <span class="thermometer-icon">💪</span>
+                            <div class="thermometer-name">Axillary</div>
+                            <div class="thermometer-desc">Underarm, safe but less accurate</div>
+                            <div class="option-feedback" id="feedback-2-axillary"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="2" data-thermometer="tympanic">
+                            <span class="thermometer-icon">👂</span>
+                            <div class="thermometer-name">Temporal/Tympanic</div>
+                            <div class="thermometer-desc">Quick but may cause agitation</div>
+                            <div class="option-feedback" id="feedback-2-tympanic"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="2" data-thermometer="rectal">
+                            <span class="thermometer-icon">📊</span>
+                            <div class="thermometer-name">Rectal</div>
+                            <div class="thermometer-desc">Accurate but invasive</div>
+                            <div class="option-feedback" id="feedback-2-rectal"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-feedback" id="scenario-2-feedback" style="margin-top: 20px;"></div>
+                    
+                    <button class="scenario-btn" data-scenario="2" id="submit-scenario-2">
+                        Submit Selection
+                    </button>
+                </div>
+
+                <!-- Scenario 3 -->
+                <div class="scenario-container" id="scenario-3" style="display: none;">
+                    <div class="scenario-title">
+                        <span>🏥</span>
+                        Scenario 3: Pre-operative Patient
+                    </div>
+                    <div class="scenario-content">
+                        A 45-year-old patient is being prepared for elective surgery. The pre-operative protocol requires
+                        baseline vital signs. The patient is alert, oriented, and cooperative.
+                    </div>
+                    <div class="scenario-question">
+                        Which method provides adequate accuracy with minimal patient discomfort?
+                    </div>
+                    
+                    <div class="thermometer-options">
+                        <div class="thermometer-option" data-scenario="3" data-thermometer="oral">
+                            <span class="thermometer-icon">👄</span>
+                            <div class="thermometer-name">Oral Digital</div>
+                            <div class="thermometer-desc">Standard for cooperative adults</div>
+                            <div class="option-feedback" id="feedback-3-oral"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="3" data-thermometer="tympanic">
+                            <span class="thermometer-icon">👂</span>
+                            <div class="thermometer-name">Tympanic</div>
+                            <div class="thermometer-desc">Quick, no patient cooperation needed</div>
+                            <div class="option-feedback" id="feedback-3-tympanic"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="3" data-thermometer="temporal">
+                            <span class="thermometer-icon">👁️</span>
+                            <div class="thermometer-name">Temporal Artery</div>
+                            <div class="thermometer-desc">Non-invasive, hygienic</div>
+                            <div class="option-feedback" id="feedback-3-temporal"></div>
+                        </div>
+                        <div class="thermometer-option" data-scenario="3" data-thermometer="rectal">
+                            <span class="thermometer-icon">📊</span>
+                            <div class="thermometer-name">Rectal</div>
+                            <div class="thermometer-desc">Most accurate but invasive</div>
+                            <div class="option-feedback" id="feedback-3-rectal"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-feedback" id="scenario-3-feedback" style="margin-top: 20px;"></div>
+                    
+                    <button class="scenario-btn" data-scenario="3" id="submit-scenario-3">
+                        Submit Selection
+                    </button>
+                </div>
+
+                <!-- Navigation -->
+                <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <button class="btn btn-secondary" id="prev-scenario" disabled>
+                        <span class="btn-icon">←</span>
+                        Previous Scenario
+                    </button>
+                    <button class="btn btn-secondary" id="next-scenario">
+                        Next Scenario
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Feedback -->
+                <div class="feedback-container" id="feedback-3">
+                    <div class="feedback-header">
+                        <span class="feedback-icon correct">✓</span>
+                        <div class="feedback-title">Thermometer Selection Analysis</div>
+                    </div>
+                    
+                    <div class="feedback-detail" id="thermometer-summary">
+                        <!-- Will be filled by JavaScript -->
+                    </div>
+                    
+                    <table class="reference-table">
+                        <thead>
+                            <tr>
+                                <th>Thermometer Type</th>
+                                <th>Best For</th>
+                                <th>Accuracy</th>
+                                <th>Time</th>
+                                <th>Considerations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rectal</strong></td>
+                                <td>Infants 0-3 months, most accurate needed</td>
+                                <td>Gold standard (±0.1°F)</td>
+                                <td>2-3 minutes</td>
+                                <td>Invasive, infection risk, requires positioning</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tympanic</strong></td>
+                                <td>Children >3 months, quick screening</td>
+                                <td>Good (±0.5°F)</td>
+                                <td>2-3 seconds</td>
+                                <td>Affected by earwax, otitis media, positioning</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Temporal Artery</strong></td>
+                                <td>All ages, non-contact preferred</td>
+                                <td>Very good (±0.2°F)</td>
+                                <td>2-3 seconds</td>
+                                <td>Affected by sweating, ambient temperature</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Oral Digital</strong></td>
+                                <td>Cooperative adults & children >4 years</td>
+                                <td>Good (±0.3°F)</td>
+                                <td>30-60 seconds</td>
+                                <td>No food/drink 15 min prior, mouth breathing affects</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Axillary</strong></td>
+                                <td>When other methods contraindicated</td>
+                                <td>Fair (±1.0°F)</td>
+                                <td>3-5 minutes</td>
+                                <td>Least accurate, add 1°F to approximate oral</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="feedback-section clinical-reference">
+                        <div class="section-title">Clinical Decision Factors</div>
+                        <div class="section-content">
+                            1. <strong>Age:</strong> Rectal for infants <3 months; tympanic/temporal for children; oral for cooperative adults<br>
+                            2. <strong>Clinical Status:</strong> Use most accurate method for critically ill or febrile patients<br>
+                            3. <strong>Patient Cooperation:</strong> Non-contact methods for agitated or confused patients<br>
+                            4. <strong>Infection Control:</strong> Single-use probes or non-contact methods when infection risk high<br>
+                            5. <strong>Documentation:</strong> Always record both value AND method used (e.g., "T: 101.2°F tympanic")
+                        </div>
+                    </div>
+                    
+                    <div class="safety-warning">
+                        <div class="warning-icon">⚠️</div>
+                        <div class="warning-content">
+                            <div class="warning-title">Critical Safety Considerations</div>
+                            <div class="warning-text">
+                                • <strong>Never use glass mercury thermometers</strong> - risk of breakage and mercury exposure<br>
+                                • <strong>Rectal contraindications:</strong> Recent rectal surgery, neutropenia, bleeding disorders<br>
+                                • <strong>Tympanic contraindications:</strong> Ear infection, ear tubes, ear drainage<br>
+                                • <strong>Oral contraindications:</strong> Unconscious, seizures, oral surgery, oxygen use<br>
+                                • <strong>Always clean/disinfect</strong> thermometers between patients per facility protocol
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-secondary" id="check-answers-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+            <button class="btn btn-primary" id="view-results-btn">
+                <span class="btn-icon">📊</span>
+                View Final Results
+            </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+            <div class="results-header">
+                <h2 class="results-title">Temperature Assessment Results</h2>
+                <div class="score-display" id="final-score">0%</div>
+            </div>
+            
+            <div class="clinical-insights">
+                <h3 class="insights-title">
+                    <span>🌡️</span> Clinical Proficiency Insights
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Age-Specific Normals:</strong> Remember that "normal" varies by age. Geriatric patients often have lower baseline temperatures and may not mount typical febrile responses to infection.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Method Matters:</strong> Always document the measurement method. A "normal" tympanic reading might be febrile if confirmed rectally.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Diurnal Variation:</strong> Body temperature naturally fluctuates 0.5-1.0°F throughout the day, typically peaking in late afternoon.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Conversion Precision:</strong> Use exact formulas, not approximations, when documenting in medical records. Round to one decimal place for clinical accuracy.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Safety First:</strong> Select thermometer method based on patient safety, comfort, and clinical need, not just convenience.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="clinical-insights" style="margin-top: 20px;">
+                <h3 class="insights-title">
+                    <span>📋</span> Documentation & Communication
+                </h3>
+                <ul class="insights-list">
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Complete Documentation:</strong> Always record: Value + Scale + Method + Time + Site (e.g., "T: 101.2°F oral @ 14:30").</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Trend Analysis:</strong> Document temperature patterns, not just single readings. Fever patterns can indicate specific conditions.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Critical Values:</strong> Immediately report temperatures >104°F (40°C) or <95°F (35°C) to the provider.</span>
+                    </li>
+                    <li>
+                        <span class="insight-dot"></span>
+                        <span><strong>Patient Education:</strong> Teach patients proper home temperature technique and when to seek medical attention.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 5, score: 0 },
+                    2: { completed: false, correct: 0, total: 6, score: 0 },
+                    3: { completed: false, correct: 0, total: 3, score: 0, currentScenario: 1 }
+                },
+                startedAt: new Date(),
+                timeSpent: 0,
+                scenarioAnswers: {
+                    1: null,
+                    2: null,
+                    3: null
+                },
+                scenarioSubmitted: {
+                    1: false,
+                    2: false,
+                    3: false
+                },
+                conversionAnswers: {
+                    1: null,
+                    2: null,
+                    3: null,
+                    4: null
+                },
+                // Correct answers for Activity 1 (matching)
+                correctMatches: {
+                    'newborn': '97.7°F - 99.5°F',
+                    'infant': '97.9°F - 100.4°F',
+                    'child': '97.9°F - 99.0°F',
+                    'adult': '97.8°F - 99.1°F',
+                    'geriatric': '96.8°F - 98.6°F'
+                },
+                // Explanation for each correct match
+                matchExplanations: {
+                    'newborn': 'Newborns have immature thermoregulation systems and require close monitoring. Their normal range is slightly lower than adults.',
+                    'infant': 'Infants have faster metabolism and slightly higher normal temperatures. This range accounts for their active immune systems.',
+                    'child': 'Children have similar ranges to adults but may run slightly higher during growth spurts or illness.',
+                    'adult': 'The classic "normal" 98.6°F falls in this range. Remember this is an average - individuals vary.',
+                    'geriatric': 'Elderly patients often have lower baseline temperatures and may not show typical fever responses to infection.'
+                },
+                // Common mistakes for Activity 1
+                commonMistakes: {
+                    'newborn': 'Often confused with adult ranges. Newborns run cooler and need rectal measurement for accuracy.',
+                    'infant': 'Mistaken for child ranges. Infants can normally run up to 100.4°F without being febrile.',
+                    'child': 'Sometimes given the infant range. Children have stabilized thermoregulation by age 1.',
+                    'adult': 'Confused with the classic 98.6°F only. Normal adults can range from 97.8°F to 99.1°F.',
+                    'geriatric': 'Often given adult ranges. Elderly patients have lower baselines - 96.8°F can be normal for them.'
+                },
+                // Correct answers for Activity 2 (conversion problems)
+                conversionProblems: {
+                    1: { fahrenheit: 101.2, celsius: 38.4, explanation: 'This is a low-grade fever. Remember: 100.4°F = 38°C is the fever threshold.' },
+                    2: { celsius: 39.5, fahrenheit: 103.1, explanation: 'This is a high fever requiring medical attention. 39.5°C indicates significant infection.' },
+                    3: { fahrenheit: 96.8, celsius: 36.0, explanation: 'This is normal for geriatric patients but would be low for younger adults.' },
+                    4: { celsius: 34.0, fahrenheit: 93.2, explanation: 'This is hypothermia. Values below 95°F (35°C) require immediate intervention.' }
+                },
+                // Correct answers for Activity 3 (thermometer selection)
+                correctThermometers: {
+                    1: 'rectal', // Infant - rectal is gold standard for accuracy
+                    2: 'temporal', // Dementia patient - non-contact, minimal agitation
+                    3: 'oral' // Pre-op adult - standard for cooperative adults
+                },
+                // Explanation for each scenario
+                scenarioExplanations: {
+                    1: {
+                        correct: 'RECTAL is the gold standard for infants under 3 years. It provides the most accurate core temperature, which is critical when assessing for fever in infants who cannot communicate symptoms.',
+                        tympanic: 'INCORRECT: Tympanic thermometers can be inaccurate in infants due to small ear canals and positioning issues. Not recommended as primary method for infants.',
+                        temporal: 'INCORRECT: Temporal artery thermometers are convenient but less accurate than rectal for infants. Use only if rectal is contraindicated.',
+                        oral: 'INCORRECT: Infants cannot cooperate with oral thermometers and cannot keep mouth closed. Also risk of biting.',
+                        axillary: 'INCORRECT: Axillary is least accurate and should only be used when other methods are contraindicated.'
+                    },
+                    2: {
+                        correct: 'TEMPORAL ARTERY is safest for dementia patients. Non-contact, minimizes agitation, and reduces infection risk while providing reasonable accuracy.',
+                        axillary: 'INCORRECT: While safe, axillary is the least accurate method and may miss important temperature changes in this vulnerable population.',
+                        tympanic: 'INCORRECT: Tympanic requires ear insertion which can agitate confused patients and may be inaccurate if not positioned perfectly.',
+                        rectal: 'INCORRECT: Rectal is invasive, increases agitation risk, and raises infection control concerns in dementia patients who may resist.'
+                    },
+                    3: {
+                        correct: 'ORAL DIGITAL is standard for cooperative adults. Provides good accuracy with minimal discomfort and is widely accepted in pre-operative protocols.',
+                        tympanic: 'INCORRECT: While quick, tympanic can be affected by earwax buildup and positioning. Oral is preferred for baseline measurements.',
+                        temporal: 'INCORRECT: Temporal is acceptable but oral is more accurate for cooperative patients and is the standard of care for pre-op assessments.',
+                        rectal: 'INCORRECT: Rectal is unnecessarily invasive for a cooperative adult and violates patient dignity without clinical indication.'
+                    }
+                },
+                // Temperature range items for Activity 1
+                temperatureRanges: [
+                    '97.7°F - 99.5°F',
+                    '97.9°F - 100.4°F',
+                    '97.9°F - 99.0°F',
+                    '97.8°F - 99.1°F',
+                    '96.8°F - 98.6°F',
+                    '98.2°F - 99.9°F', // Distractor
+                    '96.0°F - 97.5°F', // Distractor
+                    '98.6°F - 100.0°F' // Distractor
+                ]
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const completedCount = document.getElementById('completed-count');
+            const accuracyRate = document.getElementById('accuracy-rate');
+            const timeSpent = document.getElementById('time-spent');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkBtn = document.getElementById('check-answers-btn');
+            const resultsBtn = document.getElementById('view-results-btn');
+            const resultsPanel = document.getElementById('results-panel');
+            const finalScore = document.getElementById('final-score');
+            const temperatureItems = document.getElementById('temperature-items');
+
+            // Timer for time spent
+            function updateTimer() {
+                const now = new Date();
+                const diff = Math.floor((now - state.startedAt) / 1000);
+                state.timeSpent = diff;
+                const minutes = Math.floor(diff / 60);
+                const seconds = diff % 60;
+                timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+            setInterval(updateTimer, 1000);
+
+            // Update Progress Summary
+            function updateProgressSummary() {
+                let completed = 0;
+                let totalCorrect = 0;
+                let totalItems = 0;
+                
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                    totalCorrect += activity.correct;
+                    totalItems += activity.total;
+                });
+                
+                completedCount.textContent = completed;
+                const accuracy = totalItems > 0 ? Math.round((totalCorrect / totalItems) * 100) : 0;
+                accuracyRate.textContent = `${accuracy}%`;
+                
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+
+            // Activity 1: Temperature Range Matching - WITH INDIVIDUAL FEEDBACK
+            function initActivity1() {
+                const matchingCategories = document.querySelectorAll('.matching-category');
+                const checkMatchingBtn = document.getElementById('check-matching');
+                const feedback = document.getElementById('feedback-1');
+                const matchingSummary = document.getElementById('matching-summary');
+                const commonMistakesDiv = document.getElementById('common-mistakes');
+                const status = document.querySelector('#activity-1 .activity-status');
+                
+                let placedRanges = {};
+                
+                // Load temperature range items in random order
+                loadTemperatureItems();
+                
+                // Setup drag and drop
+                function setupDragAndDrop() {
+                    const tempItems = document.querySelectorAll('.temperature-item:not(.placed):not(.incorrect)');
+                    
+                    tempItems.forEach(item => {
+                        item.addEventListener('dragstart', function(e) {
+                            e.dataTransfer.setData('text/plain', this.textContent);
+                            this.classList.add('dragging');
+                        });
+                        
+                        item.addEventListener('dragend', function() {
+                            this.classList.remove('dragging');
+                        });
+                    });
+                    
+                    matchingCategories.forEach(category => {
+                        category.addEventListener('dragover', function(e) {
+                            e.preventDefault();
+                            this.classList.add('hover');
+                        });
+                        
+                        category.addEventListener('dragleave', function() {
+                            this.classList.remove('hover');
+                        });
+                        
+                        category.addEventListener('drop', function(e) {
+                            e.preventDefault();
+                            this.classList.remove('hover');
+                            
+                            const range = e.dataTransfer.getData('text/plain');
+                            const categoryType = this.dataset.category;
+                            const dropzone = this.querySelector('.category-dropzone');
+                            const feedbackDiv = this.querySelector('.category-feedback');
+                            
+                            // Check if category already has a range
+                            if (!placedRanges[categoryType]) {
+                                // Create placed range
+                                const div = document.createElement('div');
+                                div.className = 'temperature-item';
+                                div.textContent = range;
+                                
+                                // Check if correct
+                                const isCorrect = range === state.correctMatches[categoryType];
+                                if (isCorrect) {
+                                    div.classList.add('placed');
+                                } else {
+                                    div.classList.add('incorrect');
+                                }
+                                
+                                dropzone.appendChild(div);
+                                dropzone.classList.remove('empty');
+                                
+                                // Store placement
+                                placedRanges[categoryType] = { range: range, correct: isCorrect };
+                                
+                                // Show immediate feedback
+                                if (isCorrect) {
+                                    feedbackDiv.textContent = '✓ Correct! ' + state.matchExplanations[categoryType];
+                                    feedbackDiv.className = 'category-feedback correct';
+                                } else {
+                                    feedbackDiv.textContent = '✗ Incorrect. ' + state.commonMistakes[categoryType] + ' Correct range: ' + state.correctMatches[categoryType];
+                                    feedbackDiv.className = 'category-feedback incorrect';
+                                }
+                                
+                                // Hide original item
+                                const originalItem = Array.from(document.querySelectorAll('.temperature-item:not(.placed):not(.incorrect)')).find(item => 
+                                    item.textContent === range
+                                );
+                                if (originalItem) {
+                                    originalItem.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                }
+                
+                function loadTemperatureItems() {
+                    temperatureItems.innerHTML = '';
+                    
+                    // Randomize order
+                    const shuffledRanges = [...state.temperatureRanges].sort(() => Math.random() - 0.5);
+                    
+                    // Create temperature items
+                    shuffledRanges.forEach(range => {
+                        const div = document.createElement('div');
+                        div.className = 'temperature-item';
+                        div.textContent = range;
+                        div.draggable = true;
+                        temperatureItems.appendChild(div);
+                    });
+                    
+                    // Setup drag and drop after items are loaded
+                    setTimeout(setupDragAndDrop, 100);
+                }
+                
+                // Check matching
+                checkMatchingBtn.addEventListener('click', function() {
+                    if (state.activities[1].completed) return;
+                    
+                    // Calculate score
+                    let correct = 0;
+                    let totalPlaced = 0;
+                    let wrongPlacements = [];
+                    
+                    Object.keys(state.correctMatches).forEach(category => {
+                        if (placedRanges[category]) {
+                            totalPlaced++;
+                            if (placedRanges[category].correct) {
+                                correct++;
+                            } else {
+                                wrongPlacements.push({
+                                    category: category,
+                                    selected: placedRanges[category].range,
+                                    correct: state.correctMatches[category]
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Update summary
+                    let summaryText = `<strong>Score:</strong> ${correct} out of ${totalPlaced} placed correctly`;
+                    if (totalPlaced < 5) {
+                        summaryText += ` (${5 - totalPlaced} categories not placed)`;
+                    }
+                    
+                    matchingSummary.innerHTML = summaryText;
+                    
+                    // Update common mistakes section
+                    if (wrongPlacements.length > 0) {
+                        let mistakesHtml = '';
+                        wrongPlacements.forEach(mistake => {
+                            const categoryName = mistake.category.charAt(0).toUpperCase() + mistake.category.slice(1);
+                            mistakesHtml += `• <strong>${categoryName}:</strong> You selected "${mistake.selected}". The correct range is "${mistake.correct}". ${state.commonMistakes[mistake.category]}<br>`;
+                        });
+                        commonMistakesDiv.innerHTML = mistakesHtml;
+                    } else {
+                        commonMistakesDiv.innerHTML = 'All categories placed correctly! Great job!';
+                    }
+                    
+                    state.activities[1].completed = true;
+                    state.activities[1].correct = correct;
+                    state.activities[1].score = Math.round((correct / 5) * 100);
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                    feedback.classList.add('show');
+                    
+                    updateProgressSummary();
+                });
+            }
+
+            // Activity 2: Temperature Conversion - WITH EXPLANATIONS
+            function initActivity2() {
+                const fahrenheitInput = document.getElementById('fahrenheit-input');
+                const celsiusInput = document.getElementById('celsius-input');
+                const convertToCelsiusBtn = document.getElementById('convert-to-celsius');
+                const convertToFahrenheitBtn = document.getElementById('convert-to-fahrenheit');
+                const celsiusResult = document.getElementById('celsius-result');
+                const fahrenheitResult = document.getElementById('fahrenheit-result');
+                const checkAllBtn = document.getElementById('check-all-conversions');
+                const feedback = document.getElementById('feedback-2');
+                const conversionSummary = document.getElementById('conversion-summary');
+                const conversionMistakes = document.getElementById('conversion-mistakes');
+                const status = document.querySelector('#activity-2 .activity-status');
+                
+                // Problem inputs and buttons
+                const problemInputs = {
+                    1: document.getElementById('problem-1-input'),
+                    2: document.getElementById('problem-2-input'),
+                    3: document.getElementById('problem-3-input'),
+                    4: document.getElementById('problem-4-input')
+                };
+                
+                const problemButtons = {
+                    1: document.getElementById('check-problem-1'),
+                    2: document.getElementById('check-problem-2'),
+                    3: document.getElementById('check-problem-3'),
+                    4: document.getElementById('check-problem-4')
+                };
+                
+                const problemResults = {
+                    1: document.getElementById('problem-1-result'),
+                    2: document.getElementById('problem-2-result'),
+                    3: document.getElementById('problem-3-result'),
+                    4: document.getElementById('problem-4-result')
+                };
+                
+                const problemExplanations = {
+                    1: document.getElementById('problem-1-explanation'),
+                    2: document.getElementById('problem-2-explanation'),
+                    3: document.getElementById('problem-3-explanation'),
+                    4: document.getElementById('problem-4-explanation')
+                };
+                
+                // Conversion functions
+                function fahrenheitToCelsius(f) {
+                    return (f - 32) * 5/9;
+                }
+                
+                function celsiusToFahrenheit(c) {
+                    return (c * 9/5) + 32;
+                }
+                
+                // General conversion practice
+                convertToCelsiusBtn.addEventListener('click', function() {
+                    const f = parseFloat(fahrenheitInput.value);
+                    if (isNaN(f)) {
+                        alert('Please enter a valid Fahrenheit temperature');
+                        return;
+                    }
+                    
+                    const c = fahrenheitToCelsius(f);
+                    celsiusResult.textContent = `${f}°F = ${c.toFixed(1)}°C`;
+                    celsiusResult.className = 'conversion-result correct';
+                    celsiusResult.style.display = 'block';
+                });
+                
+                convertToFahrenheitBtn.addEventListener('click', function() {
+                    const c = parseFloat(celsiusInput.value);
+                    if (isNaN(c)) {
+                        alert('Please enter a valid Celsius temperature');
+                        return;
+                    }
+                    
+                    const f = celsiusToFahrenheit(c);
+                    fahrenheitResult.textContent = `${c}°C = ${f.toFixed(1)}°F`;
+                    fahrenheitResult.className = 'conversion-result correct';
+                    fahrenheitResult.style.display = 'block';
+                });
+                
+                // Check individual problems
+                Object.keys(problemButtons).forEach(problemNum => {
+                    problemButtons[problemNum].addEventListener('click', function() {
+                        const input = problemInputs[problemNum];
+                        const value = parseFloat(input.value);
+                        const resultDiv = problemResults[problemNum];
+                        const explanationDiv = problemExplanations[problemNum];
+                        
+                        if (isNaN(value)) {
+                            alert('Please enter a valid temperature');
+                            return;
+                        }
+                        
+                        const correctAnswer = state.conversionProblems[problemNum];
+                        let isCorrect = false;
+                        let calculatedValue = 0;
+                        
+                        if (problemNum === '1' || problemNum === '3') {
+                            // Fahrenheit to Celsius problems
+                            calculatedValue = fahrenheitToCelsius(correctAnswer.fahrenheit);
+                            isCorrect = Math.abs(value - calculatedValue) < 0.2; // Allow small rounding difference
+                        } else {
+                            // Celsius to Fahrenheit problems
+                            calculatedValue = celsiusToFahrenheit(correctAnswer.celsius);
+                            isCorrect = Math.abs(value - calculatedValue) < 0.2;
+                        }
+                        
+                        if (isCorrect) {
+                            input.className = 'conversion-input correct';
+                            resultDiv.textContent = '✓ Correct!';
+                            resultDiv.className = 'conversion-result correct';
+                            explanationDiv.textContent = state.conversionProblems[problemNum].explanation;
+                            explanationDiv.className = 'conversion-result correct';
+                            explanationDiv.style.display = 'block';
+                            state.conversionAnswers[problemNum] = true;
+                        } else {
+                            input.className = 'conversion-input incorrect';
+                            resultDiv.textContent = '✗ Incorrect';
+                            resultDiv.className = 'conversion-result incorrect';
+                            
+                            // Show what they should have calculated
+                            let correctValue, formula;
+                            if (problemNum === '1') {
+                                correctValue = calculatedValue.toFixed(1);
+                                formula = `°C = (101.2 - 32) × 5/9 = ${correctValue}°C`;
+                            } else if (problemNum === '2') {
+                                correctValue = calculatedValue.toFixed(1);
+                                formula = `°F = (39.5 × 9/5) + 32 = ${correctValue}°F`;
+                            } else if (problemNum === '3') {
+                                correctValue = calculatedValue.toFixed(1);
+                                formula = `°C = (96.8 - 32) × 5/9 = ${correctValue}°C`;
+                            } else {
+                                correctValue = calculatedValue.toFixed(1);
+                                formula = `°F = (34.0 × 9/5) + 32 = ${correctValue}°F`;
+                            }
+                            
+                            explanationDiv.textContent = `Correct answer: ${correctValue}. Calculation: ${formula}. ${state.conversionProblems[problemNum].explanation}`;
+                            explanationDiv.className = 'conversion-result incorrect';
+                            explanationDiv.style.display = 'block';
+                            state.conversionAnswers[problemNum] = false;
+                        }
+                        
+                        resultDiv.style.display = 'block';
+                    });
+                });
+                
+                // Check all conversions
+                checkAllBtn.addEventListener('click', function() {
+                    if (state.activities[2].completed) return;
+                    
+                    // Check if all problems have been attempted
+                    const allAttempted = Object.values(state.conversionAnswers).every(answer => answer !== null);
+                    if (!allAttempted) {
+                        alert('Please attempt all conversion problems before checking.');
+                        return;
+                    }
+                    
+                    // Calculate score
+                    let correct = Object.values(state.conversionAnswers).filter(answer => answer === true).length;
+                    
+                    // Update summary
+                    conversionSummary.innerHTML = `<strong>Score:</strong> ${correct} out of 4 problems correct (${Math.round(correct/4*100)}%).`;
+                    
+                    // Show mistakes
+                    let mistakesHtml = '';
+                    Object.keys(state.conversionAnswers).forEach(problemNum => {
+                        if (state.conversionAnswers[problemNum] === false) {
+                            const problem = state.conversionProblems[problemNum];
+                            mistakesHtml += `• <strong>Problem ${problemNum}:</strong> ${state.conversionProblems[problemNum].explanation}<br>`;
+                        }
+                    });
+                    
+                    if (mistakesHtml) {
+                        conversionMistakes.innerHTML = mistakesHtml;
+                    } else {
+                        conversionMistakes.innerHTML = 'All conversions correct! Excellent work!';
+                    }
+                    
+                    state.activities[2].completed = true;
+                    state.activities[2].correct = correct;
+                    state.activities[2].score = Math.round((correct / 4) * 100);
+                    
+                    status.textContent = 'Completed';
+                    status.style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    feedback.classList.add('show');
+                    
+                    updateProgressSummary();
+                });
+            }
+
+            // Activity 3: Thermometer Selection - WITH DETAILED FEEDBACK
+            function initActivity3() {
+                const scenarioContainers = document.querySelectorAll('.scenario-container');
+                const thermometerOptions = document.querySelectorAll('.thermometer-option');
+                const submitBtns = document.querySelectorAll('.scenario-btn');
+                const prevBtn = document.getElementById('prev-scenario');
+                const nextBtn = document.getElementById('next-scenario');
+                const feedback = document.getElementById('feedback-3');
+                const thermometerSummary = document.getElementById('thermometer-summary');
+                const status = document.querySelector('#activity-3 .activity-status');
+                
+                // Show first scenario
+                showScenario(1);
+                
+                // Thermometer option selection
+                thermometerOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const scenario = this.dataset.scenario;
+                        const thermometer = this.dataset.thermometer;
+                        
+                        // Clear other selections in this scenario
+                        document.querySelectorAll(`.thermometer-option[data-scenario="${scenario}"]`).forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Clear previous feedback
+                        document.querySelectorAll(`.option-feedback`).forEach(fb => {
+                            fb.style.display = 'none';
+                        });
+                        const scenarioFeedback = document.getElementById(`scenario-${scenario}-feedback`);
+                        if (scenarioFeedback) scenarioFeedback.style.display = 'none';
+                        
+                        // Select this option
+                        this.classList.add('selected');
+                        state.scenarioAnswers[scenario] = thermometer;
+                        
+                        // Enable submit button
+                        const submitBtn = document.querySelector(`.scenario-btn[data-scenario="${scenario}"]`);
+                        if (submitBtn) submitBtn.disabled = false;
+                    });
+                });
+                
+                // Submit scenario response
+                submitBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const scenario = this.dataset.scenario;
+                        const selectedThermometer = state.scenarioAnswers[scenario];
+                        
+                        if (!selectedThermometer) {
+                            alert('Please select a thermometer option before submitting.');
+                            return;
+                        }
+                        
+                        const isCorrect = selectedThermometer === state.correctThermometers[scenario];
+                        
+                        // Visual feedback on all options
+                        document.querySelectorAll(`.thermometer-option[data-scenario="${scenario}"]`).forEach(option => {
+                            const thermometerType = option.dataset.thermometer;
+                            const feedbackDiv = document.getElementById(`feedback-${scenario}-${thermometerType}`);
+                            
+                            if (thermometerType === state.correctThermometers[scenario]) {
+                                option.classList.add('selected');
+                                option.classList.remove('wrong');
+                                feedbackDiv.textContent = '✓ ' + state.scenarioExplanations[scenario].correct;
+                                feedbackDiv.className = 'option-feedback correct';
+                                feedbackDiv.style.display = 'block';
+                            } else if (thermometerType === selectedThermometer && !isCorrect) {
+                                option.classList.add('wrong');
+                                option.classList.remove('selected');
+                                feedbackDiv.textContent = '✗ ' + state.scenarioExplanations[scenario][thermometerType];
+                                feedbackDiv.className = 'option-feedback incorrect';
+                                feedbackDiv.style.display = 'block';
+                            } else {
+                                option.classList.remove('selected', 'wrong');
+                                feedbackDiv.textContent = state.scenarioExplanations[scenario][thermometerType];
+                                feedbackDiv.className = 'option-feedback incorrect';
+                                feedbackDiv.style.display = 'block';
+                            }
+                        });
+                        
+                        // Show overall scenario feedback
+                        const scenarioFeedback = document.getElementById(`scenario-${scenario}-feedback`);
+                        if (isCorrect) {
+                            scenarioFeedback.textContent = '✓ Correct choice! ' + state.scenarioExplanations[scenario].correct;
+                            scenarioFeedback.className = 'option-feedback correct';
+                        } else {
+                            scenarioFeedback.textContent = '✗ Not the best choice. ' + state.scenarioExplanations[scenario][selectedThermometer] + ' The optimal choice is ' + state.correctThermometers[scenario].toUpperCase() + '.';
+                            scenarioFeedback.className = 'option-feedback incorrect';
+                        }
+                        scenarioFeedback.style.display = 'block';
+                        
+                        // Mark as submitted
+                        state.scenarioSubmitted[scenario] = true;
+                        this.disabled = true;
+                        
+                        // Update activity completion
+                        updateActivity3Completion();
+                    });
+                });
+                
+                // Function to update Activity 3 completion status
+                function updateActivity3Completion() {
+                    // Check if all scenarios have been submitted
+                    const allSubmitted = Object.values(state.scenarioSubmitted).every(submitted => submitted === true);
+                    
+                    if (allSubmitted && !state.activities[3].completed) {
+                        // Calculate score
+                        let correct = 0;
+                        let scenarioDetails = [];
+                        
+                        Object.keys(state.scenarioAnswers).forEach(scenario => {
+                            const isCorrect = state.scenarioAnswers[scenario] === state.correctThermometers[scenario];
+                            if (isCorrect) correct++;
+                            
+                            scenarioDetails.push({
+                                scenario: scenario,
+                                selected: state.scenarioAnswers[scenario],
+                                correct: state.correctThermometers[scenario],
+                                isCorrect: isCorrect
+                            });
+                        });
+                        
+                        // Update summary
+                        let summaryHtml = `<strong>Score:</strong> ${correct} out of 3 scenarios correct (${Math.round(correct/3*100)}%).<br><br>`;
+                        summaryHtml += `<strong>Scenario Analysis:</strong><br>`;
+                        
+                        scenarioDetails.forEach(detail => {
+                            const scenarioName = detail.scenario === '1' ? 'Infant' : detail.scenario === '2' ? 'Dementia Patient' : 'Pre-op Adult';
+                            if (detail.isCorrect) {
+                                summaryHtml += `✓ <strong>${scenarioName}:</strong> Correctly selected ${detail.selected}. ${state.scenarioExplanations[detail.scenario].correct.substring(0, 100)}...<br>`;
+                            } else {
+                                summaryHtml += `✗ <strong>${scenarioName}:</strong> Selected ${detail.selected}, but ${detail.correct} was optimal. ${state.scenarioExplanations[detail.scenario][detail.selected].substring(0, 100)}...<br>`;
+                            }
+                        });
+                        
+                        thermometerSummary.innerHTML = summaryHtml;
+                        
+                        state.activities[3].completed = true;
+                        state.activities[3].correct = correct;
+                        state.activities[3].score = Math.round((correct / 3) * 100);
+                        
+                        status.textContent = 'Completed';
+                        status.style.color = '#00b894';
+                        document.querySelector('#activity-3').classList.add('completed');
+                        feedback.classList.add('show');
+                        
+                        updateProgressSummary();
+                    }
+                }
+                
+                // Scenario navigation
+                prevBtn.addEventListener('click', function() {
+                    if (state.activities[3].currentScenario > 1) {
+                        state.activities[3].currentScenario--;
+                        showScenario(state.activities[3].currentScenario);
+                    }
+                });
+                
+                nextBtn.addEventListener('click', function() {
+                    if (state.activities[3].currentScenario < 3) {
+                        state.activities[3].currentScenario++;
+                        showScenario(state.activities[3].currentScenario);
+                    }
+                });
+                
+                function showScenario(num) {
+                    // Hide all scenarios
+                    scenarioContainers.forEach(container => {
+                        container.style.display = 'none';
+                    });
+                    
+                    // Show selected scenario
+                    document.getElementById(`scenario-${num}`).style.display = 'block';
+                    
+                    // Update navigation buttons
+                    prevBtn.disabled = num === 1;
+                    nextBtn.disabled = num === 3;
+                    
+                    // Update button text
+                    nextBtn.textContent = num === 3 ? 'Finish Activity' : 'Next Scenario →';
+                }
+            }
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                state.activities = {
+                    1: { completed: false, correct: 0, total: 5, score: 0 },
+                    2: { completed: false, correct: 0, total: 6, score: 0 },
+                    3: { completed: false, correct: 0, total: 3, score: 0, currentScenario: 1 }
+                };
+                state.scenarioAnswers = { 1: null, 2: null, 3: null };
+                state.scenarioSubmitted = { 1: false, 2: false, 3: false };
+                state.conversionAnswers = { 1: null, 2: null, 3: null, 4: null };
+                state.startedAt = new Date();
+                
+                // Reset Activity 1 UI
+                document.querySelectorAll('.category-dropzone').forEach(dropzone => {
+                    dropzone.innerHTML = '';
+                    dropzone.classList.add('empty');
+                });
+                document.querySelectorAll('.category-feedback').forEach(fb => {
+                    fb.textContent = '';
+                    fb.className = 'category-feedback';
+                    fb.style.display = 'none';
+                });
+                document.querySelectorAll('.temperature-item').forEach(item => {
+                    item.style.display = '';
+                    item.className = 'temperature-item';
+                });
+                document.getElementById('feedback-1').classList.remove('show');
+                
+                // Reset Activity 2 UI
+                document.querySelectorAll('.conversion-input').forEach(input => {
+                    input.value = '';
+                    input.className = 'conversion-input';
+                });
+                document.querySelectorAll('.conversion-result').forEach(result => {
+                    result.style.display = 'none';
+                    result.textContent = '';
+                });
+                document.getElementById('feedback-2').classList.remove('show');
+                
+                // Reset Activity 3 UI
+                document.querySelectorAll('.thermometer-option').forEach(option => {
+                    option.classList.remove('selected', 'wrong');
+                    option.style.borderColor = '';
+                    option.style.boxShadow = '';
+                });
+                document.querySelectorAll('.option-feedback').forEach(fb => {
+                    fb.textContent = '';
+                    fb.style.display = 'none';
+                });
+                document.querySelectorAll('.scenario-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+                document.querySelector('#scenario-1').style.display = 'block';
+                document.querySelector('#scenario-2').style.display = 'none';
+                document.querySelector('#scenario-3').style.display = 'none';
+                document.getElementById('prev-scenario').disabled = true;
+                document.getElementById('next-scenario').disabled = false;
+                document.getElementById('next-scenario').textContent = 'Next Scenario →';
+                document.getElementById('feedback-3').classList.remove('show');
+                
+                // Reset activity status
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                });
+                
+                // Reset results
+                resultsPanel.classList.remove('show');
+                
+                // Reload activities
+                initActivity1();
+                initActivity3();
+                
+                // Update progress
+                updateProgressSummary();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 if not already
+                if (!state.activities[1].completed) {
+                    // Auto-place correct matches with feedback
+                    Object.keys(state.correctMatches).forEach(category => {
+                        const dropzone = document.getElementById(`${category}-dropzone`);
+                        const feedbackDiv = document.getElementById(`${category}-feedback`);
+                        const range = state.correctMatches[category];
+                        
+                        // Place the correct range
+                        const div = document.createElement('div');
+                        div.className = 'temperature-item placed';
+                        div.textContent = range;
+                        dropzone.appendChild(div);
+                        dropzone.classList.remove('empty');
+                        
+                        // Show feedback
+                        feedbackDiv.textContent = '✓ Correct! ' + state.matchExplanations[category];
+                        feedbackDiv.className = 'category-feedback correct';
+                        
+                        // Hide the correct item from the source
+                        const rangeItem = Array.from(document.querySelectorAll('.temperature-item:not(.placed):not(.incorrect)')).find(item => 
+                            item.textContent === range
+                        );
+                        if (rangeItem) {
+                            rangeItem.style.display = 'none';
+                        }
+                    });
+                    
+                    state.activities[1].completed = true;
+                    state.activities[1].correct = 5;
+                    state.activities[1].score = 100;
+                    
+                    // Update feedback
+                    document.getElementById('matching-summary').innerHTML = '<strong>Score:</strong> 5 out of 5 correct (100%). All temperature ranges matched correctly!';
+                    document.getElementById('common-mistakes').innerHTML = 'All categories placed correctly! Excellent work!';
+                    
+                    document.querySelector('#activity-1 .activity-status').textContent = 'Completed';
+                    document.querySelector('#activity-1 .activity-status').style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                    document.getElementById('feedback-1').classList.add('show');
+                }
+                
+                // Complete Activity 2 if not already
+                if (!state.activities[2].completed) {
+                    // Fill in correct answers with explanations
+                    Object.keys(state.conversionProblems).forEach(problemNum => {
+                        const problem = state.conversionProblems[problemNum];
+                        const input = document.getElementById(`problem-${problemNum}-input`);
+                        const resultDiv = document.getElementById(`problem-${problemNum}-result`);
+                        const explanationDiv = document.getElementById(`problem-${problemNum}-explanation`);
+                        
+                        if (problemNum === '1' || problemNum === '3') {
+                            const celsius = ((problem.fahrenheit - 32) * 5/9).toFixed(1);
+                            input.value = celsius;
+                            resultDiv.textContent = '✓ Correct!';
+                            resultDiv.className = 'conversion-result correct';
+                            explanationDiv.textContent = problem.explanation;
+                            explanationDiv.className = 'conversion-result correct';
+                        } else {
+                            const fahrenheit = ((problem.celsius * 9/5) + 32).toFixed(1);
+                            input.value = fahrenheit;
+                            resultDiv.textContent = '✓ Correct!';
+                            resultDiv.className = 'conversion-result correct';
+                            explanationDiv.textContent = problem.explanation;
+                            explanationDiv.className = 'conversion-result correct';
+                        }
+                        
+                        input.className = 'conversion-input correct';
+                        resultDiv.style.display = 'block';
+                        explanationDiv.style.display = 'block';
+                        state.conversionAnswers[problemNum] = true;
+                    });
+                    
+                    state.activities[2].completed = true;
+                    state.activities[2].correct = 4;
+                    state.activities[2].score = 100;
+                    
+                    // Update feedback
+                    document.getElementById('conversion-summary').innerHTML = '<strong>Score:</strong> 4 out of 4 problems correct (100%). All conversions accurate!';
+                    document.getElementById('conversion-mistakes').innerHTML = 'All conversions correct! Excellent precision!';
+                    
+                    document.querySelector('#activity-2 .activity-status').textContent = 'Completed';
+                    document.querySelector('#activity-2 .activity-status').style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    document.getElementById('feedback-2').classList.add('show');
+                }
+                
+                // Complete Activity 3 if not already
+                if (!state.activities[3].completed) {
+                    // Select correct answers with detailed feedback
+                    Object.keys(state.correctThermometers).forEach(scenario => {
+                        const correctThermometer = state.correctThermometers[scenario];
+                        
+                        // Select correct option
+                        const option = document.querySelector(`.thermometer-option[data-scenario="${scenario}"][data-thermometer="${correctThermometer}"]`);
+                        const submitBtn = document.querySelector(`.scenario-btn[data-scenario="${scenario}"]`);
+                        const feedbackDiv = document.getElementById(`feedback-${scenario}-${correctThermometer}`);
+                        const scenarioFeedback = document.getElementById(`scenario-${scenario}-feedback`);
+                        
+                        if (option && submitBtn) {
+                            option.classList.add('selected');
+                            feedbackDiv.textContent = '✓ ' + state.scenarioExplanations[scenario].correct;
+                            feedbackDiv.className = 'option-feedback correct';
+                            feedbackDiv.style.display = 'block';
+                            
+                            scenarioFeedback.textContent = '✓ Correct choice! ' + state.scenarioExplanations[scenario].correct;
+                            scenarioFeedback.className = 'option-feedback correct';
+                            scenarioFeedback.style.display = 'block';
+                            
+                            submitBtn.disabled = true;
+                            state.scenarioAnswers[scenario] = correctThermometer;
+                            state.scenarioSubmitted[scenario] = true;
+                        }
+                    });
+                    
+                    state.activities[3].completed = true;
+                    state.activities[3].correct = 3;
+                    state.activities[3].score = 100;
+                    
+                    // Update feedback
+                    document.getElementById('thermometer-summary').innerHTML = '<strong>Score:</strong> 3 out of 3 scenarios correct (100%). Optimal thermometer selection demonstrated!';
+                    
+                    document.querySelector('#activity-3 .activity-status').textContent = 'Completed';
+                    document.querySelector('#activity-3 .activity-status').style.color = '#00b894';
+                    document.querySelector('#activity-3').classList.add('completed');
+                    document.getElementById('feedback-3').classList.add('show');
+                }
+                
+                updateProgressSummary();
+            }
+
+            // View Final Results
+            function viewFinalResults() {
+                let totalScore = 0;
+                let activityCount = 0;
+                
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) {
+                        totalScore += activity.score;
+                        activityCount++;
+                    }
+                });
+                
+                const averageScore = activityCount > 0 ? Math.round(totalScore / activityCount) : 0;
+                finalScore.textContent = `${averageScore}%`;
+                resultsPanel.classList.add('show');
+                
+                // Scroll to results
+                resultsPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Initialize activities
+            initActivity1();
+            initActivity2();
+            initActivity3();
+
+            // Event listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkBtn.addEventListener('click', checkAllAnswers);
+            resultsBtn.addEventListener('click', viewFinalResults);
+
+            // Initial progress update
+            updateProgressSummary();
+        });
+    </script>
+</body>
+</html>
