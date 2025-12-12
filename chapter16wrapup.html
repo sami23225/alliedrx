@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chapter 16 Wrap-Up – Assisting in Urology and Male Reproduction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d9b8ff;
+            --color-accent: #8380f0;
+            --color-bg: #f7f5fb;
+            --color-text: #1e2030;
+            --color-muted: #727089;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 24px;
+            background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+                gap: 22px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+        }
+
+        img, .page, .column, .card, .side-card, .completion-card {
+            max-width: 100%;
+        }
+
+        .column {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / branding */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #00b894;
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 3vw, 2.3rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 36rem;
+            margin-bottom: 18px;
+        }
+
+        .subtitle strong {
+            color: var(--color-primary);
+        }
+
+        /* Sections */
+        .section-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .card {
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            padding: 14px 16px 16px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), rgba(255, 255, 255, 0.98));
+        }
+
+        .card + .card {
+            margin-top: 6px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+
+        .small {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Quiz styles */
+        .quiz-item {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.7);
+        }
+
+        .quiz-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.88rem;
+        }
+
+        .quiz-options li {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .quiz-options input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            font-size: 0.82rem;
+            margin-top: 5px;
+            min-height: 1.1em;
+        }
+
+        .quiz-feedback.correct {
+            color: #15803d;
+        }
+
+        .quiz-feedback.incorrect {
+            color: #b91c1c;
+        }
+
+        .btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            margin-top: 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+        }
+
+        /* Vocabulary */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vocab-card {
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: rgba(12, 10, 24, 0.94);
+            color: #e5e7eb;
+            font-size: 0.86rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-term {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fef9c3;
+        }
+
+        .vocab-definition {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .vocab-card.active .vocab-definition {
+            display: block;
+        }
+
+        .vocab-card::after {
+            content: "Tap to flip";
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a5b4fc;
+        }
+
+        .vocab-card.active::after {
+            content: "Hide";
+        }
+
+        /* Reflection */
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            padding: 10px 11px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
+            margin-top: 6px;
+        }
+
+        textarea:focus {
+            outline: 2px solid var(--color-primary-soft);
+            border-color: var(--color-primary);
+        }
+
+        .checklist {
+            list-style: none;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .checklist input {
+            margin-top: 2px;
+        }
+
+        /* Right column cards */
+        .side-card {
+            background: rgba(12, 10, 24, 0.96);
+            color: #e5e7eb;
+            border-radius: 18px;
+            padding: 16px 18px 18px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .side-card strong {
+            color: #ffffff;
+        }
+
+        .side-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #c4b5fd;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .side-list {
+            list-style: none;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .side-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 7px;
+            border-radius: 999px;
+            background: #a5b4fc;
+            flex-shrink: 0;
+        }
+
+        .completion-card {
+            border-radius: 18px;
+            border: 1px dashed rgba(148, 163, 184, 0.7);
+            padding: 12px 14px;
+            font-size: 0.84rem;
+            color: var(--color-muted);
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        /* Anatomy matching */
+        .anatomy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .anatomy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .anatomy-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .anatomy-card.matched {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+        }
+
+        .anatomy-card.selected {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .anatomy-name {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .anatomy-function {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Diagnostic matching */
+        .diag-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .diag-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .diag-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(175, 75, 239, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .diag-info {
+            flex: 1;
+        }
+
+        .diag-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        .diag-desc {
+            font-size: 0.78rem;
+            color: var(--color-muted);
+        }
+
+        .diag-select {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #cbd5e1;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .diag-item.correct .diag-select {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .diag-item.incorrect .diag-select {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="wrapup-heading">
+        <!-- LEFT COLUMN -->
+        <section class="column">
+            <header class="brand-row">
+                <div class="brand">
+                    <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" alt="AlliedRx logo" class="brand-logo" />
+                    <div class="course-meta">
+                        <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+                        <div class="week-label">
+                            <span class="week-label-dot"></span>
+                            <span>Chapter 16 Wrap-Up – Assisting in Urology and Male Reproduction</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="badge-mode">Interactive Review</span>
+            </header>
+
+            <h1 id="wrapup-heading">Urology & Male Reproductive Care</h1>
+            <p class="subtitle">
+                Use this page to reinforce your understanding of <strong>Chapter 16 – Assisting in Urology and Male Reproduction</strong>. 
+                Review anatomy, diagnostic procedures, common disorders, and your role as an MA in urologic care.
+            </p>
+
+            <!-- QUICK SELF-CHECK QUIZ -->
+            <section aria-label="quick self check">
+                <p class="section-label">Step 1</p>
+                <h2 class="section-title">Clinical Knowledge Check</h2>
+                <div class="card" id="quiz-card">
+                    <p class="small">
+                        Test your understanding of urologic conditions and MA responsibilities.
+                    </p>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            1. <strong>Erythropoietin</strong> is produced by the kidneys and has what primary function?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q1" value="a" id="q1a" />
+                                <label for="q1a">Regulate blood pressure through renin-angiotensin system</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="b" id="q1b" />
+                                <label for="q1b">Filter waste products from the blood</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="c" id="q1c" />
+                                <label for="q1c">Promote red blood cell formation in bone marrow</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="a">
+                        <p class="quiz-question">
+                            2. A patient with <strong>azotemia</strong> has which condition?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q2" value="a" id="q2a" />
+                                <label for="q2a">Retention of nitrogenous wastes in the blood</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="b" id="q2b" />
+                                <label for="q2b">Excess protein in the urine</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="c" id="q2c" />
+                                <label for="q2c">Painful urination with burning sensation</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="b">
+                        <p class="quiz-question">
+                            3. When teaching testicular self-examination (TSE), you should emphasize that the procedure should be performed:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q3" value="a" id="q3a" />
+                                <label for="q3a">Only when pain or abnormalities are noticed</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="b" id="q3b" />
+                                <label for="q3b">Monthly, preferably after a warm bath or shower</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="c" id="q3c" />
+                                <label for="q3c">Weekly for high-risk patients only</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            4. Which finding would be most concerning in a male patient's urinalysis?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q4" value="a" id="q4a" />
+                                <label for="q4a">Slight increase in specific gravity</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="b" id="q4b" />
+                                <label for="q4b">Trace amounts of glucose</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="c" id="q4c" />
+                                <label for="q4c">Gross hematuria with visible blood clots</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q4-feedback"></div>
+                    </div>
+
+                    <button class="btn" type="button" onclick="checkQuiz()">Check answers</button>
+                </div>
+            </section>
+
+            <!-- ANATOMY MATCHING ACTIVITY -->
+            <section aria-label="anatomy matching practice">
+                <p class="section-label">Step 2</p>
+                <h2 class="section-title">Urinary System Anatomy Matching</h2>
+                <div class="card">
+                    <p class="small">
+                        Match each structure with its primary function. Select a structure, then select the matching function.
+                    </p>
+                    
+                    <div class="anatomy-grid">
+                        <!-- Structures -->
+                        <div class="anatomy-card" data-structure="kidneys" onclick="selectStructure(this)">
+                            <div class="anatomy-name">Kidneys</div>
+                        </div>
+                        <div class="anatomy-card" data-structure="ureters" onclick="selectStructure(this)">
+                            <div class="anatomy-name">Ureters</div>
+                        </div>
+                        <div class="anatomy-card" data-structure="bladder" onclick="selectStructure(this)">
+                            <div class="anatomy-name">Urinary Bladder</div>
+                        </div>
+                        <div class="anatomy-card" data-structure="urethra" onclick="selectStructure(this)">
+                            <div class="anatomy-name">Urethra</div>
+                        </div>
+                        
+                        <!-- Functions -->
+                        <div class="anatomy-card" data-function="filter blood, produce urine, regulate electrolytes" onclick="selectFunction(this)">
+                            <div class="anatomy-function">Filter blood, produce urine, regulate electrolytes</div>
+                        </div>
+                        <div class="anatomy-card" data-function="transport urine from kidneys to bladder" onclick="selectFunction(this)">
+                            <div class="anatomy-function">Transport urine from kidneys to bladder</div>
+                        </div>
+                        <div class="anatomy-card" data-function="store urine until elimination" onclick="selectFunction(this)">
+                            <div class="anatomy-function">Store urine until elimination</div>
+                        </div>
+                        <div class="anatomy-card" data-function="carry urine from bladder to outside body" onclick="selectFunction(this)">
+                            <div class="anatomy-function">Carry urine from bladder to outside body</div>
+                        </div>
+                    </div>
+                    
+                    <div id="anatomy-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                    <button class="btn" type="button" onclick="checkAnatomyMatching()" style="margin-top: 8px;">Check matches</button>
+                </div>
+            </section>
+
+            <!-- DIAGNOSTIC PROCEDURES -->
+            <section aria-label="diagnostic procedures">
+                <p class="section-label">Step 3</p>
+                <h2 class="section-title">Diagnostic Procedures in Urology</h2>
+                <div class="card">
+                    <p class="small">
+                        Select which diagnostic test would be most appropriate for each clinical scenario.
+                    </p>
+                    
+                    <div class="diag-grid">
+                        <div class="diag-item" data-scenario="1" data-correct="cystoscopy">
+                            <div class="diag-icon">1</div>
+                            <div class="diag-info">
+                                <div class="diag-name">Recurrent hematuria with no infection</div>
+                                <div class="diag-desc">55-year-old male with intermittent blood in urine, negative cultures</div>
+                            </div>
+                            <div class="diag-select" onclick="selectDiagnostic(this)"></div>
+                        </div>
+                        
+                        <div class="diag-item" data-scenario="2" data-correct="psa">
+                            <div class="diag-icon">2</div>
+                            <div class="diag-info">
+                                <div class="diag-name">Prostate cancer screening</div>
+                                <div class="diag-desc">60-year-old male with family history of prostate cancer</div>
+                            </div>
+                            <div class="diag-select" onclick="selectDiagnostic(this)"></div>
+                        </div>
+                        
+                        <div class="diag-item" data-scenario="3" data-correct="uroflowmetry">
+                            <div class="diag-icon">3</div>
+                            <div class="diag-info">
+                                <div class="diag-name">Weak urinary stream assessment</div>
+                                <div class="diag-desc">65-year-old male with BPH symptoms, wants to quantify obstruction</div>
+                            </div>
+                            <div class="diag-select" onclick="selectDiagnostic(this)"></div>
+                        </div>
+                        
+                        <div class="diag-item" data-scenario="4" data-correct="sticulture">
+                            <div class="diag-icon">4</div>
+                            <div class="diag-info">
+                                <div class="diag-name">Urethral discharge evaluation</div>
+                                <div class="diag-desc">25-year-old male with dysuria and purulent discharge</div>
+                            </div>
+                            <div class="diag-select" onclick="selectDiagnostic(this)"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-grid" style="margin-top: 16px; background: transparent;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Cystoscopy</div>
+                            <div class="vocab-definition">Visual examination of bladder and urethra using a scope</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">PSA Test</div>
+                            <div class="vocab-definition">Prostate-specific antigen blood test for prostate screening</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Uroflowmetry</div>
+                            <div class="vocab-definition">Measures urine flow rate to assess bladder obstruction</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">STI Culture/PCR</div>
+                            <div class="vocab-definition">Tests for gonorrhea, chlamydia from urethral discharge</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" type="button" onclick="checkDiagnostics()" style="margin-top: 12px;">Check selections</button>
+                    <div id="diag-feedback" class="quiz-feedback" style="margin-top: 8px;"></div>
+                </div>
+            </section>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="column" aria-label="apply it to clinical practice">
+            <!-- SARA RICCI CASE STUDY -->
+            <section>
+                <p class="section-label">Apply it</p>
+                <h2 class="section-title">Sara Ricci's Urology Practice</h2>
+                <div class="side-card">
+                    <p class="side-subtitle">Case Scenario</p>
+                    <p>
+                        Sara Ricci, CMA (AAMA), works for Dr. Samuel Fineman, a urologist. 
+                        She handles telephone calls, assists in clinical procedures, and provides 
+                        patient education. Today she receives these calls:
+                    </p>
+                    
+                    <p class="side-subtitle" style="margin-top:12px;">Call 1: Pediatric Case</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        Parent calls about 4-year-old with frequent UTIs, possible vesicoureteral reflux.
+                    </p>
+                    
+                    <p class="side-subtitle">Call 2: Adult Case</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        68-year-old male with BPH symptoms worsening, asking about surgical options.
+                    </p>
+                    
+                    <p class="side-subtitle">Call 3: STI Concern</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        22-year-old college student with urethral discharge, worried about STI exposure.
+                    </p>
+                    
+                    <label class="small" for="sara-notes" style="display:block;margin-top:10px;">
+                        How should Sara prioritize these calls and what initial information should she gather?
+                    </label>
+                    <textarea id="sara-notes" placeholder="Document: 1) Triage priority order, 2) Key questions for each caller, 3) Patient education points"></textarea>
+                </div>
+            </section>
+
+            <!-- KEY VOCABULARY REVIEW -->
+            <section>
+                <p class="section-label">Step 4</p>
+                <h2 class="section-title">Chapter 16 Vocabulary</h2>
+                <div class="side-card">
+                    <div class="vocab-grid" style="background: transparent; gap: 8px;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Albuminuria</div>
+                            <div class="vocab-definition">Abnormal presence of albumin protein in urine; indicates kidney damage</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Azotemia</div>
+                            <div class="vocab-definition">Retention of nitrogenous wastes in blood; sign of renal impairment</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Dysuria</div>
+                            <div class="vocab-definition">Painful or difficult urination; common in UTIs and STIs</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Creatinine</div>
+                            <div class="vocab-definition">Nitrogenous waste from muscle metabolism; measured to assess kidney function</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Urgency</div>
+                            <div class="vocab-definition">Sudden compelling desire to urinate with inability to control release</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Erythropoietin</div>
+                            <div class="vocab-definition">Kidney-produced hormone that stimulates red blood cell production</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Renin</div>
+                            <div class="vocab-definition">Enzyme from kidneys that helps regulate blood pressure</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Casts</div>
+                            <div class="vocab-definition">Fibrous/protein material in urine shaped like kidney tubules; indicates kidney disease</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MA ROLE CHECKLIST -->
+            <section>
+                <p class="section-label">Step 5</p>
+                <h2 class="section-title">MA Responsibilities in Urology</h2>
+                <div class="side-card">
+                    <p>
+                        As an MA in urology practice, mark items you feel confident performing:
+                    </p>
+                    
+                    <ul class="checklist" style="margin-top:10px;">
+                        <li>
+                            <input type="checkbox" id="role-1" />
+                            <label for="role-1">
+                                Perform and document <strong>urinalysis</strong> with microscopic examination
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-2" />
+                            <label for="role-2">
+                                Educate patients on <strong>testicular self-examination</strong> technique
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-3" />
+                            <label for="role-3">
+                                Prepare patients for <strong>cystoscopy</strong> and provide post-procedure instructions
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-4" />
+                            <label for="role-4">
+                                Handle <strong>telephone triage</strong> for urologic emergencies
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-5" />
+                            <label for="role-5">
+                                Maintain <strong>HIPAA compliance</strong> with sensitive STI information
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-6" />
+                            <label for="role-6">
+                                Assist with <strong>male reproductive exams</strong> while ensuring patient dignity
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-7" />
+                            <label for="role-7">
+                                Provide <strong>STI prevention education</strong> and condom use instructions
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-8" />
+                            <label for="role-8">
+                                Document <strong>voiding diaries</strong> and symptom questionnaires
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- COMPLETION CHECKLIST -->
+            <section>
+                <p class="section-label">Ready to Move On?</p>
+                <h2 class="section-title">Chapter 16 Mastery Checklist</h2>
+                <div class="completion-card">
+                    <p>
+                        Confirm you can demonstrate these competencies before proceeding:
+                    </p>
+                    <ul class="side-list" style="margin-top:8px;">
+                        <li>
+                            <span class="dot"></span>
+                            <span>Describe <strong>urinary system anatomy</strong> and kidney functions</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Differentiate <strong>UTI vs STI</strong> symptoms and treatments</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Explain <strong>BPH management</strong> options and surgical interventions</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Perform <strong>TSE patient education</strong> with demonstration</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Identify <strong>renal failure indicators</strong> in lab results</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Apply <strong>HIPAA guidelines</strong> to sensitive urologic cases</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Assist with <strong>urologic procedures</strong> and diagnostic tests</span>
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(175, 75, 239, 0.05); border-radius: 8px;">
+                        <p class="small" style="margin-bottom: 6px;"><strong>Pro Tip from Sara Ricci:</strong></p>
+                        <p class="small" style="margin: 0;">
+                            "Always maintain extra dignity and privacy with urologic patients. They're often embarrassed. 
+                            Have educational materials ready, speak matter-of-factly about sensitive topics, and never rush them."
+                        </p>
+                    </div>
+                    
+                    <p style="margin-top:12px;">
+                        Return to your course when ready for the next chapter.
+                    </p>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        // Quiz logic
+        function checkQuiz() {
+            const items = document.querySelectorAll('.quiz-item');
+            items.forEach((item, index) => {
+                const correct = item.getAttribute('data-answer');
+                const name = 'q' + (index + 1);
+                const selected = document.querySelector('input[name="' + name + '"]:checked');
+                const feedback = document.getElementById(name + '-feedback');
+                if (!selected) {
+                    feedback.textContent = 'Please select an answer.';
+                    feedback.className = 'quiz-feedback';
+                    return;
+                }
+                if (selected.value === correct) {
+                    feedback.textContent = 'Correct! ' + getQuizFeedback(index + 1, true);
+                    feedback.className = 'quiz-feedback correct';
+                } else {
+                    feedback.textContent = 'Review needed. ' + getQuizFeedback(index + 1, false);
+                    feedback.className = 'quiz-feedback incorrect';
+                }
+            });
+        }
+        
+        function getQuizFeedback(questionNum, isCorrect) {
+            const feedback = {
+                1: "Erythropoietin stimulates RBC production. Low levels in renal failure cause anemia.",
+                2: "Azotemia = nitrogen waste buildup. Albuminuria = protein in urine. Dysuria = painful urination.",
+                3: "Monthly TSE after warm bath allows detection of changes. Testicular cancer is most common in males 15-35.",
+                4: "Gross hematuria requires immediate evaluation for possible tumors, stones, or trauma."
+            };
+            return feedback[questionNum] || (isCorrect ? "Good work!" : "Review this topic.");
+        }
+
+        // Vocabulary flip
+        function toggleVocab(card) {
+            card.classList.toggle('active');
+        }
+
+        // Anatomy Matching Game
+        let selectedStructure = null;
+        let selectedFunction = null;
+        
+        function selectStructure(card) {
+            document.querySelectorAll('.anatomy-card[data-structure]').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedStructure = card.getAttribute('data-structure');
+            checkAnatomyMatch();
+        }
+        
+        function selectFunction(card) {
+            document.querySelectorAll('.anatomy-card[data-function]').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedFunction = card.getAttribute('data-function');
+            checkAnatomyMatch();
+        }
+        
+        function checkAnatomyMatch() {
+            const feedback = document.getElementById('anatomy-feedback');
+            if (!selectedStructure || !selectedFunction) return;
+            
+            const correctMatches = {
+                kidneys: "filter blood, produce urine, regulate electrolytes",
+                ureters: "transport urine from kidneys to bladder",
+                bladder: "store urine until elimination",
+                urethra: "carry urine from bladder to outside body"
+            };
+            
+            if (correctMatches[selectedStructure] === selectedFunction) {
+                feedback.textContent = "✓ Correct match! " + getAnatomyFact(selectedStructure);
+                feedback.className = "quiz-feedback correct";
+                
+                // Mark as matched
+                document.querySelector(`.anatomy-card[data-structure="${selectedStructure}"]`).classList.add('matched');
+                document.querySelector(`.anatomy-card[data-function="${selectedFunction}"]`).classList.add('matched');
+                
+                // Reset selection
+                selectedStructure = null;
+                selectedFunction = null;
+                document.querySelectorAll('.anatomy-card.selected').forEach(c => c.classList.remove('selected'));
+            } else {
+                feedback.textContent = "Not quite. Try again!";
+                feedback.className = "quiz-feedback incorrect";
+            }
+        }
+        
+        function getAnatomyFact(structure) {
+            const facts = {
+                kidneys: "Process 120-150 quarts of blood daily to produce 1-2 quarts of urine.",
+                ureters: "Use peristalsis to move urine; stones can cause severe pain (renal colic).",
+                bladder: "Normal capacity: 400-600 mL. Overactive bladder affects 33 million Americans.",
+                urethra: "Male urethra: 8 inches. Female urethra: 1.5 inches (more prone to UTIs)."
+            };
+            return facts[structure] || "";
+        }
+        
+        function checkAnatomyMatching() {
+            const feedback = document.getElementById('anatomy-feedback');
+            const matched = document.querySelectorAll('.anatomy-card.matched').length;
+            if (matched === 8) {
+                feedback.textContent = "🎉 Perfect! All anatomy structures correctly matched.";
+                feedback.className = "quiz-feedback correct";
+            } else {
+                feedback.textContent = `${matched/2}/4 matches correct. Keep practicing!`;
+                feedback.className = "quiz-feedback";
+            }
+        }
+
+        // Diagnostic Procedures
+        const diagnosticAnswers = {
+            1: "cystoscopy",
+            2: "psa",
+            3: "uroflowmetry",
+            4: "sticulture"
+        };
+        
+        const diagnosticSelections = {};
+        
+        function selectDiagnostic(element) {
+            const item = element.closest('.diag-item');
+            const scenario = item.getAttribute('data-scenario');
+            
+            // Show options dialog
+            const options = [
+                {id: "cystoscopy", name: "Cystoscopy", desc: "Visual bladder exam"},
+                {id: "psa", name: "PSA Test", desc: "Prostate cancer screening"},
+                {id: "uroflowmetry", name: "Uroflowmetry", desc: "Urine flow measurement"},
+                {id: "sticulture", name: "STI Culture/PCR", desc: "Infection testing"},
+                {id: "ultrasound", name: "Renal Ultrasound", desc: "Kidney imaging"},
+                {id: "biopsy", name: "Prostate Biopsy", desc: "Tissue sampling"}
+            ];
+            
+            let optionsHTML = options.map(opt => 
+                `<div style="padding: 8px; border-bottom: 1px solid #e2e8f0; cursor: pointer;" onclick="setDiagnostic('${scenario}', '${opt.id}', this)">
+                    <div style="font-weight: 600;">${opt.name}</div>
+                    <div style="font-size: 0.8rem; color: #64748b;">${opt.desc}</div>
+                </div>`
+            ).join('');
+            
+            const dialog = document.createElement('div');
+            dialog.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto;">
+                        <div style="font-weight: 600; margin-bottom: 15px; color: var(--color-primary);">Select Diagnostic Test</div>
+                        <div>${optionsHTML}</div>
+                        <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 15px; padding: 8px 16px; background: #64748b; color: white; border: none; border-radius: 6px; cursor: pointer;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+        
+        function setDiagnostic(scenario, testId, element) {
+            diagnosticSelections[scenario] = testId;
+            
+            // Update UI
+            const item = document.querySelector(`.diag-item[data-scenario="${scenario}"]`);
+            const correct = item.getAttribute('data-correct');
+            
+            item.classList.remove('correct', 'incorrect');
+            if (testId === correct) {
+                item.classList.add('correct');
+            } else {
+                item.classList.add('incorrect');
+            }
+            
+            // Remove dialog
+            element.closest('div[style*="position: fixed"]').remove();
+        }
+        
+        function checkDiagnostics() {
+            const feedback = document.getElementById('diag-feedback');
+            let correct = 0;
+            let total = 0;
+            
+            for (const scenario in diagnosticAnswers) {
+                total++;
+                if (diagnosticSelections[scenario] === diagnosticAnswers[scenario]) {
+                    correct++;
+                }
+            }
+            
+            if (correct === total) {
+                feedback.textContent = "🎉 Excellent! All diagnostic selections correct.";
+                feedback.className = "quiz-feedback correct";
+            } else if (correct > 0) {
+                feedback.textContent = `${correct}/${total} correct. Review diagnostic indications.`;
+                feedback.className = "quiz-feedback";
+            } else {
+                feedback.textContent = "Try selecting tests for each scenario.";
+                feedback.className = "quiz-feedback";
+            }
+        }
+    </script>
+</body>
+</html>
