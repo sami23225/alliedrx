@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chapter 17 Wrap-Up – Assisting in Obstetrics and Gynecology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d9b8ff;
+            --color-accent: #8380f0;
+            --color-bg: #f7f5fb;
+            --color-text: #1e2030;
+            --color-dark-text: #1a1a2e;
+            --color-muted: #727089;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 24px;
+            background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+                gap: 22px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+        }
+
+        img, .page, .column, .card, .side-card, .completion-card {
+            max-width: 100%;
+        }
+
+        .column {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / branding */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #00b894;
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 3vw, 2.3rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 36rem;
+            margin-bottom: 18px;
+        }
+
+        .subtitle strong {
+            color: var(--color-primary);
+        }
+
+        /* Sections */
+        .section-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .card {
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            padding: 14px 16px 16px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), rgba(255, 255, 255, 0.98));
+        }
+
+        .card + .card {
+            margin-top: 6px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+
+        .small {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Quiz styles */
+        .quiz-item {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.7);
+        }
+
+        .quiz-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--color-dark-text);
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.88rem;
+        }
+
+        .quiz-options li {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .quiz-options input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            font-size: 0.82rem;
+            margin-top: 5px;
+            min-height: 1.1em;
+        }
+
+        .quiz-feedback.correct {
+            color: #15803d;
+        }
+
+        .quiz-feedback.incorrect {
+            color: #b91c1c;
+        }
+
+        .btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            margin-top: 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+        }
+
+        /* Vocabulary */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vocab-card {
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: rgba(12, 10, 24, 0.94);
+            color: #e5e7eb;
+            font-size: 0.86rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-term {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fef9c3;
+        }
+
+        .vocab-definition {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .vocab-card.active .vocab-definition {
+            display: block;
+        }
+
+        .vocab-card::after {
+            content: "Tap to flip";
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a5b4fc;
+        }
+
+        /* Right column cards */
+        .side-card {
+            background: rgba(12, 10, 24, 0.96);
+            color: #e5e7eb;
+            border-radius: 18px;
+            padding: 16px 18px 18px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .side-card strong {
+            color: #ffffff;
+        }
+
+        .side-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #c4b5fd;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .side-list {
+            list-style: none;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .side-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 7px;
+            border-radius: 999px;
+            background: #a5b4fc;
+            flex-shrink: 0;
+        }
+
+        .completion-card {
+            border-radius: 18px;
+            border: 1px dashed rgba(148, 163, 184, 0.7);
+            padding: 12px 14px;
+            font-size: 0.84rem;
+            color: var(--color-muted);
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        /* Contraceptive Methods */
+        .contraceptive-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .contraceptive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .method-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .method-card.hormonal {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .method-card.barrier {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .method-card.long-term {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .method-card.natural {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .method-card.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .method-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: var(--color-dark-text);
+        }
+
+        .method-title::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .method-card.hormonal .method-title::before { background: #8b5cf6; }
+        .method-card.barrier .method-title::before { background: #3b82f6; }
+        .method-card.long-term .method-title::before { background: #10b981; }
+        .method-card.natural .method-title::before { background: #f59e0b; }
+
+        .method-examples {
+            font-size: 0.82rem;
+            color: var(--color-dark-text);
+            font-weight: 500;
+        }
+
+        /* Pregnancy Stages */
+        .pregnancy-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .stage-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .stage-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--color-dark-text);
+        }
+
+        .stage-details {
+            font-size: 0.82rem;
+            color: var(--color-dark-text);
+            line-height: 1.4;
+        }
+
+        /* Gynecologic Disorders */
+        .disorder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .disorder-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .disorder-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .disorder-card.matched {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: #22c55e;
+        }
+
+        .disorder-card.selected {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .disorder-name {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .disorder-desc {
+            font-size: 0.82rem;
+            color: var(--color-dark-text);
+        }
+
+        /* Breast Exam Steps */
+        .breast-exam-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(175, 75, 239, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color-primary);
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+            color: var(--color-dark-text);
+        }
+
+        .step-desc {
+            font-size: 0.78rem;
+            color: var(--color-muted);
+        }
+
+        /* Menstrual Phases */
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .phase-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .phase-card.menstrual {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .phase-card.proliferative {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .phase-card.secretory {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .phase-card.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .phase-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--color-dark-text);
+            text-align: center;
+        }
+
+        .phase-desc {
+            font-size: 0.78rem;
+            color: var(--color-dark-text);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="wrapup-heading">
+        <!-- LEFT COLUMN -->
+        <section class="column">
+            <header class="brand-row">
+                <div class="brand">
+                    <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" alt="AlliedRx logo" class="brand-logo" />
+                    <div class="course-meta">
+                        <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+                        <div class="week-label">
+                            <span class="week-label-dot"></span>
+                            <span>Chapter 17 Wrap-Up – Assisting in Obstetrics and Gynecology</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="badge-mode">Interactive Review</span>
+            </header>
+
+            <h1 id="wrapup-heading">Women's Health & Reproductive Care</h1>
+            <p class="subtitle">
+                Use this page to reinforce your understanding of <strong>Chapter 17 – Obstetrics and Gynecology</strong>. 
+                Review female anatomy, contraceptive methods, pregnancy stages, and gynecologic disorders.
+            </p>
+
+            <!-- QUICK SELF-CHECK QUIZ -->
+            <section aria-label="quick self check">
+                <p class="section-label">Step 1</p>
+                <h2 class="section-title">Clinical Knowledge Check</h2>
+                <div class="card" id="quiz-card">
+                    <p class="small">
+                        Test your understanding of OB/GYN concepts and patient care.
+                    </p>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            1. The <strong>menstrual phase</strong> of the menstrual cycle is characterized by:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q1" value="a" id="q1a" />
+                                <label for="q1a">Ovulation and peak fertility</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="b" id="q1b" />
+                                <label for="q1b">Thickening of the endometrial lining</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="c" id="q1c" />
+                                <label for="q1c">Shedding of the endometrial lining (period)</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="a">
+                        <p class="quiz-question">
+                            2. A <strong>LEEP procedure</strong> is primarily used to treat:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q2" value="a" id="q2a" />
+                                <label for="q2a">Abnormal cervical cells (CIN)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="b" id="q2b" />
+                                <label for="q2b">Uterine fibroids</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="c" id="q2c" />
+                                <label for="q2c">Ovarian cysts</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="b">
+                        <p class="quiz-question">
+                            3. Which contraceptive method is considered <strong>most effective</strong> with typical use?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q3" value="a" id="q3a" />
+                                <label for="q3a">Condoms</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="b" id="q3b" />
+                                <label for="q3b">IUD (Intrauterine Device)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="c" id="q3c" />
+                                <label for="q3c">Fertility awareness methods</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            4. <strong>Gestational diabetes</strong> typically develops during:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q4" value="a" id="q4a" />
+                                <label for="q4a">First trimester (weeks 1-12)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="b" id="q4b" />
+                                <label for="q4b">Second trimester (weeks 13-27)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="c" id="q4c" />
+                                <label for="q4c">Third trimester (weeks 28-40)</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q4-feedback"></div>
+                    </div>
+
+                    <button class="btn" type="button" onclick="checkQuiz()">Check answers</button>
+                </div>
+            </section>
+
+            <!-- MENSTRUAL PHASES -->
+            <section aria-label="menstrual phases">
+                <p class="section-label">Step 2</p>
+                <h2 class="section-title">Menstrual Cycle Phases</h2>
+                <div class="card">
+                    <p class="small">
+                        Click each phase to review the timeline and key events in the menstrual cycle.
+                    </p>
+                    
+                    <div class="phase-grid">
+                        <div class="phase-card menstrual" onclick="selectPhase(this, 'menstrual')">
+                            <div class="phase-title">Menstrual Phase</div>
+                            <div class="phase-desc">Days 1-5</div>
+                        </div>
+                        
+                        <div class="phase-card proliferative" onclick="selectPhase(this, 'proliferative')">
+                            <div class="phase-title">Proliferative Phase</div>
+                            <div class="phase-desc">Days 6-14</div>
+                        </div>
+                        
+                        <div class="phase-card secretory" onclick="selectPhase(this, 'secretory')">
+                            <div class="phase-title">Secretory Phase</div>
+                            <div class="phase-desc">Days 15-28</div>
+                        </div>
+                    </div>
+                    
+                    <div id="phase-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                </div>
+            </section>
+
+            <!-- CONTRACEPTIVE METHODS -->
+            <section aria-label="contraceptive methods">
+                <p class="section-label">Step 3</p>
+                <h2 class="section-title">Contraceptive Method Comparison</h2>
+                <div class="card">
+                    <p class="small">
+                        Click each contraceptive category to review methods, effectiveness, and patient education points.
+                    </p>
+                    
+                    <div class="contraceptive-grid">
+                        <div class="method-card hormonal" onclick="selectMethod(this, 'hormonal')">
+                            <div class="method-title">Hormonal Methods</div>
+                            <div class="method-examples">Birth control pills, patch, ring, injection</div>
+                        </div>
+                        
+                        <div class="method-card barrier" onclick="selectMethod(this, 'barrier')">
+                            <div class="method-title">Barrier Methods</div>
+                            <div class="method-examples">Condoms, diaphragm, cervical cap</div>
+                        </div>
+                        
+                        <div class="method-card long-term" onclick="selectMethod(this, 'long-term')">
+                            <div class="method-title">Long-Acting Reversible</div>
+                            <div class="method-examples">IUDs, implants (Nexplanon)</div>
+                        </div>
+                        
+                        <div class="method-card natural" onclick="selectMethod(this, 'natural')">
+                            <div class="method-title">Natural/Fertility Awareness</div>
+                            <div class="method-examples">Calendar, BBT, cervical mucus tracking</div>
+                        </div>
+                    </div>
+                    
+                    <div id="method-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                </div>
+            </section>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="column" aria-label="apply it to clinical practice">
+            <!-- BETSY DAVIS CASE STUDY -->
+            <section>
+                <p class="section-label">Apply it</p>
+                <h2 class="section-title">Betsy Davis's OB/GYN Practice</h2>
+                <div class="side-card">
+                    <p class="side-subtitle">Case Scenario</p>
+                    <p>
+                        Betsy Davis, CMA (AAMA), works for Dr. Erin Beck at University Women's Hospital. 
+                        Her responsibilities include contraceptive education, breast self-exam teaching, 
+                        and assisting with gynecologic procedures.
+                    </p>
+                    
+                    <p class="side-subtitle" style="margin-top:12px;">Today's Patients:</p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>Patient 1:</strong> 24-year-old requesting contraceptive counseling, no medical history
+                    </p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>Patient 2:</strong> 52-year-old with menopausal symptoms (hot flashes, mood changes)
+                    </p>
+                    
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        <strong>Patient 3:</strong> 32-year-old pregnant patient, 28 weeks gestation, needs glucose screening
+                    </p>
+                    
+                    <label class="small" for="betsy-notes" style="display:block;margin-top:10px;">
+                        How should Betsy approach each patient's needs and what education should she provide?
+                    </label>
+                    <textarea id="betsy-notes" placeholder="Document: 1) Contraceptive counseling points, 2) Menopause management, 3) Prenatal education"></textarea>
+                </div>
+            </section>
+
+            <!-- PREGNANCY STAGES -->
+            <section>
+                <p class="section-label">Step 4</p>
+                <h2 class="section-title">Stages of Pregnancy</h2>
+                <div class="completion-card">
+                    <div class="pregnancy-grid">
+                        <div class="stage-item">
+                            <div class="stage-title">First Trimester (Weeks 1-12)</div>
+                            <div class="stage-details">• Major organ development • Morning sickness • Confirm pregnancy • Initial prenatal visit</div>
+                        </div>
+                        
+                        <div class="stage-item">
+                            <div class="stage-title">Second Trimester (Weeks 13-27)</div>
+                            <div class="stage-details">• Quickening (first fetal movements) • Anatomy ultrasound • Glucose screening • Growing belly</div>
+                        </div>
+                        
+                        <div class="stage-item">
+                            <div class="stage-title">Third Trimester (Weeks 28-40)</div>
+                            <div class="stage-details">• Rapid fetal growth • Braxton Hicks contractions • Fetal position assessment • Birth plan discussion</div>
+                        </div>
+                        
+                        <div class="stage-item">
+                            <div class="stage-title">Labor & Delivery</div>
+                            <div class="stage-details">• Early labor: contractions begin • Active labor: cervix dilates 4-7cm • Transition: 8-10cm dilation • Delivery: baby birth • Placental delivery</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BREAST SELF-EXAM STEPS -->
+            <section>
+                <p class="section-label">Step 5</p>
+                <h2 class="section-title">Breast Self-Examination (BSE)</h2>
+                <div class="completion-card">
+                    <p>
+                        Teach patients to perform BSE monthly, 7-10 days after menstrual period starts.
+                    </p>
+                    
+                    <div class="breast-exam-steps">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-info">
+                                <div class="step-title">Visual Inspection</div>
+                                <div class="step-desc">Stand before mirror with arms at sides, then raised overhead. Look for changes in size, shape, contour, or skin changes.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-info">
+                                <div class="step-title">Palpation Lying Down</div>
+                                <div class="step-desc">Lie down with right arm behind head. Use left hand to examine right breast with pads of fingers in circular motion.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-info">
+                                <div class="step-title">Vertical Strip Pattern</div>
+                                <div class="step-desc">Use vertical strips covering entire breast from collarbone to bra line, and from armpit to breastbone.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-info">
+                                <div class="step-title">Nipple Check</div>
+                                <div class="step-desc">Gently squeeze nipple looking for discharge. Repeat steps 2-4 on left breast.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">5</div>
+                            <div class="step-info">
+                                <div class="step-title">Report Findings</div>
+                                <div class="step-desc">Report any lumps, thickening, dimpling, redness, swelling, or nipple changes to provider immediately.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIAGNOSTIC PROCEDURES -->
+            <section>
+                <p class="section-label">Step 6</p>
+                <h2 class="section-title">OB/GYN Diagnostic Tests</h2>
+                <div class="completion-card">
+                    <p>
+                        Key diagnostic procedures in women's health:
+                    </p>
+                    
+                    <div class="vocab-grid" style="margin-top: 12px; background: transparent; gap: 8px;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Pap Test</div>
+                            <div class="vocab-definition">Screens for cervical cancer; collect cells from cervix. Start at age 21.</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Colposcopy</div>
+                            <div class="vocab-definition">Microscopic exam of cervix after abnormal Pap; may include biopsy.</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Ultrasound</div>
+                            <div class="vocab-definition">Imaging for pregnancy dating, fetal anatomy, pelvic masses.</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Mammogram</div>
+                            <div class="vocab-definition">Breast cancer screening X-ray; baseline at 40, annual at 45.</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">HSG</div>
+                            <div class="vocab-definition">Hysterosalpingogram; evaluates uterine shape and fallopian tube patency.</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">LEEP</div>
+                            <div class="vocab-definition">Loop electrosurgical excision procedure; removes abnormal cervical tissue.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MA ROLE CHECKLIST -->
+            <section>
+                <p class="section-label">Step 7</p>
+                <h2 class="section-title">MA Responsibilities in OB/GYN</h2>
+                <div class="completion-card">
+                    <p>
+                        Check off skills you feel confident performing in an OB/GYN practice:
+                    </p>
+                    
+                    <ul class="checklist" style="margin-top:10px;">
+                        <li>
+                            <input type="checkbox" id="role-1" />
+                            <label for="role-1">Prepare for and assist with <strong>Pap test collection</strong></label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-2" />
+                            <label for="role-2">Provide <strong>contraceptive counseling</strong> and education</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-3" />
+                            <label for="role-3">Teach <strong>breast self-examination (BSE)</strong> technique</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-4" />
+                            <label for="role-4">Assist with <strong>prenatal examinations</strong> and measurements</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-5" />
+                            <label for="role-5">Prepare patients for <strong>gynecologic procedures</strong> (LEEP, colposcopy)</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-6" />
+                            <label for="role-6">Educate about <strong>menopause management</strong> options</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-7" />
+                            <label for="role-7">Explain <strong>pregnancy complications</strong> warning signs</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="role-8" />
+                            <label for="role-8">Maintain <strong>patient confidentiality</strong> with sensitive reproductive health information</label>
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(175, 75, 239, 0.05); border-radius: 8px;">
+                        <p class="small" style="margin-bottom: 6px;"><strong>Pro Tip from Betsy Davis:</strong></p>
+                        <p class="small" style="margin: 0;">
+                            "Always provide privacy and use drapes appropriately during pelvic exams. Have all supplies ready before 
+                            the provider enters. When teaching BSE, use anatomical models and give patients a handout to take home. 
+                            Never rush contraceptive counseling - patients need time to make informed decisions."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPLETION CHECKLIST -->
+            <section>
+                <p class="section-label">Ready to Move On?</p>
+                <h2 class="section-title">Chapter 17 Mastery Checklist</h2>
+                <div class="completion-card">
+                    <p>
+                        Confirm you can demonstrate these competencies before proceeding:
+                    </p>
+                    <ul class="side-list" style="margin-top:8px;">
+                        <li>
+                            <span class="dot"></span>
+                            <span>Describe <strong>female reproductive anatomy</strong> and menstrual cycle phases</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Compare <strong>contraceptive methods</strong> and their effectiveness rates</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Identify <strong>gynecologic disorders</strong> and their typical symptoms</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Teach proper <strong>breast self-examination (BSE)</strong> technique</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Outline <strong>pregnancy stages</strong> and prenatal care schedule</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Assist with <strong>Pap test collection</strong> and preparation</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Explain <strong>menopausal changes</strong> and management options</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Apply <strong>legal and ethical principles</strong> to reproductive health care</span>
+                        </li>
+                    </ul>
+                    
+                    <p style="margin-top:12px;">
+                        Return to your course when ready for the next chapter.
+                    </p>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        // Quiz logic
+        function checkQuiz() {
+            const items = document.querySelectorAll('.quiz-item');
+            items.forEach((item, index) => {
+                const correct = item.getAttribute('data-answer');
+                const name = 'q' + (index + 1);
+                const selected = document.querySelector('input[name="' + name + '"]:checked');
+                const feedback = document.getElementById(name + '-feedback');
+                if (!selected) {
+                    feedback.textContent = 'Please select an answer.';
+                    feedback.className = 'quiz-feedback';
+                    return;
+                }
+                if (selected.value === correct) {
+                    feedback.textContent = 'Correct! ' + getQuizFeedback(index + 1, true);
+                    feedback.className = 'quiz-feedback correct';
+                } else {
+                    feedback.textContent = 'Review needed. ' + getQuizFeedback(index + 1, false);
+                    feedback.className = 'quiz-feedback incorrect';
+                }
+            });
+        }
+        
+        function getQuizFeedback(questionNum, isCorrect) {
+            const feedback = {
+                1: "Menstrual phase = shedding of endometrium (days 1-5). Proliferative = rebuilding (days 6-14). Secretory = preparation for implantation (days 15-28).",
+                2: "LEEP removes abnormal cervical cells found during colposcopy. Used for CIN I-III. Allows preservation of fertility.",
+                3: "IUDs >99% effective. Condoms ~85% with typical use. Fertility awareness ~76-88% effective.",
+                4: "Gestational diabetes screening at 24-28 weeks. Managed with diet, exercise, sometimes medication."
+            };
+            return feedback[questionNum] || (isCorrect ? "Good work!" : "Review this topic.");
+        }
+
+        // Vocabulary flip
+        function toggleVocab(card) {
+            card.classList.toggle('active');
+        }
+
+        // Menstrual Phases
+        function selectPhase(card, phase) {
+            document.querySelectorAll('.phase-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            const feedback = document.getElementById('phase-feedback');
+            const facts = {
+                menstrual: "Days 1-5: Endometrium sheds, estrogen/progesterone low. Avg blood loss: 30-80mL. Symptoms: cramps, fatigue.",
+                proliferative: "Days 6-14: Follicle develops, estrogen rises, endometrium thickens. Ovulation occurs around day 14.",
+                secretory: "Days 15-28: Progesterone rises, endometrium prepares for implantation. If no pregnancy, hormone levels drop, cycle restarts."
+            };
+            
+            feedback.textContent = facts[phase] || "";
+            feedback.className = "quiz-feedback";
+        }
+
+        // Contraceptive Methods
+        function selectMethod(card, method) {
+            document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            const feedback = document.getElementById('method-feedback');
+            const facts = {
+                hormonal: "Effectiveness: 91-99%. Contains estrogen/progesterone. Side effects: nausea, weight changes, breakthrough bleeding. Benefits: regulates periods, reduces cramps.",
+                barrier: "Effectiveness: 72-88%. Protects against STIs. Requires correct use every time. Examples: male/female condoms, diaphragm (requires fitting).",
+                "long-term": "Effectiveness: >99%. Lasts 3-10 years. IUD types: hormonal (Mirena) and copper (Paragard). Implant (Nexplanon) lasts 3 years.",
+                natural: "Effectiveness: 76-88%. Requires tracking basal body temp, cervical mucus, calendar. No side effects, but requires daily monitoring."
+            };
+            
+            feedback.textContent = facts[method] || "";
+            feedback.className = "quiz-feedback";
+        }
+
+        // Chapter vocabulary
+        const vocabTerms = {
+            "Adnexal": "Pertaining to adjacent or accessory parts (ovaries, fallopian tubes)",
+            "Bartholin's cyst": "Fluid-filled cyst in vestibular glands near vaginal opening",
+            "Clitoris": "Small erectile body above urinary meatus; sensitive to sexual stimulation",
+            "Coitus": "Sexual union between male and female; intercourse",
+            "Colostrum": "Thin, yellow, milky fluid secreted by mammary glands before and after delivery",
+            "Dilation": "Opening of cervix during labor (0-10 cm)",
+            "Dilation and Curettage (D&C)": "Widening cervix and scraping endometrial wall of uterus"
+        };
+    </script>
+</body>
+</html>
