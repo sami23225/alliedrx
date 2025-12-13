@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chapter 7 Wrap-Up – Vital Signs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d9b8ff;
+            --color-accent: #8380f0;
+            --color-bg: #f7f5fb;
+            --color-text: #1e2030;
+            --color-muted: #727089;
+            --color-dark-text: #1a1a2e;
+            --radius-lg: 24px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 24px;
+            background: radial-gradient(circle at top left, #ffffff 0, #f3edff 40%, var(--color-bg) 100%);
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            display: grid;
+            grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.4fr);
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+                gap: 22px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+        }
+
+        img, .page, .column, .card, .side-card, .completion-card {
+            max-width: 100%;
+        }
+
+        .column {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header / branding */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #00b894;
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.9rem, 3vw, 2.3rem);
+            line-height: 1.05;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 36rem;
+            margin-bottom: 18px;
+        }
+
+        .subtitle strong {
+            color: var(--color-primary);
+        }
+
+        /* Sections */
+        .section-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .card {
+            border-radius: 18px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            padding: 14px 16px 16px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, rgba(175, 75, 239, 0.06), rgba(255, 255, 255, 0.98));
+        }
+
+        .card + .card {
+            margin-top: 6px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+
+        .small {
+            font-size: 0.82rem;
+            color: var(--color-muted);
+        }
+
+        /* Quiz styles */
+        .quiz-item {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.7);
+        }
+
+        .quiz-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--color-dark-text);
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.88rem;
+        }
+
+        .quiz-options li {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .quiz-options input {
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            font-size: 0.82rem;
+            margin-top: 5px;
+            min-height: 1.1em;
+        }
+
+        .quiz-feedback.correct {
+            color: #15803d;
+        }
+
+        .quiz-feedback.incorrect {
+            color: #b91c1c;
+        }
+
+        .btn {
+            border-radius: 999px;
+            border: none;
+            padding: 7px 14px;
+            margin-top: 10px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(88, 28, 135, 0.35);
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 12px rgba(88, 28, 135, 0.4);
+        }
+
+        /* Vocabulary */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vocab-card {
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: rgba(12, 10, 24, 0.94);
+            color: #e5e7eb;
+            font-size: 0.86rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-term {
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fef9c3;
+        }
+
+        .vocab-definition {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .vocab-card.active .vocab-definition {
+            display: block;
+        }
+
+        .vocab-card::after {
+            content: "Tap to flip";
+            position: absolute;
+            right: 10px;
+            bottom: 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #a5b4fc;
+        }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .vitals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .vital-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .vital-card.temp {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .vital-card.pulse {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .vital-card.resp {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .vital-card.bp {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .vital-card.selected {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .vital-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: var(--color-dark-text);
+        }
+
+        .vital-title::before {
+            content: "";
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .vital-card.temp .vital-title::before { background: #ef4444; }
+        .vital-card.pulse .vital-title::before { background: #3b82f6; }
+        .vital-card.resp .vital-title::before { background: #10b981; }
+        .vital-card.bp .vital-title::before { background: #f59e0b; }
+
+        .vital-range {
+            font-size: 0.82rem;
+            color: var(--color-dark-text);
+            font-weight: 500;
+        }
+
+        /* Conversion Practice */
+        .conversion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .conversion-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .conversion-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .conversion-card > div:first-child {
+            font-weight: 600;
+            color: var(--color-dark-text);
+            margin-bottom: 8px;
+        }
+
+        .conversion-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            color: var(--color-dark-text);
+        }
+
+        .conversion-result {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            padding: 6px;
+            background: rgba(175, 75, 239, 0.05);
+            border-radius: 6px;
+            display: none;
+        }
+
+        /* Hypertension Guidelines */
+        .bp-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .bp-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .bp-stage {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+
+        .bp-normal .bp-stage { background: rgba(34, 197, 94, 0.1); color: #15803d; }
+        .bp-elevated .bp-stage { background: rgba(250, 204, 21, 0.1); color: #ca8a04; }
+        .bp-stage1 .bp-stage { background: rgba(245, 158, 11, 0.1); color: #ea580c; }
+        .bp-stage2 .bp-stage { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+        .bp-crisis .bp-stage { background: rgba(220, 38, 38, 0.2); color: #991b1b; }
+
+        .bp-info {
+            flex: 1;
+        }
+
+        .bp-range {
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--color-dark-text);
+        }
+
+        .bp-action {
+            font-size: 0.78rem;
+            color: var(--color-muted);
+        }
+
+        /* Right column cards */
+        .side-card {
+            background: rgba(12, 10, 24, 0.96);
+            color: #e5e7eb;
+            border-radius: 18px;
+            padding: 16px 18px 18px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .side-card strong {
+            color: #ffffff;
+        }
+
+        .side-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #c4b5fd;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .side-list {
+            list-style: none;
+            margin-top: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.86rem;
+        }
+
+        .side-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            margin-top: 7px;
+            border-radius: 999px;
+            background: #a5b4fc;
+            flex-shrink: 0;
+        }
+
+        .completion-card {
+            border-radius: 18px;
+            border: 1px dashed rgba(148, 163, 184, 0.7);
+            padding: 12px 14px;
+            font-size: 0.84rem;
+            color: var(--color-muted);
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        /* Age Group Ranges */
+        .age-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .age-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .age-range {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--color-dark-text);
+        }
+
+        .age-vitals {
+            font-size: 0.82rem;
+            color: var(--color-dark-text);
+            line-height: 1.4;
+        }
+
+        /* Checkbox labels */
+        .checklist label, .completion-card .side-list span {
+            color: var(--color-dark-text);
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="wrapup-heading">
+        <!-- LEFT COLUMN -->
+        <section class="column">
+            <header class="brand-row">
+                <div class="brand">
+                    <img src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png" alt="AlliedRx logo" class="brand-logo" />
+                    <div class="course-meta">
+                        <span class="course-name">Clinical Medical Assistant • Campus & Distance Learning</span>
+                        <div class="week-label">
+                            <span class="week-label-dot"></span>
+                            <span>Chapter 7 Wrap-Up – Vital Signs</span>
+                        </div>
+                    </div>
+                </div>
+                <span class="badge-mode">Interactive Review</span>
+            </header>
+
+            <h1 id="wrapup-heading">Vital Signs Assessment</h1>
+            <p class="subtitle">
+                Use this page to reinforce your understanding of <strong>Chapter 7 – Vital Signs</strong>. 
+                Review temperature, pulse, respiration, blood pressure measurement, and learn to recognize abnormal findings.
+            </p>
+
+            <!-- QUICK SELF-CHECK QUIZ -->
+            <section aria-label="quick self check">
+                <p class="section-label">Step 1</p>
+                <h2 class="section-title">Clinical Knowledge Check</h2>
+                <div class="card" id="quiz-card">
+                    <p class="small">
+                        Test your understanding of vital signs concepts and techniques.
+                    </p>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            1. <strong>Bradycardia</strong> is defined as a heart rate below:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q1" value="a" id="q1a" />
+                                <label for="q1a">80 beats per minute</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="b" id="q1b" />
+                                <label for="q1b">70 beats per minute</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q1" value="c" id="q1c" />
+                                <label for="q1c">60 beats per minute</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q1-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="b">
+                        <p class="quiz-question">
+                            2. Which temperature reading indicates a <strong>fever</strong> in an adult?
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q2" value="a" id="q2a" />
+                                <label for="q2a">98.6°F (37°C)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="b" id="q2b" />
+                                <label for="q2b">100.4°F (38°C)</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q2" value="c" id="q2c" />
+                                <label for="q2c">97.8°F (36.5°C)</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q2-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="a">
+                        <p class="quiz-question">
+                            3. The <strong>Korotkoff phase</strong> when you hear the first clear tapping sound represents:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q3" value="a" id="q3a" />
+                                <label for="q3a">Systolic blood pressure</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="b" id="q3b" />
+                                <label for="q3b">Diastolic blood pressure</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q3" value="c" id="q3c" />
+                                <label for="q3c">Pulse pressure</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q3-feedback"></div>
+                    </div>
+
+                    <div class="quiz-item" data-answer="c">
+                        <p class="quiz-question">
+                            4. <strong>Cheyne-Stokes respirations</strong> are characterized by:
+                        </p>
+                        <ul class="quiz-options">
+                            <li>
+                                <input type="radio" name="q4" value="a" id="q4a" />
+                                <label for="q4a">Rapid, shallow breathing</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="b" id="q4b" />
+                                <label for="q4b">Complete cessation of breathing</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="q4" value="c" id="q4c" />
+                                <label for="q4c">Cycles of deep breathing followed by apnea</label>
+                            </li>
+                        </ul>
+                        <div class="quiz-feedback" id="q4-feedback"></div>
+                    </div>
+
+                    <button class="btn" type="button" onclick="checkQuiz()">Check answers</button>
+                </div>
+            </section>
+
+            <!-- VITAL SIGNS RANGES -->
+            <section aria-label="vital signs ranges">
+                <p class="section-label">Step 2</p>
+                <h2 class="section-title">Normal Vital Signs Ranges</h2>
+                <div class="card">
+                    <p class="small">
+                        Click each vital sign to review normal ranges and factors affecting measurements.
+                    </p>
+                    
+                    <div class="vitals-grid">
+                        <div class="vital-card temp" onclick="selectVital(this, 'temp')">
+                            <div class="vital-title">Temperature</div>
+                            <div class="vital-range">Normal: 97.8-99.1°F (36.5-37.3°C)</div>
+                        </div>
+                        
+                        <div class="vital-card pulse" onclick="selectVital(this, 'pulse')">
+                            <div class="vital-title">Pulse</div>
+                            <div class="vital-range">Adult: 60-100 bpm; Infant: 120-160 bpm</div>
+                        </div>
+                        
+                        <div class="vital-card resp" onclick="selectVital(this, 'resp')">
+                            <div class="vital-title">Respiration</div>
+                            <div class="vital-range">Adult: 12-20 rpm; Infant: 30-60 rpm</div>
+                        </div>
+                        
+                        <div class="vital-card bp" onclick="selectVital(this, 'bp')">
+                            <div class="vital-title">Blood Pressure</div>
+                            <div class="vital-range">Normal: <120/<80 mmHg</div>
+                        </div>
+                    </div>
+                    
+                    <div id="vital-feedback" class="quiz-feedback" style="margin-top: 12px;"></div>
+                </div>
+            </section>
+
+            <!-- TEMPERATURE CONVERSION PRACTICE -->
+            <section aria-label="temperature conversion">
+                <p class="section-label">Step 3</p>
+                <h2 class="section-title">Temperature Conversion Practice</h2>
+                <div class="card">
+                    <p class="small">
+                        Practice converting between Fahrenheit and Celsius scales using the formulas:
+                        °C = (°F - 32) × 5/9 &nbsp;|&nbsp; °F = (°C × 9/5) + 32
+                    </p>
+                    
+                    <div class="conversion-grid">
+                        <div class="conversion-card">
+                            <div>Convert 98.6°F to Celsius:</div>
+                            <input type="text" class="conversion-input" id="conv1-input" placeholder="Enter °C value">
+                            <button onclick="checkConversion(1)" class="btn" style="margin-top: 8px; padding: 6px 12px; font-size: 0.8rem;">Check</button>
+                            <div class="conversion-result" id="conv1-result"></div>
+                        </div>
+                        
+                        <div class="conversion-card">
+                            <div>Convert 37°C to Fahrenheit:</div>
+                            <input type="text" class="conversion-input" id="conv2-input" placeholder="Enter °F value">
+                            <button onclick="checkConversion(2)" class="btn" style="margin-top: 8px; padding: 6px 12px; font-size: 0.8rem;">Check</button>
+                            <div class="conversion-result" id="conv2-result"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-grid" style="margin-top: 16px; background: transparent;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Febrile</div>
+                            <div class="vocab-definition">Having or showing symptoms of a fever (>100.4°F or 38°C)</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Afebrile</div>
+                            <div class="vocab-definition">Without fever; normal body temperature</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Hypothermia</div>
+                            <div class="vocab-definition">Body temperature below 95°F (35°C)</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Hyperthermia</div>
+                            <div class="vocab-definition">Abnormally high body temperature (>104°F or 40°C)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="column" aria-label="apply it to clinical practice">
+            <!-- CARLOS RICCI CASE STUDY -->
+            <section>
+                <p class="section-label">Apply it</p>
+                <h2 class="section-title">Carlos Ricci's Clinical Day</h2>
+                <div class="side-card">
+                    <p class="side-subtitle">Case Scenario</p>
+                    <p>
+                        Carlos Ricci, CMA (AAMA), works with Dr. Susan Xu in primary care. 
+                        He measures vital signs for all patients. Today, he encounters these situations:
+                    </p>
+                    
+                    <p class="side-subtitle" style="margin-top:12px;">Patient 1: Mrs. Johnson, age 72</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        BP: 162/94 mmHg, Pulse: 88 bpm irregular, Resp: 22 rpm, Temp: 98.6°F
+                    </p>
+                    
+                    <p class="side-subtitle">Patient 2: Tommy, age 4</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        Temp: 102.2°F (tympanic), Pulse: 132 bpm, Resp: 28 rpm, BP: 96/62 mmHg
+                    </p>
+                    
+                    <p class="side-subtitle">Patient 3: Mr. Chen, age 45</p>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px;">
+                        Just ran up stairs; Pulse: 118 bpm, BP: 148/92 mmHg, Resp: 24 rpm
+                    </p>
+                    
+                    <label class="small" for="carlos-notes" style="display:block;margin-top:10px;">
+                        How should Carlos interpret these findings and what actions should he take?
+                    </label>
+                    <textarea id="carlos-notes" placeholder="Document: 1) Abnormal findings for each patient, 2) Immediate actions needed, 3) Patient education points"></textarea>
+                </div>
+            </section>
+
+            <!-- HYPERTENSION GUIDELINES -->
+            <section>
+                <p class="section-label">Step 4</p>
+                <h2 class="section-title">Blood Pressure Classification</h2>
+                <div class="completion-card">
+                    <p>
+                        Review the current ACC/AHA hypertension guidelines and recommended actions.
+                    </p>
+                    
+                    <div class="bp-grid">
+                        <div class="bp-item bp-normal">
+                            <div class="bp-stage">N</div>
+                            <div class="bp-info">
+                                <div class="bp-range">Normal: <120/<80 mmHg</div>
+                                <div class="bp-action">Recheck in 1-2 years with lifestyle education</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bp-item bp-elevated">
+                            <div class="bp-stage">E</div>
+                            <div class="bp-info">
+                                <div class="bp-range">Elevated: 120-129/<80 mmHg</div>
+                                <div class="bp-action">Lifestyle modifications, recheck in 3-6 months</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bp-item bp-stage1">
+                            <div class="bp-stage">1</div>
+                            <div class="bp-info">
+                                <div class="bp-range">Stage 1: 130-139/80-89 mmHg</div>
+                                <div class="bp-action">Lifestyle changes + consider medication if CVD risk</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bp-item bp-stage2">
+                            <div class="bp-stage">2</div>
+                            <div class="bp-info">
+                                <div class="bp-range">Stage 2: ≥140/≥90 mmHg</div>
+                                <div class="bp-action">Lifestyle changes + antihypertensive medication</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bp-item bp-crisis">
+                            <div class="bp-stage">!</div>
+                            <div class="bp-info">
+                                <div class="bp-range">Hypertensive Crisis: >180/>120 mmHg</div>
+                                <div class="bp-action">Immediate medical attention required</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vocab-grid" style="margin-top: 16px; background: transparent; gap: 8px;">
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Korotkoff Sounds</div>
+                            <div class="vocab-definition">Sounds heard during BP measurement: Phase I (systolic) to Phase V (diastolic)</div>
+                        </div>
+                        <div class="vocab-card" onclick="toggleVocab(this)">
+                            <div class="vocab-term">Auscultatory Gap</div>
+                            <div class="vocab-definition">Temporary disappearance of sounds between systolic and diastolic readings</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AGE-SPECIFIC RANGES -->
+            <section>
+                <p class="section-label">Step 5</p>
+                <h2 class="section-title">Age-Specific Vital Signs</h2>
+                <div class="completion-card">
+                    <div class="age-grid">
+                        <div class="age-item">
+                            <div class="age-range">Newborn (0-3 months)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 120-160 | Resp: 30-60 | BP: 65-85/45-55</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Infant (3-12 months)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 80-140 | Resp: 24-40 | BP: 70-100/50-70</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Toddler (1-3 years)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 80-130 | Resp: 20-30 | BP: 80-110/50-80</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Child (3-6 years)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 70-120 | Resp: 20-25 | BP: 85-110/55-80</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Child (6-12 years)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 60-110 | Resp: 16-22 | BP: 90-120/60-80</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Adolescent (12+ years)</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 55-105 | Resp: 12-20 | BP: 100-130/60-85</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Adult</div>
+                            <div class="age-vitals">Temp: 97.7-99.5°F | Pulse: 60-100 | Resp: 12-20 | BP: <120/<80</div>
+                        </div>
+                        
+                        <div class="age-item">
+                            <div class="age-range">Older Adult (65+)</div>
+                            <div class="age-vitals">Temp: 96.8-98.6°F | Pulse: 60-100 | Resp: 12-20 | BP: <130/<80</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MA TECHNIQUE CHECKLIST -->
+            <section>
+                <p class="section-label">Step 6</p>
+                <h2 class="section-title">Vital Signs Technique Checklist</h2>
+                <div class="completion-card">
+                    <p>
+                        Check off proper techniques you can confidently perform:
+                    </p>
+                    
+                    <ul class="checklist" style="margin-top:10px;">
+                        <li>
+                            <input type="checkbox" id="tech-1" />
+                            <label for="tech-1">
+                                Measure temperature using <strong>oral, tympanic, and temporal</strong> methods
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-2" />
+                            <label for="tech-2">
+                                Palpate pulse at <strong>radial, brachial, and carotid</strong> sites
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-3" />
+                            <label for="tech-3">
+                                Count respirations <strong>without patient awareness</strong> (discretely)
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-4" />
+                            <label for="tech-4">
+                                Select correct <strong>cuff size</strong> based on arm circumference
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-5" />
+                            <label for="tech-5">
+                                Identify all <strong>Korotkoff phases</strong> during BP measurement
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-6" />
+                            <label for="tech-6">
+                                Convert between <strong>Fahrenheit and Celsius</strong> temperature scales
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-7" />
+                            <label for="tech-7">
+                                Calculate <strong>BMI</strong> from height and weight measurements
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="tech-8" />
+                            <label for="tech-8">
+                                Recognize <strong>urgent vital sign abnormalities</strong> requiring immediate action
+                            </label>
+                        </li>
+                    </ul>
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(175, 75, 239, 0.05); border-radius: 8px;">
+                        <p class="small" style="margin-bottom: 6px;"><strong>Pro Tip from Carlos Ricci:</strong></p>
+                        <p class="small" style="margin: 0;">
+                            "Always allow 5 minutes of rest before taking BP. If the first reading is high, wait 2 minutes 
+                            and retake. Document both readings and which arm was used. Never tell patients their pulse or 
+                            respiration rate while counting – it changes the result!"
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COMPLETION CHECKLIST -->
+            <section>
+                <p class="section-label">Ready to Move On?</p>
+                <h2 class="section-title">Chapter 7 Mastery Checklist</h2>
+                <div class="completion-card">
+                    <p>
+                        Confirm you can demonstrate these competencies before proceeding:
+                    </p>
+                    <ul class="side-list" style="margin-top:8px;">
+                        <li>
+                            <span class="dot"></span>
+                            <span>Obtain accurate <strong>temperature</strong> using three different thermometer types</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Assess <strong>pulse rate, rhythm, and volume</strong> at multiple sites</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Count <strong>respirations</strong> discretely and recognize abnormal patterns</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Measure <strong>blood pressure</strong> following correct technique with proper cuff size</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Apply <strong>current hypertension guidelines</strong> to classify BP readings</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Convert between <strong>weight units</strong> (kg/lb) and temperature scales (°F/°C)</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Recognize <strong>age-specific normal ranges</strong> for all vital signs</span>
+                        </li>
+                        <li>
+                            <span class="dot"></span>
+                            <span>Document vital signs <strong>accurately and ethically</strong> in patient records</span>
+                        </li>
+                    </ul>
+                    
+                    <p style="margin-top:12px;">
+                        Return to your course when ready for the next chapter.
+                    </p>
+                </div>
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        // Quiz logic
+        function checkQuiz() {
+            const items = document.querySelectorAll('.quiz-item');
+            items.forEach((item, index) => {
+                const correct = item.getAttribute('data-answer');
+                const name = 'q' + (index + 1);
+                const selected = document.querySelector('input[name="' + name + '"]:checked');
+                const feedback = document.getElementById(name + '-feedback');
+                if (!selected) {
+                    feedback.textContent = 'Please select an answer.';
+                    feedback.className = 'quiz-feedback';
+                    return;
+                }
+                if (selected.value === correct) {
+                    feedback.textContent = 'Correct! ' + getQuizFeedback(index + 1, true);
+                    feedback.className = 'quiz-feedback correct';
+                } else {
+                    feedback.textContent = 'Review needed. ' + getQuizFeedback(index + 1, false);
+                    feedback.className = 'quiz-feedback incorrect';
+                }
+            });
+        }
+        
+        function getQuizFeedback(questionNum, isCorrect) {
+            const feedback = {
+                1: "Bradycardia <60 bpm. Tachycardia >100 bpm. Normal adult range: 60-100 bpm.",
+                2: "Fever = >100.4°F (38°C). Normal = 97.8-99.1°F (36.5-37.3°C).",
+                3: "Korotkoff Phase I = systolic. Phase V = diastolic. Document both numbers.",
+                4: "Cheyne-Stokes = cycles of deep breathing then apnea. Seen in heart failure, brain injury."
+            };
+            return feedback[questionNum] || (isCorrect ? "Good work!" : "Review this topic.");
+        }
+
+        // Vocabulary flip
+        function toggleVocab(card) {
+            card.classList.toggle('active');
+        }
+
+        // Vital Signs Selection
+        function selectVital(card, vital) {
+            document.querySelectorAll('.vital-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            
+            const feedback = document.getElementById('vital-feedback');
+            const facts = {
+                temp: "Factors affecting: Age, time of day, activity, infection, environment. Oral temp ≈ 1°F lower than core.",
+                pulse: "Assess: Rate (bpm), rhythm (regular/irregular), volume (strength). Sites: radial, carotid, apical.",
+                resp: "Assess: Rate (rpm), rhythm, depth, effort. Count for 30 seconds ×2 if regular, full minute if irregular.",
+                bp: "Cuff width = 40% arm circumference. Position: heart level. Wait 5 min rest. Document position and arm used."
+            };
+            
+            feedback.textContent = facts[vital] || "";
+            feedback.className = "quiz-feedback";
+        }
+
+        // Temperature Conversion Practice
+        function checkConversion(conversionNum) {
+            const inputField = document.getElementById(`conv${conversionNum}-input`);
+            const resultDiv = document.getElementById(`conv${conversionNum}-result`);
+            const userAnswer = parseFloat(inputField.value);
+            
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = "Please enter a valid number.";
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            if (conversionNum === 1) {
+                // 98.6°F to Celsius: (98.6 - 32) × 5/9 = 37°C
+                const correctAnswer = 37;
+                if (Math.abs(userAnswer - correctAnswer) < 0.5) {
+                    resultDiv.textContent = "✓ Correct! 98.6°F = 37°C. Formula: °C = (°F - 32) × 5/9";
+                    resultDiv.style.color = '#15803d';
+                } else {
+                    resultDiv.textContent = `Not quite. 98.6°F = 37°C. You entered ${userAnswer}°C. Try again!`;
+                    resultDiv.style.color = '#b91c1c';
+                }
+            } else {
+                // 37°C to Fahrenheit: (37 × 9/5) + 32 = 98.6°F
+                const correctAnswer = 98.6;
+                if (Math.abs(userAnswer - correctAnswer) < 0.5) {
+                    resultDiv.textContent = "✓ Correct! 37°C = 98.6°F. Formula: °F = (°C × 9/5) + 32";
+                    resultDiv.style.color = '#15803d';
+                } else {
+                    resultDiv.textContent = `Not quite. 37°C = 98.6°F. You entered ${userAnswer}°F. Try again!`;
+                    resultDiv.style.color = '#b91c1c';
+                }
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
