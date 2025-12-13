@@ -1,0 +1,2510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AlliedRx -- Chapter 17: Gynecologic Exams & Obstetric Care</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --color-primary: #af4bef;
+            --color-primary-soft: #d492ff;
+            --color-accent: #8380f0;
+            --color-success: #00b894;
+            --color-error: #e17055;
+            --color-warning: #fdcb6e;
+            --color-info: #0984e3;
+            --color-bg: #f7f5fb;
+            --color-text: #2b2b2b;
+            --color-muted: #6c6880;
+            --color-dark: #0c0a18;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 45px rgba(23, 10, 61, 0.18);
+            --shadow-hover: 0 25px 50px rgba(175, 75, 239, 0.15);
+            --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+            background: radial-gradient(
+                circle at top left,
+                #ffffff 0,
+                #f1ecff 40%,
+                var(--color-bg) 100%
+            );
+            color: var(--color-text);
+            -webkit-text-size-adjust: 100%;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(225, 112, 85, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(225, 112, 85, 0.8); }
+        }
+
+        @keyframes correctGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 184, 148, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 184, 148, 0.8); }
+        }
+
+        /* Page Container */
+        .page {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 28px 30px 32px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 0; }
+            .page {
+                border-radius: 0;
+                box-shadow: none;
+                padding: 18px 14px 22px;
+            }
+        }
+
+        /* Header */
+        .brand-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .course-name {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--color-muted);
+            white-space: normal;
+        }
+
+        .week-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(175, 75, 239, 0.08);
+            font-size: 0.76rem;
+            color: var(--color-primary);
+            white-space: normal;
+        }
+
+        .week-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .badge-mode {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(12, 10, 24, 0.06);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--color-muted);
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .badge-mode:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 480px) {
+            .brand-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .badge-mode {
+                margin-top: 6px;
+            }
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            line-height: 1.1;
+            color: var(--color-primary);
+            margin-bottom: 6px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .module-subtitle {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        /* Progress Tracker (2-STEP ONLY) */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-tracker::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50px;
+            right: 50px;
+            height: 3px;
+            background: rgba(12, 10, 24, 0.08);
+            z-index: 1;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-muted);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Activity Grid (SINGLE COLUMN FOR 2 ACTIVITIES) */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+
+        .activity-card:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary-soft);
+        }
+
+        .activity-card:hover::before {
+            opacity: 1;
+        }
+
+        .activity-card.completed {
+            border-color: var(--color-success);
+        }
+
+        .activity-card.completed::before {
+            background: var(--color-success);
+            opacity: 1;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .activity-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .activity-status {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-muted);
+        }
+
+        .activity-card.completed .activity-status {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+        }
+
+        .activity-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .activity-description {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Activity 1: Pap Test & Diagnostic Procedures Assistant */
+        .procedure-parts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .procedure-parts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .procedure-part {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+        }
+
+        .part-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        /* Equipment Setup */
+        .equipment-tray {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            min-height: 150px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .equipment-tray.empty::after {
+            content: 'Drag Pap test equipment here';
+            color: var(--color-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            grid-column: 1 / -1;
+            align-self: center;
+        }
+
+        .equipment-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .equipment-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .equipment-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .equipment-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .equipment-item.placed {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+            cursor: default;
+        }
+
+        .equipment-item.wrong {
+            animation: glow 2s infinite;
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+        }
+
+        /* Multiple Choice */
+        .mc-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .mc-option {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mc-option:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+        }
+
+        .mc-option.selected {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .mc-option.wrong {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+            animation: shake 0.5s ease;
+        }
+
+        /* Fill in Blanks */
+        .fill-blanks {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .blank-item {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+        }
+
+        .blank-text {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .blank-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .blank-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(175, 75, 239, 0.1);
+        }
+
+        .blank-input.correct {
+            border-color: var(--color-success);
+            background: rgba(0, 184, 148, 0.05);
+        }
+
+        .blank-input.incorrect {
+            border-color: var(--color-error);
+            background: rgba(225, 112, 85, 0.05);
+        }
+
+        /* Answer Feedback */
+        .answer-feedback {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 8px;
+            display: none;
+        }
+
+        .answer-feedback.correct {
+            background: rgba(0, 184, 148, 0.1);
+            border-left: 3px solid var(--color-success);
+            color: var(--color-success);
+            display: block;
+        }
+
+        .answer-feedback.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            border-left: 3px solid var(--color-error);
+            color: var(--color-error);
+            display: block;
+        }
+
+        /* Decision Tree */
+        .decision-tree {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .decision-node {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid var(--color-primary-soft);
+            box-shadow: var(--shadow-card);
+        }
+
+        .decision-question {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .decision-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .decision-option {
+            background: rgba(175, 75, 239, 0.1);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .decision-option:hover {
+            background: rgba(175, 75, 239, 0.2);
+            border-color: var(--color-primary);
+        }
+
+        .decision-option.selected {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .decision-option.wrong {
+            background: var(--color-error);
+            color: white;
+            animation: shake 0.5s ease;
+        }
+
+        .pap-result {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid var(--color-primary-soft);
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        .result-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        /* Activity 2: Pregnancy Timeline & Patient Education Planner */
+        .timeline-container {
+            position: relative;
+            margin: 20px 0;
+            padding: 20px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+        }
+
+        .marker-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--color-primary);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .marker-dot:hover {
+            transform: scale(1.2);
+            background: var(--color-primary-soft);
+        }
+
+        .marker-dot.active {
+            background: var(--color-primary);
+            transform: scale(1.2);
+        }
+
+        .marker-label {
+            font-size: 0.7rem;
+            color: var(--color-muted);
+            text-align: center;
+        }
+
+        .timeline-content {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 30px;
+            min-height: 200px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+        }
+
+        .timeline-content.empty::after {
+            content: 'Select a trimester or milestone to view details';
+            color: var(--color-muted);
+            text-align: center;
+            font-size: 0.9rem;
+            display: block;
+            padding: 40px 0;
+        }
+
+        /* Complications Matching */
+        .complications-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .complications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .complication-item {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+
+        .complication-item:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .complication-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .complication-zones {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .complication-zone {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px dashed rgba(12, 10, 24, 0.1);
+            min-height: 150px;
+            text-align: center;
+        }
+
+        .complication-zone.hover {
+            border-color: var(--color-primary);
+            background: rgba(175, 75, 239, 0.05);
+        }
+
+        .zone-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        .complication-feedback {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            display: none;
+        }
+
+        .complication-feedback.correct {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            display: block;
+        }
+
+        .complication-feedback.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--color-error);
+            display: block;
+        }
+
+        /* Education Builder */
+        .education-builder {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .education-builder {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .trimester-column {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px solid rgba(12, 10, 24, 0.1);
+            min-height: 200px;
+        }
+
+        .trimester-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(12, 10, 24, 0.08);
+        }
+
+        .education-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .education-item {
+            background: rgba(12, 10, 24, 0.05);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .education-item:hover {
+            background: rgba(175, 75, 239, 0.1);
+            border-color: var(--color-primary-soft);
+            transform: translateY(-2px);
+        }
+
+        .education-item.dragging {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+
+        .education-feedback {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            display: none;
+        }
+
+        .education-feedback.correct {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--color-success);
+            border-left: 3px solid var(--color-success);
+            display: block;
+        }
+
+        .education-feedback.incorrect {
+            background: rgba(225, 112, 85, 0.1);
+            color: var(--color-error);
+            border-left: 3px solid var(--color-error);
+            display: block;
+        }
+
+        /* Labor Stages */
+        .labor-stages {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .labor-stage {
+            background: rgba(12, 10, 24, 0.03);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .labor-stage:hover {
+            background: rgba(175, 75, 239, 0.08);
+            border-color: var(--color-primary-soft);
+            transform: translateX(5px);
+        }
+
+        .labor-stage.selected {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: var(--color-success);
+        }
+
+        .labor-stage.wrong {
+            background: rgba(225, 112, 85, 0.1);
+            border-color: var(--color-error);
+            animation: shake 0.5s ease;
+        }
+
+        .stage-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(12, 10, 24, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text);
+            flex-shrink: 0;
+        }
+
+        .labor-stage.selected .stage-number {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .stage-text {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        /* Feedback */
+        .feedback-container {
+            background: rgba(12, 10, 24, 0.02);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            border: 1px solid rgba(12, 10, 24, 0.08);
+            margin-top: 20px;
+            display: none;
+        }
+
+        .feedback-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-icon {
+            font-size: 1.2rem;
+        }
+
+        .feedback-icon.correct {
+            color: var(--color-success);
+        }
+
+        .feedback-icon.incorrect {
+            color: var(--color-error);
+        }
+
+        .feedback-content {
+            font-size: 0.85rem;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .feedback-content strong {
+            color: var(--color-primary);
+        }
+
+        /* Safety Warning */
+        .safety-warning {
+            background: rgba(225, 112, 85, 0.1);
+            border: 2px solid var(--color-error);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: glow 2s infinite;
+        }
+
+        .warning-icon {
+            font-size: 1.5rem;
+            color: var(--color-error);
+            flex-shrink: 0;
+        }
+
+        .warning-content {
+            flex: 1;
+        }
+
+        .warning-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-error);
+            margin-bottom: 5px;
+        }
+
+        .warning-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* Clinical Tip */
+        .clinical-tip {
+            background: rgba(0, 184, 148, 0.08);
+            border: 2px solid var(--color-success);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            color: var(--color-success);
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex: 1;
+        }
+
+        .tip-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-success);
+            margin-bottom: 5px;
+        }
+
+        .tip-text {
+            font-size: 0.85rem;
+            color: var(--color-text);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9a3bd6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(175, 75, 239, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(12, 10, 24, 0.06);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 10, 24, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-labelledby="module-heading">
+        <!-- Header -->
+        <header class="brand-row">
+            <div class="brand">
+                <img
+                    src="https://cdn.prod.website-files.com/64d0ccc1558d601cbfb09021/64e9d2f719b1e5258e5d57f5_IMG_1512-p-500.png"
+                    alt="AlliedRx logo"
+                    class="brand-logo"
+                />
+                <div class="course-meta">
+                    <span class="course-name">Clinical Medical Assistant • Week 7</span>
+                    <div class="week-label">
+                        <span class="week-label-dot"></span>
+                        <span>Chapter 17: Obstetrics & Gynecology</span>
+                    </div>
+                </div>
+            </div>
+            <span class="badge-mode">Campus & Online</span>
+        </header>
+
+        <h1 id="module-heading">Gynecologic Exams & Obstetric Care</h1>
+        <p class="module-subtitle">
+            Master Pap test procedures, diagnostic techniques, pregnancy timeline management, 
+            and patient education for comprehensive women's healthcare.
+        </p>
+
+        <!-- Progress Tracker (2-STEP ONLY) -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Pap Test & Diagnostics</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Pregnancy Timeline</div>
+            </div>
+        </div>
+
+        <!-- Activity Grid (2 ACTIVITIES) -->
+        <div class="activity-grid">
+            <!-- Activity 1: Pap Test & Diagnostic Procedures Assistant -->
+            <section class="activity-card" id="activity-1" data-activity="1">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 1</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Pap Test & Diagnostic Procedures Assistant</h3>
+                <p class="activity-description">
+                    Complete all 4 parts of this comprehensive Pap test simulation. 
+                    Drag equipment, select correct patient positions, fill in documentation, 
+                    and make follow-up decisions for abnormal results.
+                </p>
+
+                <!-- PAP RESULT DISPLAY -->
+                <div class="pap-result" id="pap-result-display">
+                    <div class="result-title">Pap Test Result:</div>
+                    <div class="result-content">
+                        <strong>Patient:</strong> 35-year-old female, G2P1<br>
+                        <strong>Result:</strong> ASC-US (Atypical Squamous Cells of Undetermined Significance)<br>
+                        <strong>HPV Status:</strong> Pending<br>
+                        <strong>Clinical Note:</strong> No symptoms, routine screening
+                    </div>
+                </div>
+
+                <div class="procedure-parts">
+                    <!-- Part A: Equipment Setup -->
+                    <div class="procedure-part">
+                        <div class="part-title">Part A: Equipment Setup</div>
+                        <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                            Drag essential Pap test equipment to the procedure tray:
+                        </p>
+                        
+                        <div class="equipment-tray empty" id="pap-tray"></div>
+                        
+                        <div class="equipment-items">
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Speculum</div>
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Cervical brush</div>
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Spatula</div>
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Slide & fixative</div>
+                            <div class="equipment-item draggable" data-essential="false" draggable="true" id="lubricant-item">Lubricant</div>
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Gloves</div>
+                            <div class="equipment-item draggable" data-essential="false" draggable="true">Urine cup</div>
+                            <div class="equipment-item draggable" data-essential="true" draggable="true">Light source</div>
+                        </div>
+                        
+                        <div class="answer-feedback" id="equipment-feedback"></div>
+                        
+                        <div class="safety-warning" id="equipment-warning" style="display: none;">
+                            <div class="warning-icon">⚠️</div>
+                            <div class="warning-content">
+                                <div class="warning-title">Critical Equipment Error</div>
+                                <div class="warning-text">
+                                    Never use lubricant for Pap tests as it interferes with cytology results. 
+                                    Essential items include speculum, cervical brush/spatula, slide with fixative, 
+                                    gloves, and light source.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Part B: Patient Positioning -->
+                    <div class="procedure-part">
+                        <div class="part-title">Part B: Patient Positioning & Education</div>
+                        <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                            Select correct statements for Pap test patient preparation (Select 3):
+                        </p>
+                        
+                        <div class="mc-options">
+                            <div class="mc-option" data-correct="true">
+                                "You should be in lithotomy position with feet in stirrups"
+                            </div>
+                            <div class="mc-option" data-correct="false">
+                                "We'll use lubricant to make the speculum insertion comfortable"
+                            </div>
+                            <div class="mc-option" data-correct="true">
+                                "Avoid intercourse, douching, or vaginal medications for 48 hours before"
+                            </div>
+                            <div class="mc-option" data-correct="true">
+                                "You may feel pressure but should not feel sharp pain"
+                            </div>
+                            <div class="mc-option" data-correct="false">
+                                "Best performed during menstrual flow for better cell collection"
+                            </div>
+                        </div>
+                        
+                        <div class="answer-feedback" id="mc-feedback"></div>
+                        <button class="btn btn-secondary" id="check-mc-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.8rem;">
+                            Check Part B Answers
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Part C: Specimen Documentation -->
+                <div class="procedure-part" style="margin-bottom: 20px;">
+                    <div class="part-title">Part C: Specimen Handling & Documentation</div>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                        Fill in the blanks with correct documentation terms:
+                    </p>
+                    
+                    <div class="fill-blanks">
+                        <div class="blank-item">
+                            <div class="blank-text">
+                                Apply specimen to slide and immediately spray with 
+                                <input type="text" class="blank-input" data-answer="cytology fixative" 
+                                       placeholder="_________" id="blank-1" />
+                                to prevent drying.
+                            </div>
+                            <div class="answer-feedback" id="feedback-1"></div>
+                        </div>
+                        <div class="blank-item">
+                            <div class="blank-text">
+                                Label slide with patient's 
+                                <input type="text" class="blank-input" data-answer="full name and DOB" 
+                                       placeholder="_________" id="blank-2" />
+                                and collection date.
+                            </div>
+                            <div class="answer-feedback" id="feedback-2"></div>
+                        </div>
+                        <div class="blank-item">
+                            <div class="blank-text">
+                                Document last menstrual period (LMP) and any 
+                                <input type="text" class="blank-input" data-answer="symptoms or concerns" 
+                                       placeholder="_________" id="blank-3" />
+                                in the procedure note.
+                            </div>
+                            <div class="answer-feedback" id="feedback-3"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="check-blanks-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.8rem;">
+                        Check Part C Answers
+                    </button>
+                </div>
+
+                <!-- Part D: Abnormal Result Follow-up -->
+                <div class="procedure-part">
+                    <div class="part-title">Part D: Abnormal Result Follow-up</div>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                        Follow the decision tree for ASC-US Pap result shown above:
+                    </p>
+                    
+                    <div class="decision-tree">
+                        <div class="decision-node">
+                            <div class="decision-question">ASC-US Pap result for 35-year-old patient. Next step?</div>
+                            <div class="decision-options">
+                                <div class="decision-option" data-next="hrhpv">Test for high-risk HPV</div>
+                                <div class="decision-option" data-next="repeat">Repeat Pap in 1 year</div>
+                                <div class="decision-option" data-next="colpo">Immediate colposcopy</div>
+                            </div>
+                        </div>
+                        
+                        <div class="decision-node" id="hrhpv-node" style="display: none;">
+                            <div class="decision-question">HPV test negative. Next step?</div>
+                            <div class="decision-options">
+                                <div class="decision-option" data-next="repeat3">Repeat Pap in 3 years</div>
+                                <div class="decision-option" data-next="colpo">Schedule colposcopy anyway</div>
+                            </div>
+                        </div>
+                        
+                        <div class="answer-feedback" id="decision-feedback"></div>
+                        
+                        <div class="decision-result" id="correct-result">
+                            <div class="feedback-title">
+                                <span class="feedback-icon correct">✓</span>
+                                Correct Follow-up Path
+                            </div>
+                            <div class="feedback-content">
+                                <strong>ASC-US Management:</strong> For women 25+, reflex HPV testing is preferred.<br>
+                                • HPV negative → Return to routine screening (3 years)<br>
+                                • HPV positive → Colposcopy<br>
+                                • If HPV testing not available → Repeat Pap in 1 year<br><br>
+                                <strong>Clinical Insight:</strong> Most ASC-US results are not precancerous. 
+                                Proper triage prevents unnecessary procedures while catching true abnormalities.
+                            </div>
+                        </div>
+                        
+                        <div class="decision-result" id="incorrect-result">
+                            <div class="feedback-title">
+                                <span class="feedback-icon incorrect">✗</span>
+                                Incorrect Management
+                            </div>
+                            <div class="feedback-content">
+                                <strong>Current Guidelines:</strong> For ASC-US in women 25+, HPV testing determines next steps.<br>
+                                • <strong>Wrong:</strong> Immediate colposcopy for all ASC-US → Leads to overtreatment<br>
+                                • <strong>Wrong:</strong> Simply repeat in 1 year without HPV test → Misses triage opportunity<br><br>
+                                <strong>Correct Path:</strong> Reflex HPV testing → Negative = routine screening in 3 years, Positive = colposcopy.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 1 Feedback -->
+                <div class="feedback-container" id="activity1-feedback">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Pap Test Procedure Mastered!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Key Competencies Demonstrated:</strong><br>
+                        1. <strong>Equipment Setup:</strong> All essential items correctly identified (no lubricant!)<br>
+                        2. <strong>Patient Preparation:</strong> Proper positioning, timing, and patient education<br>
+                        3. <strong>Specimen Handling:</strong> Immediate fixation prevents air-drying artifact<br>
+                        4. <strong>Documentation:</strong> Complete labeling and clinical note documentation<br>
+                        5. <strong>Follow-up:</strong> Appropriate ASC-US management per current guidelines<br><br>
+                        
+                        <strong>Clinical Pearls:</strong><br>
+                        • Pap tests screen for cervical cancer, not STIs<br>
+                        • Liquid-based cytology has largely replaced conventional Pap smears<br>
+                        • HPV co-testing begins at age 30<br>
+                        • Proper patient education reduces anxiety and improves compliance
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity 2: Pregnancy Timeline & Patient Education Planner -->
+            <section class="activity-card" id="activity-2" data-activity="2">
+                <div class="activity-header">
+                    <span class="activity-number">Activity 2</span>
+                    <span class="activity-status">Not Started</span>
+                </div>
+                <h3 class="activity-title">Pregnancy Timeline & Patient Education Planner</h3>
+                <p class="activity-description">
+                    Explore pregnancy trimesters, match complications to correct categories, 
+                    build patient education plans, and sequence labor stages.
+                </p>
+
+                <!-- Part A: Trimesters Timeline -->
+                <div class="procedure-part" style="margin-bottom: 20px;">
+                    <div class="part-title">Part A: Pregnancy Timeline (Weeks 1-40)</div>
+                    
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        <div class="timeline-markers">
+                            <div class="timeline-marker">
+                                <div class="marker-dot" data-trimester="1" data-weeks="1-13"></div>
+                                <div class="marker-label">1st Trimester<br>Wks 1-13</div>
+                            </div>
+                            <div class="timeline-marker">
+                                <div class="marker-dot" data-trimester="2" data-weeks="14-26"></div>
+                                <div class="marker-label">2nd Trimester<br>Wks 14-26</div>
+                            </div>
+                            <div class="timeline-marker">
+                                <div class="marker-dot" data-trimester="3" data-weeks="27-40"></div>
+                                <div class="marker-label">3rd Trimester<br>Wks 27-40</div>
+                            </div>
+                            <div class="timeline-marker">
+                                <div class="marker-dot" data-milestone="quickening" data-week="18"></div>
+                                <div class="marker-label">Quickening<br>~Week 18</div>
+                            </div>
+                            <div class="timeline-marker">
+                                <div class="marker-dot" data-milestone="viability" data-week="24"></div>
+                                <div class="marker-label">Viability<br>Week 24</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-content empty" id="timeline-content">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
+                        <div class="answer-feedback" id="timeline-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Part B: Complications Matching -->
+                <div class="procedure-part" style="margin-bottom: 20px;">
+                    <div class="part-title">Part B: Pregnancy Complications Matching</div>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                        Drag complications to correct trimester when they typically present:
+                    </p>
+                    
+                    <div class="complications-grid" id="complications-items">
+                        <div class="complication-item" data-trimester="1" draggable="true">Hyperemesis gravidarum</div>
+                        <div class="complication-item" data-trimester="3" draggable="true">Preeclampsia</div>
+                        <div class="complication-item" data-trimester="2" draggable="true">Gestational diabetes</div>
+                        <div class="complication-item" data-trimester="1" draggable="true">Ectopic pregnancy</div>
+                        <div class="complication-item" data-trimester="3" draggable="true">Placenta previa</div>
+                        <div class="complication-item" data-trimester="2" draggable="true">Cervical insufficiency</div>
+                    </div>
+                    
+                    <div class="complication-zones">
+                        <div class="complication-zone" data-trimester="1">
+                            <div class="zone-label">1st Trimester</div>
+                            <div class="zone-content"></div>
+                        </div>
+                        <div class="complication-zone" data-trimester="2">
+                            <div class="zone-label">2nd Trimester</div>
+                            <div class="zone-content"></div>
+                        </div>
+                        <div class="complication-zone" data-trimester="3">
+                            <div class="zone-label">3rd Trimester</div>
+                            <div class="zone-content"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="complication-feedback" id="complication-feedback"></div>
+                    <button class="btn btn-secondary" id="check-complications-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.8rem;">
+                        Check Part B Answers
+                    </button>
+                </div>
+
+                <!-- Part C: Patient Education Builder -->
+                <div class="procedure-part" style="margin-bottom: 20px;">
+                    <div class="part-title">Part C: Patient Education by Trimester</div>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                        Build customized education plans by dragging topics to correct trimesters:
+                    </p>
+                    
+                    <div class="education-builder">
+                        <div class="trimester-column" data-trimester="1">
+                            <div class="trimester-title">1st Trimester</div>
+                            <div class="column-content"></div>
+                        </div>
+                        <div class="trimester-column" data-trimester="2">
+                            <div class="trimester-title">2nd Trimester</div>
+                            <div class="column-content"></div>
+                        </div>
+                        <div class="trimester-column" data-trimester="3">
+                            <div class="trimester-title">3rd Trimester</div>
+                            <div class="column-content"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="education-items">
+                        <div class="education-item" data-trimester="1" draggable="true">Prenatal vitamins (folic acid)</div>
+                        <div class="education-item" data-trimester="1" draggable="true">Morning sickness management</div>
+                        <div class="education-item" data-trimester="2" draggable="true">Anatomy ultrasound prep</div>
+                        <div class="education-item" data-trimester="2" draggable="true">Fetal movement tracking</div>
+                        <div class="education-item" data-trimester="3" draggable="true">Labor signs recognition</div>
+                        <div class="education-item" data-trimester="3" draggable="true">Hospital bag preparation</div>
+                        <div class="education-item" data-trimester="1" draggable="true">Medication safety review</div>
+                        <div class="education-item" data-trimester="2" draggable="true">Glucose screening prep</div>
+                        <div class="education-item" data-trimester="3" draggable="true">Breastfeeding basics</div>
+                    </div>
+                    
+                    <div class="education-feedback" id="education-feedback"></div>
+                    <button class="btn btn-secondary" id="check-education-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.8rem;">
+                        Check Part C Answers
+                    </button>
+                    
+                    <div class="clinical-tip">
+                        <div class="tip-icon">💡</div>
+                        <div class="tip-content">
+                            <div class="tip-title">Patient Education Strategy</div>
+                            <div class="tip-text">
+                                Tailor education to trimester-appropriate concerns. First trimester: survival and basics. 
+                                Second trimester: screening and planning. Third trimester: preparation for delivery and newborn care.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part D: Labor Stages -->
+                <div class="procedure-part">
+                    <div class="part-title">Part D: Labor Stages & Delivery Options</div>
+                    <p style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 10px;">
+                        Click labor stages in correct sequence:
+                    </p>
+                    
+                    <div class="labor-stages">
+                        <div class="labor-stage" data-stage="1">
+                            <div class="stage-number">1</div>
+                            <div class="stage-text">Latent phase: 0-6 cm dilation, irregular contractions</div>
+                        </div>
+                        <div class="labor-stage" data-stage="2">
+                            <div class="stage-number">2</div>
+                            <div class="stage-text">Active phase: 6-10 cm dilation, regular strong contractions</div>
+                        </div>
+                        <div class="labor-stage" data-stage="3">
+                            <div class="stage-number">3</div>
+                            <div class="stage-text">Transition: 8-10 cm dilation, intense contractions</div>
+                        </div>
+                        <div class="labor-stage" data-stage="4">
+                            <div class="stage-number">4</div>
+                            <div class="stage-text">Delivery of baby: Complete dilation to birth</div>
+                        </div>
+                        <div class="labor-stage" data-stage="5">
+                            <div class="stage-number">5</div>
+                            <div class="stage-text">Delivery of placenta: 5-30 minutes after birth</div>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-feedback" id="labor-feedback"></div>
+                    <button class="btn btn-secondary" id="check-labor-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.8rem;">
+                        Check Part D Sequence
+                    </button>
+                    
+                    <div class="safety-warning" id="labor-warning" style="display: none; margin-top: 15px;">
+                        <div class="warning-icon">⚠️</div>
+                        <div class="warning-content">
+                            <div class="warning-title">Labor Stage Error</div>
+                            <div class="warning-text">
+                                Stage 1 has three phases: latent (0-6 cm), active (6-10 cm), and transition (8-10 cm). 
+                                Stage 2 is delivery of baby. Stage 3 is delivery of placenta. 
+                                Misunderstanding stages can lead to inappropriate interventions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2 Feedback -->
+                <div class="feedback-container" id="activity2-feedback">
+                    <div class="feedback-title">
+                        <span class="feedback-icon correct">✓</span>
+                        Pregnancy Care Competency Achieved!
+                    </div>
+                    <div class="feedback-content">
+                        <strong>Mastered Learning Objectives:</strong><br>
+                        1. <strong>Trimesters:</strong> Correctly identified key milestones and developments<br>
+                        2. <strong>Complications:</strong> Matched conditions to appropriate presentation times<br>
+                        3. <strong>Patient Education:</strong> Built trimester-specific education plans<br>
+                        4. <strong>Labor Stages:</strong> Sequenced delivery process correctly<br><br>
+                        
+                        <strong>Clinical Application:</strong><br>
+                        • First trimester complications often relate to implantation/development<br>
+                        • Second trimester focuses on anatomical development and screening<br>
+                        • Third trimester concerns involve preparation for delivery<br>
+                        • Labor stage recognition guides appropriate support and intervention<br><br>
+                        
+                        <strong>Documentation Standards:</strong> Always document gestational age by LMP and ultrasound, 
+                        complication discussions, education provided, and patient understanding (teach-back method).
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" id="reset-all-btn">
+                <span class="btn-icon">↻</span>
+                Reset All Activities
+            </button>
+            <button class="btn btn-primary" id="check-all-btn">
+                <span class="btn-icon">✓</span>
+                Check All Answers
+            </button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State Management for 2 activities only
+            const state = {
+                activities: {
+                    1: { completed: false, correct: 0, total: 4, score: 0 },
+                    2: { completed: false, correct: 0, total: 4, score: 0 }
+                },
+                startedAt: new Date()
+            };
+
+            // DOM Elements
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const resetBtn = document.getElementById('reset-all-btn');
+            const checkAllBtn = document.getElementById('check-all-btn');
+
+            // Activity 1: Pap Test & Diagnostic Procedures Assistant
+            function initActivity1() {
+                const equipmentItems = document.querySelectorAll('#activity-1 .equipment-item');
+                const papTray = document.getElementById('pap-tray');
+                const equipmentWarning = document.getElementById('equipment-warning');
+                const equipmentFeedback = document.getElementById('equipment-feedback');
+                const mcOptions = document.querySelectorAll('#activity-1 .mc-option');
+                const mcFeedback = document.getElementById('mc-feedback');
+                const checkMcBtn = document.getElementById('check-mc-btn');
+                const blankInputs = document.querySelectorAll('#activity-1 .blank-input');
+                const checkBlanksBtn = document.getElementById('check-blanks-btn');
+                const decisionOptions = document.querySelectorAll('#activity-1 .decision-option');
+                const decisionFeedback = document.getElementById('decision-feedback');
+                const feedback1 = document.getElementById('activity1-feedback');
+                const status1 = document.querySelector('#activity-1 .activity-status');
+                const lubricantItem = document.getElementById('lubricant-item');
+                
+                let equipmentPlaced = 0;
+                let essentialEquipmentPlaced = 0;
+                let equipmentChecked = false;
+                let mcSelected = 0;
+                let mcCorrect = 0;
+                let mcChecked = false;
+                let blanksFilled = 0;
+                let blanksCorrect = 0;
+                let blanksChecked = false;
+                let decisionPathCompleted = false;
+                let decisionChecked = false;
+                
+                const essentialItems = ['Speculum', 'Cervical brush', 'Spatula', 'Slide & fixative', 'Gloves', 'Light source'];
+                const nonEssentialItems = ['Lubricant', 'Urine cup'];
+
+                // Part A: Equipment Setup Drag-and-Drop
+                equipmentItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            text: this.textContent,
+                            essential: this.dataset.essential === 'true'
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                papTray.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('empty');
+                });
+
+                papTray.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    
+                    // Check if item already placed
+                    const existingItems = Array.from(this.querySelectorAll('.equipment-item'));
+                    const alreadyPlaced = existingItems.some(item => item.textContent === data.text);
+                    
+                    if (!alreadyPlaced) {
+                        const div = document.createElement('div');
+                        div.className = 'equipment-item placed';
+                        div.textContent = data.text;
+                        div.style.cursor = 'default';
+                        
+                        // Mark wrong items with red glow
+                        if (nonEssentialItems.includes(data.text)) {
+                            div.classList.add('wrong');
+                            setTimeout(() => {
+                                div.classList.remove('wrong');
+                            }, 2000);
+                        }
+                        
+                        this.appendChild(div);
+                        
+                        equipmentPlaced++;
+                        if (data.essential) essentialEquipmentPlaced++;
+                        
+                        // Hide original item
+                        const originalItem = Array.from(equipmentItems).find(item => 
+                            item.textContent === data.text && item.style.display !== 'none'
+                        );
+                        if (originalItem) {
+                            originalItem.style.display = 'none';
+                        }
+                        
+                        // Check for errors
+                        if (data.text === 'Lubricant') {
+                            equipmentWarning.style.display = 'flex';
+                        }
+                    }
+                });
+
+                // Check equipment function
+                function checkEquipment() {
+                    equipmentChecked = true;
+                    const correctEssential = essentialEquipmentPlaced === 6;
+                    const correctNonEssential = equipmentPlaced - essentialEquipmentPlaced === 0;
+                    
+                    if (correctEssential && correctNonEssential) {
+                        equipmentFeedback.textContent = "✓ Correct! All essential equipment placed and no non-essential items included.";
+                        equipmentFeedback.className = "answer-feedback correct";
+                        state.activities[1].correct += 1;
+                    } else {
+                        equipmentFeedback.textContent = "✗ Incorrect. Essential items missing or non-essential items included. Lubricant should NEVER be used for Pap tests as it interferes with cytology.";
+                        equipmentFeedback.className = "answer-feedback incorrect";
+                    }
+                    
+                    checkActivity1Completion();
+                }
+
+                // Part B: Multiple Choice
+                let mcSelectedOptions = [];
+                
+                mcOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        if (mcChecked) return;
+                        
+                        const isCorrect = this.dataset.correct === 'true';
+                        const optionText = this.textContent;
+                        
+                        if (this.classList.contains('selected')) {
+                            // Deselect
+                            this.classList.remove('selected');
+                            mcSelected--;
+                            mcSelectedOptions = mcSelectedOptions.filter(text => text !== optionText);
+                            if (isCorrect) mcCorrect--;
+                        } else {
+                            // Select (max 3 selections)
+                            if (mcSelected < 3) {
+                                this.classList.add('selected');
+                                mcSelected++;
+                                mcSelectedOptions.push(optionText);
+                                if (isCorrect) mcCorrect++;
+                            }
+                        }
+                    });
+                });
+
+                checkMcBtn.addEventListener('click', function() {
+                    mcChecked = true;
+                    
+                    if (mcCorrect === 3 && mcSelected === 3) {
+                        mcFeedback.textContent = "✓ Correct! Selected all 3 correct patient education statements.";
+                        mcFeedback.className = "answer-feedback correct";
+                        state.activities[1].correct += 1;
+                    } else {
+                        mcFeedback.textContent = `✗ Incorrect. You selected ${mcCorrect}/3 correct answers. Correct answers: Lithotomy position, avoid intercourse/douching 48hr before, may feel pressure but not sharp pain. Lubricant is NOT used for Pap tests, and tests should NOT be done during menstrual flow.`;
+                        mcFeedback.className = "answer-feedback incorrect";
+                        
+                        // Highlight correct answers
+                        mcOptions.forEach(option => {
+                            if (option.dataset.correct === 'true') {
+                                option.classList.add('selected');
+                            }
+                        });
+                    }
+                    
+                    checkActivity1Completion();
+                });
+
+                // Part C: Fill in Blanks
+                checkBlanksBtn.addEventListener('click', function() {
+                    blanksChecked = true;
+                    blanksCorrect = 0;
+                    
+                    blankInputs.forEach((input, index) => {
+                        const answer = input.dataset.answer.toLowerCase();
+                        const userAnswer = input.value.trim().toLowerCase();
+                        const feedback = document.getElementById(`feedback-${index + 1}`);
+                        
+                        if (userAnswer === answer) {
+                            input.classList.add('correct');
+                            input.classList.remove('incorrect');
+                            feedback.textContent = `✓ Correct! "${input.dataset.answer}" is the right answer.`;
+                            feedback.className = "answer-feedback correct";
+                            blanksCorrect++;
+                        } else {
+                            input.classList.add('incorrect');
+                            input.classList.remove('correct');
+                            feedback.textContent = `✗ Incorrect. The correct answer is "${input.dataset.answer}".`;
+                            feedback.className = "answer-feedback incorrect";
+                        }
+                    });
+                    
+                    if (blanksCorrect === 3) {
+                        state.activities[1].correct += 1;
+                    }
+                    
+                    checkActivity1Completion();
+                });
+
+                // Part D: Decision Tree
+                decisionOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        if (decisionChecked) return;
+                        
+                        const nextStep = this.dataset.next;
+                        const parentNode = this.closest('.decision-node');
+                        
+                        // Clear other selections in this node
+                        parentNode.querySelectorAll('.decision-option').forEach(opt => {
+                            opt.classList.remove('selected', 'wrong');
+                        });
+                        
+                        // Handle decision path
+                        if (parentNode.querySelector('.decision-question').textContent.includes('ASC-US')) {
+                            // First question
+                            if (nextStep === 'hrhpv') {
+                                this.classList.add('selected');
+                                document.getElementById('hrhpv-node').style.display = 'block';
+                                document.getElementById('incorrect-result').classList.remove('show');
+                                decisionFeedback.textContent = "✓ Good choice! For ASC-US in women 25+, HPV testing is the recommended next step.";
+                                decisionFeedback.className = "answer-feedback correct";
+                            } else {
+                                this.classList.add('wrong');
+                                document.getElementById('incorrect-result').classList.add('show');
+                                document.getElementById('hrhpv-node').style.display = 'none';
+                                decisionPathCompleted = true;
+                                decisionChecked = true;
+                                decisionFeedback.textContent = "✗ Incorrect. For ASC-US in women 25+, HPV testing should be done first to determine need for colposcopy.";
+                                decisionFeedback.className = "answer-feedback incorrect";
+                                checkActivity1Completion();
+                            }
+                        } else if (parentNode.id === 'hrhpv-node') {
+                            // Second question
+                            if (nextStep === 'repeat3') {
+                                this.classList.add('selected');
+                                document.getElementById('correct-result').classList.add('show');
+                                decisionPathCompleted = true;
+                                decisionChecked = true;
+                                decisionFeedback.textContent = "✓ Correct! With negative HPV test, return to routine screening in 3 years.";
+                                decisionFeedback.className = "answer-feedback correct";
+                                state.activities[1].correct += 1;
+                                checkActivity1Completion();
+                            } else {
+                                this.classList.add('wrong');
+                                document.getElementById('incorrect-result').classList.add('show');
+                                decisionPathCompleted = true;
+                                decisionChecked = true;
+                                decisionFeedback.textContent = "✗ Incorrect. With negative HPV test, colposcopy is not indicated. Return to routine screening.";
+                                decisionFeedback.className = "answer-feedback incorrect";
+                                checkActivity1Completion();
+                            }
+                        }
+                    });
+                });
+
+                function checkActivity1Completion() {
+                    if (equipmentChecked && mcChecked && blanksChecked && decisionChecked) {
+                        state.activities[1].completed = true;
+                        state.activities[1].score = Math.round((state.activities[1].correct / 4) * 100);
+                        status1.textContent = 'Completed';
+                        status1.style.color = '#00b894';
+                        document.querySelector('#activity-1').classList.add('completed');
+                        feedback1.classList.add('show');
+                        updateProgress();
+                    }
+                }
+
+                // Auto-check equipment when all essential items placed
+                const observer = new MutationObserver(function(mutations) {
+                    if (!equipmentChecked && essentialEquipmentPlaced === 6 && equipmentPlaced === 6) {
+                        setTimeout(checkEquipment, 500);
+                    }
+                });
+
+                observer.observe(papTray, { childList: true });
+            }
+
+            // Activity 2: Pregnancy Timeline & Patient Education Planner
+            function initActivity2() {
+                const timelineMarkers = document.querySelectorAll('#activity-2 .marker-dot');
+                const timelineContent = document.getElementById('timeline-content');
+                const timelineFeedback = document.getElementById('timeline-feedback');
+                const complicationItems = document.querySelectorAll('#activity-2 .complication-item');
+                const complicationZones = document.querySelectorAll('#activity-2 .complication-zone');
+                const complicationFeedback = document.getElementById('complication-feedback');
+                const checkComplicationsBtn = document.getElementById('check-complications-btn');
+                const educationItems = document.querySelectorAll('#activity-2 .education-item');
+                const trimesterColumns = document.querySelectorAll('#activity-2 .trimester-column');
+                const educationFeedback = document.getElementById('education-feedback');
+                const checkEducationBtn = document.getElementById('check-education-btn');
+                const laborStages = document.querySelectorAll('#activity-2 .labor-stage');
+                const laborFeedback = document.getElementById('labor-feedback');
+                const checkLaborBtn = document.getElementById('check-labor-btn');
+                const laborWarning = document.getElementById('labor-warning');
+                const feedback2 = document.getElementById('activity2-feedback');
+                const status2 = document.querySelector('#activity-2 .activity-status');
+                
+                let timelineViewed = false;
+                let timelineChecked = false;
+                let complicationsPlaced = 0;
+                let complicationsCorrect = 0;
+                let complicationsChecked = false;
+                let educationPlaced = 0;
+                let educationCorrect = 0;
+                let educationChecked = false;
+                let laborSequence = [];
+                const correctLaborSequence = ['1', '2', '3', '4', '5'];
+                let laborChecked = false;
+
+                // Timeline content data
+                const timelineData = {
+                    '1': {
+                        title: 'First Trimester (Weeks 1-13)',
+                        content: '<strong>Key Developments:</strong><br>• Organogenesis (weeks 3-8)<br>• Placenta formation<br>• Heartbeat detectable by Doppler ~week 12<br><br><strong>Patient Concerns:</strong> Morning sickness, fatigue, breast tenderness'
+                    },
+                    '2': {
+                        title: 'Second Trimester (Weeks 14-26)',
+                        content: '<strong>Key Developments:</strong><br>• Quickening (fetal movement) ~week 18<br>• Anatomy ultrasound ~week 20<br>• Viability begins at 24 weeks<br><br><strong>Patient Concerns:</strong> Back pain, round ligament pain, heartburn'
+                    },
+                    '3': {
+                        title: 'Third Trimester (Weeks 27-40)',
+                        content: '<strong>Key Developments:</strong><br>• Fetal lung maturation<br>• Lightening (dropping) ~week 36<br>• Full term at 39 weeks<br><br><strong>Patient Concerns:</strong> Braxton Hicks, swelling, sleep difficulties'
+                    },
+                    'quickening': {
+                        title: 'Quickening (~Week 18)',
+                        content: '<strong>First perceived fetal movements</strong><br>• Multiparous women may feel earlier (16 weeks)<br>• Primiparous women typically 18-20 weeks<br>• Document date of quickening in prenatal record'
+                    },
+                    'viability': {
+                        title: 'Viability (Week 24)',
+                        content: '<strong>Earliest potential survival if born</strong><br>• 50-70% survival with intensive care<br>• Significant risk of long-term disability<br>• Critical milestone for prenatal counseling'
+                    }
+                };
+
+                // Part A: Timeline Interaction
+                timelineMarkers.forEach(marker => {
+                    marker.addEventListener('click', function() {
+                        const trimester = this.dataset.trimester;
+                        const milestone = this.dataset.milestone;
+                        const key = trimester || milestone;
+                        
+                        if (timelineData[key]) {
+                            timelineContent.classList.remove('empty');
+                            timelineContent.innerHTML = `
+                                <h4 style="color: var(--color-primary); margin-bottom: 10px;">${timelineData[key].title}</h4>
+                                <div style="font-size: 0.85rem; line-height: 1.5;">${timelineData[key].content}</div>
+                            `;
+                            
+                            if (!timelineViewed) {
+                                timelineViewed = true;
+                                timelineFeedback.textContent = "✓ Good! You've explored the pregnancy timeline. Now check your answers.";
+                                timelineFeedback.className = "answer-feedback correct";
+                            }
+                        }
+                        
+                        // Update active marker
+                        timelineMarkers.forEach(m => m.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+
+                // Auto-check timeline after viewing
+                setTimeout(() => {
+                    if (timelineViewed && !timelineChecked) {
+                        timelineChecked = true;
+                        state.activities[2].correct += 1;
+                        checkActivity2Completion();
+                    }
+                }, 3000);
+
+                // Part B: Complications Matching
+                complicationItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            text: this.textContent,
+                            trimester: this.dataset.trimester
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                complicationZones.forEach(zone => {
+                    zone.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        this.classList.add('hover');
+                    });
+
+                    zone.addEventListener('dragleave', function() {
+                        this.classList.remove('hover');
+                    });
+
+                    zone.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('hover');
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const targetTrimester = this.dataset.trimester;
+                        
+                        // Check if already placed in any zone
+                        const allZoneContents = document.querySelectorAll('#activity-2 .zone-content div');
+                        const alreadyPlaced = Array.from(allZoneContents).some(div => 
+                            div.textContent === data.text
+                        );
+                        
+                        if (!alreadyPlaced) {
+                            const div = document.createElement('div');
+                            div.textContent = data.text;
+                            div.style.padding = '6px 10px';
+                            div.style.margin = '4px 0';
+                            div.style.background = data.trimester === targetTrimester 
+                                ? 'rgba(0, 184, 148, 0.1)' 
+                                : 'rgba(225, 112, 85, 0.1)';
+                            div.style.borderRadius = '8px';
+                            div.style.fontSize = '0.8rem';
+                            this.querySelector('.zone-content').appendChild(div);
+                            
+                            // Hide original item
+                            const originalItem = Array.from(complicationItems).find(item => 
+                                item.textContent === data.text && item.style.display !== 'none'
+                            );
+                            if (originalItem) {
+                                originalItem.style.display = 'none';
+                            }
+                            
+                            complicationsPlaced++;
+                            if (data.trimester === targetTrimester) complicationsCorrect++;
+                        }
+                    });
+                });
+
+                checkComplicationsBtn.addEventListener('click', function() {
+                    complicationsChecked = true;
+                    
+                    if (complicationsCorrect === 6) {
+                        complicationFeedback.textContent = "✓ Perfect! All complications correctly matched to their typical presentation trimester.";
+                        complicationFeedback.className = "complication-feedback correct";
+                        state.activities[2].correct += 1;
+                    } else {
+                        complicationFeedback.textContent = `✗ You got ${complicationsCorrect}/6 correct. Check: Hyperemesis & ectopic (1st), Gestational diabetes & cervical insufficiency (2nd), Preeclampsia & placenta previa (3rd).`;
+                        complicationFeedback.className = "complication-feedback incorrect";
+                        
+                        // Show correct placements
+                        complicationItems.forEach(item => {
+                            const trimester = item.dataset.trimester;
+                            const zone = document.querySelector(`#activity-2 .complication-zone[data-trimester="${trimester}"] .zone-content`);
+                            const existing = Array.from(zone.querySelectorAll('div')).find(div => div.textContent === item.textContent);
+                            
+                            if (!existing) {
+                                const div = document.createElement('div');
+                                div.textContent = item.textContent;
+                                div.style.padding = '6px 10px';
+                                div.style.margin = '4px 0';
+                                div.style.background = 'rgba(0, 184, 148, 0.1)';
+                                div.style.borderRadius = '8px';
+                                div.style.fontSize = '0.8rem';
+                                zone.appendChild(div);
+                                item.style.display = 'none';
+                            }
+                        });
+                    }
+                    
+                    checkActivity2Completion();
+                });
+
+                // Part C: Education Builder
+                educationItems.forEach(item => {
+                    item.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', JSON.stringify({
+                            text: this.textContent,
+                            trimester: this.dataset.trimester
+                        }));
+                        this.classList.add('dragging');
+                    });
+
+                    item.addEventListener('dragend', function() {
+                        this.classList.remove('dragging');
+                    });
+                });
+
+                trimesterColumns.forEach(column => {
+                    column.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                    });
+
+                    column.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        
+                        const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                        const targetTrimester = this.dataset.trimester;
+                        
+                        // Check if already placed in any column
+                        const allColumnContents = document.querySelectorAll('#activity-2 .column-content div');
+                        const alreadyPlaced = Array.from(allColumnContents).some(div => 
+                            div.textContent === data.text
+                        );
+                        
+                        if (!alreadyPlaced) {
+                            const div = document.createElement('div');
+                            div.textContent = data.text;
+                            div.style.padding = '6px 10px';
+                            div.style.margin = '4px 0';
+                            div.style.background = data.trimester === targetTrimester 
+                                ? 'rgba(0, 184, 148, 0.1)' 
+                                : 'rgba(225, 112, 85, 0.1)';
+                            div.style.borderRadius = '8px';
+                            div.style.fontSize = '0.8rem';
+                            this.querySelector('.column-content').appendChild(div);
+                            
+                            // Hide original item
+                            const originalItem = Array.from(educationItems).find(item => 
+                                item.textContent === data.text && item.style.display !== 'none'
+                            );
+                            if (originalItem) {
+                                originalItem.style.display = 'none';
+                            }
+                            
+                            educationPlaced++;
+                            if (data.trimester === targetTrimester) educationCorrect++;
+                        }
+                    });
+                });
+
+                checkEducationBtn.addEventListener('click', function() {
+                    educationChecked = true;
+                    
+                    if (educationCorrect === 9) {
+                        educationFeedback.textContent = "✓ Excellent! All education topics correctly assigned to appropriate trimesters.";
+                        educationFeedback.className = "education-feedback correct";
+                        state.activities[2].correct += 1;
+                    } else {
+                        educationFeedback.textContent = `✗ You got ${educationCorrect}/9 correct. Review: 1st trimester = prenatal vitamins, morning sickness, med safety. 2nd trimester = anatomy ultrasound, fetal movement, glucose screen. 3rd trimester = labor signs, hospital bag, breastfeeding.`;
+                        educationFeedback.className = "education-feedback incorrect";
+                        
+                        // Show correct placements
+                        educationItems.forEach(item => {
+                            const trimester = item.dataset.trimester;
+                            const column = document.querySelector(`#activity-2 .trimester-column[data-trimester="${trimester}"] .column-content`);
+                            const existing = Array.from(column.querySelectorAll('div')).find(div => div.textContent === item.textContent);
+                            
+                            if (!existing) {
+                                const div = document.createElement('div');
+                                div.textContent = item.textContent;
+                                div.style.padding = '6px 10px';
+                                div.style.margin = '4px 0';
+                                div.style.background = 'rgba(0, 184, 148, 0.1)';
+                                div.style.borderRadius = '8px';
+                                div.style.fontSize = '0.8rem';
+                                column.appendChild(div);
+                                item.style.display = 'none';
+                            }
+                        });
+                    }
+                    
+                    checkActivity2Completion();
+                });
+
+                // Part D: Labor Stages
+                laborStages.forEach(stage => {
+                    stage.addEventListener('click', function() {
+                        if (laborChecked) return;
+                        
+                        const stageNumber = this.dataset.stage;
+                        const expectedStage = correctLaborSequence[laborSequence.length];
+                        
+                        if (stageNumber === expectedStage) {
+                            this.classList.add('selected');
+                            laborSequence.push(stageNumber);
+                            laborFeedback.textContent = `✓ Good! Stage ${stageNumber} added. Next: Stage ${parseInt(stageNumber) + 1}`;
+                            laborFeedback.className = "answer-feedback correct";
+                            
+                            if (laborSequence.length === 5) {
+                                laborFeedback.textContent = "✓ Perfect! All labor stages in correct sequence.";
+                                laborChecked = true;
+                                state.activities[2].correct += 1;
+                                checkActivity2Completion();
+                            }
+                        } else {
+                            this.classList.add('wrong');
+                            laborWarning.style.display = 'flex';
+                            laborFeedback.textContent = `✗ Incorrect sequence. You selected Stage ${stageNumber} but should have selected Stage ${expectedStage}.`;
+                            laborFeedback.className = "answer-feedback incorrect";
+                            setTimeout(() => {
+                                this.classList.remove('wrong');
+                            }, 1000);
+                        }
+                    });
+                });
+
+                checkLaborBtn.addEventListener('click', function() {
+                    laborChecked = true;
+                    
+                    if (JSON.stringify(laborSequence) === JSON.stringify(correctLaborSequence)) {
+                        laborFeedback.textContent = "✓ Correct! Labor stages in proper sequence: Latent → Active → Transition → Delivery → Placenta.";
+                        laborFeedback.className = "answer-feedback correct";
+                        state.activities[2].correct += 1;
+                    } else {
+                        laborFeedback.textContent = "✗ Incorrect sequence. Correct order: 1. Latent phase, 2. Active phase, 3. Transition, 4. Delivery of baby, 5. Delivery of placenta.";
+                        laborFeedback.className = "answer-feedback incorrect";
+                        
+                        // Show correct sequence
+                        laborStages.forEach(stage => {
+                            stage.classList.add('selected');
+                        });
+                    }
+                    
+                    checkActivity2Completion();
+                });
+
+                function checkActivity2Completion() {
+                    if (timelineChecked && complicationsChecked && educationChecked && laborChecked) {
+                        state.activities[2].completed = true;
+                        state.activities[2].score = Math.round((state.activities[2].correct / 4) * 100);
+                        status2.textContent = 'Completed';
+                        status2.style.color = '#00b894';
+                        document.querySelector('#activity-2').classList.add('completed');
+                        feedback2.classList.add('show');
+                        updateProgress();
+                    }
+                }
+            }
+
+            // Progress Tracking
+            function updateProgress() {
+                let completed = 0;
+                Object.values(state.activities).forEach(activity => {
+                    if (activity.completed) completed++;
+                });
+
+                // Update progress steps
+                progressSteps.forEach((step, index) => {
+                    if (index < completed) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === completed) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+
+            // Reset All Activities
+            function resetAllActivities() {
+                // Reset state
+                state.activities = {
+                    1: { completed: false, correct: 0, total: 4, score: 0 },
+                    2: { completed: false, correct: 0, total: 4, score: 0 }
+                };
+
+                // Reset UI
+                activityCards.forEach(card => {
+                    card.classList.remove('completed');
+                    const status = card.querySelector('.activity-status');
+                    status.textContent = 'Not Started';
+                    status.style.color = '';
+                    const feedback = card.querySelector('.feedback-container');
+                    feedback.classList.remove('show');
+                });
+
+                // Reset Activity 1
+                const papTray = document.getElementById('pap-tray');
+                papTray.innerHTML = '';
+                papTray.classList.add('empty');
+                document.querySelectorAll('#activity-1 .equipment-item').forEach(item => {
+                    item.style.display = '';
+                    item.classList.remove('placed', 'dragging', 'wrong');
+                });
+                document.getElementById('equipment-warning').style.display = 'none';
+                document.getElementById('equipment-feedback').textContent = '';
+                document.getElementById('equipment-feedback').className = 'answer-feedback';
+                
+                document.querySelectorAll('#activity-1 .mc-option').forEach(option => {
+                    option.classList.remove('selected', 'wrong');
+                });
+                document.getElementById('mc-feedback').textContent = '';
+                document.getElementById('mc-feedback').className = 'answer-feedback';
+                
+                document.querySelectorAll('#activity-1 .blank-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('correct', 'incorrect');
+                });
+                document.querySelectorAll('#activity-1 .answer-feedback').forEach(fb => {
+                    fb.textContent = '';
+                    fb.className = 'answer-feedback';
+                });
+                
+                document.querySelectorAll('#activity-1 .decision-option').forEach(option => {
+                    option.classList.remove('selected', 'wrong');
+                });
+                document.getElementById('hrhpv-node').style.display = 'none';
+                document.getElementById('correct-result').classList.remove('show');
+                document.getElementById('incorrect-result').classList.remove('show');
+                document.getElementById('decision-feedback').textContent = '';
+                document.getElementById('decision-feedback').className = 'answer-feedback';
+
+                // Reset Activity 2
+                document.getElementById('timeline-content').innerHTML = '';
+                document.getElementById('timeline-content').classList.add('empty');
+                document.querySelectorAll('#activity-2 .marker-dot').forEach(marker => {
+                    marker.classList.remove('active');
+                });
+                document.getElementById('timeline-feedback').textContent = '';
+                document.getElementById('timeline-feedback').className = 'answer-feedback';
+                
+                document.querySelectorAll('#activity-2 .complication-item').forEach(item => {
+                    item.style.display = '';
+                });
+                document.querySelectorAll('#activity-2 .zone-content').forEach(content => {
+                    content.innerHTML = '';
+                });
+                document.getElementById('complication-feedback').textContent = '';
+                document.getElementById('complication-feedback').className = 'complication-feedback';
+                
+                document.querySelectorAll('#activity-2 .education-item').forEach(item => {
+                    item.style.display = '';
+                });
+                document.querySelectorAll('#activity-2 .column-content').forEach(content => {
+                    content.innerHTML = '';
+                });
+                document.getElementById('education-feedback').textContent = '';
+                document.getElementById('education-feedback').className = 'education-feedback';
+                
+                document.querySelectorAll('#activity-2 .labor-stage').forEach(stage => {
+                    stage.classList.remove('selected', 'wrong');
+                });
+                document.getElementById('labor-warning').style.display = 'none';
+                document.getElementById('labor-feedback').textContent = '';
+                document.getElementById('labor-feedback').className = 'answer-feedback';
+
+                // Update progress
+                updateProgress();
+            }
+
+            // Check All Answers
+            function checkAllAnswers() {
+                // Complete Activity 1 if not completed
+                if (!state.activities[1].completed) {
+                    // Auto-check equipment
+                    const essentialItems = document.querySelectorAll('#activity-1 .equipment-item[data-essential="true"]');
+                    const papTray = document.getElementById('pap-tray');
+                    papTray.classList.remove('empty');
+                    
+                    essentialItems.forEach(item => {
+                        if (item.textContent !== 'Lubricant') {
+                            const div = document.createElement('div');
+                            div.className = 'equipment-item placed';
+                            div.textContent = item.textContent;
+                            div.style.cursor = 'default';
+                            papTray.appendChild(div);
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    document.getElementById('equipment-feedback').textContent = "✓ Correct! All essential equipment placed and no non-essential items included.";
+                    document.getElementById('equipment-feedback').className = "answer-feedback correct";
+                    state.activities[1].correct += 1;
+                    
+                    // Select correct MC options
+                    document.querySelectorAll('#activity-1 .mc-option[data-correct="true"]').forEach(option => {
+                        option.classList.add('selected');
+                    });
+                    document.getElementById('mc-feedback').textContent = "✓ Correct! Selected all 3 correct patient education statements.";
+                    document.getElementById('mc-feedback').className = "answer-feedback correct";
+                    state.activities[1].correct += 1;
+                    
+                    // Fill in blanks correctly
+                    document.querySelectorAll('#activity-1 .blank-input').forEach((input, index) => {
+                        input.value = input.dataset.answer;
+                        input.classList.add('correct');
+                        const feedback = document.getElementById(`feedback-${index + 1}`);
+                        feedback.textContent = `✓ Correct! "${input.dataset.answer}" is the right answer.`;
+                        feedback.className = "answer-feedback correct";
+                    });
+                    state.activities[1].correct += 1;
+                    
+                    // Complete decision tree correctly
+                    document.querySelector('#activity-1 .decision-option[data-next="hrhpv"]').classList.add('selected');
+                    document.getElementById('hrhpv-node').style.display = 'block';
+                    document.querySelector('#hrhpv-node .decision-option[data-next="repeat3"]').classList.add('selected');
+                    document.getElementById('correct-result').classList.add('show');
+                    document.getElementById('decision-feedback').textContent = "✓ Correct! For ASC-US in women 25+, HPV testing first, then routine screening if negative.";
+                    document.getElementById('decision-feedback').className = "answer-feedback correct";
+                    state.activities[1].correct += 1;
+                    
+                    state.activities[1].completed = true;
+                    state.activities[1].score = 100;
+                    document.querySelector('#activity-1 .activity-status').textContent = 'Completed';
+                    document.querySelector('#activity-1 .activity-status').style.color = '#00b894';
+                    document.querySelector('#activity-1').classList.add('completed');
+                    document.getElementById('activity1-feedback').classList.add('show');
+                }
+
+                // Complete Activity 2 if not completed
+                if (!state.activities[2].completed) {
+                    // Show timeline content
+                    const timelineContent = document.getElementById('timeline-content');
+                    timelineContent.classList.remove('empty');
+                    timelineContent.innerHTML = `
+                        <h4 style="color: var(--color-primary); margin-bottom: 10px;">First Trimester (Weeks 1-13)</h4>
+                        <div style="font-size: 0.85rem; line-height: 1.5;">
+                            <strong>Key Developments:</strong><br>• Organogenesis (weeks 3-8)<br>• Placenta formation<br>• Heartbeat detectable by Doppler ~week 12<br><br>
+                            <strong>Patient Concerns:</strong> Morning sickness, fatigue, breast tenderness
+                        </div>
+                    `;
+                    document.querySelector('#activity-2 .marker-dot[data-trimester="1"]').classList.add('active');
+                    document.getElementById('timeline-feedback').textContent = "✓ Good! You've explored the pregnancy timeline.";
+                    document.getElementById('timeline-feedback').className = "answer-feedback correct";
+                    state.activities[2].correct += 1;
+                    
+                    // Place complications correctly
+                    document.querySelectorAll('#activity-2 .complication-item').forEach(item => {
+                        const trimester = item.dataset.trimester;
+                        const zone = document.querySelector(`#activity-2 .complication-zone[data-trimester="${trimester}"] .zone-content`);
+                        const div = document.createElement('div');
+                        div.textContent = item.textContent;
+                        div.style.padding = '6px 10px';
+                        div.style.margin = '4px 0';
+                        div.style.background = 'rgba(0, 184, 148, 0.1)';
+                        div.style.borderRadius = '8px';
+                        div.style.fontSize = '0.8rem';
+                        zone.appendChild(div);
+                        item.style.display = 'none';
+                    });
+                    document.getElementById('complication-feedback').textContent = "✓ Perfect! All complications correctly matched to their typical presentation trimester.";
+                    document.getElementById('complication-feedback').className = "complication-feedback correct";
+                    state.activities[2].correct += 1;
+                    
+                    // Place education items correctly
+                    document.querySelectorAll('#activity-2 .education-item').forEach(item => {
+                        const trimester = item.dataset.trimester;
+                        const column = document.querySelector(`#activity-2 .trimester-column[data-trimester="${trimester}"] .column-content`);
+                        const div = document.createElement('div');
+                        div.textContent = item.textContent;
+                        div.style.padding = '6px 10px';
+                        div.style.margin = '4px 0';
+                        div.style.background = 'rgba(0, 184, 148, 0.1)';
+                        div.style.borderRadius = '8px';
+                        div.style.fontSize = '0.8rem';
+                        column.appendChild(div);
+                        item.style.display = 'none';
+                    });
+                    document.getElementById('education-feedback').textContent = "✓ Excellent! All education topics correctly assigned to appropriate trimesters.";
+                    document.getElementById('education-feedback').className = "education-feedback correct";
+                    state.activities[2].correct += 1;
+                    
+                    // Select labor stages in correct order
+                    document.querySelectorAll('#activity-2 .labor-stage').forEach(stage => {
+                        stage.classList.add('selected');
+                    });
+                    document.getElementById('labor-feedback').textContent = "✓ Correct! Labor stages in proper sequence: Latent → Active → Transition → Delivery → Placenta.";
+                    document.getElementById('labor-feedback').className = "answer-feedback correct";
+                    state.activities[2].correct += 1;
+                    
+                    state.activities[2].completed = true;
+                    state.activities[2].score = 100;
+                    document.querySelector('#activity-2 .activity-status').textContent = 'Completed';
+                    document.querySelector('#activity-2 .activity-status').style.color = '#00b894';
+                    document.querySelector('#activity-2').classList.add('completed');
+                    document.getElementById('activity2-feedback').classList.add('show');
+                }
+
+                updateProgress();
+            }
+
+            // Initialize activities
+            initActivity1();
+            initActivity2();
+
+            // Event listeners
+            resetBtn.addEventListener('click', resetAllActivities);
+            checkAllBtn.addEventListener('click', checkAllAnswers);
+
+            // Initial progress update
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
